@@ -1,0 +1,9 @@
+{
+  "name": "Manaweave and Runes Lexicon",
+  "landing_text": "Welcome to the Manaweave and Runes Lexicon! Here you will find all the information you need to know about the Manaweave and Runes mod.",
+  "version": "1",
+  "creative_tab": "manaweave_and_runes:manaweave_and_runes_tab",
+  "book_texture": "patchouli:textures/gui/book_purple.png",
+  "model": "patchouli:book_purple",
+  "use_resource_pack": true
+}

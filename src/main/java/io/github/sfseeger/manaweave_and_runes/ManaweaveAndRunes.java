@@ -1,10 +1,7 @@
 package io.github.sfseeger.manaweave_and_runes;
 
-import io.github.sfseeger.manaweave_and_runes.core.init.*;
-import org.slf4j.Logger;
-
 import com.mojang.logging.LogUtils;
-
+import io.github.sfseeger.manaweave_and_runes.core.init.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.Blocks;
@@ -19,6 +16,7 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
+import org.slf4j.Logger;
 
 @Mod(ManaweaveAndRunes.MODID)
 public class ManaweaveAndRunes
@@ -31,13 +29,12 @@ public class ManaweaveAndRunes
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
 
-        ManaweaveAndRunesManaInit.MANA_TYPES.register(modEventBus);
+        ManaInit.MANA_TYPES.register(modEventBus);
 
         ManaweaveAndRunesBlockInit.BLOCKS.register(modEventBus);
         ManaweaveAndRunesBlockEntityInit.BLOCK_ENTITY_TYPES.register(modEventBus);
         ManaweaveAndRunesItemInit.ITEMS.register(modEventBus);
         ManaweaveAndRunesItemGroupInit.CREATIVE_MODE_TABS.register(modEventBus);
-        
 
         NeoForge.EVENT_BUS.register(this);
 

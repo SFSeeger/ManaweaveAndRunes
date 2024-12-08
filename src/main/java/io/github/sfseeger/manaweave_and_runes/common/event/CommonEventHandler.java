@@ -1,7 +1,7 @@
 package io.github.sfseeger.manaweave_and_runes.common.event;
 
+import io.github.sfseeger.lib.mana.ManaRegistry;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
-import io.github.sfseeger.manaweave_and_runes.common.api.mana.ManaRegistry;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.registries.NewRegistryEvent;

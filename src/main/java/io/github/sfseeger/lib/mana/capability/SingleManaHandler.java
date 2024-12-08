@@ -1,7 +1,7 @@
-package io.github.sfseeger.manaweave_and_runes.common.api.capability;
+package io.github.sfseeger.lib.mana.capability;
 
 
-import io.github.sfseeger.manaweave_and_runes.common.api.mana.Mana;
+import io.github.sfseeger.lib.mana.Mana;
 
 public class SingleManaHandler extends ManaHandler {
     public SingleManaHandler(Mana manatype, int capacity, int maxReceive, int maxExtract) {

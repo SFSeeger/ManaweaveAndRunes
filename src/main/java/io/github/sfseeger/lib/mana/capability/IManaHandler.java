@@ -1,6 +1,6 @@
-package io.github.sfseeger.manaweave_and_runes.common.api.capability;
+package io.github.sfseeger.lib.mana.capability;
 
-import io.github.sfseeger.manaweave_and_runes.common.api.mana.Mana;
+import io.github.sfseeger.lib.mana.Mana;
 
 import java.util.Set;
 
@@ -17,7 +17,7 @@ public interface IManaHandler {
 
     boolean canReceive(Mana manatype);
 
-    Set<Mana> getManaStored();
+    Set<Mana> getManaTypesStored();
 
     boolean hasMana(Mana manatype);
 }

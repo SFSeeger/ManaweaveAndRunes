@@ -19,5 +19,6 @@ public class ManaweaveAndRunesItemGroupInit {
             .displayItems((parameters, output) -> {
                 output.accept(ManaweaveAndRunesItemInit.CRYSTAL_ORE_ITEM.get());
                 output.accept(ManaweaveAndRunesItemInit.MANA_STORAGE_BLOCK_ITEM.get());
+                output.accept(ManaweaveAndRunesItemInit.MANA_COLLECTOR_BLOCK_ITEM.get());
             }).build());
 }

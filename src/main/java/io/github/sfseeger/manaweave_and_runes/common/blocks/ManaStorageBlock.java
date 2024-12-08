@@ -1,8 +1,8 @@
 package io.github.sfseeger.manaweave_and_runes.common.blocks;
 
-import io.github.sfseeger.manaweave_and_runes.common.api.capability.IManaHandler;
+import io.github.sfseeger.lib.mana.capability.IManaHandler;
 import io.github.sfseeger.manaweave_and_runes.common.blockentities.ManaStorageBlockEntity;
-import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesManaInit;
+import io.github.sfseeger.manaweave_and_runes.core.init.ManaInit;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.ChatType;
 import net.minecraft.network.chat.OutgoingChatMessage;
@@ -42,7 +42,7 @@ public class ManaStorageBlock extends Block implements EntityBlock {
             IManaHandler manaHandler = manaStorageBlockEntity.getManaHandler(null);
             if (stack.is(Items.COAL)) {
                 int received = manaHandler.receiveMana(1000,
-                                                       ManaweaveAndRunesManaInit.FIRE_MANA.get(),
+                                                       ManaInit.FIRE_MANA.get(),
                                                        false);
                 if (received > 0) {
                     stack.shrink(1);
@@ -54,9 +54,9 @@ public class ManaStorageBlock extends Block implements EntityBlock {
                 PlayerChatMessage chatMessage = PlayerChatMessage.unsigned(player.getUUID(),
                                                                            "Current Mana: " + manaHandler
                                                                                    .getManaStored(
-                                                                                           ManaweaveAndRunesManaInit.FIRE_MANA.get())
+                                                                                           ManaInit.FIRE_MANA.get())
                                                                                    + " "
-                                                                                   + ManaweaveAndRunesManaInit.FIRE_MANA.get()
+                                                                                   + ManaInit.FIRE_MANA.get()
                                                                                    .getName()
                                                                                    .getString());
                 player.createCommandSourceStack()

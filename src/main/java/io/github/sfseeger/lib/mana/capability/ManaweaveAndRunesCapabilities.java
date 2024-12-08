@@ -1,4 +1,4 @@
-package io.github.sfseeger.manaweave_and_runes.common.api.capability;
+package io.github.sfseeger.lib.mana.capability;
 
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;

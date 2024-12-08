@@ -2,6 +2,7 @@ package io.github.sfseeger.manaweave_and_runes.datagen;
 
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
 import io.github.sfseeger.manaweave_and_runes.datagen.client.ManaweaveAndRunesBlockStateProvider;
+import io.github.sfseeger.manaweave_and_runes.datagen.client.ManaweaveAndRunesItemModelProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
@@ -23,5 +24,7 @@ public class ManaweaveAndRunesDatagenHandler {
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
         generator.addProvider(event.includeClient(), new ManaweaveAndRunesBlockStateProvider(output, existingFileHelper));
+        generator.addProvider(event.includeClient(),
+                              new ManaweaveAndRunesItemModelProvider(output, existingFileHelper));
     }
 }

@@ -1,4 +1,4 @@
-package io.github.sfseeger.manaweave_and_runes.common.api.mana;
+package io.github.sfseeger.lib.mana;
 
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
 import net.minecraft.core.Registry;
