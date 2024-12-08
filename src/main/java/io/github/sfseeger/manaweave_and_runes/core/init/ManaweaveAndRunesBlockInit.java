@@ -1,8 +1,8 @@
 package io.github.sfseeger.manaweave_and_runes.core.init;
 
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
+import io.github.sfseeger.manaweave_and_runes.common.blocks.ManaStorageBlock;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.neoforge.registries.DeferredBlock;
@@ -16,4 +16,6 @@ public class ManaweaveAndRunesBlockInit {
                                                                                               .strength(3.0F, 3.0F)
                                                                                               .requiresCorrectToolForDrops()
                                                                                               .sound(SoundType.AMETHYST));
+    public static final DeferredBlock<Block> MANA_STORAGE_BLOCK =
+            BLOCKS.register("mana_storage_block", ManaStorageBlock::new);
 }
