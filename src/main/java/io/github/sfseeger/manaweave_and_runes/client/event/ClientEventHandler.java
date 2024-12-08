@@ -1,4 +1,4 @@
-package io.github.sfseeger.manaweave_and_runes.core.util;
+package io.github.sfseeger.manaweave_and_runes.client.event;
 
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
 import net.neoforged.api.distmarker.Dist;

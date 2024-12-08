@@ -1,13 +1,10 @@
 package io.github.sfseeger.manaweave_and_runes;
 
+import io.github.sfseeger.manaweave_and_runes.core.init.*;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
 
-import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockInit;
-import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockEntityInit;
-import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesItemInit;
-import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesItemGroupInit;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.Blocks;
@@ -34,7 +31,8 @@ public class ManaweaveAndRunes
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
 
-        
+        ManaweaveAndRunesManaInit.MANA_TYPES.register(modEventBus);
+
         ManaweaveAndRunesBlockInit.BLOCKS.register(modEventBus);
         ManaweaveAndRunesBlockEntityInit.BLOCK_ENTITY_TYPES.register(modEventBus);
         ManaweaveAndRunesItemInit.ITEMS.register(modEventBus);
