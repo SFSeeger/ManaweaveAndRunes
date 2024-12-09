@@ -36,6 +36,9 @@ public class ManaweaveAndRunes
         ManaweaveAndRunesItemInit.ITEMS.register(modEventBus);
         ManaweaveAndRunesItemGroupInit.CREATIVE_MODE_TABS.register(modEventBus);
 
+        ManaweaveAndRunesRecipeInit.RECIPE_TYPES.register(modEventBus);
+        ManaweaveAndRunesRecipeInit.RECIPE_SERIALIZERS.register(modEventBus);
+
         NeoForge.EVENT_BUS.register(this);
 
 

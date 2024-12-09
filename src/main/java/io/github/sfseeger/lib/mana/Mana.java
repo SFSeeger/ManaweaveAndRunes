@@ -1,8 +1,11 @@
 package io.github.sfseeger.lib.mana;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.github.sfseeger.lib.mana.utils.ManaGenerationHelper;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.level.Level;
@@ -12,10 +15,16 @@ public class Mana {
 
     String descriptionId;
     ManaProperties properties;
+    public static final Codec<Mana> CODEC;
 
-    public Mana(ManaProperties properties) {
-        this.properties = properties;
+    static {
+        //  ManaRegistry.MANA_REGISTRY.holderByNameCodec().fieldOf("mana_id").forGetter(Mana::RegistryHolder)
+        CODEC = RecordCodecBuilder.create(instance -> instance.group(
+                ManaProperties.CODEC.fieldOf("properties").forGetter(Mana::getProperties)
+        ).apply(instance, Mana::new));
     }
+
+    private final Holder.Reference<Mana> registryHolder;
 
     public boolean canBeGenerated() {
         return this.properties.canBeGenerated;
@@ -77,4 +86,16 @@ public class Mana {
         return "Mana{" + ManaRegistry.MANA_REGISTRY.getKey(this) + "}";
     }
 
+    public Mana(ManaProperties properties) {
+        this.properties = properties;
+        this.registryHolder = ManaRegistry.MANA_REGISTRY.createIntrusiveHolder(this);
+    }
+
+    private ManaProperties getProperties() {
+        return properties;
+    }
+
+    public Holder.Reference<Mana> RegistryHolder() {
+        return this.registryHolder;
+    }
 }

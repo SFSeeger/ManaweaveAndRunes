@@ -5,33 +5,30 @@ import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesRecipeI
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 public class ManaGeneratorRecipe implements Recipe<ManaGeneratorRecipeInput> {
-    protected final CookingBookCategory category;
-    protected final String group;
+    //TODO: Add recipe book capability
     private final Ingredient inputItem;
     private final Mana outputMana;
-    private final int manaAmmount;
+    private final int manaAmount;
     private final int burnTime;
-    private final float experience;
 
-    public ManaGeneratorRecipe(CookingBookCategory category, String group, Ingredient inputItem, Mana outputMana, int manaAmmount, int burnTime, float experience) {
-        this.category = category;
-        this.group = group;
+    public ManaGeneratorRecipe(Ingredient inputItem, Mana outputMana, int manaAmount, int burnTime) {
         this.inputItem = inputItem;
         this.outputMana = outputMana;
-        this.manaAmmount = manaAmmount;
+        this.manaAmount = manaAmount;
         this.burnTime = burnTime;
-        this.experience = experience;
     }
 
     @Override
-    public NonNullList<Ingredient> getIngredients() {
-        NonNullList<Ingredient> ingredients = NonNullList.create();
-        ingredients.add(inputItem);
-        return ingredients;
+    public boolean matches(ManaGeneratorRecipeInput input, @NotNull Level level) {
+        return this.inputItem.test(input.stack());
     }
 
     public Ingredient getInputItem() {
@@ -39,8 +36,10 @@ public class ManaGeneratorRecipe implements Recipe<ManaGeneratorRecipeInput> {
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
-        return null;
+    public @NotNull ItemStack assemble(@NotNull ManaGeneratorRecipeInput input,
+            HolderLookup.@NotNull Provider provider) {
+        // Since no actual item gets created, we return an empty stack
+        return ItemStack.EMPTY;
     }
 
     @Override
@@ -49,47 +48,36 @@ public class ManaGeneratorRecipe implements Recipe<ManaGeneratorRecipeInput> {
     }
 
     @Override
-    public ItemStack getResultItem(HolderLookup.Provider provider) {
+    public @NotNull ItemStack getResultItem(HolderLookup.Provider provider) {
         return ItemStack.EMPTY; // TODO: Maybe show an icon for the mana or the rune symbol?
     }
 
     @Override
-    public boolean matches(ManaGeneratorRecipeInput input, Level level) {
-        return this.inputItem.test(input.stack());
+    public @NotNull NonNullList<Ingredient> getIngredients() {
+        NonNullList<Ingredient> ingredients = NonNullList.create();
+        ingredients.add(inputItem);
+        return ingredients;
     }
 
     @Override
-    public ItemStack assemble(ManaGeneratorRecipeInput input, HolderLookup.Provider provider) {
-        // Since no actual item gets created, we return an empty stack
-        return ItemStack.EMPTY;
+    public @NotNull RecipeSerializer<?> getSerializer() {
+        return ManaweaveAndRunesRecipeInit.MANA_GENERATOR_RECIPE_SERIALIZER.get();
     }
 
     @Override
-    public String getGroup() {
-        return group;
-    }
-
-    @Override
-    public RecipeType<?> getType() {
+    public @NotNull RecipeType<?> getType() {
         return ManaweaveAndRunesRecipeInit.MANA_GENERATOR_RECIPE.get();
-    }
-
-    public CookingBookCategory getCategory() {
-        return category;
     }
 
     public int getBurnTime() {
         return burnTime;
     }
 
-    public float getExperience() {
-        return experience;
-    }
-
     public Mana getOutputMana() {
         return outputMana;
     }
-    public int getManaAmmount(){
-        return manaAmmount;
+
+    public Integer getManaAmount() {
+        return manaAmount;
     }
 }

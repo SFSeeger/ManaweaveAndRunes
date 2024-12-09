@@ -1,13 +1,18 @@
 package io.github.sfseeger.lib.mana;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.github.sfseeger.lib.mana.utils.ManaGenerationHelper;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class ManaProperties {
+    public static final Codec<ManaProperties> CODEC;
+    
     protected long color;
     protected @Nullable ResourceLocation icon;
     protected boolean canBeGenerated = false;
@@ -15,9 +20,55 @@ public class ManaProperties {
     protected List<ManaGenerationHelper.GenerationCondition> generationConditions;
     ManaGenerationHelper.GenerationConditionModi modi = ManaGenerationHelper.GenerationConditionModi.OR;
 
-    protected ManaProperties(long color, @Nullable ResourceLocation icon) {
+    static {
+        CODEC = RecordCodecBuilder.create(instance -> instance.group(
+                Codec.LONG.fieldOf("color").forGetter(ManaProperties::getColor),
+                ResourceLocation.CODEC.optionalFieldOf("icon").forGetter(ManaProperties::getIcon),
+                Codec.BOOL.optionalFieldOf("canBeGenerated", false).forGetter(ManaProperties::canBeGenerated),
+                Codec.INT.optionalFieldOf("generationMultiplier", 1).forGetter(ManaProperties::getGenerationMultiplier),
+                Codec.list(ManaGenerationHelper.GenerationCondition.CODEC)
+                        .optionalFieldOf("generationConditions", new ArrayList<>())
+                        .forGetter(ManaProperties::getGenerationConditions),
+                ManaGenerationHelper.GenerationConditionModi.CODEC.optionalFieldOf("generationConditionModi",
+                                                                                   ManaGenerationHelper.GenerationConditionModi.OR)
+                        .forGetter(ManaProperties::getGenerationConditionModi)
+        ).apply(instance, ManaProperties::new));
+    }
+
+    protected ManaProperties(long color, Optional<ResourceLocation> icon, boolean canBeGenerated,
+            int generationMultiplier,
+            List<ManaGenerationHelper.GenerationCondition> generationConditions,
+            ManaGenerationHelper.GenerationConditionModi modi) {
         this.color = color;
-        this.icon = icon;
+        this.icon = icon.orElse(null);
+        this.canBeGenerated = canBeGenerated;
+        this.generationMultiplier = generationMultiplier;
+        this.generationConditions = generationConditions;
+        this.modi = modi;
+    }
+
+    private ManaGenerationHelper.GenerationConditionModi getGenerationConditionModi() {
+        return modi;
+    }
+
+    private List<ManaGenerationHelper.GenerationCondition> getGenerationConditions() {
+        return generationConditions;
+    }
+
+    private Integer getGenerationMultiplier() {
+        return generationMultiplier;
+    }
+
+    private Boolean canBeGenerated() {
+        return canBeGenerated;
+    }
+
+    private Optional<ResourceLocation> getIcon() {
+        return Optional.ofNullable(icon);
+    }
+
+    private Long getColor() {
+        return color;
     }
 
     public static class Builder {
@@ -59,11 +110,9 @@ public class ManaProperties {
         }
 
         public ManaProperties build() {
-            ManaProperties p = new ManaProperties(color, icon);
-            p.canBeGenerated = canBeGenerated;
-            p.generationMultiplier = generationMultiplier;
-            p.generationConditions = generationConditions;
-            p.modi = modi;
+            ManaProperties p =
+                    new ManaProperties(color, Optional.ofNullable(icon), canBeGenerated, generationMultiplier,
+                                       generationConditions, modi);
             return p;
         }
     }

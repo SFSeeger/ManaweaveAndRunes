@@ -1,5 +1,6 @@
 package io.github.sfseeger.lib.mana.utils;
 
+import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -25,7 +26,12 @@ public class ManaGenerationHelper {
     public enum GenerationConditionModi {
         OR,
         XOR,
-        AND,
+        AND;
+
+        public static Codec<GenerationConditionModi> CODEC = Codec.STRING.xmap(
+                GenerationConditionModi::valueOf,
+                GenerationConditionModi::name
+        );
     }
 
     public enum GenerationCondition {
@@ -53,6 +59,11 @@ public class ManaGenerationHelper {
                 return pos.getY() > 70 ? pos.getY() / 63 : 0;
             }
         };
+
+        public static Codec<GenerationCondition> CODEC = Codec.STRING.xmap(
+                GenerationCondition::valueOf,
+                GenerationCondition::name
+        );
 
         abstract public int getManaGenerationPotential(Level level, BlockPos pos, BlockState state);
     }
