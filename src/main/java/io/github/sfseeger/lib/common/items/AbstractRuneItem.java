@@ -1,6 +1,7 @@
 package io.github.sfseeger.lib.common.items;
 
 import io.github.sfseeger.lib.mana.Mana;
+import io.github.sfseeger.lib.mana.capability.IManaHandler;
 import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.items.IItemHandler;
 import org.jetbrains.annotations.NotNull;
@@ -19,7 +20,7 @@ public class AbstractRuneItem extends Item {
         return this.manatype.get();
     }
 
-    public IItemHandler getManaHandler() {
+    public IManaHandler getManaHandler() {
         return null;
     }
 

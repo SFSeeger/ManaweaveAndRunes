@@ -21,6 +21,8 @@ public class ManaCollectorBlockEntity extends ManaCapableBlockEntity {
     private static final int MAX_RECEIVE = 5000;
     private static final int MAX_EXTRACT = 5000;
 
+    private boolean isCollecting = false;
+
     private ItemStackHandler inventory = new ItemStackHandler(1) {
         @Override
         protected void onContentsChanged(int slot) {
@@ -50,11 +52,20 @@ public class ManaCollectorBlockEntity extends ManaCapableBlockEntity {
             Mana mamaType = runeItem.getManaType();
             int potentialMana =
                     mamaType.canGenerateMana(level, pos, state) * MANA_PER_SOURCE * mamaType.getGenerationMultiplier();
+            blockEntity.setCollecting(potentialMana > 0);
             manaHandler.receiveMana(potentialMana, mamaType, false);
         }
     }
 
     public IItemHandler getItemHandler(@Nullable Direction side) {
         return inventory;
+    }
+
+    public boolean isCollecting() {
+        return isCollecting;
+    }
+
+    public void setCollecting(boolean collecting) {
+        isCollecting = collecting;
     }
 }
