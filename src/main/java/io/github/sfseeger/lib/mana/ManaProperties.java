@@ -47,27 +47,31 @@ public class ManaProperties {
         this.modi = modi;
     }
 
-    private ManaGenerationHelper.GenerationConditionModi getGenerationConditionModi() {
+    public static ManaProperties Empty(){
+        return new ManaProperties.Builder().build();
+    }
+
+    public ManaGenerationHelper.GenerationConditionModi getGenerationConditionModi() {
         return modi;
     }
 
-    private List<ManaGenerationHelper.GenerationCondition> getGenerationConditions() {
+    public List<ManaGenerationHelper.GenerationCondition> getGenerationConditions() {
         return generationConditions;
     }
 
-    private Integer getGenerationMultiplier() {
+    public Integer getGenerationMultiplier() {
         return generationMultiplier;
     }
 
-    private Boolean canBeGenerated() {
+    public Boolean canBeGenerated() {
         return canBeGenerated;
     }
 
-    private Optional<ResourceLocation> getIcon() {
+    public Optional<ResourceLocation> getIcon() {
         return Optional.ofNullable(icon);
     }
 
-    private Long getColor() {
+    public Long getColor() {
         return color;
     }
 

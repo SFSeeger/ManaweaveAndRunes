@@ -1,8 +1,11 @@
 package io.github.sfseeger.manaweave_and_runes.common.blocks;
 
+import io.github.sfseeger.lib.mana.ManaDateComponent;
 import io.github.sfseeger.lib.mana.capability.IManaHandler;
 import io.github.sfseeger.manaweave_and_runes.common.blockentities.ManaStorageBlockEntity;
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaInit;
+import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesDataComponentsInit;
+import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesItemInit;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.ChatType;
 import net.minecraft.network.chat.OutgoingChatMessage;
@@ -34,35 +37,20 @@ public class ManaStorageBlock extends Block implements EntityBlock {
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
             Player player, InteractionHand hand, BlockHitResult hitResult) {
-        if (level.isClientSide) {
-            return ItemInteractionResult.CONSUME;
-        }
-        BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (blockEntity instanceof ManaStorageBlockEntity manaStorageBlockEntity) {
-            IManaHandler manaHandler = manaStorageBlockEntity.getManaHandler(null);
-            if (stack.is(Items.COAL)) {
-                int received = manaHandler.receiveMana(1000,
-                                                       ManaInit.FIRE_MANA.get(),
-                                                       false);
+        if (!level.isClientSide) {
+            BlockEntity blockEntity = level.getBlockEntity(pos);
+            ManaDateComponent manaDateComponent = stack.get(ManaweaveAndRunesDataComponentsInit.MANA_DATA_COMPONENT.value());
+            if (blockEntity instanceof ManaStorageBlockEntity manaStorageBlockEntity && manaDateComponent != null) {
+                IManaHandler manaHandler = manaStorageBlockEntity.getManaHandler(null);
+                int received = manaHandler.receiveMana(manaDateComponent.getManaAmount(),
+                        manaDateComponent.getManaType().value(),
+                        false);
                 if (received > 0) {
                     stack.shrink(1);
                     return ItemInteractionResult.SUCCESS;
                 }
-                return ItemInteractionResult.FAIL;
-            }
-            if (stack.is(Items.APPLE)) {
-                PlayerChatMessage chatMessage = PlayerChatMessage.unsigned(player.getUUID(),
-                                                                           "Current Mana: " + manaHandler
-                                                                                   .getManaStored(
-                                                                                           ManaInit.FIRE_MANA.get())
-                                                                                   + " "
-                                                                                   + ManaInit.FIRE_MANA.get()
-                                                                                   .getName()
-                                                                                   .getString());
-                player.createCommandSourceStack()
-                        .sendChatMessage(new OutgoingChatMessage.Player(chatMessage), false,
-                                         ChatType.bind(ChatType.CHAT, player));
-                return ItemInteractionResult.SUCCESS;
+                return ItemInteractionResult.CONSUME_PARTIAL;
+
             }
         }
         return ItemInteractionResult.FAIL;

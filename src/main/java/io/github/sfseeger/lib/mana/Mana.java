@@ -1,7 +1,7 @@
 package io.github.sfseeger.lib.mana;
 
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.mojang.serialization.DataResult;
 import io.github.sfseeger.lib.mana.utils.ManaGenerationHelper;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -15,16 +15,17 @@ public class Mana {
 
     String descriptionId;
     ManaProperties properties;
-    public static final Codec<Mana> CODEC;
+    public static final Codec<Holder<Mana>> CODEC;
 
     static {
         //  ManaRegistry.MANA_REGISTRY.holderByNameCodec().fieldOf("mana_id").forGetter(Mana::RegistryHolder)
-        CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                ManaProperties.CODEC.fieldOf("properties").forGetter(Mana::getProperties)
-        ).apply(instance, Mana::new));
+        CODEC = Codec.lazyInitialized(() ->
+                ManaRegistry.MANA_REGISTRY.holderByNameCodec().validate(
+                        instance -> instance.is(Manas.EmptyMana.registryHolder()) ?
+                                DataResult.error(() -> "Empty mana cannot be serialized") : DataResult.success(instance)
+                )
+        );
     }
-
-    private final Holder.Reference<Mana> registryHolder;
 
     public boolean canBeGenerated() {
         return this.properties.canBeGenerated;
@@ -32,7 +33,7 @@ public class Mana {
 
     public int canGenerateMana(Level level, BlockPos pos, BlockState state) {
         // Returns 0 if mana cannot be generated, otherwise the factor of mana that can be generated
-        // E.g when placing multiple lava blocks around a mana collector, the mana collector will generate more mana
+        // E.g. when placing multiple lava blocks around a mana collector, the mana collector will generate more mana
         if (!this.canBeGenerated()) {
             return 0;
         }
@@ -66,6 +67,10 @@ public class Mana {
         return potentialGeneration;
     }
 
+    public ManaProperties properties() {
+        return this.properties;
+    }
+
     public int getGenerationMultiplier() {
         // Returns a factor by which the generation amount is multiplied
         return this.properties.generationMultiplier;
@@ -88,14 +93,13 @@ public class Mana {
 
     public Mana(ManaProperties properties) {
         this.properties = properties;
-        this.registryHolder = ManaRegistry.MANA_REGISTRY.createIntrusiveHolder(this);
     }
 
     private ManaProperties getProperties() {
         return properties;
     }
 
-    public Holder.Reference<Mana> RegistryHolder() {
-        return this.registryHolder;
+    public Holder<Mana> registryHolder() {
+        return ManaRegistry.MANA_REGISTRY.wrapAsHolder(this);
     }
 }

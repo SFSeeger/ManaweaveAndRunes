@@ -32,12 +32,12 @@ public class ManaDebugStickItem extends Item {
         if (handler != null) {
             StringBuilder message = new StringBuilder("Current Mana: ");
             for (Mana mana : handler.getManaTypesStored()) {
-                message.append(handler.getManaStored(mana)).append(" ").append(mana.getName().getString()).append(" ");
+                message.append(handler.getManaStored(mana)).append(" ").append(mana.getName().withColor(mana.properties().getColor().intValue()).getString()).append(" ");
             }
             PlayerChatMessage chatMessage = PlayerChatMessage.unsigned(player.getUUID(), message.toString());
             player.createCommandSourceStack()
                     .sendChatMessage(new OutgoingChatMessage.Player(chatMessage), false,
-                                     ChatType.bind(ChatType.CHAT, player));
+                            ChatType.bind(ChatType.CHAT, player));
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.PASS;

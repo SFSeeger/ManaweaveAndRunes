@@ -30,6 +30,7 @@ public class ManaweaveAndRunes
         modEventBus.addListener(this::commonSetup);
 
         ManaInit.MANA_TYPES.register(modEventBus);
+        ManaweaveAndRunesDataComponentsInit.DATA_COMPONENTS.register(modEventBus);
 
         ManaweaveAndRunesBlockInit.BLOCKS.register(modEventBus);
         ManaweaveAndRunesBlockEntityInit.BLOCK_ENTITY_TYPES.register(modEventBus);
