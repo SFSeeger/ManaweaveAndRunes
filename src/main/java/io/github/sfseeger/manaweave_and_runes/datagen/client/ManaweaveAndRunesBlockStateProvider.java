@@ -21,5 +21,6 @@ public class ManaweaveAndRunesBlockStateProvider extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
         this.registerSimpleBlock(ManaweaveAndRunesBlockInit.CRYSTAL_ORE);
+        this.registerSimpleBlock(ManaweaveAndRunesBlockInit.MANA_COLLECTOR_BLOCK);
     }
 }

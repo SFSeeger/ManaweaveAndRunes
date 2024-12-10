@@ -14,12 +14,12 @@ public class ManaweaveAndRunesBlockInit {
 
     public static final DeferredBlock<Block> CRYSTAL_ORE = BLOCKS.registerSimpleBlock("crystal_ore",
                                                                                       BlockBehaviour.Properties.of()
-                                                                                              .strength(3.0F, 3.0F)
+                                                                                              .strength(3.0F)
                                                                                               .requiresCorrectToolForDrops()
                                                                                               .sound(SoundType.AMETHYST));
     public static final DeferredBlock<Block> MANA_STORAGE_BLOCK =
-            BLOCKS.register("mana_storage_block", ManaStorageBlock::new);
+            BLOCKS.register("mana_storage", ManaStorageBlock::new);
 
     public static final DeferredBlock<Block> MANA_COLLECTOR_BLOCK =
-            BLOCKS.register("mana_collector_block", ManaCollectorBlock::new);
+            BLOCKS.register("mana_collector", ManaCollectorBlock::new);
 }

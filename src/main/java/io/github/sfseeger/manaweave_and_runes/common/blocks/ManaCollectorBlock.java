@@ -1,6 +1,5 @@
 package io.github.sfseeger.manaweave_and_runes.common.blocks;
 
-import io.github.sfseeger.lib.common.items.AbstractRuneItem;
 import io.github.sfseeger.manaweave_and_runes.common.blockentities.ManaCollectorBlockEntity;
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockEntityInit;
 import net.minecraft.core.BlockPos;
@@ -21,7 +20,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class ManaCollectorBlock extends Block implements EntityBlock {
     public ManaCollectorBlock() {
-        super(Properties.of()); // TODO: Fill in properties
+        super(Properties.of().strength(2.5f).requiresCorrectToolForDrops());
     }
 
     @Override
@@ -54,9 +53,8 @@ public class ManaCollectorBlock extends Block implements EntityBlock {
             Player player, InteractionHand hand, BlockHitResult hitResult) {
         if (!level.isClientSide) {
             BlockEntity blockEntity = level.getBlockEntity(pos);
-            if (blockEntity instanceof ManaCollectorBlockEntity manaCollectorBlockEntity && stack.getItem() instanceof AbstractRuneItem) {
-                manaCollectorBlockEntity.getItemHandler(null).insertItem(0, stack, false);
-                stack.shrink(1);
+            if (blockEntity instanceof ManaCollectorBlockEntity manaCollectorBlockEntity && manaCollectorBlockEntity.placeRune(
+                    player, stack)) {
                 return ItemInteractionResult.SUCCESS;
             }
         }

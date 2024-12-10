@@ -11,7 +11,7 @@ public interface IManaHandler {
 
     int getManaStored(Mana manatype);
 
-    int getMaxManaStored(Mana manatype);
+    int getManaCapacity();
 
     boolean canExtract(Mana manatype);
 

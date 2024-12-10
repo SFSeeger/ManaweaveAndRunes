@@ -3,16 +3,15 @@ package io.github.sfseeger.lib.common.items;
 import io.github.sfseeger.lib.mana.Mana;
 import io.github.sfseeger.lib.mana.capability.IManaHandler;
 import net.minecraft.world.item.Item;
-import net.neoforged.neoforge.items.IItemHandler;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
 
-public class AbstractRuneItem extends Item {
+public abstract class AbstractRuneItem extends Item {
     protected Supplier<Mana> manatype;
 
     public AbstractRuneItem(Properties properties, Supplier<Mana> manatype) {
-        super(properties);
+        super(properties.stacksTo(1));
         this.manatype = manatype;
     }
 

@@ -17,63 +17,22 @@ import java.util.Set;
 
 public class ManaHandler implements IManaHandler, INBTSerializable {
     protected List<Mana> allowedMana = new ArrayList<>();
-    protected int fallbackCapacity = 0;
-    protected HashMap<Mana, Integer> manaCapacity = new HashMap<>();
     protected HashMap<Mana, Integer> manaStored = new HashMap<>();
     protected int maxManaReceive = 0;
     protected int maxManaExtract = 0;
+    protected int capacity = 0;
 
-    public ManaHandler(Mana manatype, int capacity, int stored, int maxReceive, int maxExtract) {
-        allowedMana = List.of(manatype);
-        this.manaCapacity.put(manatype, capacity);
-        this.manaStored.put(manatype, stored);
-        this.maxManaReceive = maxReceive;
-        this.maxManaExtract = maxExtract;
-    }
-
-    public ManaHandler(HashMap<Mana, Integer> manaCapacity, HashMap<Mana, Integer> manaStored,
-            int maxManaReceive, int maxManaExtract, int fallbackCapacity,
-            @Nullable List<Mana> allowedMana) {
-        if (allowedMana != null) {
-            this.allowedMana = allowedMana;
-        }
-        this.fallbackCapacity = fallbackCapacity;
-        this.manaCapacity = manaCapacity;
-        this.manaStored = manaStored;
+    public ManaHandler(int capacity, int maxManaReceive, int maxManaExtract, @Nullable List<Mana> allowedMana) {
         this.maxManaReceive = maxManaReceive;
         this.maxManaExtract = maxManaExtract;
-    }
-
-    public ManaHandler(HashMap<Mana, Integer> manaCapacity, HashMap<Mana, Integer> manaStored,
-            int maxManaReceive, int maxManaExtract,
-            @Nullable List<Mana> allowedMana) {
-        if (allowedMana != null) {
-            this.allowedMana = allowedMana;
-        }
-        this.manaCapacity = manaCapacity;
-        this.manaStored = manaStored;
-        this.maxManaReceive = maxManaReceive;
-        this.maxManaExtract = maxManaExtract;
-    }
-
-    public ManaHandler(int fallbackCapacity, int maxManaExtract, int maxManaReceive, @Nullable List<Mana> allowedMana) {
-        if (allowedMana != null) {
-            this.allowedMana = allowedMana;
-        }
-        this.fallbackCapacity = fallbackCapacity;
-        this.maxManaReceive = maxManaReceive;
-        this.maxManaExtract = maxManaExtract;
+        this.capacity = capacity;
     }
 
 
     @Override
     public int receiveMana(int amount, Mana manatype, boolean simulate) {
         if (this.canReceive(manatype) && amount > 0) {
-            if (!this.hasMana(manatype)) {
-                this.manaStored.put(manatype, 0);
-                this.manaCapacity.put(manatype, this.fallbackCapacity);
-            }
-            int space = this.getMaxManaStored(manatype) - this.getManaStored(manatype);
+            int space = this.capacity - this.getManaStored(manatype);
             int accepted = Math.clamp(space, 0, Math.min(this.maxManaReceive, amount));
             if (!simulate) {
                 this.manaStored.put(manatype, this.getManaStored(manatype) + accepted);
@@ -89,7 +48,11 @@ public class ManaHandler implements IManaHandler, INBTSerializable {
         if (this.canExtract(manatype) && amount > 0) {
             int extracted = Math.min(this.getManaStored(manatype), Math.min(this.maxManaExtract, amount));
             if (!simulate) {
-                this.manaStored.put(manatype, this.getManaStored(manatype) - extracted);
+                int result = this.getManaStored(manatype) - extracted;
+                this.manaStored.put(manatype, result);
+                if (result == 0 && allowedMana.isEmpty()) {
+                    this.manaStored.remove(manatype);
+                }
                 onContentChanged();
             }
             return extracted;
@@ -100,13 +63,12 @@ public class ManaHandler implements IManaHandler, INBTSerializable {
     @Override
     public int getManaStored(Mana manatype) {
         Integer stored = manaStored.get(manatype);
-        return stored == null ? 0 : stored;
+        return stored == null ? -1 : stored;
     }
 
     @Override
-    public int getMaxManaStored(Mana manatype) {
-        Integer capacity = manaCapacity.get(manatype);
-        return capacity == null ? -1 : capacity;
+    public int getManaCapacity() {
+        return capacity;
     }
 
     @Override
@@ -141,8 +103,9 @@ public class ManaHandler implements IManaHandler, INBTSerializable {
     @Override
     public Tag serializeNBT(HolderLookup.Provider provider) {
         CompoundTag tag = new CompoundTag();
-        for (Mana manatype : manaCapacity.keySet()) {
-            tag.putInt(ManaRegistry.MANA_REGISTRY.getKey(manatype).toString(), manaCapacity.get(manatype));
+        for (Mana manatype : manaStored.keySet()) {
+            Integer stored = manaStored.get(manatype);
+            tag.putInt(ManaRegistry.MANA_REGISTRY.getKey(manatype).toString(), stored == null ? 0 : stored);
         }
         return tag;
     }
@@ -157,7 +120,7 @@ public class ManaHandler implements IManaHandler, INBTSerializable {
                     continue;
                 }
                 IntTag intTag = (IntTag) compoundTag.get(manaType);
-                manaCapacity.put(mana, intTag.getAsInt());
+                manaStored.put(mana, intTag.getAsInt());
             }
         } else {
             throw new IllegalArgumentException("Expected CompoundTag, got " + tag.getClass());
