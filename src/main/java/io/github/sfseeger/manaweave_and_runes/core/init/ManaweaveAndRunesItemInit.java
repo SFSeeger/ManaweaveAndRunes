@@ -13,8 +13,10 @@ public class ManaweaveAndRunesItemInit {
 
     public static final DeferredItem<ManaDebugStickItem> MANA_DEBUG_STICK_ITEM = ITEMS.register("mana_debug_stick",
                                                                                                 ManaDebugStickItem::new);
-    public static final DeferredItem<FireRuneItem> FIRE_RUNE_ITEM = ITEMS.register("fire_rune", FireRuneItem::new);
-    public static final DeferredItem<AirRuneItem> AIR_RUNE_ITEM = ITEMS.register("air_rune", AirRuneItem::new);
+    public static final DeferredItem<FireRuneItem> AMETHYST_FIRE_RUNE_ITEM = ITEMS.register("amethyst_fire_rune",
+                                                                                            FireRuneItem::new);
+    public static final DeferredItem<AirRuneItem> AMETHYST_AIR_RUNE_ITEM = ITEMS.register("amethyst_air_rune",
+                                                                                          AirRuneItem::new);
 
 
     public static final DeferredItem<BlockItem> CRYSTAL_ORE_ITEM =

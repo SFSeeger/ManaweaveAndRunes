@@ -3,18 +3,13 @@ package io.github.sfseeger.manaweave_and_runes.common.blocks;
 import io.github.sfseeger.lib.mana.ManaDateComponent;
 import io.github.sfseeger.lib.mana.capability.IManaHandler;
 import io.github.sfseeger.manaweave_and_runes.common.blockentities.ManaStorageBlockEntity;
-import io.github.sfseeger.manaweave_and_runes.core.init.ManaInit;
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesDataComponentsInit;
-import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesItemInit;
+import io.github.sfseeger.manaweave_and_runes.core.util.InventoryUtil;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.ChatType;
-import net.minecraft.network.chat.OutgoingChatMessage;
-import net.minecraft.network.chat.PlayerChatMessage;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
@@ -46,11 +41,9 @@ public class ManaStorageBlock extends Block implements EntityBlock {
                         manaDateComponent.getManaType().value(),
                         false);
                 if (received > 0) {
-                    stack.shrink(1);
+                    InventoryUtil.shrinkStackIfSurvival(player, stack, 1);
                     return ItemInteractionResult.SUCCESS;
                 }
-                return ItemInteractionResult.CONSUME_PARTIAL;
-
             }
         }
         return ItemInteractionResult.FAIL;

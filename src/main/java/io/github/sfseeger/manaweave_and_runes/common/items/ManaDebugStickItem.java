@@ -4,19 +4,20 @@ import io.github.sfseeger.lib.mana.Mana;
 import io.github.sfseeger.lib.mana.capability.IManaHandler;
 import io.github.sfseeger.lib.mana.capability.ManaweaveAndRunesCapabilities;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.ChatType;
-import net.minecraft.network.chat.OutgoingChatMessage;
-import net.minecraft.network.chat.PlayerChatMessage;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 
 public class ManaDebugStickItem extends Item {
     public ManaDebugStickItem() {
-        super(new Item.Properties().rarity(Rarity.EPIC));
+        super(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC));
     }
 
     @Override
@@ -30,16 +31,22 @@ public class ManaDebugStickItem extends Item {
         IManaHandler handler =
                 level.getCapability(ManaweaveAndRunesCapabilities.MANA_HANDLER_BLOCK, pos, null);
         if (handler != null) {
-            StringBuilder message = new StringBuilder("Current Mana: ");
+            MutableComponent message = Component.literal("Current Mana: ");
+
             for (Mana mana : handler.getManaTypesStored()) {
-                message.append(handler.getManaStored(mana)).append(" ").append(mana.getName().withColor(mana.properties().getColor().intValue()).getString()).append(" ");
+                message.append(Integer.toString(handler.getManaStored(mana))).append(" ")
+                        .append(mana.getName()
+                                        .setStyle(Style.EMPTY.withColor(mana.properties().getColor()).withItalic(true)))
+                        .append(", ");
             }
-            PlayerChatMessage chatMessage = PlayerChatMessage.unsigned(player.getUUID(), message.toString());
-            player.createCommandSourceStack()
-                    .sendChatMessage(new OutgoingChatMessage.Player(chatMessage), false,
-                            ChatType.bind(ChatType.CHAT, player));
+            player.sendSystemMessage(message);
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.PASS;
+    }
+
+    @Override
+    public boolean isFoil(ItemStack stack) {
+        return true;
     }
 }

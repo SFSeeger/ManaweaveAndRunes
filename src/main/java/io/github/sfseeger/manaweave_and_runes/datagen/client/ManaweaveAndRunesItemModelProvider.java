@@ -14,5 +14,7 @@ public class ManaweaveAndRunesItemModelProvider extends ItemModelProvider {
     @Override
     protected void registerModels() {
         basicItem(ManaweaveAndRunesItemInit.MANA_DEBUG_STICK_ITEM.get());
+        basicItem(ManaweaveAndRunesItemInit.AMETHYST_FIRE_RUNE_ITEM.get());
+        basicItem(ManaweaveAndRunesItemInit.AMETHYST_AIR_RUNE_ITEM.get());
     }
 }

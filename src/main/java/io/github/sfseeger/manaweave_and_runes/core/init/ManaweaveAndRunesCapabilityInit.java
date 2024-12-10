@@ -4,6 +4,7 @@ import io.github.sfseeger.lib.common.items.AbstractRuneItem;
 import io.github.sfseeger.lib.mana.capability.ManaweaveAndRunesCapabilities;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
 import io.github.sfseeger.manaweave_and_runes.common.blockentities.ManaCollectorBlockEntity;
+import io.github.sfseeger.manaweave_and_runes.common.blockentities.ManaStorageBlockEntity;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -17,12 +18,17 @@ public class ManaweaveAndRunesCapabilityInit {
                 ManaweaveAndRunesBlockEntityInit.MANA_COLLECTOR_BLOCK_ENTITY.get(),
                 ManaCollectorBlockEntity::getManaHandler
         );
+        event.registerBlockEntity(
+                ManaweaveAndRunesCapabilities.MANA_HANDLER_BLOCK,
+                ManaweaveAndRunesBlockEntityInit.MANA_STORAGE_BLOCK_ENTITY.get(),
+                ManaStorageBlockEntity::getManaHandler
+        );
 
         event.registerItem(
                 ManaweaveAndRunesCapabilities.MANA_HANDLER_ITEM,
                 (itemstack, context) -> itemstack.getItem() instanceof AbstractRuneItem runeItem ? runeItem.getManaHandler() : null,
-                ManaweaveAndRunesItemInit.FIRE_RUNE_ITEM.get(),
-                ManaweaveAndRunesItemInit.AIR_RUNE_ITEM.get()
+                ManaweaveAndRunesItemInit.AMETHYST_FIRE_RUNE_ITEM.get(),
+                ManaweaveAndRunesItemInit.AMETHYST_AIR_RUNE_ITEM.get()
         );
     }
 

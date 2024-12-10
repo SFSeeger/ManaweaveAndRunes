@@ -12,17 +12,10 @@ import java.util.Optional;
 
 public class ManaProperties {
     public static final Codec<ManaProperties> CODEC;
-    
-    protected long color;
-    protected @Nullable ResourceLocation icon;
-    protected boolean canBeGenerated = false;
-    protected int generationMultiplier = 1;
-    protected List<ManaGenerationHelper.GenerationCondition> generationConditions;
-    ManaGenerationHelper.GenerationConditionModi modi = ManaGenerationHelper.GenerationConditionModi.OR;
 
     static {
         CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                Codec.LONG.fieldOf("color").forGetter(ManaProperties::getColor),
+                Codec.INT.fieldOf("color").forGetter(ManaProperties::getColor),
                 ResourceLocation.CODEC.optionalFieldOf("icon").forGetter(ManaProperties::getIcon),
                 Codec.BOOL.optionalFieldOf("canBeGenerated", false).forGetter(ManaProperties::canBeGenerated),
                 Codec.INT.optionalFieldOf("generationMultiplier", 1).forGetter(ManaProperties::getGenerationMultiplier),
@@ -34,8 +27,15 @@ public class ManaProperties {
                         .forGetter(ManaProperties::getGenerationConditionModi)
         ).apply(instance, ManaProperties::new));
     }
+    protected @Nullable ResourceLocation icon;
+    protected boolean canBeGenerated = false;
+    protected int generationMultiplier = 1;
+    protected List<ManaGenerationHelper.GenerationCondition> generationConditions;
+    ManaGenerationHelper.GenerationConditionModi modi = ManaGenerationHelper.GenerationConditionModi.OR;
 
-    protected ManaProperties(long color, Optional<ResourceLocation> icon, boolean canBeGenerated,
+    protected int color;
+
+    protected ManaProperties(int color, Optional<ResourceLocation> icon, boolean canBeGenerated,
             int generationMultiplier,
             List<ManaGenerationHelper.GenerationCondition> generationConditions,
             ManaGenerationHelper.GenerationConditionModi modi) {
@@ -71,19 +71,19 @@ public class ManaProperties {
         return Optional.ofNullable(icon);
     }
 
-    public Long getColor() {
+    public Integer getColor() {
         return color;
     }
 
     public static class Builder {
         List<ManaGenerationHelper.GenerationCondition> generationConditions = new ArrayList<>();
         ManaGenerationHelper.GenerationConditionModi modi = ManaGenerationHelper.GenerationConditionModi.OR;
-        private long color = 0x000000;
+        private int color = 0x000000;
         private ResourceLocation icon;
         private boolean canBeGenerated = false;
         private int generationMultiplier = 1;
 
-        public Builder color(long color) {
+        public Builder color(int color) {
             this.color = color;
             return this;
         }
