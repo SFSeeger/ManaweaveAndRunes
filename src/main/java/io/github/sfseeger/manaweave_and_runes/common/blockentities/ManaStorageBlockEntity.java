@@ -1,8 +1,8 @@
 package io.github.sfseeger.manaweave_and_runes.common.blockentities;
 
 import io.github.sfseeger.lib.common.blockentities.IManaCapable;
-import io.github.sfseeger.lib.mana.capability.IManaHandler;
-import io.github.sfseeger.lib.mana.capability.ManaHandler;
+import io.github.sfseeger.lib.common.mana.capability.IManaHandler;
+import io.github.sfseeger.lib.common.mana.capability.ManaHandler;
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockEntityInit;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

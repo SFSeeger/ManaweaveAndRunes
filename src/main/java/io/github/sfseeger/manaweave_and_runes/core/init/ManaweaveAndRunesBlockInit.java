@@ -3,6 +3,7 @@ package io.github.sfseeger.manaweave_and_runes.core.init;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
 import io.github.sfseeger.manaweave_and_runes.common.blocks.ManaCollectorBlock;
 import io.github.sfseeger.manaweave_and_runes.common.blocks.ManaStorageBlock;
+import io.github.sfseeger.manaweave_and_runes.common.blocks.RuneCarverBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -22,4 +23,6 @@ public class ManaweaveAndRunesBlockInit {
 
     public static final DeferredBlock<Block> MANA_COLLECTOR_BLOCK =
             BLOCKS.register("mana_collector", ManaCollectorBlock::new);
+
+    public static final DeferredBlock<Block> RUNE_CARVER_BLOCK = BLOCKS.register("rune_carver", RuneCarverBlock::new);
 }

@@ -1,7 +1,7 @@
 package io.github.sfseeger.manaweave_and_runes.common.blocks;
 
-import io.github.sfseeger.lib.mana.ManaDateComponent;
-import io.github.sfseeger.lib.mana.capability.IManaHandler;
+import io.github.sfseeger.lib.common.mana.ManaDateComponent;
+import io.github.sfseeger.lib.common.mana.capability.IManaHandler;
 import io.github.sfseeger.manaweave_and_runes.common.blockentities.ManaStorageBlockEntity;
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesDataComponentsInit;
 import io.github.sfseeger.manaweave_and_runes.core.util.InventoryUtil;

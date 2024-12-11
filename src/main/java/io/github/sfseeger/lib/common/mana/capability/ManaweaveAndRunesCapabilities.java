@@ -1,4 +1,4 @@
-package io.github.sfseeger.lib.mana.capability;
+package io.github.sfseeger.lib.common.mana.capability;
 
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;

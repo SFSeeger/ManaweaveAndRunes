@@ -1,6 +1,6 @@
-package io.github.sfseeger.lib.mana;
+package io.github.sfseeger.lib.common.mana;
 
-import io.github.sfseeger.lib.mana.utils.ManaGenerationHelper;
+import io.github.sfseeger.lib.common.mana.utils.ManaGenerationHelper;
 
 public class Manas {
     public static final Mana EmptyMana = new Mana(new ManaProperties.Builder().canBeGenerated(false).build());

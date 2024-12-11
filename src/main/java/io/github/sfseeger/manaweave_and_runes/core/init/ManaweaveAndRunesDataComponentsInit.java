@@ -1,6 +1,6 @@
 package io.github.sfseeger.manaweave_and_runes.core.init;
 
-import io.github.sfseeger.lib.mana.ManaDateComponent;
+import io.github.sfseeger.lib.common.mana.ManaDateComponent;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;

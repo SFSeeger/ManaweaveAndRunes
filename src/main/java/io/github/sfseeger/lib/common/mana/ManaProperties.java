@@ -1,8 +1,8 @@
-package io.github.sfseeger.lib.mana;
+package io.github.sfseeger.lib.common.mana;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import io.github.sfseeger.lib.mana.utils.ManaGenerationHelper;
+import io.github.sfseeger.lib.common.mana.utils.ManaGenerationHelper;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 

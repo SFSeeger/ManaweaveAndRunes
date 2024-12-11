@@ -1,6 +1,6 @@
-package io.github.sfseeger.lib.mana.capability;
+package io.github.sfseeger.lib.common.mana.capability;
 
-import io.github.sfseeger.lib.mana.Mana;
+import io.github.sfseeger.lib.common.mana.Mana;
 
 import java.util.Set;
 

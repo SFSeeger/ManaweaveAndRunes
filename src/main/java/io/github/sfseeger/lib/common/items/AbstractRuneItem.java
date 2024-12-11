@@ -1,7 +1,7 @@
 package io.github.sfseeger.lib.common.items;
 
-import io.github.sfseeger.lib.mana.Mana;
-import io.github.sfseeger.lib.mana.capability.IManaHandler;
+import io.github.sfseeger.lib.common.mana.Mana;
+import io.github.sfseeger.lib.common.mana.capability.IManaHandler;
 import net.minecraft.world.item.Item;
 import org.jetbrains.annotations.NotNull;
 

@@ -2,9 +2,9 @@ package io.github.sfseeger.manaweave_and_runes.common.blockentities;
 
 import io.github.sfseeger.lib.common.blockentities.IManaCapable;
 import io.github.sfseeger.lib.common.items.AbstractRuneItem;
-import io.github.sfseeger.lib.mana.Mana;
-import io.github.sfseeger.lib.mana.capability.IManaHandler;
-import io.github.sfseeger.lib.mana.capability.SingleManaHandler;
+import io.github.sfseeger.lib.common.mana.Mana;
+import io.github.sfseeger.lib.common.mana.capability.IManaHandler;
+import io.github.sfseeger.lib.common.mana.capability.SingleManaHandler;
 import io.github.sfseeger.manaweave_and_runes.common.blocks.ManaCollectorBlock;
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockEntityInit;
 import net.minecraft.core.BlockPos;

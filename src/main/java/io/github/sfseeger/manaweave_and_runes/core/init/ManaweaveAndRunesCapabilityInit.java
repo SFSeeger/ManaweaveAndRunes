@@ -1,7 +1,7 @@
 package io.github.sfseeger.manaweave_and_runes.core.init;
 
 import io.github.sfseeger.lib.common.items.AbstractRuneItem;
-import io.github.sfseeger.lib.mana.capability.ManaweaveAndRunesCapabilities;
+import io.github.sfseeger.lib.common.mana.capability.ManaweaveAndRunesCapabilities;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
 import io.github.sfseeger.manaweave_and_runes.common.blockentities.ManaCollectorBlockEntity;
 import io.github.sfseeger.manaweave_and_runes.common.blockentities.ManaStorageBlockEntity;

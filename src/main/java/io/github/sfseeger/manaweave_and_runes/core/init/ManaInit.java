@@ -1,10 +1,8 @@
 package io.github.sfseeger.manaweave_and_runes.core.init;
 
-import io.github.sfseeger.lib.mana.Mana;
-import io.github.sfseeger.lib.mana.ManaProperties;
-import io.github.sfseeger.lib.mana.ManaRegistry;
-import io.github.sfseeger.lib.mana.Manas;
-import io.github.sfseeger.lib.mana.utils.ManaGenerationHelper;
+import io.github.sfseeger.lib.common.mana.Mana;
+import io.github.sfseeger.lib.common.mana.ManaRegistry;
+import io.github.sfseeger.lib.common.mana.Manas;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
 import net.neoforged.neoforge.registries.DeferredRegister;
 

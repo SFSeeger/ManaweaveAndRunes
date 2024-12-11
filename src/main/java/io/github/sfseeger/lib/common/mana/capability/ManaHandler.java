@@ -1,7 +1,7 @@
-package io.github.sfseeger.lib.mana.capability;
+package io.github.sfseeger.lib.common.mana.capability;
 
-import io.github.sfseeger.lib.mana.Mana;
-import io.github.sfseeger.lib.mana.ManaRegistry;
+import io.github.sfseeger.lib.common.mana.Mana;
+import io.github.sfseeger.lib.common.mana.ManaRegistry;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.IntTag;

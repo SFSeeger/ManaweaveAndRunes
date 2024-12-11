@@ -1,4 +1,4 @@
-package io.github.sfseeger.lib.mana.utils;
+package io.github.sfseeger.lib.common.mana.utils;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;

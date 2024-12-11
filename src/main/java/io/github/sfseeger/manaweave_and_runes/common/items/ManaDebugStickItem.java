@@ -1,8 +1,8 @@
 package io.github.sfseeger.manaweave_and_runes.common.items;
 
-import io.github.sfseeger.lib.mana.Mana;
-import io.github.sfseeger.lib.mana.capability.IManaHandler;
-import io.github.sfseeger.lib.mana.capability.ManaweaveAndRunesCapabilities;
+import io.github.sfseeger.lib.common.mana.Mana;
+import io.github.sfseeger.lib.common.mana.capability.IManaHandler;
+import io.github.sfseeger.lib.common.mana.capability.ManaweaveAndRunesCapabilities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;

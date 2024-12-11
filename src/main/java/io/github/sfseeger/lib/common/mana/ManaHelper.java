@@ -1,7 +1,6 @@
-package io.github.sfseeger.lib.mana;
+package io.github.sfseeger.lib.common.mana;
 
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent;
 
 import static io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesDataComponentsInit.MANA_DATA_COMPONENT;

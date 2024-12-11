@@ -1,8 +1,8 @@
 package io.github.sfseeger.manaweave_and_runes.common.event;
 
-import io.github.sfseeger.lib.mana.ManaHelper;
-import io.github.sfseeger.lib.mana.ManaRegistry;
-import io.github.sfseeger.lib.mana.Manas;
+import io.github.sfseeger.lib.common.mana.ManaHelper;
+import io.github.sfseeger.lib.common.mana.ManaRegistry;
+import io.github.sfseeger.lib.common.mana.Manas;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
 import net.minecraft.world.item.Items;
 import net.neoforged.bus.api.SubscribeEvent;

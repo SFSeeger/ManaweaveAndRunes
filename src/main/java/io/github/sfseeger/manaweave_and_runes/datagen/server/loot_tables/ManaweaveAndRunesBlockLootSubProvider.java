@@ -21,6 +21,7 @@ public class ManaweaveAndRunesBlockLootSubProvider extends BlockLootSubProvider 
 
         this.dropSelf(ManaweaveAndRunesBlockInit.MANA_STORAGE_BLOCK.get());
         this.dropSelf(ManaweaveAndRunesBlockInit.MANA_COLLECTOR_BLOCK.get());
+        this.dropSelf(ManaweaveAndRunesBlockInit.RUNE_CARVER_BLOCK.get());
     }
 
     @Override
