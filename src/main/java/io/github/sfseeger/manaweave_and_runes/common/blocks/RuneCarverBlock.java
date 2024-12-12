@@ -6,16 +6,20 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
-import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 
 public class RuneCarverBlock extends Block {
+    private static final Component CONTAINER_TITLE =
+            Component.translatable("container.manaweave_and_runes.rune_carver_block");
+
     public RuneCarverBlock() {
         super(Properties.of().strength(2.5f));
     }
@@ -31,16 +35,9 @@ public class RuneCarverBlock extends Block {
 
     @Override
     protected @Nullable MenuProvider getMenuProvider(BlockState state, Level level, BlockPos pos) {
-        return new MenuProvider() {
-            @Override
-            public Component getDisplayName() {
-                return Component.translatable("block.manaweave_and_runes.rune_carver_block");
-            }
-
-            @Override
-            public @Nullable AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
-                return new RuneCarverBlockMenu(i, inventory);
-            }
-        };
+        return new SimpleMenuProvider((id, playerInventory, player) -> {
+            return new RuneCarverBlockMenu(id, playerInventory, new ItemStackHandler(3),
+                                           ContainerLevelAccess.create(level, pos));
+        }, CONTAINER_TITLE);
     }
 }

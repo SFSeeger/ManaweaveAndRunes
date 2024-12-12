@@ -11,6 +11,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -84,6 +87,7 @@ public class ManaCollectorBlockEntity extends BlockEntity implements IManaCapabl
         if (level != null) {
             level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(),
                                    ManaCollectorBlock.UPDATE_ALL);
+            level.invalidateCapabilities(getBlockPos());
         }
     }
 
@@ -141,5 +145,10 @@ public class ManaCollectorBlockEntity extends BlockEntity implements IManaCapabl
         CompoundTag tag = super.getUpdateTag(registries);
         saveAdditional(tag, registries);
         return tag;
+    }
+
+    @Override
+    public @Nullable Packet<ClientGamePacketListener> getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 }

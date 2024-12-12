@@ -118,7 +118,7 @@ public class RuneCarverBlockScreen extends AbstractContainerScreen<RuneCarverBlo
 
         if (displayRecipes) {
             for (int i = 0; i < this.menu.getRecipes().size(); i++) {
-                int x = uiX + SELECTOR_X + i * 18;
+                int x = uiX + SELECTOR_X + i * 17;
                 int y = uiY + SELECTOR_Y + (i / 4) * 18;
                 renderRecipeButton(guiGraphics, x, y, isMouseInBounds(x, y, 16, 18, mouseX, mouseY),
                                    i == this.menu.getSelectedRecipeIndex(), i);

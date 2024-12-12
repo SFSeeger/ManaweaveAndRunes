@@ -7,6 +7,7 @@ import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockIn
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesItemInit;
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesRecipeInit;
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaverAndRunesMenuInit;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
@@ -17,6 +18,7 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.items.IItemHandler;
@@ -86,9 +88,15 @@ public class RuneCarverBlockMenu extends AbstractContainerMenu {
             public void onTake(Player player, ItemStack stack) {
                 stack.onCraftedBy(player.level(), player, stack.getCount());
                 ItemStack chiselStack = RuneCarverBlockMenu.this.getChiselSlot().getItem();
-                ItemStack runeStack = RuneCarverBlockMenu.this.getRuneSlot().remove(1);
-                if (!runeStack.isEmpty()) {
+                ItemStack runeStack = RuneCarverBlockMenu.this.getRuneSlot().getItem().copy();
+                runeStack.shrink(1);
+                RuneCarverBlockMenu.this.getChiselSlot().set(new ItemStack(Items.ACACIA_LEAVES));
+                RuneCarverBlockMenu.this.getResultSlot().set(runeStack);
+                if (RuneCarverBlockMenu.this.getChiselSlot().hasItem() || RuneCarverBlockMenu.this.getRuneSlot()
+                        .hasItem()) {
                     RuneCarverBlockMenu.this.setupResultSlot();
+                } else {
+                    RuneCarverBlockMenu.this.selectedRecipeIndex.set(-1);
                 }
 
                 access.execute((level, blockPos) -> {
@@ -101,6 +109,12 @@ public class RuneCarverBlockMenu extends AbstractContainerMenu {
                 });
                 broadcastChanges();
                 super.onTake(player, stack);
+            }
+
+            @Override
+            public void setChanged() {
+                super.setChanged();
+                RuneCarverBlockMenu.this.slotUpdateListener.run();
             }
         };
         this.addSlot(outputSlotItemHandler);
@@ -125,11 +139,7 @@ public class RuneCarverBlockMenu extends AbstractContainerMenu {
         if (!this.recipes.isEmpty() && this.isValidRecipeIndex(this.getSelectedRecipeIndex())) {
             RecipeHolder<RuneCarverRecipe> recipeHolder = this.recipes.get(this.getSelectedRecipeIndex());
             ItemStack result = recipeHolder.value().assemble(this.getRecipeInput(), this.level.registryAccess());
-            if (result.isItemEnabled(this.level.enabledFeatures())) {
-                this.getResultSlot().set(result);
-            } else {
-                this.getResultSlot().set(ItemStack.EMPTY);
-            }
+            this.getResultSlot().set(result);
         } else {
             this.getResultSlot().set(ItemStack.EMPTY);
         }
@@ -164,17 +174,6 @@ public class RuneCarverBlockMenu extends AbstractContainerMenu {
     }
 
     @Override
-    public void slotsChanged(Container inventory) {
-        ItemStack itemstack = this.getChiselSlot().getItem();
-        ItemStack itemstack1 = this.getRuneSlot().getItem();
-        if (!itemstack.is(this.chiselItem.getItem()) || !itemstack1.is(this.runeItem.getItem())) {
-            this.chiselItem = itemstack.copy();
-            this.runeItem = itemstack1.copy();
-            this.createRecipeList();
-        }
-    }
-
-    @Override
     public ItemStack quickMoveStack(Player player, int index) {
         ItemStack quickMovedStack = ItemStack.EMPTY;
         Slot quickMovedSlot = this.slots.get(index);
@@ -183,10 +182,11 @@ public class RuneCarverBlockMenu extends AbstractContainerMenu {
             ItemStack rawStack = quickMovedSlot.getItem();
             quickMovedStack = rawStack.copy();
 
-            if (index == RUNE_SLOT) {
+            if (index == RESULT_SLOT) {
                 if (!this.moveItemStackTo(rawStack, INV_SLOT_START, HOTBAR_SLOT_END + 1, true)) {
                     return ItemStack.EMPTY;
                 }
+                quickMovedSlot.onQuickCraft(rawStack, quickMovedStack);
             }
             // Does the item come from the player's inventory?
             else if (index >= INV_SLOT_START && index < HOTBAR_SLOT_END + 1) {
@@ -232,9 +232,29 @@ public class RuneCarverBlockMenu extends AbstractContainerMenu {
     public void removed(Player player) {
         super.removed(player);
         this.access.execute((level, blockPos) -> {
-            this.clearContainer(player, this.slots.get(CHISEL_SLOT).container);
-            this.clearContainer(player, this.slots.get(RUNE_SLOT).container);
+            if (!player.isAlive() || player instanceof ServerPlayer && ((ServerPlayer) player).hasDisconnected()) {
+                player.drop(getChiselSlot().remove(getChiselSlot().getItem().getCount()), false);
+                player.drop(getRuneSlot().remove(getRuneSlot().getItem().getCount()), false);
+            } else {
+                Inventory inventory = player.getInventory();
+                if (inventory.player instanceof ServerPlayer) {
+                    inventory.placeItemBackInInventory(getChiselSlot().remove(getChiselSlot().getItem().getCount()));
+                    inventory.placeItemBackInInventory(getRuneSlot().remove(getRuneSlot().getItem().getCount()));
+                }
+            }
         });
+    }
+
+    @Override
+    public void slotsChanged(Container inventory) {
+        ItemStack itemstack = this.getChiselSlot().getItem();
+        ItemStack itemstack1 = this.getRuneSlot().getItem();
+        if (!itemstack.is(this.chiselItem.getItem()) || !itemstack1.is(this.runeItem.getItem())) {
+            this.chiselItem = itemstack.copy();
+            this.runeItem = itemstack1.copy();
+            this.createRecipeList();
+        }
+        broadcastChanges();
     }
 
     @Override
