@@ -43,6 +43,9 @@ public class RuneCarverBlockScreen extends AbstractContainerScreen<RuneCarverBlo
     private float scrollOffs;
     private int startIndex;
 
+    private static final int SELECTOR_X = 49;
+    private static final int SELECTOR_Y = 15;
+
     public RuneCarverBlockScreen(RuneCarverBlockMenu menu, Inventory playerInventory,
             Component title) {
         super(menu, playerInventory, title);
@@ -82,22 +85,23 @@ public class RuneCarverBlockScreen extends AbstractContainerScreen<RuneCarverBlo
 
         int scrollYOffset = (int) (41.0F * this.scrollOffs);
         ResourceLocation scroll = displayRecipes ? SCROLL_ACTIVE : SCROLL_INACTIVE;
-        guiGraphics.blitSprite(scroll, uiX + 146, uiY + 15 + scrollYOffset, 12, 15);
+        guiGraphics.blitSprite(scroll, uiX + 116, uiY + 15 + scrollYOffset, 12, 15);
     }
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         if (displayRecipes) {
-            int selectorX = uiX + 78;
-            int selectorY = uiY + 14;
+            int selectorX = uiX + SELECTOR_X;
+            int selectorY = uiY + SELECTOR_Y;
             if (isMouseInBounds(selectorX, selectorY, 66, 56, (int) mouseX, (int) mouseY)) {
-                menu.clickMenuButton(minecraft.player, 0);
-                return true;
-            }
-            int chiselButtonX = uiX + 48;
-            int chiselButtonY = uiY + 32;
-            if (isMouseInBounds(chiselButtonX, chiselButtonY, 20, 19, (int) mouseX, (int) mouseY)) {
-                menu.assembleRune();
+                for (int i = 0; i < 12; i++) {
+                    int x = selectorX + i * 18;
+                    int y = selectorY + (i / 4) * 18;
+                    if (isMouseInBounds(x, y, 16, 18, (int) mouseX, (int) mouseY)) {
+                        this.menu.clickMenuButton(this.minecraft.player, i);
+                        return true;
+                    }
+                }
                 return true;
             }
         }
@@ -111,27 +115,17 @@ public class RuneCarverBlockScreen extends AbstractContainerScreen<RuneCarverBlo
     }
 
     protected void renderButtons(GuiGraphics guiGraphics, int mouseX, int mouseY) {
-        int x = uiX + 48;
-        int y = uiY + 32;
-        renderChiselButton(guiGraphics, x, y, isMouseInBounds(x, y, 20, 19, mouseX, mouseY));
 
         if (displayRecipes) {
             for (int i = 0; i < this.menu.getRecipes().size(); i++) {
-                x = uiX + 79 + i * 18;
-                y = uiY + 15 + (i / 4) * 18;
+                int x = uiX + SELECTOR_X + i * 18;
+                int y = uiY + SELECTOR_Y + (i / 4) * 18;
                 renderRecipeButton(guiGraphics, x, y, isMouseInBounds(x, y, 16, 18, mouseX, mouseY),
                                    i == this.menu.getSelectedRecipeIndex(), i);
             }
         }
     }
 
-    protected void renderChiselButton(GuiGraphics guiGraphics, int x, int y, boolean active) {
-        if (active) {
-            guiGraphics.blitSprite(CHISEL_BUTTON_ACTIVE, x, y, 20, 19);
-        } else {
-            guiGraphics.blitSprite(CHISEL_BUTTON_INACTIVE, x, y, 20, 19);
-        }
-    }
 
     protected void renderRecipeButton(GuiGraphics guiGraphics, int x, int y, boolean active, boolean selected,
             int recipeIndex) {
