@@ -103,6 +103,9 @@ public class RuneCarverBlockScreen extends AbstractContainerScreen<RuneCarverBlo
                     }
                 }
                 return true;
+            } else if (isMouseInBounds(uiX + 138, uiY + 14, 20, 19, (int) mouseX, (int) mouseY)) {
+                this.menu.craftRune(this.minecraft.player);
+                return true;
             }
         }
         return super.mouseClicked(mouseX, mouseY, button);
@@ -115,6 +118,10 @@ public class RuneCarverBlockScreen extends AbstractContainerScreen<RuneCarverBlo
     }
 
     protected void renderButtons(GuiGraphics guiGraphics, int mouseX, int mouseY) {
+        ResourceLocation chiselButtonSprite = isMouseInBounds(uiX + 138, uiY + 14, 20, 19, mouseX,
+                                                              mouseY) ? CHISEL_BUTTON_ACTIVE : CHISEL_BUTTON_INACTIVE;
+        guiGraphics.blitSprite(chiselButtonSprite, uiX + 138, uiY + 14, 20,
+                               19);
 
         if (displayRecipes) {
             for (int i = 0; i < this.menu.getRecipes().size(); i++) {

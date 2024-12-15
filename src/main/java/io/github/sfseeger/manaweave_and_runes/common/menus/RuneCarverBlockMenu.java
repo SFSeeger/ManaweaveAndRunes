@@ -1,15 +1,12 @@
 package io.github.sfseeger.manaweave_and_runes.common.menus;
 
-import com.google.common.collect.Lists;
 import io.github.sfseeger.lib.common.recipes.rune_carver.RuneCarverRecipe;
-import io.github.sfseeger.lib.common.recipes.rune_carver.RuneCarverRecipeInput;
+import io.github.sfseeger.manaweave_and_runes.common.blockentities.RuneCarverBlockEntity;
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockInit;
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesItemInit;
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesRecipeInit;
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaverAndRunesMenuInit;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -18,9 +15,9 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
@@ -41,32 +38,34 @@ public class RuneCarverBlockMenu extends AbstractContainerMenu {
     private List<RecipeHolder<RuneCarverRecipe>> recipes;
     private Runnable slotUpdateListener;
     private long lastSoundTime;
-    private ItemStack chiselItem;
-    private ItemStack runeItem;
+    private final RuneCarverBlockEntity blockEntity;
 
 
-    public RuneCarverBlockMenu(int containerId, Inventory playerInventory) {
-        this(containerId, playerInventory, new ItemStackHandler(3), ContainerLevelAccess.NULL);
+    public RuneCarverBlockMenu(int containerId, Inventory playerInventory, FriendlyByteBuf data) {
+        this(containerId, playerInventory, new ItemStackHandler(3), DataSlot.standalone(),
+             playerInventory.player.level().getBlockEntity(data.readBlockPos()), ContainerLevelAccess.NULL);
     }
 
     public RuneCarverBlockMenu(int containerId, Inventory playerInventory, IItemHandler handler,
+            DataSlot selectedRecipeIndex,
+            BlockEntity blockEntity,
             ContainerLevelAccess access) {
         super(ManaweaverAndRunesMenuInit.RUNE_CARVER_BLOCK_MENU.get(), containerId);
-        this.selectedRecipeIndex = DataSlot.standalone();
-        this.recipes = Lists.newArrayList();
+
+        this.selectedRecipeIndex = selectedRecipeIndex;
         this.access = access;
         this.level = playerInventory.player.level();
         this.slotUpdateListener = () -> {
         };
         this.lastSoundTime = -1;
-        this.chiselItem = ItemStack.EMPTY;
-        this.runeItem = ItemStack.EMPTY;
+        this.blockEntity = (RuneCarverBlockEntity) blockEntity;
+        setupRecipeList();
 
         this.addSlot(new SlotItemHandler(handler, CHISEL_SLOT, 20, 15) {
             @Override
             public void setChanged() {
                 super.setChanged();
-                RuneCarverBlockMenu.this.slotsChanged(this.container);
+                RuneCarverBlockMenu.this.onSlotUpdate(this.index);
                 RuneCarverBlockMenu.this.slotUpdateListener.run();
             }
         });
@@ -74,46 +73,20 @@ public class RuneCarverBlockMenu extends AbstractContainerMenu {
             @Override
             public void setChanged() {
                 super.setChanged();
-                RuneCarverBlockMenu.this.slotsChanged(this.container);
+                RuneCarverBlockMenu.this.onSlotUpdate(this.index);
                 RuneCarverBlockMenu.this.slotUpdateListener.run();
             }
         });
-        SlotItemHandler outputSlotItemHandler = new SlotItemHandler(handler, RESULT_SLOT, 143, 33) {
+        SlotItemHandler outputSlotItemHandler = new SlotItemHandler(handler, RESULT_SLOT, 143, 49) {
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return false;
             }
 
             @Override
-            public void onTake(Player player, ItemStack stack) {
-                stack.onCraftedBy(player.level(), player, stack.getCount());
-                ItemStack chiselStack = RuneCarverBlockMenu.this.getChiselSlot().getItem();
-                ItemStack runeStack = RuneCarverBlockMenu.this.getRuneSlot().getItem().copy();
-                runeStack.shrink(1);
-                RuneCarverBlockMenu.this.getChiselSlot().set(new ItemStack(Items.ACACIA_LEAVES));
-                RuneCarverBlockMenu.this.getResultSlot().set(runeStack);
-                if (RuneCarverBlockMenu.this.getChiselSlot().hasItem() || RuneCarverBlockMenu.this.getRuneSlot()
-                        .hasItem()) {
-                    RuneCarverBlockMenu.this.setupResultSlot();
-                } else {
-                    RuneCarverBlockMenu.this.selectedRecipeIndex.set(-1);
-                }
-
-                access.execute((level, blockPos) -> {
-                    long l = level.getGameTime();
-                    if (RuneCarverBlockMenu.this.lastSoundTime != l) {
-                        level.playSound(null, blockPos, SoundEvents.ANVIL_USE, SoundSource.BLOCKS,
-                                        1.0F, 1.0F);
-                        RuneCarverBlockMenu.this.lastSoundTime = l;
-                    }
-                });
-                broadcastChanges();
-                super.onTake(player, stack);
-            }
-
-            @Override
             public void setChanged() {
                 super.setChanged();
+                RuneCarverBlockMenu.this.onSlotUpdate(this.index);
                 RuneCarverBlockMenu.this.slotUpdateListener.run();
             }
         };
@@ -132,18 +105,6 @@ public class RuneCarverBlockMenu extends AbstractContainerMenu {
         }
 
         this.addDataSlot(this.selectedRecipeIndex);
-        this.selectedRecipeIndex.set(-1);
-    }
-
-    private void setupResultSlot() {
-        if (!this.recipes.isEmpty() && this.isValidRecipeIndex(this.getSelectedRecipeIndex())) {
-            RecipeHolder<RuneCarverRecipe> recipeHolder = this.recipes.get(this.getSelectedRecipeIndex());
-            ItemStack result = recipeHolder.value().assemble(this.getRecipeInput(), this.level.registryAccess());
-            this.getResultSlot().set(result);
-        } else {
-            this.getResultSlot().set(ItemStack.EMPTY);
-        }
-        this.broadcastChanges();
     }
 
     private Slot getResultSlot() {
@@ -151,26 +112,35 @@ public class RuneCarverBlockMenu extends AbstractContainerMenu {
     }
 
     public int getSelectedRecipeIndex() {
-        return this.selectedRecipeIndex.get();
+        return blockEntity.selectedRuneIndex().get();
     }
 
     public void updateSelectedRecipeIndex(int index) {
-        this.selectedRecipeIndex.set(index);
+        this.blockEntity.setSelectedRuneIndex(index);
     }
 
     private void onSlotUpdate(int slotIndex) {
         if (slotIndex == CHISEL_SLOT || slotIndex == RUNE_SLOT) {
-            this.createRecipeList();
+            setupRecipeList();
             broadcastChanges();
         }
     }
 
     public boolean clickMenuButton(Player player, int id) {
-        if (this.isValidRecipeIndex(id)) {
+        if (isValidRecipeIndex(id)) {
             this.updateSelectedRecipeIndex(id);
-            this.setupResultSlot();
         }
         return true;
+    }
+
+    @Override
+    public void slotsChanged(Container container) {
+        super.slotsChanged(container);
+        this.setupRecipeList();
+    }
+
+    private boolean isValidRecipeIndex(int id) {
+        return id >= 0 && id < this.recipes.size();
     }
 
     @Override
@@ -229,53 +199,9 @@ public class RuneCarverBlockMenu extends AbstractContainerMenu {
     }
 
     @Override
-    public void removed(Player player) {
-        super.removed(player);
-        this.access.execute((level, blockPos) -> {
-            if (!player.isAlive() || player instanceof ServerPlayer && ((ServerPlayer) player).hasDisconnected()) {
-                player.drop(getChiselSlot().remove(getChiselSlot().getItem().getCount()), false);
-                player.drop(getRuneSlot().remove(getRuneSlot().getItem().getCount()), false);
-            } else {
-                Inventory inventory = player.getInventory();
-                if (inventory.player instanceof ServerPlayer) {
-                    inventory.placeItemBackInInventory(getChiselSlot().remove(getChiselSlot().getItem().getCount()));
-                    inventory.placeItemBackInInventory(getRuneSlot().remove(getRuneSlot().getItem().getCount()));
-                }
-            }
-        });
-    }
-
-    @Override
-    public void slotsChanged(Container inventory) {
-        ItemStack itemstack = this.getChiselSlot().getItem();
-        ItemStack itemstack1 = this.getRuneSlot().getItem();
-        if (!itemstack.is(this.chiselItem.getItem()) || !itemstack1.is(this.runeItem.getItem())) {
-            this.chiselItem = itemstack.copy();
-            this.runeItem = itemstack1.copy();
-            this.createRecipeList();
-        }
-        broadcastChanges();
-    }
-
-    @Override
     public boolean stillValid(Player player) {
         return AbstractContainerMenu.stillValid(this.access, player,
                                                 ManaweaveAndRunesBlockInit.RUNE_CARVER_BLOCK.get());
-    }
-
-    private boolean isValidRecipeIndex(int id) {
-        return id >= 0 && id < this.recipes.size();
-    }
-
-    public void createRecipeList() {
-        this.recipes =
-                this.level.getRecipeManager()
-                        .getRecipesFor(ManaweaveAndRunesRecipeInit.RUNE_CARVER_RECIPE_TYPE.get(), this.getRecipeInput(),
-                                       this.level);
-    }
-
-    private RuneCarverRecipeInput getRecipeInput() {
-        return new RuneCarverRecipeInput(getChiselSlot().getItem(), getRuneSlot().getItem());
     }
 
     public void registerUpdateListener(Runnable listener) {
@@ -288,6 +214,23 @@ public class RuneCarverBlockMenu extends AbstractContainerMenu {
 
     public List<RecipeHolder<RuneCarverRecipe>> getRecipes() {
         return this.recipes;
+    }
+
+    public void craftRune(Player player) {
+        this.blockEntity.craftRune(this.recipes);
+        recipes = this.getRecipes();
+        broadcastChanges();
+    }
+
+    public void setupRecipeList() {
+        List<RecipeHolder<RuneCarverRecipe>> recipes = this.level.getRecipeManager()
+                .getRecipesFor(ManaweaveAndRunesRecipeInit.RUNE_CARVER_RECIPE_TYPE.get(),
+                               this.blockEntity.getRecipeInput(),
+                               this.level);
+        System.out.println("Setting recipes: " + recipes + " on " + (level.isClientSide() ? "client" : "server"));
+
+        this.recipes = recipes;
+        broadcastChanges();
     }
 
     public Slot getChiselSlot() {

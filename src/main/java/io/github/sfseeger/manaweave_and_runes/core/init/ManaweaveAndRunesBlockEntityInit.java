@@ -3,6 +3,7 @@ package io.github.sfseeger.manaweave_and_runes.core.init;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
 import io.github.sfseeger.manaweave_and_runes.common.blockentities.ManaCollectorBlockEntity;
 import io.github.sfseeger.manaweave_and_runes.common.blockentities.ManaStorageBlockEntity;
+import io.github.sfseeger.manaweave_and_runes.common.blockentities.RuneCarverBlockEntity;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -28,6 +29,14 @@ public class ManaweaveAndRunesBlockEntityInit {
                     () -> BlockEntityType.Builder.of(
                             ManaCollectorBlockEntity::new,
                             ManaweaveAndRunesBlockInit.MANA_COLLECTOR_BLOCK.get()
+                    ).build(null)
+            );
+    public static final Supplier<BlockEntityType<RuneCarverBlockEntity>> RUNE_CARVER_BLOCK_ENTITY =
+            BLOCK_ENTITY_TYPES.register(
+                    "rune_carver_block_entity",
+                    () -> BlockEntityType.Builder.of(
+                            RuneCarverBlockEntity::new,
+                            ManaweaveAndRunesBlockInit.RUNE_CARVER_BLOCK.get()
                     ).build(null)
             );
 }

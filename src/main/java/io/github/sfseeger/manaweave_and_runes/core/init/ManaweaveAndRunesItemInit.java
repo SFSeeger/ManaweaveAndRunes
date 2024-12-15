@@ -25,7 +25,7 @@ public class ManaweaveAndRunesItemInit {
     public static final DeferredItem<Item> AMETHYST_BASE_RUNE = ITEMS.register("amethyst_base_rune",
                                                                                () -> new Item(
                                                                                        new Item.Properties().stacksTo(
-                                                                                               1)));
+                                                                                               16)));
     public static final DeferredItem<FireRuneItem> AMETHYST_FIRE_RUNE_ITEM = ITEMS.register("amethyst_fire_rune",
                                                                                             FireRuneItem::new);
     public static final DeferredItem<AirRuneItem> AMETHYST_AIR_RUNE_ITEM = ITEMS.register("amethyst_air_rune",
