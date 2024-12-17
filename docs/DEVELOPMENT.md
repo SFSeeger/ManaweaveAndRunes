@@ -62,7 +62,9 @@ Used to store Mana by placing a Rune on top of it. Here items can be recharged a
 
 ## Rituals and Spells
 ### Spells
-Using an Transmutation circle on a crystal as well as a collection of  _Sorage runes_, spells can be cast. The following Spells are currently planned:
+
+Using an Transmutation circle on a crystal as well as a collection of  _Storage runes_, spells can be cast. The
+following Spells are currently planned:
 
 | Spell | Effect | Resources | Upgradable |
 | :---: | :---: | :---: | :---: |

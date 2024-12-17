@@ -1,6 +1,8 @@
 package io.github.sfseeger.manaweave_and_runes.core.init;
 
-import io.github.sfseeger.lib.common.items.AbstractRuneItem;
+import io.github.sfseeger.lib.common.mana.IManaItem;
+import io.github.sfseeger.lib.common.mana.Mana;
+import io.github.sfseeger.lib.common.mana.capability.ItemStackManaHandler;
 import io.github.sfseeger.lib.common.mana.capability.ManaweaveAndRunesCapabilities;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
 import io.github.sfseeger.manaweave_and_runes.common.blockentities.ManaCollectorBlockEntity;
@@ -9,6 +11,9 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+
+import java.util.List;
+import java.util.function.Supplier;
 
 @EventBusSubscriber(modid = ManaweaveAndRunes.MODID, bus = EventBusSubscriber.Bus.MOD)
 public class ManaweaveAndRunesCapabilityInit {
@@ -26,7 +31,20 @@ public class ManaweaveAndRunesCapabilityInit {
 
         event.registerItem(
                 ManaweaveAndRunesCapabilities.MANA_HANDLER_ITEM,
-                (itemstack, context) -> itemstack.getItem() instanceof AbstractRuneItem runeItem ? runeItem.getManaHandler() : null,
+                (itemstack, context) -> {
+                    int capacity = 3000;
+                    int maxExtract = 200;
+                    int maxInsert = 400;
+                    List<Supplier<Mana>> allowedMana = null;
+                    if (itemstack.getItem() instanceof IManaItem manaItem) {
+                        capacity = manaItem.getManaCapacity();
+                        maxExtract = manaItem.getMaxExtract();
+                        maxInsert = manaItem.getMaxReceive();
+                        allowedMana = List.of(manaItem::getManaType);
+                    }
+                    return new ItemStackManaHandler(itemstack, capacity, maxExtract, maxInsert,
+                                                    allowedMana);
+                },
                 ManaweaveAndRunesItemInit.AMETHYST_FIRE_RUNE_ITEM.get(),
                 ManaweaveAndRunesItemInit.AMETHYST_AIR_RUNE_ITEM.get()
         );

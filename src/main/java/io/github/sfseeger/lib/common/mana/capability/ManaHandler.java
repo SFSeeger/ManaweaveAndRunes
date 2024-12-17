@@ -62,6 +62,12 @@ public class ManaHandler implements IManaHandler, INBTSerializable {
         return 0;
     }
 
+    protected void setMana(Mana manatype, int amount) {
+        if (amount > 0) {
+            this.manaStored.put(manatype, amount);
+        }
+    }
+
     @Override
     public int getManaStored(Mana manatype) {
         Integer stored = manaStored.get(manatype);
