@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:air"
+          "name": "manaweave_and_runes:rune_carver"
         }
       ],
       "rolls": 1.0

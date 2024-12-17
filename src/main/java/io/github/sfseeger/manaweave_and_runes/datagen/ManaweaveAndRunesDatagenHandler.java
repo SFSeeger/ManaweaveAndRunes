@@ -3,6 +3,7 @@ package io.github.sfseeger.manaweave_and_runes.datagen;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
 import io.github.sfseeger.manaweave_and_runes.datagen.client.ManaweaveAndRunesBlockStateProvider;
 import io.github.sfseeger.manaweave_and_runes.datagen.client.ManaweaveAndRunesItemModelProvider;
+import io.github.sfseeger.manaweave_and_runes.datagen.server.ManaweaveAndRunesBlockTagsProvider;
 import io.github.sfseeger.manaweave_and_runes.datagen.server.ManaweaveAndRunesRecipeProvider;
 import io.github.sfseeger.manaweave_and_runes.datagen.server.loot_tables.ManaweaveAndRunesBlockLootSubProvider;
 import net.minecraft.core.HolderLookup;
@@ -30,19 +31,20 @@ public class ManaweaveAndRunesDatagenHandler {
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
         generator.addProvider(event.includeClient(),
-                              new ManaweaveAndRunesBlockStateProvider(output, existingFileHelper));
+                new ManaweaveAndRunesBlockStateProvider(output, existingFileHelper));
         generator.addProvider(event.includeClient(),
-                              new ManaweaveAndRunesItemModelProvider(output, existingFileHelper));
+                new ManaweaveAndRunesItemModelProvider(output, existingFileHelper));
 
 
         // Server
         generator.addProvider(event.includeServer(), new ManaweaveAndRunesRecipeProvider(output, lookupProvider));
         generator.addProvider(event.includeServer(), new LootTableProvider(output, Set.of(), List.of(
-                                      new LootTableProvider.SubProviderEntry(
-                                              ManaweaveAndRunesBlockLootSubProvider::new,
-                                              LootContextParamSets.BLOCK
-                                      )
-                              ), event.getLookupProvider())
+                        new LootTableProvider.SubProviderEntry(
+                                ManaweaveAndRunesBlockLootSubProvider::new,
+                                LootContextParamSets.BLOCK
+                        )
+                ), event.getLookupProvider())
         );
+        generator.addProvider(event.includeServer(), new ManaweaveAndRunesBlockTagsProvider(output, lookupProvider, ManaweaveAndRunes.MODID, existingFileHelper));
     }
 }
