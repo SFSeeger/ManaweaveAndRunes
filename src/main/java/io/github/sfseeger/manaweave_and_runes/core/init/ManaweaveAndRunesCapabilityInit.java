@@ -32,7 +32,7 @@ public class ManaweaveAndRunesCapabilityInit {
         );
     }
 
-    private static void registerItemCapabilities(RegisterCapabilitiesEvent event) {
+    private static void registerItemHandlerCapabilities(RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(
                 Capabilities.ItemHandler.BLOCK,
                 ManaweaveAndRunesBlockEntityInit.MANA_COLLECTOR_BLOCK_ENTITY.get(),
@@ -43,6 +43,6 @@ public class ManaweaveAndRunesCapabilityInit {
     @SubscribeEvent
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
         registerManaCapabilities(event);
-        registerItemCapabilities(event);
+        registerItemHandlerCapabilities(event);
     }
 }

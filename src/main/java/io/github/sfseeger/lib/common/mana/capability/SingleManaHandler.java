@@ -4,13 +4,14 @@ package io.github.sfseeger.lib.common.mana.capability;
 import io.github.sfseeger.lib.common.mana.Mana;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 public class SingleManaHandler extends ManaHandler {
     public SingleManaHandler(int capacity, int maxManaReceive, int maxManaExtract) {
         super(capacity, maxManaReceive, maxManaExtract, null);
     }
 
-    public SingleManaHandler(int capacity, int maxManaReceive, int maxManaExtract, Mana manaType) {
+    public SingleManaHandler(int capacity, int maxManaReceive, int maxManaExtract, Supplier<Mana> manaType) {
         super(capacity, maxManaReceive, maxManaExtract, manaType != null ? List.of(manaType) : null);
     }
 

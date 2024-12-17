@@ -4,7 +4,9 @@ import io.github.sfseeger.manaweave_and_runes.common.blockentities.ManaCollector
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockEntityInit;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
@@ -58,6 +60,24 @@ public class ManaCollectorBlock extends Block implements EntityBlock {
                 return ItemInteractionResult.SUCCESS;
             }
         }
-        return ItemInteractionResult.FAIL;
+        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+        if(!level.isClientSide()) {
+            BlockEntity blockEntity = level.getBlockEntity(pos);
+            if (blockEntity instanceof ManaCollectorBlockEntity manaCollectorBlockEntity) {
+                ItemStack stack = manaCollectorBlockEntity.removeRune();
+                if(stack.isEmpty()){
+                    return InteractionResult.FAIL;
+                }
+                if(!player.addItem(stack)){
+                    level.addFreshEntity(new ItemEntity(level, pos.getX(), pos.getY(), pos.getY(), stack));
+                }
+                return InteractionResult.SUCCESS;
+            }
+        }
+        return InteractionResult.FAIL;
     }
 }
