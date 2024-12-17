@@ -106,7 +106,7 @@ public class ManaCollectorBlockEntity extends BlockEntity implements IManaCapabl
 
     public boolean placeRune(@Nullable LivingEntity entity, ItemStack rune) {
         if (inventory.getStackInSlot(0).isEmpty() && rune.getItem() instanceof AbstractRuneItem) {
-            inventory.setStackInSlot(0, rune.consumeAndReturn(1, entity));
+            inventory.setStackInSlot(0, rune.copy());
             this.level.gameEvent(GameEvent.BLOCK_CHANGE, this.getBlockPos(),
                     GameEvent.Context.of(entity, this.getBlockState()));
             markUpdated();

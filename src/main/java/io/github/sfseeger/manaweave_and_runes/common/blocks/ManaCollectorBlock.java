@@ -51,19 +51,6 @@ public class ManaCollectorBlock extends Block implements EntityBlock {
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hitResult) {
-        if (!level.isClientSide) {
-            BlockEntity blockEntity = level.getBlockEntity(pos);
-            if (blockEntity instanceof ManaCollectorBlockEntity manaCollectorBlockEntity && manaCollectorBlockEntity.placeRune(
-                    player, stack)) {
-                return ItemInteractionResult.SUCCESS;
-            }
-        }
-        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-    }
-
-    @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if(!level.isClientSide()) {
             BlockEntity blockEntity = level.getBlockEntity(pos);
@@ -72,12 +59,30 @@ public class ManaCollectorBlock extends Block implements EntityBlock {
                 if(stack.isEmpty()){
                     return InteractionResult.FAIL;
                 }
-                if(!player.addItem(stack)){
-                    level.addFreshEntity(new ItemEntity(level, pos.getX(), pos.getY(), pos.getY(), stack));
+                if (!player.addItem(stack.copy())) {
+                    ItemEntity entity = new ItemEntity(level, pos.getX() + 0.5f, pos.getY() + 1.2f, pos.getZ() + 0.5f,
+                                                       stack.copy());
+                    entity.setDefaultPickUpDelay();
+                    level.addFreshEntity(entity);
+                    stack.setCount(0);
                 }
                 return InteractionResult.SUCCESS;
             }
         }
         return InteractionResult.FAIL;
+    }
+
+    @Override
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hitResult) {
+        if (!level.isClientSide) {
+            BlockEntity blockEntity = level.getBlockEntity(pos);
+            if (blockEntity instanceof ManaCollectorBlockEntity manaCollectorBlockEntity && manaCollectorBlockEntity.placeRune(
+                    player, stack)) {
+                stack.shrink(1);
+                return ItemInteractionResult.SUCCESS;
+            }
+        }
+        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 }

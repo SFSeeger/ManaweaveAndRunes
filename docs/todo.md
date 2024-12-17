@@ -1,15 +1,18 @@
 # ToDo
-## Add capacity to Storage Runes
+
+## ✅ Add capacity to Storage Runes
 ## Fix Rune carver
 * [ ] Add better UI
 * [ ] Make crafting actual usable
 * [ ] Design Blockmodel 
 ## Finish Generator
-* [ ] Collect mana into rune
+
+* [X] Collect mana into rune
 * [ ] add more collection conditions
 * [ ] Design Block model
 * [ ] Add particles
-* [ ] Check blocks at -1 y block pos 
+* [X] Check blocks at -1 y block pos
+* [ ] Fix blocks disappearing visually from inventory when clicked on generator
 ## Mana Concentrator
 * [ ] Design crafting workflow
 * [ ] Implement Block & Blockentity

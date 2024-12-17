@@ -27,14 +27,13 @@ public interface IManaItem {
 
     default boolean isManaBarVisible(ItemStack stack) {
         IManaHandler manaHandler = getManaHandler(stack);
-        return manaHandler != null && manaHandler.getManaStored(getManaType()) > 0 && manaHandler.getManaStored(
-                getManaType()) < manaHandler.getManaCapacity();
+        return manaHandler != null && manaHandler.getManaStored(getManaType()) > 0;
     }
 
     default void addTooltip(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flagIn) {
         IManaHandler manaHandler = getManaHandler(stack);
         if (manaHandler == null) return;
-        MutableComponent component = Component.translatable("lore.manaweaveandrunes.mana_stored",
+        MutableComponent component = Component.translatable("lore.manaweave_and_runes.mana_stored",
                                                             String.format("%,d",
                                                                           manaHandler.getManaStored(getManaType())),
                                                             String.format("%,d",
