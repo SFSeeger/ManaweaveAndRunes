@@ -4,6 +4,7 @@ import io.github.sfseeger.lib.common.blockentities.IManaCapable;
 import io.github.sfseeger.lib.common.items.AbstractRuneItem;
 import io.github.sfseeger.lib.common.mana.Mana;
 import io.github.sfseeger.lib.common.mana.capability.IManaHandler;
+import io.github.sfseeger.lib.common.mana.capability.ManaweaveAndRunesCapabilities;
 import io.github.sfseeger.lib.common.mana.capability.SingleManaHandler;
 import io.github.sfseeger.manaweave_and_runes.common.blocks.ManaCollectorBlock;
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockEntityInit;
@@ -65,7 +66,7 @@ public class ManaCollectorBlockEntity extends BlockEntity implements IManaCapabl
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state,
-            ManaCollectorBlockEntity blockEntity) {
+                                  ManaCollectorBlockEntity blockEntity) {
         if (level.getGameTime() % 20 != 0) return;
         IManaHandler manaHandler = blockEntity.getManaHandler(null);
         IItemHandler itemHandler = blockEntity.getItemHandler(null);
@@ -76,7 +77,10 @@ public class ManaCollectorBlockEntity extends BlockEntity implements IManaCapabl
             int potentialMana =
                     mamaType.canGenerateMana(level, pos, state) * MANA_PER_SOURCE * mamaType.getGenerationMultiplier();
             blockEntity.setCollecting(potentialMana > 0);
-            manaHandler.receiveMana(potentialMana, mamaType, false);
+            IManaHandler stackManaHandler = stack.getCapability(ManaweaveAndRunesCapabilities.MANA_HANDLER_ITEM);
+            if (stackManaHandler != null) {
+                stackManaHandler.receiveMana(potentialMana, mamaType, false);
+            }
 
             blockEntity.markUpdated();
         }
@@ -86,7 +90,7 @@ public class ManaCollectorBlockEntity extends BlockEntity implements IManaCapabl
         setChanged();
         if (level != null) {
             level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(),
-                                   ManaCollectorBlock.UPDATE_ALL);
+                    ManaCollectorBlock.UPDATE_ALL);
             level.invalidateCapabilities(getBlockPos());
         }
     }
@@ -102,22 +106,23 @@ public class ManaCollectorBlockEntity extends BlockEntity implements IManaCapabl
 
     public boolean placeRune(@Nullable LivingEntity entity, ItemStack rune) {
         if (inventory.getStackInSlot(0).isEmpty() && rune.getItem() instanceof AbstractRuneItem) {
-            inventory.setStackInSlot(0, rune.consumeAndReturn(1, entity));
+            inventory.setStackInSlot(0, rune.copy());
             this.level.gameEvent(GameEvent.BLOCK_CHANGE, this.getBlockPos(),
-                                 GameEvent.Context.of(entity, this.getBlockState()));
+                    GameEvent.Context.of(entity, this.getBlockState()));
             markUpdated();
             return true;
         }
         return false;
     }
 
-    public void removeRune() {
-        inventory.setStackInSlot(0, ItemStack.EMPTY);
+    public ItemStack removeRune() {
+        ItemStack stack = inventory.extractItem(0, 1, false);
         setChanged();
         if (level != null) {
             level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(),
-                                   ManaCollectorBlock.UPDATE_ALL);
+                    ManaCollectorBlock.UPDATE_ALL);
         }
+        return stack;
     }
 
     public boolean isCollecting() {

@@ -14,18 +14,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Supplier;
 
 public class ManaHandler implements IManaHandler, INBTSerializable {
-    protected List<Mana> allowedMana = new ArrayList<>();
+    protected List<Supplier<Mana>> allowedMana;
     protected HashMap<Mana, Integer> manaStored = new HashMap<>();
     protected int maxManaReceive = 0;
     protected int maxManaExtract = 0;
     protected int capacity = 0;
 
-    public ManaHandler(int capacity, int maxManaReceive, int maxManaExtract, @Nullable List<Mana> allowedMana) {
+    public ManaHandler(int capacity, int maxManaReceive, int maxManaExtract, @Nullable List<Supplier<Mana>> allowedMana) {
         this.maxManaReceive = maxManaReceive;
         this.maxManaExtract = maxManaExtract;
         this.capacity = capacity;
+        this.allowedMana = allowedMana != null ? allowedMana : new ArrayList<>();
     }
 
 
@@ -60,6 +62,12 @@ public class ManaHandler implements IManaHandler, INBTSerializable {
         return 0;
     }
 
+    protected void setMana(Mana manatype, int amount) {
+        if (amount > 0) {
+            this.manaStored.put(manatype, amount);
+        }
+    }
+
     @Override
     public int getManaStored(Mana manatype) {
         Integer stored = manaStored.get(manatype);
@@ -73,7 +81,7 @@ public class ManaHandler implements IManaHandler, INBTSerializable {
 
     @Override
     public boolean canExtract(Mana manatype) {
-        if (!allowedMana.isEmpty() && !allowedMana.contains(manatype)) {
+        if (!allowedManaContains(manatype)) {
             return false;
         }
         return maxManaExtract > 0;
@@ -81,10 +89,14 @@ public class ManaHandler implements IManaHandler, INBTSerializable {
 
     @Override
     public boolean canReceive(Mana manatype) {
-        if (!allowedMana.isEmpty() && !allowedMana.contains(manatype)) {
+        if (!allowedManaContains(manatype)) {
             return false;
         }
         return maxManaReceive > 0;
+    }
+
+    private boolean allowedManaContains(Mana manatype) {
+        return allowedMana.isEmpty() || allowedMana.stream().anyMatch(manaSupplier -> manaSupplier.get().equals(manatype));
     }
 
     @Override

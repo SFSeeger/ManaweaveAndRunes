@@ -2,5 +2,6 @@
   "itemGroup.manaweave_and_runes": "Manaweave and Runes Tab",
   "mana.manaweave_and_runes.fire_mana": "Fire Mana",
   "mana.manaweave_and_runes.air_mana": "Air Mana",
-  "container.manaweave_and_runes.rune_carver_block": "Rune Carver"
+  "container.manaweave_and_runes.rune_carver_block": "Rune Carver",
+  "lore.manaweave_and_runes.mana_stored": "%d / %d"
 }

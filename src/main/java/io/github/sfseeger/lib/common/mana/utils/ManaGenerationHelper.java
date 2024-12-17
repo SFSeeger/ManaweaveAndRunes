@@ -13,7 +13,7 @@ public class ManaGenerationHelper {
         int count = 0;
         for (int x = -1; x <= 1; x++) {
             for (int z = -1; z <= 1; z++) {
-                BlockPos offset = pos.offset(x, 0, z);
+                BlockPos offset = pos.offset(x, -1, z);
                 FluidState fluidState = level.getBlockState(offset).getFluidState();
                 if (fluidState.isSource() && fluidState.getType().isSame(fluid)) {
                     count += 1;

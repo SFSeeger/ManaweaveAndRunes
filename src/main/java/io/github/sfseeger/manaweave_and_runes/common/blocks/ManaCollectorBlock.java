@@ -4,7 +4,9 @@ import io.github.sfseeger.manaweave_and_runes.common.blockentities.ManaCollector
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockEntityInit;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
@@ -49,15 +51,38 @@ public class ManaCollectorBlock extends Block implements EntityBlock {
     }
 
     @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+        if(!level.isClientSide()) {
+            BlockEntity blockEntity = level.getBlockEntity(pos);
+            if (blockEntity instanceof ManaCollectorBlockEntity manaCollectorBlockEntity) {
+                ItemStack stack = manaCollectorBlockEntity.removeRune();
+                if(stack.isEmpty()){
+                    return InteractionResult.FAIL;
+                }
+                if (!player.addItem(stack.copy())) {
+                    ItemEntity entity = new ItemEntity(level, pos.getX() + 0.5f, pos.getY() + 1.2f, pos.getZ() + 0.5f,
+                                                       stack.copy());
+                    entity.setDefaultPickUpDelay();
+                    level.addFreshEntity(entity);
+                    stack.setCount(0);
+                }
+                return InteractionResult.SUCCESS;
+            }
+        }
+        return InteractionResult.FAIL;
+    }
+
+    @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
             Player player, InteractionHand hand, BlockHitResult hitResult) {
         if (!level.isClientSide) {
             BlockEntity blockEntity = level.getBlockEntity(pos);
             if (blockEntity instanceof ManaCollectorBlockEntity manaCollectorBlockEntity && manaCollectorBlockEntity.placeRune(
                     player, stack)) {
+                stack.shrink(1);
                 return ItemInteractionResult.SUCCESS;
             }
         }
-        return ItemInteractionResult.FAIL;
+        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 }
