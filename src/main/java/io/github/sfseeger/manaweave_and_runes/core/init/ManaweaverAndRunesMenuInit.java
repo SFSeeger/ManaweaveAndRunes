@@ -1,10 +1,12 @@
 package io.github.sfseeger.manaweave_and_runes.core.init;
 
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
+import io.github.sfseeger.manaweave_and_runes.common.menus.ManaStorageBlockMenu;
 import io.github.sfseeger.manaweave_and_runes.common.menus.RuneCarverBlockMenu;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.MenuType;
+import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
@@ -15,4 +17,6 @@ public class ManaweaverAndRunesMenuInit {
 
     public static final Supplier<MenuType<RuneCarverBlockMenu>> RUNE_CARVER_BLOCK_MENU = MENUS.register(
             "rune_carver_menu", () -> new MenuType<>(RuneCarverBlockMenu::new, FeatureFlags.DEFAULT_FLAGS));
+    public static final Supplier<MenuType<ManaStorageBlockMenu>> MANA_STORAGE_BLOCK_MENU = MENUS.register(
+            "mana_storage_menu", () -> IMenuTypeExtension.create(ManaStorageBlockMenu::new));
 }

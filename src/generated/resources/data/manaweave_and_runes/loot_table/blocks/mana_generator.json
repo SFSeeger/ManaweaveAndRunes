@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "manaweave_and_runes:mana_storage"
+          "name": "manaweave_and_runes:mana_generator"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "manaweave_and_runes:blocks/mana_storage"
+  "random_sequence": "manaweave_and_runes:blocks/mana_generator"
 }

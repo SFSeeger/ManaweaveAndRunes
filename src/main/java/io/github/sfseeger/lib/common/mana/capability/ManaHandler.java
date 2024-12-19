@@ -22,12 +22,26 @@ public class ManaHandler implements IManaHandler, INBTSerializable {
     protected int maxManaReceive = 0;
     protected int maxManaExtract = 0;
     protected int capacity = 0;
+    protected int slots = -1;
 
     public ManaHandler(int capacity, int maxManaReceive, int maxManaExtract, @Nullable List<Supplier<Mana>> allowedMana) {
         this.maxManaReceive = maxManaReceive;
         this.maxManaExtract = maxManaExtract;
         this.capacity = capacity;
         this.allowedMana = allowedMana != null ? allowedMana : new ArrayList<>();
+    }
+
+    public ManaHandler(int capacity, int maxManaReceive, int maxManaExtract, int slots,
+            @Nullable List<Supplier<Mana>> allowedMana) {
+        this.maxManaReceive = maxManaReceive;
+        this.maxManaExtract = maxManaExtract;
+        this.capacity = capacity;
+        this.allowedMana = allowedMana != null ? allowedMana : new ArrayList<>();
+        if (slots > 0) {
+            this.slots = slots;
+            if (this.allowedMana.size() != slots) throw new IllegalArgumentException(
+                    "ManaHandler slots must be equal to the size of the allowedMana list");
+        }
     }
 
 
@@ -81,7 +95,7 @@ public class ManaHandler implements IManaHandler, INBTSerializable {
 
     @Override
     public boolean canExtract(Mana manatype) {
-        if (!allowedManaContains(manatype)) {
+        if (!allowedManaContains(manatype) || (slots > 0 && manaStored.size() >= slots)) {
             return false;
         }
         return maxManaExtract > 0;
@@ -89,7 +103,7 @@ public class ManaHandler implements IManaHandler, INBTSerializable {
 
     @Override
     public boolean canReceive(Mana manatype) {
-        if (!allowedManaContains(manatype)) {
+        if (!allowedManaContains(manatype) || (slots > 0 && manaStored.size() >= slots)) {
             return false;
         }
         return maxManaReceive > 0;

@@ -6,6 +6,7 @@ import io.github.sfseeger.lib.common.mana.capability.ItemStackManaHandler;
 import io.github.sfseeger.lib.common.mana.capability.ManaweaveAndRunesCapabilities;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
 import io.github.sfseeger.manaweave_and_runes.common.blockentities.ManaCollectorBlockEntity;
+import io.github.sfseeger.manaweave_and_runes.common.blockentities.ManaGeneratorBlockEntity;
 import io.github.sfseeger.manaweave_and_runes.common.blockentities.ManaStorageBlockEntity;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -22,6 +23,11 @@ public class ManaweaveAndRunesCapabilityInit {
                 ManaweaveAndRunesCapabilities.MANA_HANDLER_BLOCK,
                 ManaweaveAndRunesBlockEntityInit.MANA_COLLECTOR_BLOCK_ENTITY.get(),
                 ManaCollectorBlockEntity::getManaHandler
+        );
+        event.registerBlockEntity(
+                ManaweaveAndRunesCapabilities.MANA_HANDLER_BLOCK,
+                ManaweaveAndRunesBlockEntityInit.MANA_GENERATOR_BLOCK_ENTITY.get(),
+                ManaGeneratorBlockEntity::getManaHandler
         );
         event.registerBlockEntity(
                 ManaweaveAndRunesCapabilities.MANA_HANDLER_BLOCK,
