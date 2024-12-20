@@ -41,6 +41,8 @@ public class ManaweaveAndRunesItemInit {
             ITEMS.registerSimpleBlockItem("mana_generator", ManaweaveAndRunesBlockInit.MANA_GENERATOR_BLOCK);
     public static final DeferredItem<BlockItem> MANA_COLLECTOR_BLOCK_ITEM =
             ITEMS.registerSimpleBlockItem("mana_collector", ManaweaveAndRunesBlockInit.MANA_COLLECTOR_BLOCK);
+    public static final DeferredItem<BlockItem> MANA_STORAGE_BLOCK_ITEM =
+            ITEMS.registerSimpleBlockItem("mana_storage", ManaweaveAndRunesBlockInit.MANA_STORAGE_BLOCK);
     public static final DeferredItem<BlockItem> RUNE_CARVER_BLOCK_ITEM =
             ITEMS.registerSimpleBlockItem("rune_carver", ManaweaveAndRunesBlockInit.RUNE_CARVER_BLOCK);
 }

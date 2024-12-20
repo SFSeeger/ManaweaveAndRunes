@@ -2,7 +2,7 @@ package io.github.sfseeger.lib.common.mana.capability;
 
 import io.github.sfseeger.lib.common.mana.Mana;
 
-import java.util.Set;
+import java.util.List;
 
 public interface IManaHandler {
     int receiveMana(int amount, Mana manatype, boolean simulate);
@@ -17,7 +17,7 @@ public interface IManaHandler {
 
     boolean canReceive(Mana manatype);
 
-    Set<Mana> getManaTypesStored();
+    List<Mana> getManaTypesStored();
 
     boolean hasMana(Mana manatype);
 }

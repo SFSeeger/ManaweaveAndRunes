@@ -3,5 +3,6 @@
   "mana.manaweave_and_runes.fire_mana": "Fire Mana",
   "mana.manaweave_and_runes.air_mana": "Air Mana",
   "container.manaweave_and_runes.rune_carver_block": "Rune Carver",
-  "lore.manaweave_and_runes.mana_stored": "%d / %d"
+  "lore.manaweave_and_runes.mana_stored": "%d / %d",
+  "container.manaweave_and_runes.mana_storage_block": "Mana Storage"
 }

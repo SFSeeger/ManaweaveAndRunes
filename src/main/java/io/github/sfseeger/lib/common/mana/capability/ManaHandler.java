@@ -13,7 +13,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 import java.util.function.Supplier;
 
 public class ManaHandler implements IManaHandler, INBTSerializable {
@@ -39,7 +38,7 @@ public class ManaHandler implements IManaHandler, INBTSerializable {
         this.allowedMana = allowedMana != null ? allowedMana : new ArrayList<>();
         if (slots > 0) {
             this.slots = slots;
-            if (this.allowedMana.size() != slots) throw new IllegalArgumentException(
+            if (!this.allowedMana.isEmpty() && this.allowedMana.size() != slots) throw new IllegalArgumentException(
                     "ManaHandler slots must be equal to the size of the allowedMana list");
         }
     }
@@ -114,8 +113,8 @@ public class ManaHandler implements IManaHandler, INBTSerializable {
     }
 
     @Override
-    public Set<Mana> getManaTypesStored() {
-        return manaStored.keySet();
+    public List<Mana> getManaTypesStored() {
+        return manaStored.keySet().stream().toList();
     }
 
     @Override
