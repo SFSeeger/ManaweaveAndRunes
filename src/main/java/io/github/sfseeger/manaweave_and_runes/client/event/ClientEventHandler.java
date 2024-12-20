@@ -2,6 +2,7 @@ package io.github.sfseeger.manaweave_and_runes.client.event;
 
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
 import io.github.sfseeger.manaweave_and_runes.client.renderer.ManaCollectorBlockEntityRenderer;
+import io.github.sfseeger.manaweave_and_runes.client.screens.ManaStorageBlockScreen;
 import io.github.sfseeger.manaweave_and_runes.client.screens.RuneCarverBlockScreen;
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockEntityInit;
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaverAndRunesMenuInit;
@@ -22,5 +23,6 @@ public class ClientEventHandler {
     @SubscribeEvent
     public static void registerScreens(RegisterMenuScreensEvent event) {
         event.register(ManaweaverAndRunesMenuInit.RUNE_CARVER_BLOCK_MENU.get(), RuneCarverBlockScreen::new);
+        event.register(ManaweaverAndRunesMenuInit.MANA_STORAGE_BLOCK_MENU.get(), ManaStorageBlockScreen::new);
     }
 }

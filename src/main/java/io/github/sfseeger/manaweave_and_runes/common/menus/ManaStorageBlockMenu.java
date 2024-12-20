@@ -1,5 +1,6 @@
 package io.github.sfseeger.manaweave_and_runes.common.menus;
 
+import io.github.sfseeger.lib.common.mana.Mana;
 import io.github.sfseeger.manaweave_and_runes.common.blockentities.ManaStorageBlockEntity;
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockInit;
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaverAndRunesMenuInit;
@@ -13,6 +14,8 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
+
+import java.util.List;
 
 public class ManaStorageBlockMenu extends AbstractContainerMenu {
     private final ContainerLevelAccess access;
@@ -34,7 +37,7 @@ public class ManaStorageBlockMenu extends AbstractContainerMenu {
 
         // Add mana slots
         for (int i = 0; i < ManaStorageBlockEntity.MANA_SLOTS; ++i) {
-            this.addSlot(new SlotItemHandler(itemHandler, i, 8 + i * 18, 18) {
+            this.addSlot(new SlotItemHandler(itemHandler, i, 44 + i * 18, 35) {
                 @Override
                 public boolean mayPlace(ItemStack stack) {
                     return false;
@@ -70,5 +73,21 @@ public class ManaStorageBlockMenu extends AbstractContainerMenu {
     public boolean stillValid(Player player) {
         return AbstractContainerMenu.stillValid(this.access, player,
                                                 ManaweaveAndRunesBlockInit.MANA_STORAGE_BLOCK.get());
+    }
+
+    public Mana getManaInSlot(int index) {
+        List<Mana> manaList = blockEntity.getManaHandler(null).getManaTypesStored();
+        if (index < manaList.size()) {
+            return manaList.get(index);
+        }
+        return null;
+    }
+
+    public int getManaStored(Mana mana) {
+        return blockEntity.getManaHandler(null).getManaStored(mana);
+    }
+
+    public int getManaCapacity() {
+        return blockEntity.getManaHandler(null).getManaCapacity();
     }
 }

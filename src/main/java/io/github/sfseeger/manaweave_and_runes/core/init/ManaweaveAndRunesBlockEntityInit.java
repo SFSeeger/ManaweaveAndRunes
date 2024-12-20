@@ -16,7 +16,7 @@ public class ManaweaveAndRunesBlockEntityInit {
 
     public static final Supplier<BlockEntityType<ManaGeneratorBlockEntity>> MANA_GENERATOR_BLOCK_ENTITY =
             BLOCK_ENTITY_TYPES.register(
-                    "mana_storage_block_entity",
+                    "mana_generator_block_entity",
                     () -> BlockEntityType.Builder.of(
                             ManaGeneratorBlockEntity::new,
                             ManaweaveAndRunesBlockInit.MANA_GENERATOR_BLOCK.get()
