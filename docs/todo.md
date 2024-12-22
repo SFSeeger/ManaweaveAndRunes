@@ -24,7 +24,6 @@
 * [ ] Add particles
 
 ## Mana Storage
-
 * [X] Add mana storage
 * [X] Add mana storage blockentity
 * [ ] Replace slots with bars
@@ -79,3 +78,4 @@
 * [ ] Add building blocks?
 * [ ] Add more grindy progression system
 * [ ] Build slot based Mana System (maybe even replace the map type)
+* [ ] Figure out how to add mana icons to atlas

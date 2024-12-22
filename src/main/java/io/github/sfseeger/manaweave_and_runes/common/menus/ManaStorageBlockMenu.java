@@ -37,7 +37,7 @@ public class ManaStorageBlockMenu extends AbstractContainerMenu {
 
         // Add mana slots
         for (int i = 0; i < ManaStorageBlockEntity.MANA_SLOTS; ++i) {
-            this.addSlot(new SlotItemHandler(itemHandler, i, 44 + i * 18, 35) {
+            this.addSlot(new SlotItemHandler(itemHandler, i, 44 + i * 18, 56) {
                 @Override
                 public boolean mayPlace(ItemStack stack) {
                     return false;
@@ -89,5 +89,9 @@ public class ManaStorageBlockMenu extends AbstractContainerMenu {
 
     public int getManaCapacity() {
         return blockEntity.getManaHandler(null).getManaCapacity();
+    }
+
+    public float getManaPercentage(Mana mana) {
+        return (float) getManaStored(mana) / getManaCapacity();
     }
 }

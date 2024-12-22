@@ -10,13 +10,13 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 
 public class ManaStorageBlockScreen extends AbstractContainerScreen<ManaStorageBlockMenu> {
     private static final ResourceLocation GUI_TEXTURE =
             ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID,
                                                   "textures/gui/container/mana_storage.png");
+    private static final ResourceLocation FALLBACK_ICON =
+            ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "textures/mana/fire_mana.png");
 
 
     private int uiX;
@@ -46,7 +46,11 @@ public class ManaStorageBlockScreen extends AbstractContainerScreen<ManaStorageB
     protected void renderTooltip(GuiGraphics guiGraphics, int x, int y) {
         super.renderTooltip(guiGraphics, x, y);
         for (int i = 0; i < ManaStorageBlockEntity.MANA_SLOTS; i++) {
-            if (ScreenUtil.isMouseInBounds(uiX + 44 + i * 18, uiY + 35, 16, 16, x, y)) {
+            if (ScreenUtil.isMouseInBounds(uiX + 44 + i * 18, uiY + 56, 16, 16, x, y)) {
+                Mana mana = menu.getManaInSlot(i);
+                if (mana != null)
+                    guiGraphics.renderTooltip(this.font, mana.getName().withColor(mana.properties().getColor()), x, y);
+            } else if (ScreenUtil.isMouseInBounds(uiX + 50 + i * 18, uiY + 15, 3, 36, x, y)) {
                 Mana mana = menu.getManaInSlot(i);
                 if (mana != null)
                     guiGraphics.renderTooltip(this.font, Component.translatable("lore.manaweave_and_runes.mana_stored",
@@ -54,7 +58,7 @@ public class ManaStorageBlockScreen extends AbstractContainerScreen<ManaStorageB
                                                                                               menu.getManaStored(mana)),
                                                                                 String.format("%,d",
                                                                                               menu.getManaCapacity()))
-                            .append(" ").append(mana.getName().withColor(mana.properties().getColor())), x, y);
+                            .withColor(mana.properties().getColor()), x, y);
             }
         }
     }
@@ -65,7 +69,14 @@ public class ManaStorageBlockScreen extends AbstractContainerScreen<ManaStorageB
 
         for (int i = 0; i < ManaStorageBlockEntity.MANA_SLOTS; i++) {
             Mana mana = menu.getManaInSlot(i);
-            if (mana != null) guiGraphics.renderItem(new ItemStack(Items.ALLIUM), uiX + 44 + i * 18, uiY + 35);
+            if (mana != null) {
+                float fill = menu.getManaPercentage(mana);
+                guiGraphics.fill(uiX + 50 + i * 18, uiY + 51 - (int) (36 * fill), uiX + 53 + i * 18, uiY + 51,
+                                 0xFF000000 + mana.properties().getColor());
+                guiGraphics.blit(mana.properties().getIcon().orElse(FALLBACK_ICON), uiX + 44 + i * 18, uiY + 56, 0, 0,
+                                 16, 16);
+            }
         }
     }
+
 }
