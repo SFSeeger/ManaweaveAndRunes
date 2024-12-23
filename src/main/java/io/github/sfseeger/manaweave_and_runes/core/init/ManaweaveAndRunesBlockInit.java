@@ -1,10 +1,7 @@
 package io.github.sfseeger.manaweave_and_runes.core.init;
 
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
-import io.github.sfseeger.manaweave_and_runes.common.blocks.ManaCollectorBlock;
-import io.github.sfseeger.manaweave_and_runes.common.blocks.ManaGeneratorBlock;
-import io.github.sfseeger.manaweave_and_runes.common.blocks.ManaStorageBlock;
-import io.github.sfseeger.manaweave_and_runes.common.blocks.RuneCarverBlock;
+import io.github.sfseeger.manaweave_and_runes.common.blocks.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -19,6 +16,8 @@ public class ManaweaveAndRunesBlockInit {
                                                                                               .strength(3.0F)
                                                                                               .requiresCorrectToolForDrops()
                                                                                               .sound(SoundType.AMETHYST));
+    public static final DeferredBlock<RuneBlock> RUNE_BLOCK = BLOCKS.register("rune_block", RuneBlock::new);
+
     public static final DeferredBlock<Block> MANA_GENERATOR_BLOCK =
             BLOCKS.register("mana_generator", ManaGeneratorBlock::new);
 

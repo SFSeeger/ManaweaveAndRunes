@@ -15,7 +15,6 @@
 * [ ] Fix blocks disappearing visually from inventory when clicked on generator
 
 ## Finish Generator
-
 * [ ] Generate mana tick based
 * [ ] Fix being able to burn runes
 * [ ] Add menu & screen
@@ -29,7 +28,14 @@
 * [ ] Replace slots with bars
 * [ ] Add mana icons to test
 ## Mana Concentrator
-* [ ] Design crafting workflow
+
+* [X] Design crafting workflow
+* [X] Add Rune Block
+    * [ ] Add multiple types?
+* [ ] Add Pedestal
+    * [ ] Add Block & Blockentity
+    * [ ] Add model
+    * [ ] Allow receiving mana from spreaders & storage
 * [ ] Implement Block & Blockentity
 * [ ] Add recipe
 * [ ] Implement UI
@@ -51,14 +57,21 @@
 
 ## Spell Casting
 * [ ] Add rune braclet
-* [ ] Add spell regestry
+* [ ] Add spell registry
 * [ ] Add spellcasting rune circles
 * [ ] Add effects and animations
 * [ ] Add upgrades
-## Add mana storage & pedastal
-## Add crystal ore minability & add to world gen
+
+## Add rune / item pedestal
+
+## Crystal Ore
+
+* [X] Add ore
+* [X] Make minable
+* [ ] Add to worldgen
 ## Runes
-* [ ] Add rune regestry?
+
+* [ ] Add rune registry?
 
 ## Mana
 * [ ] Add Mana types

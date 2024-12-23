@@ -21,6 +21,7 @@ public class ManaweaveAndRunesItemGroupInit {
                     .displayItems((parameters, output) -> {
                         output.accept(ManaweaveAndRunesItemInit.CRYSTAL_ORE_ITEM.get());
                         output.accept(ManaweaveAndRunesItemInit.CRYSTAL.get());
+                        output.accept(ManaweaveAndRunesItemInit.RUNE_BLOCK_ITEM.get());
                         output.accept(ManaweaveAndRunesItemInit.MANA_GENERATOR_BLOCK_ITEM.get());
                         output.accept(ManaweaveAndRunesItemInit.MANA_COLLECTOR_BLOCK_ITEM.get());
                         output.accept(ManaweaveAndRunesItemInit.AMETHYST_BASE_RUNE.get());

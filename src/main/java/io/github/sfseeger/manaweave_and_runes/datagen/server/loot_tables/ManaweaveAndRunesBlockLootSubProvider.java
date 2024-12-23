@@ -19,6 +19,8 @@ public class ManaweaveAndRunesBlockLootSubProvider extends BlockLootSubProvider 
         this.add(ManaweaveAndRunesBlockInit.CRYSTAL_ORE.get(), (block) -> createOreDrop(block,
                                                                                         ManaweaveAndRunesItemInit.CRYSTAL.get()));
 
+        this.dropSelf(ManaweaveAndRunesBlockInit.RUNE_BLOCK.get());
+
         this.dropSelf(ManaweaveAndRunesBlockInit.MANA_GENERATOR_BLOCK.get());
         this.dropSelf(ManaweaveAndRunesBlockInit.MANA_COLLECTOR_BLOCK.get());
         this.dropSelf(ManaweaveAndRunesBlockInit.MANA_STORAGE_BLOCK.get());

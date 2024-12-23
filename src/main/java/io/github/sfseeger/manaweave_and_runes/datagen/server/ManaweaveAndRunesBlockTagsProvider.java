@@ -11,7 +11,9 @@ import org.jetbrains.annotations.Nullable;
 import java.util.concurrent.CompletableFuture;
 
 public class ManaweaveAndRunesBlockTagsProvider extends BlockTagsProvider {
-    public ManaweaveAndRunesBlockTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, String modId, @Nullable ExistingFileHelper existingFileHelper) {
+    public ManaweaveAndRunesBlockTagsProvider(PackOutput output,
+            CompletableFuture<HolderLookup.Provider> lookupProvider, String modId,
+            @Nullable ExistingFileHelper existingFileHelper) {
         super(output, lookupProvider, modId, existingFileHelper);
     }
 
@@ -20,7 +22,8 @@ public class ManaweaveAndRunesBlockTagsProvider extends BlockTagsProvider {
         this.tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(ManaweaveAndRunesBlockInit.MANA_COLLECTOR_BLOCK.get())
                 .add(ManaweaveAndRunesBlockInit.CRYSTAL_ORE.get())
-                .add(ManaweaveAndRunesBlockInit.MANA_STORAGE_BLOCK.get());
+                .add(ManaweaveAndRunesBlockInit.MANA_STORAGE_BLOCK.get())
+                .add(ManaweaveAndRunesBlockInit.RUNE_BLOCK.get());
 
         this.tag(BlockTags.NEEDS_DIAMOND_TOOL)
                 .add(ManaweaveAndRunesBlockInit.CRYSTAL_ORE.get());
