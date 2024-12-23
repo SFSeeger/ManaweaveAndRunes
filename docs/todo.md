@@ -33,9 +33,11 @@
 * [X] Add Rune Block
     * [ ] Add multiple types?
 * [ ] Add Pedestal
-    * [ ] Add Block & Blockentity
-    * [ ] Add model
+  * [X] Add Block & Blockentity
+  * [X] Add model
+  * [X] Add renderer
     * [ ] Allow receiving mana from spreaders & storage
+  * [ ] Show item amount on hover
 * [ ] Implement Block & Blockentity
 * [ ] Add recipe
 * [ ] Implement UI

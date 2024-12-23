@@ -34,5 +34,10 @@ public class ManaweaveAndRunesBlockStateProvider extends BlockStateProvider {
                 .cubeAll(deferredRuneBlock.getRegisteredName() + "_inactive", runeBlockInactive));
         this.simpleBlockItem(deferredRuneBlock.get(), this.models().getExistingFile(
                 ResourceLocation.parse(deferredRuneBlock.getRegisteredName() + "_inactive")));
+
+        this.horizontalBlock(ManaweaveAndRunesBlockInit.RUNE_PEDESTAL_BLOCK.get(), this.models().getExistingFile(
+                ResourceLocation.parse(ManaweaveAndRunesBlockInit.RUNE_PEDESTAL_BLOCK.getRegisteredName())));
+        this.simpleBlockItem(ManaweaveAndRunesBlockInit.RUNE_PEDESTAL_BLOCK.get(), this.models().getExistingFile(
+                ResourceLocation.parse(ManaweaveAndRunesBlockInit.RUNE_PEDESTAL_BLOCK.getRegisteredName())));
     }
 }

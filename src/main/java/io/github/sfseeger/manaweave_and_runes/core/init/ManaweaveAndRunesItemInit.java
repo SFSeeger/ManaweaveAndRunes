@@ -39,6 +39,8 @@ public class ManaweaveAndRunesItemInit {
             ITEMS.registerSimpleBlockItem("crystal_ore", ManaweaveAndRunesBlockInit.CRYSTAL_ORE);
     public static final DeferredItem<BlockItem> RUNE_BLOCK_ITEM =
             ITEMS.registerSimpleBlockItem("rune_block", ManaweaveAndRunesBlockInit.RUNE_BLOCK);
+    public static final DeferredItem<BlockItem> RUNE_PEDESTAL_BLOCK_ITEM =
+            ITEMS.registerSimpleBlockItem("rune_pedestal", ManaweaveAndRunesBlockInit.RUNE_PEDESTAL_BLOCK);
 
 
     public static final DeferredItem<BlockItem> MANA_GENERATOR_BLOCK_ITEM =

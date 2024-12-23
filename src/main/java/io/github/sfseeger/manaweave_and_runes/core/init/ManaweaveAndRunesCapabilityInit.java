@@ -8,6 +8,7 @@ import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
 import io.github.sfseeger.manaweave_and_runes.common.blockentities.ManaCollectorBlockEntity;
 import io.github.sfseeger.manaweave_and_runes.common.blockentities.ManaGeneratorBlockEntity;
 import io.github.sfseeger.manaweave_and_runes.common.blockentities.ManaStorageBlockEntity;
+import io.github.sfseeger.manaweave_and_runes.common.blockentities.RunePedestalBlockEntity;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -33,6 +34,11 @@ public class ManaweaveAndRunesCapabilityInit {
                 ManaweaveAndRunesCapabilities.MANA_HANDLER_BLOCK,
                 ManaweaveAndRunesBlockEntityInit.MANA_STORAGE_BLOCK_ENTITY.get(),
                 ManaStorageBlockEntity::getManaHandler
+        );
+        event.registerBlockEntity(
+                ManaweaveAndRunesCapabilities.MANA_HANDLER_BLOCK,
+                ManaweaveAndRunesBlockEntityInit.RUNE_PEDESTAL_BLOCK_ENTITY.get(),
+                RunePedestalBlockEntity::getManaHandler
         );
 
         event.registerItem(
@@ -61,6 +67,11 @@ public class ManaweaveAndRunesCapabilityInit {
                 Capabilities.ItemHandler.BLOCK,
                 ManaweaveAndRunesBlockEntityInit.MANA_COLLECTOR_BLOCK_ENTITY.get(),
                 ManaCollectorBlockEntity::getItemHandler
+        );
+        event.registerBlockEntity(
+                Capabilities.ItemHandler.BLOCK,
+                ManaweaveAndRunesBlockEntityInit.RUNE_PEDESTAL_BLOCK_ENTITY.get(),
+                RunePedestalBlockEntity::getItemHandler
         );
     }
 

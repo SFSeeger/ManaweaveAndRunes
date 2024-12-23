@@ -17,6 +17,8 @@ public class ManaweaveAndRunesBlockInit {
                                                                                               .requiresCorrectToolForDrops()
                                                                                               .sound(SoundType.AMETHYST));
     public static final DeferredBlock<RuneBlock> RUNE_BLOCK = BLOCKS.register("rune_block", RuneBlock::new);
+    public static final DeferredBlock<RunePedestalBlock> RUNE_PEDESTAL_BLOCK =
+            BLOCKS.register("rune_pedestal", RunePedestalBlock::new);
 
     public static final DeferredBlock<Block> MANA_GENERATOR_BLOCK =
             BLOCKS.register("mana_generator", ManaGeneratorBlock::new);

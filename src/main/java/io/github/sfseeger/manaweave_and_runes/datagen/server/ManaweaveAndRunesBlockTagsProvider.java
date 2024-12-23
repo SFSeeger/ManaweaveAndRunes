@@ -23,7 +23,8 @@ public class ManaweaveAndRunesBlockTagsProvider extends BlockTagsProvider {
                 .add(ManaweaveAndRunesBlockInit.MANA_COLLECTOR_BLOCK.get())
                 .add(ManaweaveAndRunesBlockInit.CRYSTAL_ORE.get())
                 .add(ManaweaveAndRunesBlockInit.MANA_STORAGE_BLOCK.get())
-                .add(ManaweaveAndRunesBlockInit.RUNE_BLOCK.get());
+                .add(ManaweaveAndRunesBlockInit.RUNE_BLOCK.get())
+                .add(ManaweaveAndRunesBlockInit.RUNE_PEDESTAL_BLOCK.get());
 
         this.tag(BlockTags.NEEDS_DIAMOND_TOOL)
                 .add(ManaweaveAndRunesBlockInit.CRYSTAL_ORE.get());
