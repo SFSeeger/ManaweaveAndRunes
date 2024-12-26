@@ -13,6 +13,5 @@ public class ManaRegistry {
             .sync(true)
             .defaultKey(ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "empty_mana")) //TODO: Change this to the actual default key
             .maxId(256)
-
             .create();
 }

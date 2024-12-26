@@ -16,6 +16,7 @@
 
 ## Finish Generator
 * [ ] Generate mana tick based
+* [ ] Add mana to items using datamaps
 * [ ] Fix being able to burn runes
 * [ ] Add menu & screen
 * [ ] Figure out how to place mana in adjacent block

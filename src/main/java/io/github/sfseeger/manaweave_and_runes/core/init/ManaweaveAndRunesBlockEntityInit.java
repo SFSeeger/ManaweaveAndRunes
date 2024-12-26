@@ -1,10 +1,7 @@
 package io.github.sfseeger.manaweave_and_runes.core.init;
 
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
-import io.github.sfseeger.manaweave_and_runes.common.blockentities.ManaCollectorBlockEntity;
-import io.github.sfseeger.manaweave_and_runes.common.blockentities.ManaGeneratorBlockEntity;
-import io.github.sfseeger.manaweave_and_runes.common.blockentities.ManaStorageBlockEntity;
-import io.github.sfseeger.manaweave_and_runes.common.blockentities.RunePedestalBlockEntity;
+import io.github.sfseeger.manaweave_and_runes.common.blockentities.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -46,6 +43,15 @@ public class ManaweaveAndRunesBlockEntityInit {
                     () -> BlockEntityType.Builder.of(
                             RunePedestalBlockEntity::new,
                             ManaweaveAndRunesBlockInit.RUNE_PEDESTAL_BLOCK.get()
+                    ).build(null)
+            );
+
+    public static final Supplier<BlockEntityType<ManaConcentratorBlockEntity>> MANA_CONCENTRATOR_BLOCK_ENTITY =
+            BLOCK_ENTITY_TYPES.register(
+                    "mana_concentrator_block_entity",
+                    () -> BlockEntityType.Builder.of(
+                            ManaConcentratorBlockEntity::new,
+                            ManaweaveAndRunesBlockInit.Novice_MANA_CONCENTRATOR_BLOCK.get()
                     ).build(null)
             );
 }
