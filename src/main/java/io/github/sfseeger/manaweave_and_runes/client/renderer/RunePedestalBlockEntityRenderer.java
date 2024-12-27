@@ -27,6 +27,7 @@ import net.neoforged.neoforge.items.IItemHandler;
 public class RunePedestalBlockEntityRenderer implements BlockEntityRenderer<RunePedestalBlockEntity> {
 
     private final BlockEntityRendererProvider.Context context;
+    private static final float ROTATION_PERIOD = 150f;
 
     public RunePedestalBlockEntityRenderer(BlockEntityRendererProvider.Context ctx) {
         this.context = ctx;
@@ -48,6 +49,7 @@ public class RunePedestalBlockEntityRenderer implements BlockEntityRenderer<Rune
             );
             boolean isBlock = stack.getItem() instanceof BlockItem;
             float scalingFactor = isBlock ? 1f : .5f;
+            int itemCount = stack.getCount() > 16 ? 1 : stack.getCount() / 16;
 
 
             poseStack.pushPose();
@@ -55,14 +57,16 @@ public class RunePedestalBlockEntityRenderer implements BlockEntityRenderer<Rune
 
             Direction direction1 = Direction.from2DDataValue((direction.get2DDataValue()) % 4);
             float f = -direction1.toYRot();
-            poseStack.mulPose(Axis.YP.rotationDegrees(f));
+            float rot = (level.getGameTime() % ROTATION_PERIOD) * (360f / ROTATION_PERIOD);
+            poseStack.mulPose(Axis.YP.rotationDegrees(f + rot));
 
-            //poseStack.scale(scalingFactor, scalingFactor, scalingFactor);
+            //for (int i = 0; i < itemCount; i++) {
+            //poseStack.translate(i * 0.02f, 0, -i * 0.02f);
             this.context.getItemRenderer()
                     .renderStatic(stack, ItemDisplayContext.GROUND, packedLight, OverlayTexture.NO_OVERLAY,
                                   poseStack,
                                   multiBufferSource, level, 0);
-
+            //}
             Font font = this.context.getFont();
             poseStack.scale(0.05f, -0.05f, 0.05f);
             HitResult result = Minecraft.getInstance().hitResult;

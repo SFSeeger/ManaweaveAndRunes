@@ -19,14 +19,15 @@ public class ManaweaveAndRunesItemGroupInit {
                     .withTabsBefore(CreativeModeTabs.COMBAT)
                     .icon(() -> new ItemStack(ManaweaveAndRunesItemInit.AMETHYST_BASE_RUNE.get()))// TODO: change item
                     .displayItems((parameters, output) -> {
-                        output.accept(ManaweaveAndRunesItemInit.CRYSTAL_ORE_ITEM.get());
-                        output.accept(ManaweaveAndRunesItemInit.CRYSTAL.get());
-                        output.accept(ManaweaveAndRunesItemInit.RUNE_BLOCK_ITEM.get());
-                        output.accept(ManaweaveAndRunesItemInit.MANA_GENERATOR_BLOCK_ITEM.get());
-                        output.accept(ManaweaveAndRunesItemInit.MANA_COLLECTOR_BLOCK_ITEM.get());
-                        output.accept(ManaweaveAndRunesItemInit.AMETHYST_BASE_RUNE.get());
-                        output.accept(ManaweaveAndRunesItemInit.AMETHYST_FIRE_RUNE_ITEM.get());
-                        output.accept(ManaweaveAndRunesItemInit.AMETHYST_AIR_RUNE_ITEM.get());
-                        output.accept(ManaweaveAndRunesItemInit.DIAMOND_CHISEL.get());
+                        ManaweaveAndRunesItemInit.ITEMS.getEntries().forEach(item -> output.accept(item.get()));
+//                        output.accept(ManaweaveAndRunesItemInit.CRYSTAL_ORE_ITEM.get());
+//                        output.accept(ManaweaveAndRunesItemInit.CRYSTAL.get());
+//                        output.accept(ManaweaveAndRunesItemInit.RUNE_BLOCK_ITEM.get());
+//                        output.accept(ManaweaveAndRunesItemInit.MANA_GENERATOR_BLOCK_ITEM.get());
+//                        output.accept(ManaweaveAndRunesItemInit.MANA_COLLECTOR_BLOCK_ITEM.get());
+//                        output.accept(ManaweaveAndRunesItemInit.AMETHYST_BASE_RUNE.get());
+//                        output.accept(ManaweaveAndRunesItemInit.AMETHYST_FIRE_RUNE_ITEM.get());
+//                        output.accept(ManaweaveAndRunesItemInit.AMETHYST_AIR_RUNE_ITEM.get());
+//                        output.accept(ManaweaveAndRunesItemInit.DIAMOND_CHISEL.get());
                     }).build());
 }

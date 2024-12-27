@@ -1,5 +1,6 @@
 package io.github.sfseeger.lib.common.mana;
 
+import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import io.github.sfseeger.lib.common.mana.utils.ManaGenerationHelper;
@@ -11,18 +12,29 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
+import java.util.List;
+
 public class Mana {
 
     String descriptionId;
     ManaProperties properties;
     public static final Codec<Holder<Mana>> CODEC;
+    public static final Codec<List<Pair<Holder<Mana>, Integer>>> MANAS_WITH_AMOUNT_CODEC;
 
     static {
         //  ManaRegistry.MANA_REGISTRY.holderByNameCodec().fieldOf("mana_id").forGetter(Mana::RegistryHolder)
         CODEC = Codec.lazyInitialized(() ->
-                ManaRegistry.MANA_REGISTRY.holderByNameCodec().validate(
-                        instance -> instance.is(Manas.EmptyMana.registryHolder()) ?
-                                DataResult.error(() -> "Empty mana cannot be serialized") : DataResult.success(instance)
+                                              ManaRegistry.MANA_REGISTRY.holderByNameCodec().validate(
+                                                      instance -> instance.is(Manas.EmptyMana.registryHolder()) ?
+                                                              DataResult.error(
+                                                                      () -> "Empty mana cannot be serialized") : DataResult.success(
+                                                              instance)
+                                              )
+        );
+        MANAS_WITH_AMOUNT_CODEC = Codec.list(
+                Codec.pair(
+                        Mana.CODEC.fieldOf("manaType").codec(),
+                        Codec.INT.fieldOf("amount").codec()
                 )
         );
     }

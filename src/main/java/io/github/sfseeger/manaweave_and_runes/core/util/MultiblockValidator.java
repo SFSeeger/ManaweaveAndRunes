@@ -14,10 +14,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import org.slf4j.Logger;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -163,5 +160,28 @@ public class MultiblockValidator {
 
     public record MultiBlockValidationData(boolean isValid, BlockPos errorLocation, Block currentBlock,
                                            Block expectedBlock) {
+    }
+
+    public List<BlockPos> findBlocks(Block block) throws IllegalArgumentException {
+        // TODO: implement not symmetrical multiblocks
+        char symbol = blockMapping.entrySet().stream()
+                .filter(entry -> entry.getValue().equals(block))
+                .map(Map.Entry::getKey)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Block not found in block mapping"));
+        List<BlockPos> positions = new ArrayList<>();
+        for (int y = 0; y < multiblockStructure.length; y++) {
+            int yOffset = structureOrigin.getY() - y;
+            for (int z = 0; z < multiblockStructure[y].length; z++) {
+                int zOffset = z - structureOrigin.getZ();
+                for (int x = 0; x < multiblockStructure[y][z].length; x++) {
+                    int xOffset = x - structureOrigin.getX();
+                    if (multiblockStructure[y][z][x] == symbol) {
+                        positions.add(new BlockPos(xOffset, yOffset, zOffset));
+                    }
+                }
+            }
+        }
+        return positions;
     }
 }

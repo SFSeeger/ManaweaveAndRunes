@@ -50,7 +50,6 @@ public class ManaCollectorBlockEntityRenderer implements BlockEntityRenderer<Man
                     .renderStatic(stack, ItemDisplayContext.FIXED, packedLight, OverlayTexture.NO_OVERLAY,
                                   poseStack,
                                   multiBufferSource, level, 0);
-
             poseStack.popPose();
         }
     }

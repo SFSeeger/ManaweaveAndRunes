@@ -13,12 +13,7 @@ import java.util.stream.Collectors;
 
 public class ManaDataComponent {
     public static final Codec<ManaDataComponent> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            Codec.list(
-                    Codec.pair(
-                            Mana.CODEC.fieldOf("manaType").codec(),
-                            Codec.INT.fieldOf("amount").codec()
-                    )
-            ).fieldOf("manaMap").forGetter(ManaDataComponent::toList)
+            Mana.MANAS_WITH_AMOUNT_CODEC.fieldOf("manaMap").forGetter(ManaDataComponent::toList)
     ).apply(instance, ManaDataComponent::fromList));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, ManaDataComponent> STREAM_CODEC = StreamCodec.composite(

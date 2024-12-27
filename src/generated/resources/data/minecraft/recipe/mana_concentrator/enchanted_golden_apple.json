@@ -1,0 +1,23 @@
+{
+  "type": "manaweave_and_runes:mana_concentrator",
+  "craftTime": 100,
+  "inputs": [
+    {
+      "item": "minecraft:diamond"
+    },
+    {
+      "item": "minecraft:nether_wart"
+    }
+  ],
+  "manaMap": [
+    {
+      "amount": 10,
+      "manaType": "manaweave_and_runes:fire_mana"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:enchanted_golden_apple"
+  },
+  "tier": "NOVICE"
+}

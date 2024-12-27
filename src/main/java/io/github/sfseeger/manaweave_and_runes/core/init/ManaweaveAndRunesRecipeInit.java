@@ -1,5 +1,7 @@
 package io.github.sfseeger.manaweave_and_runes.core.init;
 
+import io.github.sfseeger.lib.common.recipes.mana_concentrator.ManaConcentratorRecipe;
+import io.github.sfseeger.lib.common.recipes.mana_concentrator.ManaConcentratorRecipeSerializer;
 import io.github.sfseeger.lib.common.recipes.rune_carver.RuneCarverRecipe;
 import io.github.sfseeger.lib.common.recipes.rune_carver.RuneCarverRecipeSerializer;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
@@ -28,4 +30,16 @@ public class ManaweaveAndRunesRecipeInit {
             RECIPE_SERIALIZERS.register(
                     "rune_carver",
                     RuneCarverRecipeSerializer::new);
+
+
+    public static final Supplier<RecipeType<ManaConcentratorRecipe>> MANA_CONCENTRATOR_RECIPE_TYPE =
+            RECIPE_TYPES.register(
+                    "mana_concentrator",
+                    () -> RecipeType.<ManaConcentratorRecipe>simple(
+                            ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "mana_concentrator")));
+
+    public static final Supplier<RecipeSerializer<ManaConcentratorRecipe>> MANA_CONCENTRATOR_RECIPE_SERIALIZER =
+            RECIPE_SERIALIZERS.register(
+                    "mana_concentrator",
+                    ManaConcentratorRecipeSerializer::new);
 }

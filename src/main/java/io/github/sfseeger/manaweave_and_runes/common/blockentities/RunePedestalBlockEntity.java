@@ -70,6 +70,10 @@ public class RunePedestalBlockEntity extends BlockEntity {
         return stack;
     }
 
+    public ItemStack getItem() {
+        return inventory.getStackInSlot(0);
+    }
+
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
@@ -92,5 +96,9 @@ public class RunePedestalBlockEntity extends BlockEntity {
         CompoundTag tag = super.getUpdateTag(registries);
         saveAdditional(tag, registries);
         return tag;
+    }
+
+    public void setItem(ItemStack item) {
+        inventory.setStackInSlot(0, item);
     }
 }
