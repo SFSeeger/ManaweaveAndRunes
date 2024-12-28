@@ -35,20 +35,29 @@ public class ManaConcentratorBlockEntityRenderer implements BlockEntityRenderer<
                     level.getBrightness(LightLayer.BLOCK, pos),
                     level.getBrightness(LightLayer.SKY, pos)
             );
+            int fullSlots = fullSlots(itemHandler);
             float rot = (level.getGameTime() % ROTATION_PERIOD) * (360f / ROTATION_PERIOD);
-            float rotationPerItem = 360f / itemHandler.getSlots();
+            float rotationPerItem = 360f / fullSlots;
 
             poseStack.pushPose();
             poseStack.translate(0.5, 1, 0.5);
-            for (int i = 0; i < itemHandler.getSlots(); i++) {
-                poseStack.mulPose(Axis.YP.rotationDegrees(rot + i * rotationPerItem));
+            poseStack.mulPose(Axis.YP.rotationDegrees(rot));
+            for (int i = 0; i < fullSlots; i++) {
+                poseStack.mulPose(Axis.YP.rotationDegrees(rotationPerItem));
                 poseStack.translate(0, 0, 1);
                 ItemStack stack = itemHandler.getStackInSlot(i);
                 this.context.getItemRenderer()
                         .renderStatic(stack, ItemDisplayContext.GROUND, packedLight, OverlayTexture.NO_OVERLAY,
-                                      poseStack, multiBufferSource, level, 0);
+                                      poseStack, multiBufferSource, level, i);
+                poseStack.translate(0, 0, -1);
             }
             poseStack.popPose();
         }
+    }
+
+    private int fullSlots(IItemHandler handler) {
+        return (int) java.util.stream.IntStream.range(0, handler.getSlots())
+                .filter(i -> !handler.getStackInSlot(i).isEmpty())
+                .count();
     }
 }

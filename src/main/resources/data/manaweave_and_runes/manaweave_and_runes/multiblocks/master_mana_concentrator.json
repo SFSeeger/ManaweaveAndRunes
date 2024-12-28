@@ -1,0 +1,76 @@
+{
+  "blockMapping": {
+    "R": "manaweave_and_runes:rune_block",
+    "A": "manaweave_and_runes:rune_pedestal",
+    "B": "minecraft:amethyst_block",
+    "S": "minecraft:sea_lantern"
+  },
+  "structure": [
+    [
+      "     S     ",
+      "           ",
+      "           ",
+      "           ",
+      "           ",
+      "S         S",
+      "           ",
+      "           ",
+      "           ",
+      "           ",
+      "     S     "
+    ],
+    [
+      "     R     ",
+      "           ",
+      "           ",
+      "           ",
+      "           ",
+      "R         R",
+      "           ",
+      "           ",
+      "           ",
+      "           ",
+      "     R     "
+    ],
+    [
+      "     R     ",
+      "           ",
+      "           ",
+      "           ",
+      "           ",
+      "R         R",
+      "           ",
+      "           ",
+      "           ",
+      "           ",
+      "     R     "
+    ],
+    [
+      "     R     ",
+      "           ",
+      "   A   A   ",
+      "  A     A  ",
+      "    A A    ",
+      "R    0    R",
+      "    A A    ",
+      "  A     A  ",
+      "   A   A   ",
+      "           ",
+      "     R     "
+    ],
+    [
+      "___RRRRR___",
+      "__R__R__R__",
+      "_R_BRRRB_R_",
+      "R_BR_R_RB_R",
+      "R_R_BRB_R_R",
+      "RRRRRBRRRRR",
+      "R_R_BRB_R_R",
+      "R_BR_R_RB_R",
+      "_R_BRRRB_R_",
+      "__R__R__R__",
+      "___RRRRR___"
+    ]
+  ],
+  "symmetric": true
+}

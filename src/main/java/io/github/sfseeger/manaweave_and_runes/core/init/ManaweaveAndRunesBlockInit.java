@@ -2,6 +2,8 @@ package io.github.sfseeger.manaweave_and_runes.core.init;
 
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
 import io.github.sfseeger.manaweave_and_runes.common.blocks.*;
+import io.github.sfseeger.manaweave_and_runes.common.blocks.mana_concentrator.ManaConcentratorBlock;
+import io.github.sfseeger.manaweave_and_runes.common.blocks.mana_concentrator.ManaConcentratorTypes;
 import io.github.sfseeger.manaweave_and_runes.common.blocks.mana_concentrator.NoviceManaConcentratorBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
@@ -31,6 +33,8 @@ public class ManaweaveAndRunesBlockInit {
             BLOCKS.register("mana_storage", ManaStorageBlock::new);
 
     public static final DeferredBlock<Block> RUNE_CARVER_BLOCK = BLOCKS.register("rune_carver", RuneCarverBlock::new);
-    public static final DeferredBlock<NoviceManaConcentratorBlock> Novice_MANA_CONCENTRATOR_BLOCK =
+    public static final DeferredBlock<NoviceManaConcentratorBlock> NOVICE_MANA_CONCENTRATOR_BLOCK =
             BLOCKS.register("novice_mana_concentrator", NoviceManaConcentratorBlock::new);
+    public static final DeferredBlock<Block> MASTER_MANA_CONCENTRATOR_BLOCK =
+            BLOCKS.register("master_mana_concentrator", () -> new ManaConcentratorBlock(ManaConcentratorTypes.MASTER));
 }

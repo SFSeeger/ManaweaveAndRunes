@@ -1,10 +1,12 @@
 package io.github.sfseeger.manaweave_and_runes.common.blockentities;
 
 import io.github.sfseeger.lib.common.mana.IManaItem;
+import io.github.sfseeger.lib.common.mana.Mana;
 import io.github.sfseeger.lib.common.mana.capability.IManaHandler;
 import io.github.sfseeger.lib.common.mana.capability.ManaweaveAndRunesCapabilities;
 import io.github.sfseeger.lib.common.recipes.mana_concentrator.ManaConcentratorInput;
 import io.github.sfseeger.lib.common.recipes.mana_concentrator.ManaConcentratorRecipe;
+import io.github.sfseeger.manaweave_and_runes.common.blocks.RuneBlock;
 import io.github.sfseeger.manaweave_and_runes.common.blocks.mana_concentrator.ManaConcentratorBlock;
 import io.github.sfseeger.manaweave_and_runes.common.blocks.mana_concentrator.ManaConcentratorType;
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockEntityInit;
@@ -21,7 +23,10 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
@@ -50,8 +55,10 @@ public class ManaConcentratorBlockEntity extends BlockEntity {
         }
     };
     private int craftTime;
-    private int craftTimeRemaining;
+    private int craftTimePassed;
+    private boolean isCrafting;
     private Stack<Integer> slotStack = new Stack<>();
+    private ManaConcentratorRecipe currentRecipe;
 
     public IItemHandler getItemHandler(@Nullable Direction side) {
         return inventory;
@@ -64,8 +71,30 @@ public class ManaConcentratorBlockEntity extends BlockEntity {
     public static void serverTick(Level level, BlockPos pos, BlockState state,
             ManaConcentratorBlockEntity blockEntity) {
         if (level.getGameTime() % 20 == 0) {
-            blockEntity.setActive(blockEntity.validateMultiblock().isValid());
+            boolean isActive = blockEntity.validateMultiblock().isValid();
+            if (!isActive && blockEntity.isCrafting) blockEntity.abortCrafting();
+            blockEntity.setActive(isActive);
             blockEntity.markUpdated();
+        }
+        if (blockEntity.isCrafting) {
+            blockEntity.craftTimePassed++;
+            if (blockEntity.craftTimePassed >= blockEntity.craftTime) {
+                ItemStack result = blockEntity.craft();
+                if (!result.isEmpty()) {
+                    level.addFreshEntity(new ItemEntity(level, pos.getX(), pos.getY() + 1, pos.getZ(), result));
+                    level.playSound(null, pos, SoundEvents.AMETHYST_BLOCK_RESONATE, SoundSource.BLOCKS, 1.0F, 1.0F);
+                    blockEntity.stopCrafting();
+                }
+                blockEntity.stopCrafting();
+            } else if (level.getGameTime() % 15 == 0) {
+                level.playSound(null, pos, SoundEvents.AMETHYST_BLOCK_PLACE, SoundSource.BLOCKS, 1.0F,
+                                1.0F + level.random.nextFloat() * 0.1F);
+            }
+        } else if (blockEntity.craftTime > 0 && blockEntity.isActive && blockEntity.craftTimePassed <= blockEntity.craftTime) {
+            ManaConcentratorRecipe recipe = blockEntity.getAvailableRecipe();
+            if (recipe == null) {
+                blockEntity.startCrafting();
+            } else blockEntity.currentRecipe = recipe;
         }
     }
 
@@ -75,6 +104,33 @@ public class ManaConcentratorBlockEntity extends BlockEntity {
         if (randomsource.nextFloat() <= 0.5F && blockEntity.isActive()) {
             Vec3 vec3 = ParticleUtils.randomPosInsideBox(pos, randomsource, -0.25, 0.25, -0.25, 1.25, 0.75, 1.25);
             level.addParticle(ParticleTypes.GLOW, vec3.x(), vec3.y(), vec3.z(), 0.0, 0.0, 0.0);
+        }
+        if (blockEntity.isCrafting) {
+            Vec3 vec3 = ParticleUtils.randomPosInsideBox(pos, randomsource, -0.25, 0.25, -0.25, 1.25, 0.75, 1.25);
+            level.addParticle(ParticleTypes.END_ROD, vec3.x(), vec3.y(), vec3.z(), 0.0, 0.0, 0.0);
+        }
+    }
+
+    private void stopCrafting() {
+        isCrafting = false;
+        craftTime = 0;
+        craftTimePassed = 0;
+        markUpdated();
+        getManaConcentratorType().findBlocks(level, ManaweaveAndRunesBlockInit.RUNE_BLOCK.get()).forEach(pos -> {
+            BlockPos blockPos = getBlockPos().offset(pos);
+            BlockState state = level.getBlockState(blockPos);
+            try {
+                level.setBlockAndUpdate(blockPos, state.setValue(RuneBlock.ACTIVE, false));
+            } catch (IllegalArgumentException e) {
+                // Ignore
+            }
+        });
+    }
+
+    private void abortCrafting() {
+        stopCrafting();
+        if (level != null) {
+            level.playSound(null, getBlockPos(), SoundEvents.AMETHYST_BLOCK_BREAK, SoundSource.BLOCKS, 1.0F, 1.0F);
         }
     }
 
@@ -98,15 +154,43 @@ public class ManaConcentratorBlockEntity extends BlockEntity {
         }
     }
 
-    public ItemStack craft() {
-        if (!isActive || level == null) {
-            return ItemStack.EMPTY;
+    public boolean startCrafting() {
+        if (!isActive || level == null || isCrafting) {
+            return false;
         }
-        RecipeManager recipes = ((ServerLevel) level).getRecipeManager();
+        currentRecipe = getAvailableRecipe();
+        if (currentRecipe != null) {
+            craftTime = currentRecipe.craftTime();
+            craftTimePassed = 0;
+            isCrafting = true;
+            level.playSound(null, getBlockPos(), SoundEvents.BEACON_ACTIVATE, SoundSource.BLOCKS, 1.0F, 1.0F);
+            getManaConcentratorType().findBlocks(level, ManaweaveAndRunesBlockInit.RUNE_BLOCK.get()).forEach(pos -> {
+                BlockPos blockPos = getBlockPos().offset(pos);
+                BlockState state = level.getBlockState(blockPos);
+                level.setBlockAndUpdate(blockPos, state.setValue(RuneBlock.ACTIVE, true));
+            });
+            markUpdated();
+            return true;
+        }
+        return false;
+    }
+
+    public ManaConcentratorRecipe getAvailableRecipe() {
+        if (!isActive || level == null) {
+            return null;
+        }
+        RecipeManager recipes = level.getRecipeManager();
         ManaConcentratorType type = getManaConcentratorType();
-        List<ItemStack> inputItems = new ArrayList<>();
+        ManaConcentratorInput input = getInput(type);
+        Optional<RecipeHolder<ManaConcentratorRecipe>> optional = recipes.getRecipeFor(
+                ManaweaveAndRunesRecipeInit.MANA_CONCENTRATOR_RECIPE_TYPE.get(), input, level);
+        return optional.map(RecipeHolder::value).orElse(null);
+    }
+
+    public ManaConcentratorInput getInput(ManaConcentratorType type) {
         List<BlockPos> relativePedestalPositions =
                 type.findBlocks(level, ManaweaveAndRunesBlockInit.RUNE_PEDESTAL_BLOCK.get());
+        List<ItemStack> inputItems = new ArrayList<>();
         for (BlockPos pos : relativePedestalPositions) {
             BlockEntity blockEntity = level.getBlockEntity(getBlockPos().offset(pos));
             ItemStack item;
@@ -115,26 +199,50 @@ public class ManaConcentratorBlockEntity extends BlockEntity {
                 inputItems.add(item);
             }
         }
-        ManaConcentratorInput input = new ManaConcentratorInput(inputItems, type.getTier());
-        Optional<RecipeHolder<ManaConcentratorRecipe>> optional = recipes.getRecipeFor(
-                ManaweaveAndRunesRecipeInit.MANA_CONCENTRATOR_RECIPE_TYPE.get(), input, level);
-        ManaConcentratorRecipe recipe = optional.map(RecipeHolder::value).orElse(null);
+        return new ManaConcentratorInput(inputItems, type.getTier());
+    }
 
-        if (recipe != null) {
+    public ItemStack craft() {
+        if (!isActive || level == null) {
+            return ItemStack.EMPTY;
+        }
+        ManaConcentratorType type = getManaConcentratorType();
+        List<BlockPos> relativePedestalPositions =
+                type.findBlocks(level, ManaweaveAndRunesBlockInit.RUNE_PEDESTAL_BLOCK.get());
+
+        if (this.currentRecipe != null) {
+            Map<Mana, Integer> extractedMana = new HashMap<>();
             for (int i = 0; i < inventory.getSlots(); i++) {
                 ItemStack stack = inventory.getStackInSlot(i);
-                if (!stack.isEmpty() && stack.getItem() instanceof IManaItem manaItem) {
-                    int manaAmount = recipe.manaMap().getOrDefault(manaItem.getManaType(), 0);
-                    if (manaAmount != 0) {
-                        IManaHandler handler = stack.getCapability(ManaweaveAndRunesCapabilities.MANA_HANDLER_ITEM);
-                        if (handler != null) {
-                            int extracted = handler.extractMana(manaAmount, manaItem.getManaType(), false);
-                            if (extracted != manaAmount) {
-                                return ItemStack.EMPTY;
-                            }
+                if (stack.isEmpty() || !(stack.getItem() instanceof IManaItem manaItem)) {
+                    continue;
+                }
+
+                // TODO: Allow for mana from storage blocks
+                // TODO: Implement the following workflow: Extract mana every crafting tick, then craft when enough mana is extracted when mana is missing, enter a grace period where the crafting time is paused until mana is available
+                // after that, abort with side effect
+                Mana manaType = manaItem.getManaType();
+                int manaAmount = this.currentRecipe.manaMap().getOrDefault(manaType, 0);
+                if (manaAmount != 0) {
+                    IManaHandler handler = stack.getCapability(ManaweaveAndRunesCapabilities.MANA_HANDLER_ITEM);
+                    if (handler != null) {
+                        int alreadyExtracted = extractedMana.getOrDefault(manaType, 0);
+                        int extracted = handler.extractMana(manaAmount - alreadyExtracted, manaType, false);
+                        if (extracted > 0) {
+                            extractedMana.put(manaType, alreadyExtracted + extracted);
                         }
                     }
                 }
+            }
+            if (extractedMana.size() != this.currentRecipe.manaMap().size()) {
+                abortCrafting();
+                return ItemStack.EMPTY;
+            }
+            if (extractedMana.entrySet()
+                    .stream()
+                    .anyMatch(entry -> entry.getValue() < this.currentRecipe.manaMap().get(entry.getKey()))) {
+                abortCrafting();
+                return ItemStack.EMPTY;
             }
 
             relativePedestalPositions.stream()
@@ -143,7 +251,7 @@ public class ManaConcentratorBlockEntity extends BlockEntity {
                     .map(blockEntity -> (RunePedestalBlockEntity) blockEntity)
                     .forEach(runePedestalBlockEntity -> runePedestalBlockEntity.getItemHandler(null)
                             .extractItem(0, 1, false));
-            return recipe.assemble(input, level.registryAccess());
+            return this.currentRecipe.assemble(getInput(type), level.registryAccess());
         }
 
         return ItemStack.EMPTY;
@@ -204,11 +312,14 @@ public class ManaConcentratorBlockEntity extends BlockEntity {
             craftTime = tag.getInt("craftTime");
         }
         if (tag.contains("craftTimeRemaining")) {
-            craftTimeRemaining = tag.getInt("craftTimeRemaining");
+            craftTimePassed = tag.getInt("craftTimeRemaining");
         }
         if (tag.contains("slotStack")) {
             this.slotStack = new Stack<>();
             Arrays.stream(tag.getIntArray("slotStack")).forEach(slotStack::push);
+        }
+        if (tag.contains("isCrafting")) {
+            isCrafting = tag.getBoolean("isCrafting");
         }
     }
 
@@ -218,8 +329,9 @@ public class ManaConcentratorBlockEntity extends BlockEntity {
         tag.putBoolean("isActive", isActive);
         tag.put("inventory", inventory.serializeNBT(registries));
         tag.putInt("craftTime", craftTime);
-        tag.putInt("craftTimeRemaining", craftTimeRemaining);
+        tag.putInt("craftTimeRemaining", craftTimePassed);
         tag.putIntArray("slotStack", slotStack.stream().mapToInt(i -> i).toArray());
+        tag.putBoolean("isCrafting", isCrafting);
     }
 
     @Override

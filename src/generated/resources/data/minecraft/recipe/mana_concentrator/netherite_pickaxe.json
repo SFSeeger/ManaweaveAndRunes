@@ -1,0 +1,43 @@
+{
+  "type": "manaweave_and_runes:mana_concentrator",
+  "craftTime": 600,
+  "inputs": [
+    {
+      "item": "minecraft:redstone"
+    },
+    {
+      "item": "minecraft:amethyst_shard"
+    },
+    {
+      "item": "minecraft:gold_block"
+    },
+    {
+      "item": "minecraft:netherite_ingot"
+    },
+    {
+      "item": "minecraft:netherite_ingot"
+    }
+  ],
+  "manaMap": [
+    {
+      "amount": 400,
+      "manaType": "manaweave_and_runes:fire_mana"
+    },
+    {
+      "amount": 250,
+      "manaType": "manaweave_and_runes:air_mana"
+    }
+  ],
+  "result": {
+    "components": {
+      "minecraft:enchantments": {
+        "levels": {
+          "minecraft:efficiency": 3
+        }
+      }
+    },
+    "count": 1,
+    "id": "minecraft:netherite_pickaxe"
+  },
+  "tier": "MASTER"
+}

@@ -19,7 +19,7 @@ public record ManaConcentratorInput(List<ItemStack> items, Tier tier) implements
     }
 
     public boolean matches(Tier tier, List<Ingredient> inputs) {
-        return tier.greaterThanEqual(this.tier) && inputs.size() == this.items.size() && inputs.stream()
+        return this.tier.greaterThanEqual(tier) && inputs.size() == this.items.size() && inputs.stream()
                 .allMatch(ingredient -> this.items.stream().anyMatch(ingredient));
     }
 }
