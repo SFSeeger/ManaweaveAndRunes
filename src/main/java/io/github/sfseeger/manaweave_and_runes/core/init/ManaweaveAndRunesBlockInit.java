@@ -35,6 +35,8 @@ public class ManaweaveAndRunesBlockInit {
     public static final DeferredBlock<Block> RUNE_CARVER_BLOCK = BLOCKS.register("rune_carver", RuneCarverBlock::new);
     public static final DeferredBlock<NoviceManaConcentratorBlock> NOVICE_MANA_CONCENTRATOR_BLOCK =
             BLOCKS.register("novice_mana_concentrator", NoviceManaConcentratorBlock::new);
-    public static final DeferredBlock<Block> MASTER_MANA_CONCENTRATOR_BLOCK =
+    public static final DeferredBlock<? extends ManaConcentratorBlock> MASTER_MANA_CONCENTRATOR_BLOCK =
             BLOCKS.register("master_mana_concentrator", () -> new ManaConcentratorBlock(ManaConcentratorTypes.MASTER));
+    public static final DeferredBlock<? extends ManaConcentratorBlock> ASCENDED_MANA_CONCENTRATOR_BLOCK =
+            BLOCKS.register("ascended_mana_concentrator", () -> new ManaConcentratorBlock(ManaConcentratorTypes.ASCENDED));
 }

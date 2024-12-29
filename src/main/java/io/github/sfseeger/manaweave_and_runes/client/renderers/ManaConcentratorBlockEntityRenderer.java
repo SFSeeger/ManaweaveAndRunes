@@ -1,8 +1,9 @@
-package io.github.sfseeger.manaweave_and_runes.client.renderer;
+package io.github.sfseeger.manaweave_and_runes.client.renderers;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import io.github.sfseeger.manaweave_and_runes.common.blockentities.ManaConcentratorBlockEntity;
+import io.github.sfseeger.manaweave_and_runes.common.blocks.mana_concentrator.ManaConcentratorType;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -39,8 +40,11 @@ public class ManaConcentratorBlockEntityRenderer implements BlockEntityRenderer<
             float rot = (level.getGameTime() % ROTATION_PERIOD) * (360f / ROTATION_PERIOD);
             float rotationPerItem = 360f / fullSlots;
 
+            ManaConcentratorType type = be.getManaConcentratorType();
+
+
             poseStack.pushPose();
-            poseStack.translate(0.5, 1, 0.5);
+            poseStack.translate(0.5, be.getEffectYOffset(), 0.5);
             poseStack.mulPose(Axis.YP.rotationDegrees(rot));
             for (int i = 0; i < fullSlots; i++) {
                 poseStack.mulPose(Axis.YP.rotationDegrees(rotationPerItem));

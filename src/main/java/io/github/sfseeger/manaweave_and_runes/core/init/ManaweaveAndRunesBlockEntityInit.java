@@ -52,7 +52,8 @@ public class ManaweaveAndRunesBlockEntityInit {
                     () -> BlockEntityType.Builder.of(
                             ManaConcentratorBlockEntity::new,
                             ManaweaveAndRunesBlockInit.NOVICE_MANA_CONCENTRATOR_BLOCK.get(),
-                            ManaweaveAndRunesBlockInit.MASTER_MANA_CONCENTRATOR_BLOCK.get()
+                            ManaweaveAndRunesBlockInit.MASTER_MANA_CONCENTRATOR_BLOCK.get(),
+                            ManaweaveAndRunesBlockInit.ASCENDED_MANA_CONCENTRATOR_BLOCK.get()
                     ).build(null)
             );
 }

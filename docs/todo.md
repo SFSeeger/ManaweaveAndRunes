@@ -29,7 +29,6 @@
 * [ ] Replace slots with bars
 * [ ] Add mana icons to test
 ## Mana Concentrator
-
 * [X] Design crafting workflow
 * [X] Add Rune Block
     * [ ] Add multiple types?
@@ -37,13 +36,15 @@
   * [X] Add Block & Blockentity
   * [X] Add model
   * [X] Add renderer
-    * [ ] Allow receiving mana from spreaders & storage
   * [ ] Show item amount on hover
-* [ ] Implement Block & Blockentity
-* [ ] Add recipe
-* [ ] Implement UI
+* [X] Implement Block & Blockentity
+* [ ] Allow receiving mana from spreaders & storage
+* [X] Add recipe
 * [ ] Design blockmodels
-* [ ] Add Multiblock check & stages
+* [X] Add Multiblock check & stages
+* [X] Add particles
+* [ ] Better sounds
+
 ## Mana Spreader
 * [ ] Check how to transfer mana
 ## Add structure Runes

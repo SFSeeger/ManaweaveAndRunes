@@ -86,10 +86,12 @@ public class ManaConcentratorBlock extends Block implements EntityBlock {
             Player player, InteractionHand hand, BlockHitResult hitResult) {
         if (!level.isClientSide && !stack.isEmpty()) {
             BlockEntity blockEntity = level.getBlockEntity(pos);
-            if (blockEntity instanceof ManaConcentratorBlockEntity manaConcentratorBlockEntity && manaConcentratorBlockEntity.isActive()) {
-                if (stack.is(Items.CARROT_ON_A_STICK)) {// TODO: Replace with crafting start item
-                    manaConcentratorBlockEntity.startCrafting();
-                    return ItemInteractionResult.SUCCESS;
+            if (blockEntity instanceof ManaConcentratorBlockEntity manaConcentratorBlockEntity) {
+                if (manaConcentratorBlockEntity.isActive()) {
+                    if (stack.is(Items.CARROT_ON_A_STICK)) {// TODO: Replace with crafting start item
+                        manaConcentratorBlockEntity.startCrafting();
+                        return ItemInteractionResult.SUCCESS;
+                    }
                 } else if (stack.is(ManaweaveAndRunesItemInit.MANA_DEBUG_STICK_ITEM)) {
                     MultiblockValidator.MultiBlockValidationData validationData =
                             manaConcentratorBlockEntity.validateMultiblock();

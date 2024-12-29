@@ -57,4 +57,7 @@ public class ManaweaveAndRunesItemInit {
     public static final DeferredItem<BlockItem> MASTER_MANA_CONCENTRATOR_BLOCK_ITEM =
             ITEMS.registerSimpleBlockItem("master_mana_concentrator",
                                           ManaweaveAndRunesBlockInit.MASTER_MANA_CONCENTRATOR_BLOCK);
+    public static final DeferredItem<BlockItem> ASCENDED_MANA_CONCENTRATOR_BLOCK_ITEM =
+            ITEMS.registerSimpleBlockItem("ascended_mana_concentrator",
+                                          ManaweaveAndRunesBlockInit.ASCENDED_MANA_CONCENTRATOR_BLOCK);
 }

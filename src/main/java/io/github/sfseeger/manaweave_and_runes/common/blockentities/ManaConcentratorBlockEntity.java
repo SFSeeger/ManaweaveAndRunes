@@ -1,5 +1,7 @@
 package io.github.sfseeger.manaweave_and_runes.common.blockentities;
 
+import com.mojang.serialization.Codec;
+import io.github.sfseeger.lib.common.Tier;
 import io.github.sfseeger.lib.common.mana.IManaItem;
 import io.github.sfseeger.lib.common.mana.Mana;
 import io.github.sfseeger.lib.common.mana.capability.IManaHandler;
@@ -9,6 +11,7 @@ import io.github.sfseeger.lib.common.recipes.mana_concentrator.ManaConcentratorR
 import io.github.sfseeger.manaweave_and_runes.common.blocks.RuneBlock;
 import io.github.sfseeger.manaweave_and_runes.common.blocks.mana_concentrator.ManaConcentratorBlock;
 import io.github.sfseeger.manaweave_and_runes.common.blocks.mana_concentrator.ManaConcentratorType;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRParticleTypeInit;
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockEntityInit;
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockInit;
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesRecipeInit;
@@ -19,6 +22,8 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtOps;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -59,6 +64,7 @@ public class ManaConcentratorBlockEntity extends BlockEntity {
     private boolean isCrafting;
     private Stack<Integer> slotStack = new Stack<>();
     private ManaConcentratorRecipe currentRecipe;
+    public static final Codec<List<BlockPos>> BLOCK_POS_LIST_CODEC = BlockPos.CODEC.listOf();
 
     public IItemHandler getItemHandler(@Nullable Direction side) {
         return inventory;
@@ -67,6 +73,7 @@ public class ManaConcentratorBlockEntity extends BlockEntity {
     public ManaConcentratorBlockEntity(BlockPos pos, BlockState state) {
         super(ManaweaveAndRunesBlockEntityInit.MANA_CONCENTRATOR_BLOCK_ENTITY.get(), pos, state);
     }
+    private List<BlockPos> pedestalPositions;
 
     public static void serverTick(Level level, BlockPos pos, BlockState state,
             ManaConcentratorBlockEntity blockEntity) {
@@ -76,13 +83,20 @@ public class ManaConcentratorBlockEntity extends BlockEntity {
             blockEntity.setActive(isActive);
             blockEntity.markUpdated();
         }
+
         if (blockEntity.isCrafting) {
             blockEntity.craftTimePassed++;
             if (blockEntity.craftTimePassed >= blockEntity.craftTime) {
                 ItemStack result = blockEntity.craft();
                 if (!result.isEmpty()) {
-                    level.addFreshEntity(new ItemEntity(level, pos.getX(), pos.getY() + 1, pos.getZ(), result));
+                    level.addFreshEntity(
+                            new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, result));
                     level.playSound(null, pos, SoundEvents.AMETHYST_BLOCK_RESONATE, SoundSource.BLOCKS, 1.0F, 1.0F);
+
+                    float yOffset = blockEntity.getEffectYOffset();
+                    ((ServerLevel) level).sendParticles(MRParticleTypeInit.MANA_CONCENTRATED.get(), pos.getX() + .5,
+                                                        pos.getY() + yOffset, pos.getZ() + 0.5,
+                                                        1, 0, 0, 0, yOffset < 1.5 ? 1 : 0);
                     blockEntity.stopCrafting();
                 }
                 blockEntity.stopCrafting();
@@ -90,24 +104,12 @@ public class ManaConcentratorBlockEntity extends BlockEntity {
                 level.playSound(null, pos, SoundEvents.AMETHYST_BLOCK_PLACE, SoundSource.BLOCKS, 1.0F,
                                 1.0F + level.random.nextFloat() * 0.1F);
             }
+
         } else if (blockEntity.craftTime > 0 && blockEntity.isActive && blockEntity.craftTimePassed <= blockEntity.craftTime) {
             ManaConcentratorRecipe recipe = blockEntity.getAvailableRecipe();
             if (recipe == null) {
                 blockEntity.startCrafting();
             } else blockEntity.currentRecipe = recipe;
-        }
-    }
-
-    public static void clientTick(Level level, BlockPos pos, BlockState state,
-            ManaConcentratorBlockEntity blockEntity) {
-        RandomSource randomsource = level.getRandom();
-        if (randomsource.nextFloat() <= 0.5F && blockEntity.isActive()) {
-            Vec3 vec3 = ParticleUtils.randomPosInsideBox(pos, randomsource, -0.25, 0.25, -0.25, 1.25, 0.75, 1.25);
-            level.addParticle(ParticleTypes.GLOW, vec3.x(), vec3.y(), vec3.z(), 0.0, 0.0, 0.0);
-        }
-        if (blockEntity.isCrafting) {
-            Vec3 vec3 = ParticleUtils.randomPosInsideBox(pos, randomsource, -0.25, 0.25, -0.25, 1.25, 0.75, 1.25);
-            level.addParticle(ParticleTypes.END_ROD, vec3.x(), vec3.y(), vec3.z(), 0.0, 0.0, 0.0);
         }
     }
 
@@ -187,19 +189,37 @@ public class ManaConcentratorBlockEntity extends BlockEntity {
         return optional.map(RecipeHolder::value).orElse(null);
     }
 
-    public ManaConcentratorInput getInput(ManaConcentratorType type) {
-        List<BlockPos> relativePedestalPositions =
-                type.findBlocks(level, ManaweaveAndRunesBlockInit.RUNE_PEDESTAL_BLOCK.get());
-        List<ItemStack> inputItems = new ArrayList<>();
-        for (BlockPos pos : relativePedestalPositions) {
-            BlockEntity blockEntity = level.getBlockEntity(getBlockPos().offset(pos));
-            ItemStack item;
-            if (blockEntity instanceof RunePedestalBlockEntity runePedestalBlockEntity && !(item =
-                    runePedestalBlockEntity.getItem()).isEmpty()) {
-                inputItems.add(item);
+    public static void clientTick(Level level, BlockPos pos, BlockState state,
+            ManaConcentratorBlockEntity blockEntity) {
+        RandomSource randomsource = level.getRandom();
+
+
+        if (randomsource.nextFloat() <= 0.5F && blockEntity.isActive()) {
+            Vec3 vec3 = ParticleUtils.randomPosInsideBox(pos, randomsource, -0.25, 0.25, -0.25, 1.25, 0.75, 1.25);
+            level.addParticle(ParticleTypes.GLOW, vec3.x(), vec3.y(), vec3.z(), 0.0, 0.0, 0.0);
+        }
+
+        if (blockEntity.isCrafting) {
+            Vec3 vec3 = ParticleUtils.randomPosInsideBox(pos, randomsource, -0.25, 0.25, -0.25, 1.25, 0.75, 1.25);
+            level.addParticle(ParticleTypes.END_ROD, vec3.x(), vec3.y(), vec3.z(), 0.0, 0.0, 0.0);
+
+            List<BlockPos> filteredPedestalPositions = blockEntity.pedestalPositions.stream()
+                    .filter(pedestalPos -> level.getBlockEntity(
+                            pos.offset(pedestalPos)) instanceof RunePedestalBlockEntity re && !re.getItem().isEmpty())
+                    .toList();
+
+            for (BlockPos pedestalPos : filteredPedestalPositions.stream().map(pos::offset).toList()) {
+                Vec3 pedestalVec =
+                        new Vec3(pedestalPos.getX(), pedestalPos.getY(), pedestalPos.getZ());
+                Vec3 vecToConcentrator = new Vec3(pos.getX(), pos.getY(), pos.getZ()).vectorTo(pedestalVec);
+                for (int i = 0; i < 4; i++) {
+                    Vec3 randomPedestalVec = vecToConcentrator.offsetRandom(randomsource, .5f);
+                    level.addParticle(MRParticleTypeInit.MANA_PARTICLE.get(),
+                                      pos.getX() + 0.5f, pos.getY() + 1.5f, pos.getZ() + 0.5f,
+                                      randomPedestalVec.x(), randomPedestalVec.y(), randomPedestalVec.z());
+                }
             }
         }
-        return new ManaConcentratorInput(inputItems, type.getTier());
     }
 
     public ItemStack craft() {
@@ -263,6 +283,10 @@ public class ManaConcentratorBlockEntity extends BlockEntity {
                 : null;
     }
 
+    private static <T> Tag encode(Codec<T> codec, T value, HolderLookup.Provider levelRegistry) {
+        return (Tag) codec.encodeStart(levelRegistry.createSerializationContext(NbtOps.INSTANCE), value).getOrThrow();
+    }
+
     public boolean placeItem(ItemStack stack) {
         for (int i = 0; i < inventory.getSlots(); i++) {
             if (inventory.getStackInSlot(i).isEmpty() && inventory.insertItem(i, stack.copy(), false).isEmpty()) {
@@ -303,6 +327,28 @@ public class ManaConcentratorBlockEntity extends BlockEntity {
         this.isActive = isActive;
     }
 
+    public ManaConcentratorInput getInput(ManaConcentratorType type) {
+        List<BlockPos> relativePedestalPositions =
+                type.findBlocks(level, ManaweaveAndRunesBlockInit.RUNE_PEDESTAL_BLOCK.get());
+        // We can set this here to save on updates
+        pedestalPositions = relativePedestalPositions;
+        List<ItemStack> inputItems = new ArrayList<>();
+        for (BlockPos pos : relativePedestalPositions) {
+            BlockEntity blockEntity = level.getBlockEntity(getBlockPos().offset(pos));
+            ItemStack item;
+            if (blockEntity instanceof RunePedestalBlockEntity runePedestalBlockEntity && !(item =
+                    runePedestalBlockEntity.getItem()).isEmpty()) {
+                inputItems.add(item);
+            }
+        }
+        return new ManaConcentratorInput(inputItems, type.getTier());
+    }
+
+    public float getEffectYOffset() {
+        ManaConcentratorType type = getManaConcentratorType();
+        return type != null && type.getTier() == Tier.ASCENDED ? 0.5f : 1.5f; // TODO: maybe move this to the type
+    }
+
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
@@ -321,6 +367,11 @@ public class ManaConcentratorBlockEntity extends BlockEntity {
         if (tag.contains("isCrafting")) {
             isCrafting = tag.getBoolean("isCrafting");
         }
+        if (tag.contains("pedestalPositions")) {
+            pedestalPositions = BLOCK_POS_LIST_CODEC.parse(NbtOps.INSTANCE, tag.get("pedestalPositions"))
+                    .result()
+                    .orElseThrow(() -> new IllegalArgumentException("Failed to parse pedestal positions"));
+        }
     }
 
     @Override
@@ -332,6 +383,9 @@ public class ManaConcentratorBlockEntity extends BlockEntity {
         tag.putInt("craftTimeRemaining", craftTimePassed);
         tag.putIntArray("slotStack", slotStack.stream().mapToInt(i -> i).toArray());
         tag.putBoolean("isCrafting", isCrafting);
+        tag.put("pedestalPositions", encode(BLOCK_POS_LIST_CODEC,
+                                            pedestalPositions == null || pedestalPositions.isEmpty() ? List.of() : pedestalPositions,
+                                            registries));
     }
 
     @Override

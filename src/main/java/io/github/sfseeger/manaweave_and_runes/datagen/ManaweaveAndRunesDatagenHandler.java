@@ -3,6 +3,7 @@ package io.github.sfseeger.manaweave_and_runes.datagen;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
 import io.github.sfseeger.manaweave_and_runes.datagen.client.ManaweaveAndRunesBlockStateProvider;
 import io.github.sfseeger.manaweave_and_runes.datagen.client.ManaweaveAndRunesItemModelProvider;
+import io.github.sfseeger.manaweave_and_runes.datagen.client.ManaweaveAndRunesParticleDescriptionProvider;
 import io.github.sfseeger.manaweave_and_runes.datagen.server.ManaweaveAndRunesBlockTagsProvider;
 import io.github.sfseeger.manaweave_and_runes.datagen.server.ManaweaveAndRunesRecipeProvider;
 import io.github.sfseeger.manaweave_and_runes.datagen.server.loot_tables.ManaweaveAndRunesBlockLootSubProvider;
@@ -34,6 +35,8 @@ public class ManaweaveAndRunesDatagenHandler {
                               new ManaweaveAndRunesBlockStateProvider(output, existingFileHelper));
         generator.addProvider(event.includeClient(),
                               new ManaweaveAndRunesItemModelProvider(output, existingFileHelper));
+        generator.addProvider(event.includeClient(),
+                              new ManaweaveAndRunesParticleDescriptionProvider(output, existingFileHelper));
 
 
         // Server

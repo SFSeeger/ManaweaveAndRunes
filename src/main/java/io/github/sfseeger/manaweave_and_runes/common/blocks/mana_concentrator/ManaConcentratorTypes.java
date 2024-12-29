@@ -9,7 +9,7 @@ public class ManaConcentratorTypes {
             ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "novice_mana_concentrator"), Tier.NOVICE);
     public static final ManaConcentratorType MASTER = new ManaConcentratorType(
             ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "master_mana_concentrator"), Tier.MASTER);
-    public static final ManaConcentratorType ASCENDANT = new ManaConcentratorType(
-            ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "ascendant_mana_concentrator"),
+    public static final ManaConcentratorType ASCENDED = new ManaConcentratorType(
+            ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "ascended_mana_concentrator"),
             Tier.ASCENDED);
 }

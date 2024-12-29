@@ -1,4 +1,4 @@
-package io.github.sfseeger.manaweave_and_runes.client.renderer;
+package io.github.sfseeger.manaweave_and_runes.client.renderers;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
