@@ -2,9 +2,9 @@ package io.github.sfseeger.manaweave_and_runes.common.blockentities;
 
 import com.mojang.serialization.Codec;
 import io.github.sfseeger.lib.common.Tier;
-import io.github.sfseeger.lib.common.mana.IManaItem;
 import io.github.sfseeger.lib.common.mana.Mana;
 import io.github.sfseeger.lib.common.mana.capability.IManaHandler;
+import io.github.sfseeger.lib.common.mana.capability.IManaItem;
 import io.github.sfseeger.lib.common.mana.capability.ManaweaveAndRunesCapabilities;
 import io.github.sfseeger.lib.common.recipes.mana_concentrator.ManaConcentratorInput;
 import io.github.sfseeger.lib.common.recipes.mana_concentrator.ManaConcentratorRecipe;

@@ -1,7 +1,7 @@
 package io.github.sfseeger.manaweave_and_runes.core.init;
 
-import io.github.sfseeger.lib.common.mana.IManaItem;
 import io.github.sfseeger.lib.common.mana.Mana;
+import io.github.sfseeger.lib.common.mana.capability.IManaItem;
 import io.github.sfseeger.lib.common.mana.capability.ItemStackManaHandler;
 import io.github.sfseeger.lib.common.mana.capability.ManaweaveAndRunesCapabilities;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
