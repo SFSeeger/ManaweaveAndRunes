@@ -15,6 +15,7 @@ public class CommonEventHandler {
     @SubscribeEvent
     public static void registerRegistries(NewRegistryEvent event) {
         event.register(ManaweaveAndRunesRegistries.MANA_REGISTRY);
+        event.register(ManaweaveAndRunesRegistries.RITUAL_REGISTRY);
     }
 
     @SubscribeEvent

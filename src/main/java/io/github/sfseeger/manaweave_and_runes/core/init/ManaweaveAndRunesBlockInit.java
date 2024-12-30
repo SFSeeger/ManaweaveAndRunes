@@ -5,6 +5,8 @@ import io.github.sfseeger.manaweave_and_runes.common.blocks.*;
 import io.github.sfseeger.manaweave_and_runes.common.blocks.mana_concentrator.ManaConcentratorBlock;
 import io.github.sfseeger.manaweave_and_runes.common.blocks.mana_concentrator.ManaConcentratorTypes;
 import io.github.sfseeger.manaweave_and_runes.common.blocks.mana_concentrator.NoviceManaConcentratorBlock;
+import io.github.sfseeger.manaweave_and_runes.common.blocks.ritual_anchor.RitualAnchorBlock;
+import io.github.sfseeger.manaweave_and_runes.common.blocks.ritual_anchor.RitualAnchorTypes;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -38,5 +40,16 @@ public class ManaweaveAndRunesBlockInit {
     public static final DeferredBlock<? extends ManaConcentratorBlock> MASTER_MANA_CONCENTRATOR_BLOCK =
             BLOCKS.register("master_mana_concentrator", () -> new ManaConcentratorBlock(ManaConcentratorTypes.MASTER));
     public static final DeferredBlock<? extends ManaConcentratorBlock> ASCENDED_MANA_CONCENTRATOR_BLOCK =
-            BLOCKS.register("ascended_mana_concentrator", () -> new ManaConcentratorBlock(ManaConcentratorTypes.ASCENDED));
+            BLOCKS.register("ascended_mana_concentrator",
+                            () -> new ManaConcentratorBlock(ManaConcentratorTypes.ASCENDED));
+
+    public static final DeferredBlock<RitualAnchorBlock> NOVICE_RITUAL_ANCHOR_BLOCK =
+            BLOCKS.register("novice_ritual_anchor", () -> new RitualAnchorBlock(
+                    RitualAnchorTypes.NOVICE));
+    public static final DeferredBlock<RitualAnchorBlock> MASTER_RITUAL_ANCHOR_BLOCK =
+            BLOCKS.register("master_ritual_anchor", () -> new RitualAnchorBlock(
+                    RitualAnchorTypes.MASTER));
+    public static final DeferredBlock<RitualAnchorBlock> ASCENDED_RITUAL_ANCHOR_BLOCK =
+            BLOCKS.register("ascended_ritual_anchor", () -> new RitualAnchorBlock(
+                    RitualAnchorTypes.ASCENDED));
 }
