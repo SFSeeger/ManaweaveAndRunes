@@ -1,8 +1,8 @@
 package io.github.sfseeger.manaweave_and_runes.common.event;
 
 import io.github.sfseeger.lib.common.mana.ManaHelper;
-import io.github.sfseeger.lib.common.mana.ManaRegistry;
 import io.github.sfseeger.lib.common.mana.Manas;
+import io.github.sfseeger.lib.core.ManaweaveAndRunesRegistries;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
 import net.minecraft.world.item.Items;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -14,7 +14,7 @@ import net.neoforged.neoforge.registries.NewRegistryEvent;
 public class CommonEventHandler {
     @SubscribeEvent
     public static void registerRegistries(NewRegistryEvent event) {
-        event.register(ManaRegistry.MANA_REGISTRY);
+        event.register(ManaweaveAndRunesRegistries.MANA_REGISTRY);
     }
 
     @SubscribeEvent

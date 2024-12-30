@@ -1,7 +1,7 @@
 package io.github.sfseeger.lib.common.items;
 
-import io.github.sfseeger.lib.common.mana.IManaItem;
 import io.github.sfseeger.lib.common.mana.Mana;
+import io.github.sfseeger.lib.common.mana.capability.IManaItem;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;

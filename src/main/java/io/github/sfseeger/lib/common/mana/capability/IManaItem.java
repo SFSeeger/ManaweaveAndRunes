@@ -1,7 +1,6 @@
-package io.github.sfseeger.lib.common.mana;
+package io.github.sfseeger.lib.common.mana.capability;
 
-import io.github.sfseeger.lib.common.mana.capability.IManaHandler;
-import io.github.sfseeger.lib.common.mana.capability.ManaweaveAndRunesCapabilities;
+import io.github.sfseeger.lib.common.mana.Mana;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.Item;
@@ -22,7 +21,7 @@ public interface IManaItem {
     }
 
     default int getManaBarColor(ItemStack stack) {
-        return getManaType().properties.getColor();
+        return getManaType().properties().getColor();
     }
 
     default boolean isManaBarVisible(ItemStack stack) {
@@ -40,7 +39,7 @@ public interface IManaItem {
                                                                           manaHandler.getManaCapacity()))
                 .append(" ")
                 .append(getManaType().getName())
-                .withColor(getManaType().properties.getColor());
+                .withColor(getManaType().properties().getColor());
 
         tooltip.add(component);
 

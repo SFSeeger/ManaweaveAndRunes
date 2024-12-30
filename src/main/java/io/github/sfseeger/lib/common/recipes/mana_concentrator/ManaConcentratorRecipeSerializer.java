@@ -5,7 +5,7 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.github.sfseeger.lib.common.Tier;
 import io.github.sfseeger.lib.common.mana.Mana;
-import io.github.sfseeger.lib.common.mana.ManaRegistry;
+import io.github.sfseeger.lib.core.ManaweaveAndRunesRegistries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -31,7 +31,7 @@ public class ManaConcentratorRecipeSerializer implements RecipeSerializer<ManaCo
                     ManaConcentratorRecipe::getIngredients,
                     ByteBufCodecs.map(
                             HashMap::new,
-                            ByteBufCodecs.registry(ManaRegistry.MANA_REGISTRY_KEY),
+                            ByteBufCodecs.registry(ManaweaveAndRunesRegistries.MANA_REGISTRY_KEY),
                             ByteBufCodecs.INT,
                             256
                     ), ManaConcentratorRecipe::manaMap,

@@ -1,7 +1,7 @@
 package io.github.sfseeger.lib.common.mana.capability;
 
 import io.github.sfseeger.lib.common.mana.Mana;
-import io.github.sfseeger.lib.common.mana.ManaRegistry;
+import io.github.sfseeger.lib.core.ManaweaveAndRunesRegistries;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.IntTag;
@@ -130,7 +130,8 @@ public class ManaHandler implements IManaHandler, INBTSerializable {
         CompoundTag tag = new CompoundTag();
         for (Mana manatype : manaStored.keySet()) {
             Integer stored = manaStored.get(manatype);
-            tag.putInt(ManaRegistry.MANA_REGISTRY.getKey(manatype).toString(), stored == null ? 0 : stored);
+            tag.putInt(ManaweaveAndRunesRegistries.MANA_REGISTRY.getKey(manatype).toString(),
+                       stored == null ? 0 : stored);
         }
         return tag;
     }
@@ -140,7 +141,7 @@ public class ManaHandler implements IManaHandler, INBTSerializable {
         CompoundTag compoundTag = (CompoundTag) tag;
         if (tag instanceof CompoundTag) {
             for (String manaType : compoundTag.getAllKeys()) {
-                Mana mana = ManaRegistry.MANA_REGISTRY.get(ResourceLocation.parse(manaType));
+                Mana mana = ManaweaveAndRunesRegistries.MANA_REGISTRY.get(ResourceLocation.parse(manaType));
                 if (mana == null || !((CompoundTag) tag).contains(manaType)) {
                     continue;
                 }

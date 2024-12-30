@@ -4,15 +4,22 @@ import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import io.github.sfseeger.lib.common.mana.utils.ManaGenerationHelper;
+import io.github.sfseeger.lib.core.ManaweaveAndRunesRegistries;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Mana {
 
@@ -20,11 +27,18 @@ public class Mana {
     ManaProperties properties;
     public static final Codec<Holder<Mana>> CODEC;
     public static final Codec<List<Pair<Holder<Mana>, Integer>>> MANAS_WITH_AMOUNT_CODEC;
+    public static final StreamCodec<RegistryFriendlyByteBuf, Map<Mana, Integer>> MANA_MAP_STREAM_CODEC =
+            ByteBufCodecs.map(
+                    HashMap::new,
+                    ByteBufCodecs.registry(ManaweaveAndRunesRegistries.MANA_REGISTRY_KEY),
+                    ByteBufCodecs.INT,
+                    256
+            );
 
     static {
         //  ManaRegistry.MANA_REGISTRY.holderByNameCodec().fieldOf("mana_id").forGetter(Mana::RegistryHolder)
         CODEC = Codec.lazyInitialized(() ->
-                                              ManaRegistry.MANA_REGISTRY.holderByNameCodec().validate(
+                                              ManaweaveAndRunesRegistries.MANA_REGISTRY.holderByNameCodec().validate(
                                                       instance -> instance.is(Manas.EmptyMana.registryHolder()) ?
                                                               DataResult.error(
                                                                       () -> "Empty mana cannot be serialized") : DataResult.success(
@@ -37,6 +51,17 @@ public class Mana {
                         Codec.INT.fieldOf("amount").codec()
                 )
         );
+    }
+
+    public static Map<Mana, Integer> manaMapFromList(List<Pair<Holder<Mana>, Integer>> list) {
+        return list.stream().collect(Collectors.toMap(pair -> pair.getFirst().value(), Pair::getSecond));
+    }
+
+    public static List<Pair<Holder<Mana>, Integer>> manaMapAsList(Map<Mana, Integer> map) {
+        return map.entrySet()
+                .stream()
+                .map(entry -> Pair.of(entry.getKey().registryHolder(), entry.getValue()))
+                .toList();
     }
 
     public boolean canBeGenerated() {
@@ -90,7 +115,7 @@ public class Mana {
 
     public String getDescriptionId() {
         if (this.descriptionId == null) {
-            this.descriptionId = Util.makeDescriptionId("mana", ManaRegistry.MANA_REGISTRY.getKey(this));
+            this.descriptionId = Util.makeDescriptionId("mana", ManaweaveAndRunesRegistries.MANA_REGISTRY.getKey(this));
         }
         return this.descriptionId;
     }
@@ -100,7 +125,7 @@ public class Mana {
     }
 
     public String toString() {
-        return "Mana{" + ManaRegistry.MANA_REGISTRY.getKey(this) + "}";
+        return "Mana{" + ManaweaveAndRunesRegistries.MANA_REGISTRY.getKey(this) + "}";
     }
 
     public Mana(ManaProperties properties) {
@@ -112,6 +137,6 @@ public class Mana {
     }
 
     public Holder<Mana> registryHolder() {
-        return ManaRegistry.MANA_REGISTRY.wrapAsHolder(this);
+        return ManaweaveAndRunesRegistries.MANA_REGISTRY.wrapAsHolder(this);
     }
 }
