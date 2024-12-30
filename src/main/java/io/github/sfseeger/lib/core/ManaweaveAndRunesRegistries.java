@@ -19,13 +19,6 @@ public class ManaweaveAndRunesRegistries {
             .maxId(256)
             .create();
 
-    // Datapack registries
-    public static final ResourceKey<Registry<MultiblockValidator>>
-            MULTIBLOCK_VALIDATOR_REGISTRY_KEY = ResourceKey.createRegistryKey(ResourceLocation.fromNamespaceAndPath(
-            ManaweaveAndRunes.MODID, "multiblocks"));
-    public static final ResourceKey<Registry<RitualInput>> RITUAL_INPUT_REGISTRY_KEY =
-            ResourceKey.createRegistryKey(
-                    ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "ritual_inputs"));
     public static ResourceKey<Registry<Ritual>> RITUAL_REGISTRY_KEY =
             ResourceKey.createRegistryKey(ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "ritual"));
     public static Registry<Ritual> RITUAL_REGISTRY = new RegistryBuilder<>(RITUAL_REGISTRY_KEY)
@@ -34,4 +27,12 @@ public class ManaweaveAndRunesRegistries {
                                                               "default_ritual")) //TODO: Change this to the actual default key
             .maxId(256)
             .create();
+
+    // Datapack registries
+    public static final ResourceKey<Registry<MultiblockValidator>>
+            MULTIBLOCK_VALIDATOR_REGISTRY_KEY = ResourceKey.createRegistryKey(ResourceLocation.fromNamespaceAndPath(
+            ManaweaveAndRunes.MODID, "multiblocks"));
+    public static final ResourceKey<Registry<RitualInput>> RITUAL_INPUT_REGISTRY_KEY =
+            ResourceKey.createRegistryKey(
+                    ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "ritual_inputs"));
 }
