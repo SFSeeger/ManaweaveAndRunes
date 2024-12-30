@@ -12,7 +12,7 @@
 * [ ] Design Block model
 * [ ] Add particles
 * [X] Check blocks at -1 y block pos
-* [ ] Fix blocks disappearing visually from inventory when clicked on generator
+* [ ] Fix blocks disappearing visually from inventory when clicked on collector
 
 ## Finish Generator
 * [ ] Generate mana tick based
@@ -49,18 +49,20 @@
 * [ ] Check how to transfer mana
 ## Add structure Runes
 ## Ritual Anchor
-* [ ] Add ritual registry
+
+* [X] Add ritual registry
 * [ ] Add ritual multiblock
-* [ ] Add ritual ui
+* [ ] Add unlock-able rituals
 * [ ] Add position & soul holder rune
 * [ ] Add ritual side effects?
-* [ ] Add banishment diemension
+* [ ] Add banishment dimension
   
 ## Ground spellcasting runes
 * [ ] Figure out how tf to implement this
 
 ## Spell Casting
-* [ ] Add rune braclet
+
+* [ ] Add rune bracelet
 * [ ] Add spell registry
 * [ ] Add spellcasting rune circles
 * [ ] Add effects and animations
@@ -69,12 +71,10 @@
 ## Add rune / item pedestal
 
 ## Crystal Ore
-
 * [X] Add ore
 * [X] Make minable
 * [ ] Add to worldgen
 ## Runes
-
 * [ ] Add rune registry?
 
 ## Mana
@@ -90,7 +90,7 @@
 ## General stuff
 * [ ] Add findable stuff
 * [ ] Add Structures
-* [ ] Move essential classes and regestration into lib?
+* [ ] Move essential classes and registration into lib?
 * [ ] Figure out upgrade tiers
 * [ ] Add building blocks?
 * [ ] Add more grindy progression system
