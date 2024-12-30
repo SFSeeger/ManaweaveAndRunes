@@ -1,0 +1,14 @@
+{
+  "initialItemCost": [
+    {
+      "item": "minecraft:diamond_sword"
+    }
+  ],
+  "tickItemCost": [],
+  "manaCost": [
+    {
+      "amount": 10,
+      "manaType": "manaweave_and_runes:fire_mana"
+    }
+  ]
+}

@@ -10,13 +10,15 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.crafting.Ingredient;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class RitualInput {
     public static final Codec<RitualInput> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            Ingredient.CODEC.listOf(1, 64).fieldOf("initialItemCost").forGetter(RitualInput::getInitialItemCost),
-            Ingredient.CODEC.listOf(1, 64).fieldOf("tickItemCost").forGetter(RitualInput::getTickItemCost),
+            Ingredient.CODEC.listOf().fieldOf("initialItemCost").forGetter(RitualInput::getInitialItemCost),
+            Ingredient.CODEC.listOf().fieldOf("tickItemCost").forGetter(RitualInput::getTickItemCost),
             Mana.MANAS_WITH_AMOUNT_CODEC.fieldOf("manaCost").forGetter(RitualInput::getManaCostAsList)
     ).apply(instance, RitualInput::new));
     public static final StreamCodec<RegistryFriendlyByteBuf, RitualInput> STREAM_CODEC = StreamCodec.composite(
@@ -57,6 +59,8 @@ public class RitualInput {
     }
 
     public boolean matches(List<Ingredient> items) {
-        return initialItemCost.stream().allMatch(ingredient -> items.stream().anyMatch(ingredient::equals));
+        Set<Ingredient> costs = new HashSet<>(initialItemCost);
+        costs.addAll(tickItemCost);
+        return costs.containsAll(items);
     }
 }

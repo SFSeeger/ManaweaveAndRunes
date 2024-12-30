@@ -56,4 +56,13 @@ public class ManaweaveAndRunesBlockEntityInit {
                             ManaweaveAndRunesBlockInit.ASCENDED_MANA_CONCENTRATOR_BLOCK.get()
                     ).build(null)
             );
+
+    public static final Supplier<BlockEntityType<RitualAnchorBlockEntity>> RITUAL_ANCHOR_BLOCK_ENTITY =
+            BLOCK_ENTITY_TYPES.register(
+                    "ritual_anchor_block_entity",
+                    () -> BlockEntityType.Builder.of(
+                            RitualAnchorBlockEntity::new,
+                            ManaweaveAndRunesBlockInit.NOVICE_RITUAL_ANCHOR_BLOCK.get()
+                    ).build(null)
+            );
 }
