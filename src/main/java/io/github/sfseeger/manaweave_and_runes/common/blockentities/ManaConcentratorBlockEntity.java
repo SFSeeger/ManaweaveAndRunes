@@ -23,7 +23,6 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -44,6 +43,8 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+
+import static io.github.sfseeger.manaweave_and_runes.core.util.Utils.encode;
 
 public class ManaConcentratorBlockEntity extends BlockEntity {
     private boolean isActive;
@@ -283,9 +284,6 @@ public class ManaConcentratorBlockEntity extends BlockEntity {
                 : null;
     }
 
-    private static <T> Tag encode(Codec<T> codec, T value, HolderLookup.Provider levelRegistry) {
-        return (Tag) codec.encodeStart(levelRegistry.createSerializationContext(NbtOps.INSTANCE), value).getOrThrow();
-    }
 
     public boolean placeItem(ItemStack stack) {
         for (int i = 0; i < inventory.getSlots(); i++) {

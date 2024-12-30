@@ -1,6 +1,7 @@
 package io.github.sfseeger.lib.common.rituals;
 
 
+import com.mojang.serialization.Codec;
 import io.github.sfseeger.lib.common.Tier;
 import io.github.sfseeger.lib.common.mana.Mana;
 import io.github.sfseeger.lib.core.ManaweaveAndRunesRegistries;
@@ -8,6 +9,7 @@ import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -22,24 +24,23 @@ import java.util.Map;
 import java.util.Optional;
 
 public abstract class Ritual {
+    public static final Codec<Ritual> CODEC =
+            Codec.lazyInitialized(() -> ManaweaveAndRunesRegistries.RITUAL_REGISTRY.byNameCodec());
+
     final boolean instant;
-    final boolean doesTick;
     final Tier tier;
     String descriptionId;
-    ResourceLocation ritualInputLocation;
     RitualInput input;
 
-    public Ritual(boolean instant, boolean doesTick, Tier tier, ResourceLocation ritualInputLocation) {
+    public Ritual(boolean instant, Tier tier) {
         this.instant = instant;
-        this.doesTick = doesTick;
         this.tier = tier;
-        this.ritualInputLocation = ritualInputLocation;
     }
 
     public String getDescriptionId() {
         if (this.descriptionId == null) {
             this.descriptionId =
-                    Util.makeDescriptionId("ritual", ManaweaveAndRunesRegistries.RITUAL_REGISTRY.getKey(this));
+                    Util.makeDescriptionId("ritual", getRegistryName());
         }
         return this.descriptionId;
     }
@@ -71,11 +72,11 @@ public abstract class Ritual {
             registryAccess = level.registryAccess();
         }
         registryAccess.registry(ManaweaveAndRunesRegistries.RITUAL_INPUT_REGISTRY_KEY)
-                .flatMap(reg -> Optional.ofNullable(reg.get(ritualInputLocation)))
+                .flatMap(reg -> Optional.ofNullable(reg.get(getRegistryName())))
                 .ifPresentOrElse(ritualInput -> this.input = ritualInput,
                                  () -> {
                                      throw new IllegalStateException(
-                                             "Ritual input not found for key: " + ritualInputLocation);
+                                             "Ritual input not found for key: " + getRegistryName());
                                  });
     }
 
@@ -97,13 +98,12 @@ public abstract class Ritual {
 
     ;
 
-    public void onRitualTick(Level level, BlockPos pos, BlockState state) {
-        if (!doesTick) {
-            return;
-        }
+    public RitualStepResult onRitualTick(Level level, BlockPos pos, BlockState state, RitualOriginType originType) {
+        return RitualStepResult.SUCCESS;
     }
 
-    public void onRitualStart(Level level, BlockPos pos, BlockState state, RitualOriginType originType) {
+    public RitualStepResult onRitualStart(Level level, BlockPos pos, BlockState state, RitualOriginType originType) {
+        return RitualStepResult.SUCCESS;
     }
 
     public void onRitualEnd(Level level, BlockPos pos, BlockState state, RitualOriginType originType) {
@@ -135,10 +135,6 @@ public abstract class Ritual {
         return instant;
     }
 
-    public boolean doesTick() {
-        return doesTick;
-    }
-
     public boolean usableInSpellcastingCircle() {
         return false;
     }
@@ -152,16 +148,34 @@ public abstract class Ritual {
     }
 
     public boolean matches(List<Ingredient> items, Tier tier, RitualOriginType originType) {
+        //TODO: This will not work, since input is not available when loading from the registry
         return input.matches(items)
                 && tier.greaterThanEqual(this.tier)
                 && originType == RitualOriginType.CIRCLE ? usableInSpellcastingCircle() : usableInRitualAnchor(); //TODO: Make this data driven
     }
 
-    public String toString() {
-        return "Ritual{" + ManaweaveAndRunesRegistries.RITUAL_REGISTRY.getKey(this) + "}";
+    public boolean matches(List<Ingredient> items, Tier tier, RitualOriginType originType, Level level) {
+        return level.registryAccess().registry(ManaweaveAndRunesRegistries.RITUAL_INPUT_REGISTRY_KEY)
+                .flatMap(reg -> Optional.ofNullable(reg.get(getRegistryName())))
+                .map(input -> input.matches(items)
+                        && tier.greaterThanEqual(this.tier)
+                        && (originType == RitualOriginType.CIRCLE ? usableInSpellcastingCircle() : usableInRitualAnchor()))
+                .orElse(false);
     }
 
-    public static enum RitualOriginType {
+    public Holder<Ritual> registryHolder() {
+        return ManaweaveAndRunesRegistries.RITUAL_REGISTRY.wrapAsHolder(this);
+    }
+
+    protected ResourceLocation getRegistryName() {
+        return ManaweaveAndRunesRegistries.RITUAL_REGISTRY.getKey(this);
+    }
+
+    public String toString() {
+        return "Ritual{" + getRegistryName() + "}";
+    }
+
+    public enum RitualOriginType {
         CIRCLE,
         ANCHOR
     }
