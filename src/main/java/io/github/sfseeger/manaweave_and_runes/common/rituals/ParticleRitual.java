@@ -3,6 +3,7 @@ package io.github.sfseeger.manaweave_and_runes.common.rituals;
 import io.github.sfseeger.lib.common.Tier;
 import io.github.sfseeger.lib.common.rituals.Ritual;
 import io.github.sfseeger.lib.common.rituals.RitualStepResult;
+import io.github.sfseeger.manaweave_and_runes.common.blocks.ritual_anchor.RitualAnchorBlock;
 import io.github.sfseeger.manaweave_and_runes.core.util.ParticleUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -15,7 +16,7 @@ import net.minecraft.world.phys.Vec3;
 
 public class ParticleRitual extends Ritual {
     public ParticleRitual() {
-        super(Tier.NOVICE, 3 * 20);
+        super(Tier.NOVICE, 5 * 20);
     }
 
     @Override
@@ -29,6 +30,10 @@ public class ParticleRitual extends Ritual {
         if (ticksPassed % 10 == 0) {
             if (level.isThundering()) return RitualStepResult.ABORT;
         }
+        int amount = 1;
+        if (level.getBlockState(pos).getBlock() instanceof RitualAnchorBlock block) {
+            amount = block.ritualAnchorType.getTier().ordinal() + 1;
+        }
 
         Vec3 d = getDimension();
         for (int i = 0; i < 5; i++) {
@@ -36,7 +41,7 @@ public class ParticleRitual extends Ritual {
                     ParticleUtils.randomPosInsideBox(pos, level.getRandom(), -d.x / 2, -d.y / 2, -d.z / 2, d.x / 2,
                                                      d.y / 2,
                                                      d.z / 2);
-            level.sendParticles(ParticleTypes.GLOW, randomPos.x(), randomPos.y(), randomPos.z(), 1, 0, 0, 0,
+            level.sendParticles(ParticleTypes.GLOW, randomPos.x(), randomPos.y(), randomPos.z(), amount, 0, 0, 0,
                                 0);
         }
         return RitualStepResult.SUCCESS;

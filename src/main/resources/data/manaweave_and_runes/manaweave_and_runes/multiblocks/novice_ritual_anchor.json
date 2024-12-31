@@ -1,0 +1,37 @@
+{
+  "blockMapping": {
+    "R": "manaweave_and_runes:rune_block",
+    "P": "manaweave_and_runes:rune_pedestal",
+    "A": "minecraft:amethyst_block"
+  },
+  "structure": [
+    [
+      "       ",
+      "       ",
+      "       ",
+      "       ",
+      "       ",
+      "       ",
+      "       "
+    ],
+    [
+      "       ",
+      "       ",
+      "  P P  ",
+      "   0   ",
+      "  P P  ",
+      "       ",
+      "       "
+    ],
+    [
+      "__R_R__",
+      "_R_R_R_",
+      "R_ARA_R",
+      "_RRARR_",
+      "R_ARA_R",
+      "_R_R_R_",
+      "__R_R__"
+    ]
+  ],
+  "symmetric": true
+}

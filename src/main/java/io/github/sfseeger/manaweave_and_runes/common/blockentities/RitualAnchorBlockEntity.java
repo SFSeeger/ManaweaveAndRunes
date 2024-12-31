@@ -7,6 +7,7 @@ import io.github.sfseeger.manaweave_and_runes.common.blocks.ritual_anchor.Ritual
 import io.github.sfseeger.manaweave_and_runes.common.blocks.ritual_anchor.RitualAnchorType;
 import io.github.sfseeger.manaweave_and_runes.common.blocks.ritual_anchor.RitualAnchorTypes;
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockEntityInit;
+import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockInit;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -15,12 +16,13 @@ import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManager {
@@ -81,7 +83,21 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
     @Override
     public RitualStepResult consumeInitialItem(Level level, BlockPos pos, BlockState blockState, int ticksPassed,
             Ritual.RitualOriginType originType) {
-        //TODO: Implement
+        if (level.getGameTime() % 20 != 0) {
+            return RitualStepResult.SUCCESS;
+        }
+
+        for (BlockPos offset : getRitualAnchorType().findBlocks(level,
+                                                                ManaweaveAndRunesBlockInit.RUNE_PEDESTAL_BLOCK.get())) {
+            BlockPos worldPos = pos.offset(offset);
+            BlockEntity blockEntity = level.getBlockEntity(worldPos);
+            if (blockEntity instanceof RunePedestalBlockEntity pBE) {
+                if (getRitual().getInitialItemCost(level).stream().anyMatch(el -> el.test(pBE.getItem()))) {
+                    pBE.getItemHandler(null).extractItem(0, 1, false);
+                    return RitualStepResult.SUCCESS;
+                }
+            }
+        }
         return RitualStepResult.SKIP;
     }
 
@@ -121,10 +137,20 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
 
     public boolean checkAndStartRitual(Level level, Player player, ItemStack stack) {
         //TODO: Check if player knows this ritual
-        if (getState() != RitualState.IDLE) {
+        if (getState() != RitualState.IDLE || !stack.is(Items.CARROT_ON_A_STICK)) {
             return false;
         }
-        Ritual ritual = getMatchingRitual(List.of(Ingredient.of(stack)), getRitualAnchorType().getTier(), ORIGIN_TYPE,
+        List<ItemStack> items = new ArrayList<>();
+        for (BlockPos offset : getRitualAnchorType().findBlocks(level,
+                                                                ManaweaveAndRunesBlockInit.RUNE_PEDESTAL_BLOCK.get())) {
+            BlockPos worldPos = getBlockPos().offset(offset);
+            BlockEntity blockEntity = level.getBlockEntity(worldPos);
+            if (blockEntity instanceof RunePedestalBlockEntity pBE) {
+                ItemStack item = pBE.getItem();
+                if (!item.isEmpty()) items.add(item);
+            }
+        }
+        Ritual ritual = getMatchingRitual(items, getRitualAnchorType().getTier(), ORIGIN_TYPE,
                                           level).orElse(null);
         if (ritual == null) {
             return false;

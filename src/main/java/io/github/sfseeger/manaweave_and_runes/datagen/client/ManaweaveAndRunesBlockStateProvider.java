@@ -39,5 +39,18 @@ public class ManaweaveAndRunesBlockStateProvider extends BlockStateProvider {
                 ResourceLocation.parse(ManaweaveAndRunesBlockInit.RUNE_PEDESTAL_BLOCK.getRegisteredName())));
         this.simpleBlockItem(ManaweaveAndRunesBlockInit.RUNE_PEDESTAL_BLOCK.get(), this.models().getExistingFile(
                 ResourceLocation.parse(ManaweaveAndRunesBlockInit.RUNE_PEDESTAL_BLOCK.getRegisteredName())));
+
+        this.simpleBlockWithItem(ManaweaveAndRunesBlockInit.NOVICE_RITUAL_ANCHOR_BLOCK.get(),
+                                 this.models().getExistingFile(
+                                         ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID,
+                                                                               "block/ritual_anchor")));
+        this.simpleBlockWithItem(ManaweaveAndRunesBlockInit.MASTER_RITUAL_ANCHOR_BLOCK.get(),
+                                 this.models().getExistingFile(
+                                         ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID,
+                                                                               "block/ritual_anchor")));
+        this.simpleBlockWithItem(ManaweaveAndRunesBlockInit.ASCENDED_RITUAL_ANCHOR_BLOCK.get(),
+                                 this.models().getExistingFile(
+                                         ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID,
+                                                                               "block/ritual_anchor")));
     }
 }

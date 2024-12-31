@@ -7,6 +7,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
@@ -16,14 +17,31 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.BooleanOp;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.stream.Stream;
+
 public class RitualAnchorBlock extends Block implements EntityBlock {
+    public static final VoxelShape SHAPE = Stream.of(
+            Block.box(0, 0, 0, 16, 3, 16),
+            Block.box(2, 3, 2, 14, 6, 14),
+            Block.box(3, 6, 3, 13, 11, 13),
+            Block.box(0, 11, 0, 15, 12, 15)
+    ).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).get();
     public final RitualAnchorType ritualAnchorType;
 
     public RitualAnchorBlock(RitualAnchorType type) {
         super(Properties.of().strength(1.5f).requiresCorrectToolForDrops().sound(SoundType.AMETHYST));
         this.ritualAnchorType = type;
+    }
+
+    @Override
+    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return SHAPE;
     }
 
     @Override

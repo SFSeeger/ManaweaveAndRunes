@@ -29,6 +29,10 @@ public class ManaweaveAndRunesBlockLootSubProvider extends BlockLootSubProvider 
         this.dropSelf(ManaweaveAndRunesBlockInit.NOVICE_MANA_CONCENTRATOR_BLOCK.get());
         this.dropSelf(ManaweaveAndRunesBlockInit.MASTER_MANA_CONCENTRATOR_BLOCK.get());
         this.dropSelf(ManaweaveAndRunesBlockInit.ASCENDED_MANA_CONCENTRATOR_BLOCK.get());
+        this.dropSelf(ManaweaveAndRunesBlockInit.NOVICE_RITUAL_ANCHOR_BLOCK.get());
+        this.dropSelf(ManaweaveAndRunesBlockInit.MASTER_RITUAL_ANCHOR_BLOCK.get());
+        this.dropSelf(ManaweaveAndRunesBlockInit.ASCENDED_RITUAL_ANCHOR_BLOCK.get());
+
     }
 
     @Override
