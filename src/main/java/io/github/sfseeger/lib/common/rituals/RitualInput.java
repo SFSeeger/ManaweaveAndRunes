@@ -8,6 +8,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 
 import java.util.HashSet;
@@ -58,9 +59,9 @@ public class RitualInput {
         return Mana.manaMapAsList(manaCost);
     }
 
-    public boolean matches(List<Ingredient> items) {
+    public boolean matches(List<ItemStack> items) {
         Set<Ingredient> costs = new HashSet<>(initialItemCost);
         costs.addAll(tickItemCost);
-        return costs.containsAll(items);
+        return costs.stream().allMatch(i -> items.stream().anyMatch(i));
     }
 }

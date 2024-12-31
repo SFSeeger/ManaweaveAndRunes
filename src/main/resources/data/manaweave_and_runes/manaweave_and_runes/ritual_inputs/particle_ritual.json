@@ -1,14 +1,17 @@
 {
   "initialItemCost": [
     {
-      "item": "minecraft:diamond_sword"
+      "item": "minecraft:glow_ink_sac"
+    },
+    {
+      "item": "minecraft:feather"
     }
   ],
   "tickItemCost": [],
   "manaCost": [
     {
       "amount": 10,
-      "manaType": "manaweave_and_runes:fire_mana"
+      "manaType": "manaweave_and_runes:air_mana"
     }
   ]
 }

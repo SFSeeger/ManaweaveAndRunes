@@ -10,7 +10,7 @@ import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.RegistryOps;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -70,7 +70,7 @@ public interface IRitualManager {
             )
     );
 
-    default Optional<Ritual> getMatchingRitual(List<Ingredient> items, Tier tier, Ritual.RitualOriginType originType,
+    default Optional<Ritual> getMatchingRitual(List<ItemStack> items, Tier tier, Ritual.RitualOriginType originType,
             Level level) {
         return ManaweaveAndRunesRegistries.RITUAL_REGISTRY.entrySet().stream()
                 .map(Map.Entry::getValue)
