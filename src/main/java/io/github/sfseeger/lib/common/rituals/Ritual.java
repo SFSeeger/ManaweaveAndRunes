@@ -15,6 +15,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -29,9 +30,9 @@ public abstract class Ritual {
             Codec.lazyInitialized(() -> ManaweaveAndRunesRegistries.RITUAL_REGISTRY.byNameCodec());
 
     final Tier tier;
+    final int duration;
     String descriptionId;
     RitualInput input;
-    final int duration;
 
     public Ritual(Tier tier, int duration) {
         this.tier = tier;
@@ -60,16 +61,19 @@ public abstract class Ritual {
      * Returns the mana cost of the ritual
      * If the ritual is not instant, the mana cost will be the cost per tick
      */
-    public Map<Mana, Integer> getManaCost() {
-        return input.getManaCost();
+    public Map<Mana, Integer> getManaCost(Level level) {
+        RitualInput input = getInput(level).orElse(null);
+        return input != null ? input.getManaCost() : Map.of();
     }
 
-    public List<Ingredient> getInitialItemCost() {
-        return input.getInitialItemCost();
+    public List<Ingredient> getInitialItemCost(Level level) {
+        RitualInput input = getInput(level).orElse(null);
+        return input != null ? input.getInitialItemCost() : List.of();
     }
 
-    public List<Ingredient> getTickItemCost() {
-        return input.getTickItemCost();
+    public List<Ingredient> getTickItemCost(Level level) {
+        RitualInput input = getInput(level).orElse(null);
+        return input != null ? input.getTickItemCost() : List.of();
     }
 
     public RitualStepResult onRitualServerTick(ServerLevel level, BlockPos pos, BlockState state, int ticksPassed,
@@ -118,26 +122,37 @@ public abstract class Ritual {
         return true;
     }
 
-    public RitualInput getInput() {
-        return input;
+    public Optional<RitualInput> getInput(Level level) {
+        RegistryAccess registryAccess = getRegistryAccess(level);
+        if (registryAccess == null) {
+            return Optional.empty();
+        }
+        return registryAccess.registry(ManaweaveAndRunesRegistries.RITUAL_INPUT_REGISTRY_KEY)
+                .flatMap(reg -> Optional.ofNullable(reg.get(getRegistryName())));
     }
 
-    public boolean matches(List<Ingredient> items, Tier tier, RitualOriginType originType) {
+    public boolean matches(List<ItemStack> items, Tier tier, RitualOriginType originType) {
         return input.matches(items)
                 && tier.greaterThanEqual(this.tier)
                 && originType == RitualOriginType.CIRCLE ? usableInSpellcastingCircle() : usableInRitualAnchor(); //TODO: Make this data driven
     }
 
-    public boolean matches(List<Ingredient> items, Tier tier, RitualOriginType originType, Level level) {
-        RegistryAccess registryAccess;
+    private RegistryAccess getRegistryAccess(Level level) {
         if (level.isClientSide) {
             ClientPacketListener listener = Minecraft.getInstance().getConnection();
             if (listener == null) {
-                return false;
+                return null;
             }
-            registryAccess = listener.registryAccess();
+            return listener.registryAccess();
         } else {
-            registryAccess = level.registryAccess();
+            return level.registryAccess();
+        }
+    }
+
+    public boolean matches(List<ItemStack> items, Tier tier, RitualOriginType originType, Level level) {
+        RegistryAccess registryAccess = getRegistryAccess(level);
+        if (registryAccess == null) {
+            return false;
         }
         return registryAccess.registry(ManaweaveAndRunesRegistries.RITUAL_INPUT_REGISTRY_KEY)
                 .flatMap(reg -> Optional.ofNullable(reg.get(getRegistryName())))

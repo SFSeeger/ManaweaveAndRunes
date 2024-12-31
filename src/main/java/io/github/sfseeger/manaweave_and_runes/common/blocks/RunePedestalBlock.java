@@ -21,7 +21,6 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -29,6 +28,11 @@ import org.jetbrains.annotations.Nullable;
 
 public class RunePedestalBlock extends Block implements EntityBlock {
     public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
+    private static final VoxelShape SHAPE = Shapes.or(
+            Shapes.box(0, 0, 0, 1, 0.125, 1),
+            Shapes.box(0.25, 0.125, 0.25, 0.75, 0.875, 0.75),
+            Shapes.box(0.0625, 0.875, 0.0625, 0.9375, 1, 0.9375)
+    );
 
     public RunePedestalBlock() {
         super(BlockBehaviour.Properties.of()
@@ -90,11 +94,6 @@ public class RunePedestalBlock extends Block implements EntityBlock {
 
     @Override
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        VoxelShape shape = Shapes.empty();
-        shape = Shapes.join(shape, Shapes.box(0, 0, 0, 1, 0.125, 1), BooleanOp.OR);
-        shape = Shapes.join(shape, Shapes.box(0.25, 0.125, 0.25, 0.75, 0.875, 0.75), BooleanOp.OR);
-        shape = Shapes.join(shape, Shapes.box(0.0625, 0.875, 0.0625, 0.9375, 1, 0.9375), BooleanOp.OR);
-
-        return shape;
+        return SHAPE;
     }
 }
