@@ -119,10 +119,11 @@ public interface IRitualManager {
     default void deserializeNBT(CompoundTag tag, HolderLookup.Provider holderLookup) {
         RegistryOps<Tag> ops = RegistryOps.create(NbtOps.INSTANCE, holderLookup);
 
-        setState(RitualState.values()[tag.getInt("state")]);
+        int state = tag.contains("state") ? tag.getInt("state") : RitualState.IDLE.ordinal();
+        setState(RitualState.values()[state]);
         setRitual(Ritual.CODEC.parse(ops, tag.get("ritual"))
                           .result()
-                          .orElseThrow(() -> new IllegalArgumentException("Could not deserialize ritual")));
+                          .orElse(null));
     }
 
     Ritual getRitual();

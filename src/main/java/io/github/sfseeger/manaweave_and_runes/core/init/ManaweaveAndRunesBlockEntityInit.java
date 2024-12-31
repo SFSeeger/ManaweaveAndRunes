@@ -62,7 +62,9 @@ public class ManaweaveAndRunesBlockEntityInit {
                     "ritual_anchor_block_entity",
                     () -> BlockEntityType.Builder.of(
                             RitualAnchorBlockEntity::new,
-                            ManaweaveAndRunesBlockInit.NOVICE_RITUAL_ANCHOR_BLOCK.get()
+                            ManaweaveAndRunesBlockInit.NOVICE_RITUAL_ANCHOR_BLOCK.get(),
+                            ManaweaveAndRunesBlockInit.MASTER_RITUAL_ANCHOR_BLOCK.get(),
+                            ManaweaveAndRunesBlockInit.ASCENDED_RITUAL_ANCHOR_BLOCK.get()
                     ).build(null)
             );
 }

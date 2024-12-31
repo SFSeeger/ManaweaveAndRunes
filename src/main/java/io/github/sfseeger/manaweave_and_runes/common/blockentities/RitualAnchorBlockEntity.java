@@ -60,7 +60,6 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
         switch (blockEntity.getState()) {
             case FINISH, ABORT -> {
                 blockEntity.ritualTicks = 0;
-                blockEntity.setRitual(null);
             }
             case TICK -> {
                 blockEntity.ritualTicks++;

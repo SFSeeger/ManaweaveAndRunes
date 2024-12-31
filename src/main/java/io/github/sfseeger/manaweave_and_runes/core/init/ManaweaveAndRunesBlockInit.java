@@ -47,7 +47,7 @@ public class ManaweaveAndRunesBlockInit {
             BLOCKS.register("novice_ritual_anchor", () -> new RitualAnchorBlock(
                     RitualAnchorTypes.NOVICE));
     public static final DeferredBlock<RitualAnchorBlock> MASTER_RITUAL_ANCHOR_BLOCK =
-            BLOCKS.register("novice_ritual_anchor", () -> new RitualAnchorBlock(
+            BLOCKS.register("master_ritual_anchor", () -> new RitualAnchorBlock(
                     RitualAnchorTypes.MASTER));
     public static final DeferredBlock<RitualAnchorBlock> ASCENDED_RITUAL_ANCHOR_BLOCK =
             BLOCKS.register("ascended_ritual_anchor", () -> new RitualAnchorBlock(
