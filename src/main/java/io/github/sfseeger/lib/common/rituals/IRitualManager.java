@@ -1,6 +1,7 @@
 package io.github.sfseeger.lib.common.rituals;
 
 import io.github.sfseeger.lib.common.Tier;
+import io.github.sfseeger.lib.common.rituals.ritual_data.RitualContext;
 import io.github.sfseeger.lib.core.ManaweaveAndRunesRegistries;
 import io.github.sfseeger.manaweave_and_runes.core.util.Utils;
 import net.minecraft.core.BlockPos;
@@ -28,30 +29,18 @@ public interface IRitualManager {
             ),
             RitualState.START, Map.of(
                     RitualStepResult.SUCCESS, RitualState.INITIAL_ITEM_CONSUME,
-                    RitualStepResult.SKIP, RitualState.MANA_CONSUME,
+                    RitualStepResult.SKIP, RitualState.TICK,
                     RitualStepResult.END, RitualState.FINISH,
                     RitualStepResult.ABORT, RitualState.ABORT
             ),
             RitualState.INITIAL_ITEM_CONSUME, Map.of(
                     RitualStepResult.SUCCESS, RitualState.INITIAL_ITEM_CONSUME,
-                    RitualStepResult.SKIP, RitualState.MANA_CONSUME,
-                    RitualStepResult.END, RitualState.FINISH,
-                    RitualStepResult.ABORT, RitualState.ABORT
-            ),
-            RitualState.MANA_CONSUME, Map.of(
-                    RitualStepResult.SUCCESS, RitualState.TICK,
                     RitualStepResult.SKIP, RitualState.TICK,
                     RitualStepResult.END, RitualState.FINISH,
                     RitualStepResult.ABORT, RitualState.ABORT
             ),
             RitualState.TICK, Map.of(
-                    RitualStepResult.SUCCESS, RitualState.TICK_ITEM_CONSUME,
-                    RitualStepResult.SKIP, RitualState.MANA_CONSUME,
-                    RitualStepResult.END, RitualState.FINISH,
-                    RitualStepResult.ABORT, RitualState.ABORT
-            ),
-            RitualState.TICK_ITEM_CONSUME, Map.of(
-                    RitualStepResult.SUCCESS, RitualState.MANA_CONSUME,
+                    RitualStepResult.SUCCESS, RitualState.TICK,
                     RitualStepResult.SKIP, RitualState.TICK,
                     RitualStepResult.END, RitualState.FINISH,
                     RitualStepResult.ABORT, RitualState.ABORT
@@ -79,31 +68,39 @@ public interface IRitualManager {
     }
 
     default void transition(RitualStepResult result) {
+        RitualState state = getState();
         setState(transitionMap.get(getState()).get(result));
+        if (!getState().equals(state)) markUpdated();
     }
 
     default void startRitual(Ritual ritual) {
         setState(RitualState.START);
         setRitual(ritual);
+        markUpdated();
     }
 
     RitualStepResult consumeInitialItem(Level level, BlockPos pos, BlockState blockState, int ticksPassed,
+            RitualContext context,
             Ritual.RitualOriginType originType);
 
     RitualStepResult consumeTickItem(Level level, BlockPos pos, BlockState blockState, int ticksPassed,
+            RitualContext context,
             Ritual.RitualOriginType originType);
 
     RitualStepResult consumeMana(Level level, BlockPos pos, BlockState blockState, int ticksPassed,
+            RitualContext context,
             Ritual.RitualOriginType originType);
 
     default RitualStepResult executeStep(Level level, BlockPos pos, BlockState blockState, int ticksPassed,
+            RitualContext context,
             Ritual.RitualOriginType originType) {
-        return getState().step(this, level, pos, blockState, ticksPassed, originType);
+        return getState().step(this, level, pos, blockState, ticksPassed, context, originType);
     }
 
     default void executeStepAndTransition(Level level, BlockPos pos, BlockState blockState, int ticksPassed,
+            RitualContext context,
             Ritual.RitualOriginType originType) {
-        RitualStepResult result = executeStep(level, pos, blockState, ticksPassed, originType);
+        RitualStepResult result = executeStep(level, pos, blockState, ticksPassed, context, originType);
         transition(result);
     }
 
@@ -126,6 +123,8 @@ public interface IRitualManager {
                           .orElse(null));
     }
 
+    void markUpdated();
+
     Ritual getRitual();
 
     void setRitual(Ritual ritual);
@@ -136,27 +135,32 @@ public interface IRitualManager {
 
 
     enum RitualState {
-        START((manager, level, pos, blockState, ticksPassed, originType) -> {
-            RitualStepResult result = manager.getRitual().onRitualStart(level, pos, blockState, originType);
+        START((manager, level, pos, blockState, ticksPassed, context, originType) -> {
+            RitualStepResult result = manager.getRitual().onRitualStart(level, pos, blockState, context, originType);
             manager.transition(result);
             return result;
         }),
         INITIAL_ITEM_CONSUME(IRitualManager::consumeInitialItem),
-        TICK_ITEM_CONSUME(IRitualManager::consumeTickItem),
-        MANA_CONSUME(IRitualManager::consumeMana),
-        TICK((manager, level, pos, blockState, ticksPassed, originType) ->
-                     manager.getRitual()
-                             .onRitualServerTick((ServerLevel) level, pos, blockState, ticksPassed, originType)
-        ),
-        FINISH((manager, level, pos, blockState, ticksPassed, originType) -> {
-            manager.getRitual().onRitualEnd(level, pos, blockState, originType);
+        TICK((manager, level, pos, blockState, ticksPassed, context, originType) -> {
+            RitualStepResult currentResult =
+                    manager.consumeMana(level, pos, blockState, ticksPassed, context, originType);
+            currentResult = currentResult.getHigherPriority(
+                    manager.getRitual()
+                            .onRitualServerTick((ServerLevel) level, pos, blockState, ticksPassed, context,
+                                                originType));
+            currentResult = currentResult.getHigherPriority(
+                    manager.consumeTickItem(level, pos, blockState, ticksPassed, context, originType));
+            return currentResult;
+        }),
+        FINISH((manager, level, pos, blockState, ticksPassed, context, originType) -> {
+            manager.getRitual().onRitualEnd(level, pos, blockState, context, originType);
             return RitualStepResult.SUCCESS;
         }),
-        ABORT((manager, level, pos, blockState, ticksPassed, originType) -> {
-            manager.getRitual().onRitualInterrupt(level, pos, blockState, originType);
+        ABORT((manager, level, pos, blockState, ticksPassed, context, originType) -> {
+            manager.getRitual().onRitualInterrupt(level, pos, blockState, context, originType);
             return RitualStepResult.SUCCESS;
         }),
-        IDLE((manager, level, pos, blockState, ticksPassed, originType) -> RitualStepResult.SKIP);
+        IDLE((manager, level, pos, blockState, ticksPassed, extraData, originType) -> RitualStepResult.SKIP);
 
         private final RitualStep stepFunction;
 
@@ -165,16 +169,16 @@ public interface IRitualManager {
         }
 
         public RitualStepResult step(IRitualManager manager, Level level, BlockPos pos, BlockState blockState,
-                int ticksPassed,
+                int ticksPassed, RitualContext context,
                 Ritual.RitualOriginType originType) {
-            return stepFunction.step(manager, level, pos, blockState, ticksPassed, originType);
+            return stepFunction.step(manager, level, pos, blockState, ticksPassed, context, originType);
         }
 
 
         @FunctionalInterface
         private interface RitualStep {
             RitualStepResult step(IRitualManager manager, Level level, BlockPos pos, BlockState blockState,
-                    int ticksPassed, Ritual.RitualOriginType originType);
+                    int ticksPassed, RitualContext context, Ritual.RitualOriginType originType);
         }
     }
 }

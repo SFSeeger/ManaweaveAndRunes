@@ -1,9 +1,7 @@
 package io.github.sfseeger.manaweave_and_runes.core.init;
 
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
-import io.github.sfseeger.manaweave_and_runes.common.items.AirRuneItem;
-import io.github.sfseeger.manaweave_and_runes.common.items.FireRuneItem;
-import io.github.sfseeger.manaweave_and_runes.common.items.ManaDebugStickItem;
+import io.github.sfseeger.manaweave_and_runes.common.items.*;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
@@ -34,6 +32,11 @@ public class ManaweaveAndRunesItemInit {
 
     public static final DeferredItem<ManaDebugStickItem> MANA_DEBUG_STICK_ITEM = ITEMS.register("mana_debug_stick",
                                                                                                 ManaDebugStickItem::new);
+
+    public static final DeferredItem<PositionRuneItem> POSITION_RUNE_ITEM = ITEMS.register("position_rune",
+                                                                                           PositionRuneItem::new);
+    public static final DeferredItem<SoulContainerRuneItem> SOUL_CONTAINER_RUNE_ITEM = ITEMS.register(
+            "soul_container_rune", SoulContainerRuneItem::new);
 
     public static final DeferredItem<BlockItem> CRYSTAL_ORE_ITEM =
             ITEMS.registerSimpleBlockItem("crystal_ore", ManaweaveAndRunesBlockInit.CRYSTAL_ORE);

@@ -4,12 +4,12 @@ package io.github.sfseeger.lib.common.rituals;
 import com.mojang.serialization.Codec;
 import io.github.sfseeger.lib.common.Tier;
 import io.github.sfseeger.lib.common.mana.Mana;
+import io.github.sfseeger.lib.common.rituals.ritual_data.RitualContext;
 import io.github.sfseeger.lib.core.ManaweaveAndRunesRegistries;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -76,24 +76,24 @@ public abstract class Ritual {
         return input != null ? input.getTickItemCost() : List.of();
     }
 
-    public RitualStepResult onRitualServerTick(ServerLevel level, BlockPos pos, BlockState state, int ticksPassed,
+    public abstract RitualStepResult onRitualServerTick(ServerLevel level, BlockPos pos, BlockState state,
+            int ticksPassed, RitualContext context,
+            RitualOriginType originType);
+
+    public void onRitualClientTick(Level level, BlockPos pos, BlockState state, int ticksPassed, RitualContext context,
+            RitualOriginType originType) {
+    }
+
+    public RitualStepResult onRitualStart(Level level, BlockPos pos, BlockState state, RitualContext context,
             RitualOriginType originType) {
         return RitualStepResult.SUCCESS;
     }
 
-    public void onRitualClientTick(Level level, BlockPos pos, BlockState state, int ticksPassed,
-            RitualOriginType originType) {
-    }
+    public abstract void onRitualEnd(Level level, BlockPos pos, BlockState state, RitualContext context,
+            RitualOriginType originType);
 
-    public RitualStepResult onRitualStart(Level level, BlockPos pos, BlockState state, RitualOriginType originType) {
-        return RitualStepResult.SUCCESS;
-    }
-
-    public void onRitualEnd(Level level, BlockPos pos, BlockState state, RitualOriginType originType) {
-    }
-
-    public void onRitualInterrupt(Level level, BlockPos pos, BlockState state, RitualOriginType originType) {
-    }
+    public abstract void onRitualInterrupt(Level level, BlockPos pos, BlockState state, RitualContext context,
+            RitualOriginType originType);
 
     public int getDuration() {
         return duration;
@@ -131,12 +131,6 @@ public abstract class Ritual {
                 .flatMap(reg -> Optional.ofNullable(reg.get(getRegistryName())));
     }
 
-    public boolean matches(List<ItemStack> items, Tier tier, RitualOriginType originType) {
-        return input.matches(items)
-                && tier.greaterThanEqual(this.tier)
-                && originType == RitualOriginType.CIRCLE ? usableInSpellcastingCircle() : usableInRitualAnchor(); //TODO: Make this data driven
-    }
-
     private RegistryAccess getRegistryAccess(Level level) {
         if (level.isClientSide) {
             ClientPacketListener listener = Minecraft.getInstance().getConnection();
@@ -154,16 +148,13 @@ public abstract class Ritual {
         if (registryAccess == null) {
             return false;
         }
-        return registryAccess.registry(ManaweaveAndRunesRegistries.RITUAL_INPUT_REGISTRY_KEY)
+        boolean res = registryAccess.registry(ManaweaveAndRunesRegistries.RITUAL_INPUT_REGISTRY_KEY)
                 .flatMap(reg -> Optional.ofNullable(reg.get(getRegistryName())))
                 .map(input -> input.matches(items)
                         && tier.greaterThanEqual(this.tier)
                         && (originType == RitualOriginType.CIRCLE ? usableInSpellcastingCircle() : usableInRitualAnchor()))
                 .orElse(false);
-    }
-
-    public Holder<Ritual> registryHolder() {
-        return ManaweaveAndRunesRegistries.RITUAL_REGISTRY.wrapAsHolder(this);
+        return res;
     }
 
     protected ResourceLocation getRegistryName() {
@@ -178,4 +169,10 @@ public abstract class Ritual {
         CIRCLE,
         ANCHOR
     }
+
+    public <T> Codec<T> getExtraDataCodec() {
+        return null;
+    }
+
+    ;
 }
