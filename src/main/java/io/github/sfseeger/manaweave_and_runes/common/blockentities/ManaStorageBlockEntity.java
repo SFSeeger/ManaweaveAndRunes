@@ -1,5 +1,6 @@
 package io.github.sfseeger.manaweave_and_runes.common.blockentities;
 
+import io.github.sfseeger.lib.common.blockentities.IManaCapable;
 import io.github.sfseeger.lib.common.mana.capability.ManaHandler;
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockEntityInit;
 import net.minecraft.core.BlockPos;
@@ -13,7 +14,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
-public class ManaStorageBlockEntity extends BlockEntity {
+public class ManaStorageBlockEntity extends BlockEntity implements IManaCapable {
     public static final int MANA_SLOTS = 5;
     ManaHandler manaHandler;
 
@@ -27,6 +28,7 @@ public class ManaStorageBlockEntity extends BlockEntity {
         };
     }
 
+    @Override
     public ManaHandler getManaHandler(Direction side) {
         return this.manaHandler;
     }

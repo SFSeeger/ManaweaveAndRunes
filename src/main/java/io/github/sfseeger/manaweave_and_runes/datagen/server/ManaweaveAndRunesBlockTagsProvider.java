@@ -1,5 +1,6 @@
 package io.github.sfseeger.manaweave_and_runes.datagen.server;
 
+import io.github.sfseeger.manaweave_and_runes.core.init.MRTagInit;
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockInit;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -28,5 +29,9 @@ public class ManaweaveAndRunesBlockTagsProvider extends BlockTagsProvider {
 
         this.tag(BlockTags.NEEDS_DIAMOND_TOOL)
                 .add(ManaweaveAndRunesBlockInit.CRYSTAL_ORE.get());
+
+        this.tag(MRTagInit.RITUAL_MANA_PROVIDERS)
+                .add(ManaweaveAndRunesBlockInit.MANA_STORAGE_BLOCK.get())
+                .add(ManaweaveAndRunesBlockInit.MANA_COLLECTOR_BLOCK.get());
     }
 }

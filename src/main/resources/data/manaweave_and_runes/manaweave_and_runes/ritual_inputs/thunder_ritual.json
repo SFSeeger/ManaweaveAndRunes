@@ -1,0 +1,20 @@
+{
+  "initialItemCost": [
+    {
+      "item": "minecraft:copper_ingot"
+    },
+    {
+      "item": "minecraft:blaze_rod"
+    },
+    {
+      "item": "manaweave_and_runes:position_rune"
+    }
+  ],
+  "tickItemCost": [],
+  "manaCost": [
+    {
+      "amount": 10,
+      "manaType": "manaweave_and_runes:air_mana"
+    }
+  ]
+}

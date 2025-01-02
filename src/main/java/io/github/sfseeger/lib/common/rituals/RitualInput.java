@@ -11,10 +11,10 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class RitualInput {
     public static final Codec<RitualInput> CODEC = RecordCodecBuilder.create(instance -> instance.group(
@@ -60,8 +60,48 @@ public class RitualInput {
     }
 
     public boolean matches(List<ItemStack> items) {
-        Set<Ingredient> costs = new HashSet<>(initialItemCost);
+        List<Ingredient> costs = new ArrayList<>(initialItemCost);
         costs.addAll(tickItemCost);
-        return costs.stream().allMatch(i -> items.stream().anyMatch(i));
+        return costs.stream().allMatch(i -> items.stream().anyMatch(i::test));
+    }
+
+    public static class Builder {
+        private List<Ingredient> initialItemCost = new ArrayList<>();
+        private List<Ingredient> tickItemCost = new ArrayList<>();
+        private Map<Mana, Integer> manaCost = new HashMap<>();
+
+        public Builder setInitialItemCost(List<Ingredient> initialItemCost) {
+            this.initialItemCost = initialItemCost;
+            return this;
+        }
+
+        public Builder addInitialItemCost(Ingredient initialItemCost) {
+            this.initialItemCost.add(initialItemCost);
+            return this;
+        }
+
+        public Builder setTickItemCost(List<Ingredient> tickItemCost) {
+            this.tickItemCost = tickItemCost;
+            return this;
+        }
+
+        public Builder addTickItemCost(Ingredient tickItemCost) {
+            this.tickItemCost.add(tickItemCost);
+            return this;
+        }
+
+        public Builder setManaCost(Map<Mana, Integer> manaCost) {
+            this.manaCost = manaCost;
+            return this;
+        }
+
+        public Builder addManaCost(Mana mana, int amount) {
+            this.manaCost.put(mana, amount);
+            return this;
+        }
+
+        public RitualInput createRitualInput() {
+            return new RitualInput(initialItemCost, tickItemCost, manaCost);
+        }
     }
 }

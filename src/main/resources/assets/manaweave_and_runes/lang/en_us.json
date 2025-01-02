@@ -12,5 +12,7 @@
   "block.manaweave_and_runes.ascended_mana_concentrator": "Ascended Mana Concentrator",
   "container.manaweave_and_runes.rune_carver_block": "Rune Carver",
   "lore.manaweave_and_runes.mana_stored": "%d / %d",
-  "container.manaweave_and_runes.mana_storage_block": "Mana Storage"
+  "container.manaweave_and_runes.mana_storage_block": "Mana Storage",
+  "item.manaweave_and_runes.soul_container_rune.stole_soul_fragment": "Someone tried to steal a soul fragment from you",
+  "item.manaweave_and_runes.soul_container_rune.detected": "You got noticed trying to steal a soul fragment"
 }

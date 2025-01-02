@@ -53,7 +53,7 @@
 * [X] Add ritual registry
 * [ ] Add ritual multiblock
 * [ ] Add unlock-able rituals
-* [ ] Add position & soul holder rune
+* [X] Add position & soul holder rune
 * [ ] Add ritual side effects?
 * [ ] Add banishment dimension
   
