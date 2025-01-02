@@ -1,6 +1,5 @@
 package io.github.sfseeger.manaweave_and_runes.common.blockentities;
 
-import com.mojang.serialization.Codec;
 import io.github.sfseeger.lib.common.Tier;
 import io.github.sfseeger.lib.common.mana.Mana;
 import io.github.sfseeger.lib.common.mana.capability.IManaHandler;
@@ -44,6 +43,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
+import static io.github.sfseeger.lib.common.ManaweaveAndRunesCodecs.BLOCK_POS_LIST_CODEC;
 import static io.github.sfseeger.manaweave_and_runes.core.util.Utils.encode;
 
 public class ManaConcentratorBlockEntity extends BlockEntity {
@@ -65,7 +65,6 @@ public class ManaConcentratorBlockEntity extends BlockEntity {
     private boolean isCrafting;
     private Stack<Integer> slotStack = new Stack<>();
     private ManaConcentratorRecipe currentRecipe;
-    public static final Codec<List<BlockPos>> BLOCK_POS_LIST_CODEC = BlockPos.CODEC.listOf();
 
     public IItemHandler getItemHandler(@Nullable Direction side) {
         return inventory;

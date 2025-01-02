@@ -79,12 +79,15 @@ public interface IRitualManager {
     }
 
     default void transition(RitualStepResult result) {
+        RitualState currentState = getState();
         setState(transitionMap.get(getState()).get(result));
+        markUpdated();
     }
 
     default void startRitual(Ritual ritual) {
         setState(RitualState.START);
         setRitual(ritual);
+        markUpdated();
     }
 
     RitualStepResult consumeInitialItem(Level level, BlockPos pos, BlockState blockState, int ticksPassed,
@@ -125,6 +128,8 @@ public interface IRitualManager {
                           .result()
                           .orElse(null));
     }
+
+    void markUpdated();
 
     Ritual getRitual();
 
