@@ -4,6 +4,7 @@ import io.github.sfseeger.lib.common.rituals.Ritual;
 import io.github.sfseeger.lib.common.rituals.Rituals;
 import io.github.sfseeger.lib.core.ManaweaveAndRunesRegistries;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
+import io.github.sfseeger.manaweave_and_runes.common.rituals.FlightRitual;
 import io.github.sfseeger.manaweave_and_runes.common.rituals.ParticleRitual;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -17,4 +18,6 @@ public class RitualInit {
             RITUALS.register("default_ritual", () -> Rituals.DEFAULT_RITUAL);
     public static final Supplier<Ritual> PARTICLE_RITUAL =
             RITUALS.register("particle_ritual", ParticleRitual::new);
+    public static final Supplier<Ritual> FLIGHT_RITUAL =
+            RITUALS.register("flight_ritual", FlightRitual::new);
 }

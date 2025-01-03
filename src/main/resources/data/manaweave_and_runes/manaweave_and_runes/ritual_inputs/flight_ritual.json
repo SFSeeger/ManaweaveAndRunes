@@ -1,0 +1,20 @@
+{
+  "initialItemCost": [
+    {
+      "item": "minecraft:feather"
+    },
+    {
+      "item": "minecraft:feather"
+    },
+    {
+      "item": "minecraft:elytra"
+    }
+  ],
+  "tickItemCost": [],
+  "manaCost": [
+    {
+      "amount": 10,
+      "manaType": "manaweave_and_runes:air_mana"
+    }
+  ]
+}

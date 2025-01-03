@@ -11,7 +11,10 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class RitualInput {
     public static final Codec<RitualInput> CODEC = RecordCodecBuilder.create(instance -> instance.group(
@@ -57,9 +60,9 @@ public class RitualInput {
     }
 
     public boolean matches(List<ItemStack> items) {
-        Set<Ingredient> costs = new HashSet<>(initialItemCost);
+        List<Ingredient> costs = new ArrayList<>(initialItemCost);
         costs.addAll(tickItemCost);
-        return costs.stream().allMatch(i -> items.stream().anyMatch(i));
+        return costs.stream().allMatch(i -> items.stream().anyMatch(i::test));
     }
 
     public static class Builder {

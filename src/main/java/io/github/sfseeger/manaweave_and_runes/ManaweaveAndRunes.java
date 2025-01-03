@@ -40,6 +40,8 @@ public class ManaweaveAndRunes {
         ManaweaveAndRunesRecipeInit.RECIPE_TYPES.register(modEventBus);
         ManaweaveAndRunesRecipeInit.RECIPE_SERIALIZERS.register(modEventBus);
         ManaweaverAndRunesMenuInit.MENUS.register(modEventBus);
+
+        RitualDataTypesInit.register(modEventBus);
         RitualInit.RITUALS.register(modEventBus);
 
         NeoForge.EVENT_BUS.register(this);

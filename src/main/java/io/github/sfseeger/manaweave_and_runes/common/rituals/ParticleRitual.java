@@ -3,6 +3,7 @@ package io.github.sfseeger.manaweave_and_runes.common.rituals;
 import io.github.sfseeger.lib.common.Tier;
 import io.github.sfseeger.lib.common.rituals.Ritual;
 import io.github.sfseeger.lib.common.rituals.RitualStepResult;
+import io.github.sfseeger.lib.common.rituals.ritual_data.RitualContext;
 import io.github.sfseeger.manaweave_and_runes.common.blocks.ritual_anchor.RitualAnchorBlock;
 import io.github.sfseeger.manaweave_and_runes.core.util.ParticleUtils;
 import net.minecraft.core.BlockPos;
@@ -26,7 +27,7 @@ public class ParticleRitual extends Ritual {
 
     @Override
     public RitualStepResult onRitualServerTick(ServerLevel level, BlockPos pos, BlockState state, int ticksPassed,
-            RitualOriginType originType) {
+            RitualContext context, RitualOriginType originType) {
         if (ticksPassed % 10 == 0) {
             if (level.isThundering()) return RitualStepResult.ABORT;
         }
@@ -48,12 +49,22 @@ public class ParticleRitual extends Ritual {
     }
 
     @Override
-    public void onRitualEnd(Level level, BlockPos pos, BlockState state, RitualOriginType originType) {
+    public void onRitualClientTick(Level level, BlockPos pos, BlockState state, int ticksPassed,
+            RitualContext context, RitualOriginType originType) {
+        if (ticksPassed % 10 == 0) {
+            level.playSound(null, pos, SoundEvents.BEACON_ACTIVATE, SoundSource.BLOCKS, 1, 1);
+        }
+    }
+
+    @Override
+    public void onRitualEnd(Level level, BlockPos pos, BlockState state, RitualContext context,
+            RitualOriginType originType) {
         level.playSound(null, pos, SoundEvents.BEACON_DEACTIVATE, SoundSource.BLOCKS, 1, 1);
     }
 
     @Override
-    public void onRitualInterrupt(Level level, BlockPos pos, BlockState state, RitualOriginType originType) {
+    public void onRitualInterrupt(Level level, BlockPos pos, BlockState state, RitualContext context,
+            RitualOriginType originType) {
         level.explode(null, pos.getX(), pos.getY(), pos.getZ(), 3, Level.ExplosionInteraction.TNT);
     }
 
