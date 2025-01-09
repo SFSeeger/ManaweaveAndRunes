@@ -28,8 +28,8 @@ public class ManaProperties {
         ).apply(instance, ManaProperties::new));
     }
     protected @Nullable ResourceLocation icon;
-    protected boolean canBeGenerated = false;
-    protected int generationMultiplier = 1;
+    protected boolean canBeGenerated;
+    protected int generationMultiplier;
     protected List<ManaGenerationHelper.GenerationCondition> generationConditions;
     ManaGenerationHelper.GenerationConditionModi modi = ManaGenerationHelper.GenerationConditionModi.OR;
 

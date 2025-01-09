@@ -45,9 +45,6 @@ public class TeleportRitual extends Ritual {
                 if (playerRitualData == null) {
                     return RitualStepResult.ABORT;
                 }
-                for (Player p : level.getServer().getPlayerList().getPlayers()) {
-                    System.out.println(p.getName().getString());
-                }
                 target = level.getServer().getPlayerList().getPlayer(playerRitualData.getPlayerUUID());
             } else {
                 target = getPlayer(level, context);
@@ -76,7 +73,7 @@ public class TeleportRitual extends Ritual {
             RitualOriginType originType) {
         Tier tier = ((RitualAnchorBlock) state.getBlock()).ritualAnchorType.getTier();
         RandomSource random = level.getRandom();
-        Player target = null;
+        Player target;
         if (tier.greaterThanEqual(Tier.ASCENDED)) {
             target = level.getServer().getPlayerList().getPlayer(context.getData(PLAYER_TYPE).getPlayerUUID());
         } else {

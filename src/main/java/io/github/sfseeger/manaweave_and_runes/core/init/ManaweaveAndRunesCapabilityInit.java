@@ -5,10 +5,7 @@ import io.github.sfseeger.lib.common.mana.capability.IManaItem;
 import io.github.sfseeger.lib.common.mana.capability.ItemStackManaHandler;
 import io.github.sfseeger.lib.common.mana.capability.ManaweaveAndRunesCapabilities;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
-import io.github.sfseeger.manaweave_and_runes.common.blockentities.ManaCollectorBlockEntity;
-import io.github.sfseeger.manaweave_and_runes.common.blockentities.ManaGeneratorBlockEntity;
-import io.github.sfseeger.manaweave_and_runes.common.blockentities.ManaStorageBlockEntity;
-import io.github.sfseeger.manaweave_and_runes.common.blockentities.RunePedestalBlockEntity;
+import io.github.sfseeger.manaweave_and_runes.common.blockentities.*;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -22,11 +19,6 @@ public class ManaweaveAndRunesCapabilityInit {
     private static void registerManaCapabilities(RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(
                 ManaweaveAndRunesCapabilities.MANA_HANDLER_BLOCK,
-                ManaweaveAndRunesBlockEntityInit.MANA_COLLECTOR_BLOCK_ENTITY.get(),
-                ManaCollectorBlockEntity::getManaHandler
-        );
-        event.registerBlockEntity(
-                ManaweaveAndRunesCapabilities.MANA_HANDLER_BLOCK,
                 ManaweaveAndRunesBlockEntityInit.MANA_GENERATOR_BLOCK_ENTITY.get(),
                 ManaGeneratorBlockEntity::getManaHandler
         );
@@ -37,8 +29,8 @@ public class ManaweaveAndRunesCapabilityInit {
         );
         event.registerBlockEntity(
                 ManaweaveAndRunesCapabilities.MANA_HANDLER_BLOCK,
-                ManaweaveAndRunesBlockEntityInit.RUNE_PEDESTAL_BLOCK_ENTITY.get(),
-                RunePedestalBlockEntity::getManaHandler
+                ManaweaveAndRunesBlockEntityInit.RITUAL_ANCHOR_BLOCK_ENTITY.get(),
+                RitualAnchorBlockEntity::getManaHandler
         );
 
         event.registerItem(

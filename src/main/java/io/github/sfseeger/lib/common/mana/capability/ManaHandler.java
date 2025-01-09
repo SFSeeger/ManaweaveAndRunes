@@ -18,9 +18,9 @@ import java.util.function.Supplier;
 public class ManaHandler implements IManaHandler, INBTSerializable {
     protected List<Supplier<Mana>> allowedMana;
     protected HashMap<Mana, Integer> manaStored = new HashMap<>();
-    protected int maxManaReceive = 0;
-    protected int maxManaExtract = 0;
-    protected int capacity = 0;
+    protected int maxManaReceive;
+    protected int maxManaExtract;
+    protected int capacity;
     protected int slots = -1;
 
     public ManaHandler(int capacity, int maxManaReceive, int maxManaExtract, @Nullable List<Supplier<Mana>> allowedMana) {
@@ -84,7 +84,7 @@ public class ManaHandler implements IManaHandler, INBTSerializable {
     @Override
     public int getManaStored(Mana manatype) {
         Integer stored = manaStored.get(manatype);
-        return stored == null ? -1 : stored;
+        return stored == null ? 0 : stored;
     }
 
     @Override
@@ -123,6 +123,14 @@ public class ManaHandler implements IManaHandler, INBTSerializable {
     }
 
     public void onContentChanged() {
+    }
+
+    public List<Supplier<Mana>> getAllowedMana() {
+        return allowedMana;
+    }
+
+    public void setAllowedMana(List<Supplier<Mana>> allowedMana) {
+        this.allowedMana = allowedMana;
     }
 
     @Override

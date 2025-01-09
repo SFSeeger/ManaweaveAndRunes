@@ -1,5 +1,6 @@
 package io.github.sfseeger.manaweave_and_runes.common.blocks.ritual_anchor;
 
+import io.github.sfseeger.lib.common.blocks.ManaNetworkBlock;
 import io.github.sfseeger.manaweave_and_runes.common.blockentities.RitualAnchorBlockEntity;
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockEntityInit;
 import net.minecraft.core.BlockPos;
@@ -25,7 +26,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.stream.Stream;
 
-public class RitualAnchorBlock extends Block implements EntityBlock {
+public class RitualAnchorBlock extends ManaNetworkBlock implements EntityBlock {
     public static final VoxelShape SHAPE = Stream.of(
             Block.box(0, 0, 0, 16, 3, 16),
             Block.box(2, 3, 2, 14, 6, 14),

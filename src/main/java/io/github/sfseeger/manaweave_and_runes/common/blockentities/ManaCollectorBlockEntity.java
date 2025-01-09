@@ -1,11 +1,13 @@
 package io.github.sfseeger.manaweave_and_runes.common.blockentities;
 
-import io.github.sfseeger.lib.common.blockentities.IManaCapable;
 import io.github.sfseeger.lib.common.items.AbstractRuneItem;
+import io.github.sfseeger.lib.common.mana.IManaNetworkSubscriber;
 import io.github.sfseeger.lib.common.mana.Mana;
 import io.github.sfseeger.lib.common.mana.capability.IManaHandler;
 import io.github.sfseeger.lib.common.mana.capability.ManaweaveAndRunesCapabilities;
 import io.github.sfseeger.lib.common.mana.capability.SingleManaHandler;
+import io.github.sfseeger.lib.common.mana.network.ManaNetworkNode;
+import io.github.sfseeger.lib.common.mana.network.ManaNetworkNodeType;
 import io.github.sfseeger.manaweave_and_runes.common.blocks.ManaCollectorBlock;
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockEntityInit;
 import net.minecraft.core.BlockPos;
@@ -26,14 +28,11 @@ import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 
-public class ManaCollectorBlockEntity extends BlockEntity implements IManaCapable {
+public class ManaCollectorBlockEntity extends BlockEntity implements IManaNetworkSubscriber {
     public static final int CAPACITY = 5000;
     public static final int MANA_PER_SOURCE = 5;
     private static final int MAX_RECEIVE = 5000;
     private static final int MAX_EXTRACT = 5000;
-
-    private boolean isCollecting = false;
-
     private final ItemStackHandler inventory = new ItemStackHandler(1) {
         @Override
         public int getSlotLimit(int slot) {
@@ -52,6 +51,8 @@ public class ManaCollectorBlockEntity extends BlockEntity implements IManaCapabl
         }
     };
     private final SingleManaHandler manaHandler;
+    ManaNetworkNode manaNetworkNode = new ManaNetworkNode(this, ManaNetworkNodeType.PROVIDER);
+    private boolean isCollecting = false;
 
     public ManaCollectorBlockEntity(BlockPos pos, BlockState blockState) {
         super(ManaweaveAndRunesBlockEntityInit.MANA_COLLECTOR_BLOCK_ENTITY.get(), pos, blockState);
@@ -66,9 +67,8 @@ public class ManaCollectorBlockEntity extends BlockEntity implements IManaCapabl
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state,
-                                  ManaCollectorBlockEntity blockEntity) {
+            ManaCollectorBlockEntity blockEntity) {
         if (level.getGameTime() % 20 != 0) return;
-        IManaHandler manaHandler = blockEntity.getManaHandler(null);
         IItemHandler itemHandler = blockEntity.getItemHandler(null);
         ItemStack stack = itemHandler.getStackInSlot(0);
         Item item = stack.getItem();
@@ -81,17 +81,8 @@ public class ManaCollectorBlockEntity extends BlockEntity implements IManaCapabl
             if (stackManaHandler != null) {
                 stackManaHandler.receiveMana(potentialMana, mamaType, false);
             }
-
+            blockEntity.getManaNetworkNode().provideMana(potentialMana, mamaType);
             blockEntity.markUpdated();
-        }
-    }
-
-    public void markUpdated() {
-        setChanged();
-        if (level != null) {
-            level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(),
-                    ManaCollectorBlock.UPDATE_ALL);
-            level.invalidateCapabilities(getBlockPos());
         }
     }
 
@@ -99,16 +90,34 @@ public class ManaCollectorBlockEntity extends BlockEntity implements IManaCapabl
         return inventory;
     }
 
-    @Override
     public IManaHandler getManaHandler(@Nullable Direction side) {
-        return manaHandler;
+        return inventory.getStackInSlot(0).getCapability(ManaweaveAndRunesCapabilities.MANA_HANDLER_ITEM);
+    }
+
+    @Override
+    public ManaNetworkNode getManaNetworkNode() {
+        return manaNetworkNode;
+    }
+
+    @Override
+    public void setManaNetworkNode(ManaNetworkNode node) {
+        this.manaNetworkNode = node;
+    }
+
+    public void markUpdated() {
+        setChanged();
+        if (level != null) {
+            level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(),
+                                   ManaCollectorBlock.UPDATE_ALL);
+            level.invalidateCapabilities(getBlockPos());
+        }
     }
 
     public boolean placeRune(@Nullable LivingEntity entity, ItemStack rune) {
         if (inventory.getStackInSlot(0).isEmpty() && rune.getItem() instanceof AbstractRuneItem) {
             inventory.setStackInSlot(0, rune.copy());
             this.level.gameEvent(GameEvent.BLOCK_CHANGE, this.getBlockPos(),
-                    GameEvent.Context.of(entity, this.getBlockState()));
+                                 GameEvent.Context.of(entity, this.getBlockState()));
             markUpdated();
             return true;
         }
@@ -120,7 +129,7 @@ public class ManaCollectorBlockEntity extends BlockEntity implements IManaCapabl
         setChanged();
         if (level != null) {
             level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(),
-                    ManaCollectorBlock.UPDATE_ALL);
+                                   ManaCollectorBlock.UPDATE_ALL);
         }
         return stack;
     }
@@ -137,12 +146,21 @@ public class ManaCollectorBlockEntity extends BlockEntity implements IManaCapabl
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
         inventory.deserializeNBT(registries, tag.getCompound("inventory"));
+        manaNetworkNode = ManaNetworkNode.deserializeNBT(tag.getCompound("mana_network_node"), registries, this)
+                .orElse(new ManaNetworkNode(this, ManaNetworkNodeType.PROVIDER));
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
         tag.put("inventory", inventory.serializeNBT(registries));
+        tag.put("mana_network_node",
+                manaNetworkNode != null ? manaNetworkNode.serializeNBT(registries) : new CompoundTag());
+    }
+
+    @Override
+    public @Nullable Packet<ClientGamePacketListener> getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @Override
@@ -153,7 +171,11 @@ public class ManaCollectorBlockEntity extends BlockEntity implements IManaCapabl
     }
 
     @Override
-    public @Nullable Packet<ClientGamePacketListener> getUpdatePacket() {
-        return ClientboundBlockEntityDataPacket.create(this);
+    public void onLoad() {
+        super.onLoad();
+        if (manaNetworkNode != null) {
+            manaNetworkNode.connectPendingNodes();
+            manaNetworkNode.updateNetwork();
+        }
     }
 }

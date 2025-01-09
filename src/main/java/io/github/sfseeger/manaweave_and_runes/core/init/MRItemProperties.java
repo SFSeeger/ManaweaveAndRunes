@@ -16,6 +16,11 @@ public class MRItemProperties {
                                         ManaweaveAndRunes.MODID, "contains_soul"),
                                 (stack, level, entity, seed) -> stack.get(
                                         ManaweaveAndRunesDataComponentsInit.PLAYER_DATA_COMPONENT) != null ? 1.0F : 0.0F);
+        ItemProperties.register(ManaweaveAndRunesItemInit.POSITION_RUNE_ITEM.get(),
+                                ResourceLocation.fromNamespaceAndPath(
+                                        ManaweaveAndRunes.MODID, "has_position"),
+                                (stack, level, entity, seed) -> stack.get(
+                                        ManaweaveAndRunesDataComponentsInit.BLOCK_POS_DATA_COMPONENT) != null ? 1.0F : 0.0F);
     }
 
     @SubscribeEvent

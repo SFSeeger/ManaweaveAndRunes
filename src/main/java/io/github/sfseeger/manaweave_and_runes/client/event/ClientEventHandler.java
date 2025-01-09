@@ -5,6 +5,7 @@ import io.github.sfseeger.manaweave_and_runes.client.particles.ManaConcentratedP
 import io.github.sfseeger.manaweave_and_runes.client.particles.ManaParticle;
 import io.github.sfseeger.manaweave_and_runes.client.renderers.ManaCollectorBlockEntityRenderer;
 import io.github.sfseeger.manaweave_and_runes.client.renderers.ManaConcentratorBlockEntityRenderer;
+import io.github.sfseeger.manaweave_and_runes.client.renderers.ManaStorageBlockEntityRenderer;
 import io.github.sfseeger.manaweave_and_runes.client.renderers.RunePedestalBlockEntityRenderer;
 import io.github.sfseeger.manaweave_and_runes.client.screens.ManaStorageBlockScreen;
 import io.github.sfseeger.manaweave_and_runes.client.screens.RuneCarverBlockScreen;
@@ -28,6 +29,8 @@ public class ClientEventHandler {
                                           RunePedestalBlockEntityRenderer::new);
         event.registerBlockEntityRenderer(ManaweaveAndRunesBlockEntityInit.MANA_CONCENTRATOR_BLOCK_ENTITY.get(),
                                           ManaConcentratorBlockEntityRenderer::new);
+        event.registerBlockEntityRenderer(ManaweaveAndRunesBlockEntityInit.MANA_STORAGE_BLOCK_ENTITY.get(),
+                                          ManaStorageBlockEntityRenderer::new);
     }
 
     @SubscribeEvent

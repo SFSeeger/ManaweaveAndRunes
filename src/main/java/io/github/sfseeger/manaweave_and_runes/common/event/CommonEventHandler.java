@@ -10,7 +10,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent;
 import net.neoforged.neoforge.registries.NewRegistryEvent;
 
-@EventBusSubscriber(modid = ManaweaveAndRunes.MODID, bus=EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = ManaweaveAndRunes.MODID, bus = EventBusSubscriber.Bus.MOD)
 public class CommonEventHandler {
     @SubscribeEvent
     public static void registerRegistries(NewRegistryEvent event) {
@@ -20,7 +20,7 @@ public class CommonEventHandler {
     }
 
     @SubscribeEvent
-    public static void modifyComponents(ModifyDefaultComponentsEvent event){
+    public static void modifyComponents(ModifyDefaultComponentsEvent event) {
         ManaHelper.setItemMana(event, Items.COAL, Manas.FireMana, 50);
         ManaHelper.setItemMana(event, Items.BLUE_DYE, Manas.AirMana, 20);
     }
