@@ -100,11 +100,6 @@ public class SoulContainerRuneItem extends Item implements IRitualDataCapable {
         }
     }
 
-    @Override
-    public boolean isFoil(ItemStack stack) {
-        return stack.get(PLAYER_DATA_COMPONENT) != null;
-    }
-
     @SuppressWarnings("unchecked")
     @Override
     public PlayerRitualData getData(ItemStack stack) {

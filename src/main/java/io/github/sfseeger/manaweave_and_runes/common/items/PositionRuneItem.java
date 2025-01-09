@@ -41,11 +41,6 @@ public class PositionRuneItem extends Item implements IRitualDataCapable {
         }
     }
 
-    @Override
-    public boolean isFoil(ItemStack stack) {
-        return stack.get(BLOCK_POS_DATA_COMPONENT) != null;
-    }
-
     @SuppressWarnings("unchecked")
     @Override
     public PositionRitualData getData(ItemStack stack) {

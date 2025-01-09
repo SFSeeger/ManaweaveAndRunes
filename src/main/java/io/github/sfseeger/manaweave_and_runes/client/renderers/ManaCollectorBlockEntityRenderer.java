@@ -2,6 +2,7 @@ package io.github.sfseeger.manaweave_and_runes.client.renderers;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
+import io.github.sfseeger.lib.client.ber.ManaNodeRenderer;
 import io.github.sfseeger.manaweave_and_runes.common.blockentities.ManaCollectorBlockEntity;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -18,7 +19,7 @@ import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.items.IItemHandler;
 
 @OnlyIn(Dist.CLIENT)
-public class ManaCollectorBlockEntityRenderer implements BlockEntityRenderer<ManaCollectorBlockEntity> {
+public class ManaCollectorBlockEntityRenderer extends ManaNodeRenderer implements BlockEntityRenderer<ManaCollectorBlockEntity> {
 
     private final BlockEntityRendererProvider.Context context;
 
@@ -29,7 +30,8 @@ public class ManaCollectorBlockEntityRenderer implements BlockEntityRenderer<Man
     @Override
     public void render(ManaCollectorBlockEntity manaCollectorBlockEntity, float partialTick, PoseStack poseStack,
             MultiBufferSource multiBufferSource, int packedLight, int packedOverlay) {
-        BlockPos pos = manaCollectorBlockEntity.getBlockPos().above();
+        BlockPos pos = manaCollectorBlockEntity.getBlockPos();
+        BlockPos posAbove = pos.above();
         IItemHandler itemHandler = manaCollectorBlockEntity.getItemHandler(null);
         ItemStack stack = itemHandler.getStackInSlot(0);
         Level level = manaCollectorBlockEntity.getLevel();
@@ -37,8 +39,8 @@ public class ManaCollectorBlockEntityRenderer implements BlockEntityRenderer<Man
 
         if (level != null && !stack.isEmpty()) {
             packedLight = LightTexture.pack(
-                    level.getBrightness(LightLayer.BLOCK, pos),
-                    level.getBrightness(LightLayer.SKY, pos)
+                    level.getBrightness(LightLayer.BLOCK, posAbove),
+                    level.getBrightness(LightLayer.SKY, posAbove)
             );
 
             poseStack.pushPose();
@@ -51,6 +53,8 @@ public class ManaCollectorBlockEntityRenderer implements BlockEntityRenderer<Man
                                   poseStack,
                                   multiBufferSource, level, 0);
             poseStack.popPose();
+
+            renderManaConnections(manaCollectorBlockEntity, pos, poseStack, multiBufferSource);
         }
     }
 }

@@ -1,5 +1,6 @@
 package io.github.sfseeger.manaweave_and_runes.common.blocks;
 
+import io.github.sfseeger.lib.common.blocks.ManaNetworkBlock;
 import io.github.sfseeger.manaweave_and_runes.common.blockentities.ManaStorageBlockEntity;
 import io.github.sfseeger.manaweave_and_runes.common.menus.ManaStorageBlockMenu;
 import net.minecraft.core.BlockPos;
@@ -11,7 +12,6 @@ import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -20,7 +20,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
-public class ManaStorageBlock extends Block implements EntityBlock {
+public class ManaStorageBlock extends ManaNetworkBlock implements EntityBlock {
     public ManaStorageBlock() {
         super(Properties.of()); // TODO: Add properties
     }

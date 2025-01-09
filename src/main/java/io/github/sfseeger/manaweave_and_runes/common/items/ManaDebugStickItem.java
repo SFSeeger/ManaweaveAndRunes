@@ -1,5 +1,6 @@
 package io.github.sfseeger.manaweave_and_runes.common.items;
 
+import io.github.sfseeger.lib.common.mana.IManaNetworkSubscriber;
 import io.github.sfseeger.lib.common.mana.Mana;
 import io.github.sfseeger.lib.common.mana.capability.IManaHandler;
 import io.github.sfseeger.lib.common.mana.capability.ManaweaveAndRunesCapabilities;
@@ -15,6 +16,8 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 
+import java.util.UUID;
+
 public class ManaDebugStickItem extends Item {
     public ManaDebugStickItem() {
         super(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC));
@@ -28,9 +31,27 @@ public class ManaDebugStickItem extends Item {
         }
         BlockPos pos = context.getClickedPos();
         Player player = context.getPlayer();
+        boolean success = false;
+
+        if (level.getBlockEntity(pos) instanceof IManaNetworkSubscriber subscriber) {
+            success = true;
+
+            MutableComponent message = Component.literal("Node: ");
+
+            UUID networkId = subscriber.getManaNetworkNode().getNetworkId();
+
+            message.append("Network ID: ").append(networkId != null ? networkId.toString() : "null");
+            message.append("\nConnected Nodes: ")
+                    .append(Integer.toString(subscriber.getManaNetworkNode().getConnectedNodes().size()));
+            player.sendSystemMessage(message);
+        }
+
+
         IManaHandler handler =
                 level.getCapability(ManaweaveAndRunesCapabilities.MANA_HANDLER_BLOCK, pos, null);
         if (handler != null) {
+            success = true;
+
             MutableComponent message = Component.literal("Current Mana: ");
 
             for (Mana mana : handler.getManaTypesStored()) {
@@ -40,9 +61,8 @@ public class ManaDebugStickItem extends Item {
                         .append(", ");
             }
             player.sendSystemMessage(message);
-            return InteractionResult.SUCCESS;
         }
-        return InteractionResult.PASS;
+        return success ? InteractionResult.SUCCESS : InteractionResult.PASS;
     }
 
     @Override

@@ -15,6 +15,7 @@ public class ManaweaveAndRunesItemModelProvider extends ItemModelProvider {
     @Override
     protected void registerModels() {
         basicItem(ManaweaveAndRunesItemInit.MANA_DEBUG_STICK_ITEM.get());
+        basicItem(ManaweaveAndRunesItemInit.MANA_CONNECTOR.get());
         basicItem(ManaweaveAndRunesItemInit.CRYSTAL.get());
 
         handheldItem(ManaweaveAndRunesItemInit.DIAMOND_CHISEL.get());
@@ -30,6 +31,15 @@ public class ManaweaveAndRunesItemModelProvider extends ItemModelProvider {
                 .model(this.getBuilder("item/soul_container_rune/filled")
                                .parent(this.getExistingFile(mcLoc("item/handheld")))
                                .texture("layer0", "item/soul_container_rune_filled"))
+                .end();
+
+        handheldItem(ManaweaveAndRunesItemInit.POSITION_RUNE_ITEM.get())
+                .texture("layer0", "item/position_rune")
+                .override()
+                .predicate(ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "has_position"), 1.0F)
+                .model(this.getBuilder("item/position_rune_active")
+                               .parent(this.getExistingFile(mcLoc("item/generated")))
+                               .texture("layer0", "item/position_rune_active"))
                 .end();
     }
 }

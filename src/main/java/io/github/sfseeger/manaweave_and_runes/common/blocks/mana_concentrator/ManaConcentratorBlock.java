@@ -96,7 +96,7 @@ public class ManaConcentratorBlock extends Block implements EntityBlock {
                     MultiblockValidator.MultiBlockValidationData validationData =
                             manaConcentratorBlockEntity.validateMultiblock();
                     if (validationData.isValid()) {
-                        player.sendSystemMessage(Component.literal("Multiblock is valid!"));
+                        player.sendSystemMessage(Component.literal("Multiblock is isValid!"));
                     } else {
                         player.sendSystemMessage(Component.literal("Multiblock is invalid!"));
                         player.sendSystemMessage(Component.literal(
