@@ -6,6 +6,7 @@ import io.github.sfseeger.manaweave_and_runes.common.blockentities.RitualAnchorB
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
@@ -22,6 +23,11 @@ public class RitualAnchorBlockEntityRenderer extends ManaNodeRenderer implements
             MultiBufferSource multiBufferSource, int i, int i1) {
         renderManaConnections(ritualAnchorBlockEntity, ritualAnchorBlockEntity.getBlockPos(), poseStack,
                               multiBufferSource);
+    }
+
+    @Override
+    public boolean shouldRender(RitualAnchorBlockEntity blockEntity, Vec3 cameraPos) {
+        return true;
     }
 
     @Override

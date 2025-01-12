@@ -41,7 +41,7 @@ public class ManaTransmitterBlockEntity extends BlockEntity implements IManaNetw
     @Override
     public void markUpdated() {
         setChanged();
-        if (level != null && !level.isClientSide)
+        if (level != null)
             level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
     }
 
@@ -73,9 +73,10 @@ public class ManaTransmitterBlockEntity extends BlockEntity implements IManaNetw
     @Override
     public void onLoad() {
         super.onLoad();
-        if (level != null && !level.isClientSide) {
+        if (node != null) {
             node.updateNetwork();
             node.connectPendingNodes();
+            markUpdated();
         }
     }
 }

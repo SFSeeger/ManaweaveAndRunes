@@ -87,8 +87,8 @@ public class ManaStorageBlockEntity extends BlockEntity implements IManaNetworkS
     public void onLoad() {
         super.onLoad();
         if (manaNetworkNode != null) {
-            manaNetworkNode.connectPendingNodes();
             manaNetworkNode.updateNetwork();
+            manaNetworkNode.connectPendingNodes();
         }
     }
 }
