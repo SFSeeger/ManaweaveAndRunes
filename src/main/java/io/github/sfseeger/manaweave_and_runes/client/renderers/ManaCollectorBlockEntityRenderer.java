@@ -57,4 +57,9 @@ public class ManaCollectorBlockEntityRenderer extends ManaNodeRenderer implement
             renderManaConnections(manaCollectorBlockEntity, pos, poseStack, multiBufferSource);
         }
     }
+
+    @Override
+    public boolean shouldRenderOffScreen(ManaCollectorBlockEntity blockEntity) {
+        return !blockEntity.getManaNetworkNode().getConnectedNodes().isEmpty();
+    }
 }

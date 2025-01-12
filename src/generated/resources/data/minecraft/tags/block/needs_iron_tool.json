@@ -1,0 +1,13 @@
+{
+  "values": [
+    "manaweave_and_runes:mana_collector",
+    "manaweave_and_runes:mana_storage",
+    "manaweave_and_runes:novice_mana_concentrator",
+    "manaweave_and_runes:master_mana_concentrator",
+    "manaweave_and_runes:ascended_mana_concentrator",
+    "manaweave_and_runes:novice_ritual_anchor",
+    "manaweave_and_runes:master_ritual_anchor",
+    "manaweave_and_runes:ascended_ritual_anchor",
+    "manaweave_and_runes:mana_transmitter"
+  ]
+}
