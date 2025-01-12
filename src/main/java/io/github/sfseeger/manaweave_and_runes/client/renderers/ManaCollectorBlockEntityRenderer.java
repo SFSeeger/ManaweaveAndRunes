@@ -14,6 +14,7 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.items.IItemHandler;
@@ -56,6 +57,11 @@ public class ManaCollectorBlockEntityRenderer extends ManaNodeRenderer implement
 
             renderManaConnections(manaCollectorBlockEntity, pos, poseStack, multiBufferSource);
         }
+    }
+
+    @Override
+    public boolean shouldRender(ManaCollectorBlockEntity blockEntity, Vec3 cameraPos) {
+        return true;
     }
 
     @Override

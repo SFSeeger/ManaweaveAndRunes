@@ -92,8 +92,8 @@ public class ManaGeneratorBlockEntity extends BlockEntity implements IManaNetwor
     public void onLoad() {
         super.onLoad();
         if (manaNetworkNode != null) {
-            manaNetworkNode.connectPendingNodes();
             manaNetworkNode.updateNetwork();
+            manaNetworkNode.connectPendingNodes();
         }
     }
 }

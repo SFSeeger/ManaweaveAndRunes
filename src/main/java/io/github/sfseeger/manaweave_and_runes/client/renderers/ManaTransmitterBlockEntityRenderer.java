@@ -6,6 +6,7 @@ import io.github.sfseeger.manaweave_and_runes.common.blockentities.ManaTransmitt
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
@@ -21,6 +22,11 @@ public class ManaTransmitterBlockEntityRenderer extends ManaNodeRenderer impleme
     public void render(ManaTransmitterBlockEntity be, float v, PoseStack poseStack,
             MultiBufferSource multiBufferSource, int packedLight, int packedOverlay) {
         renderManaConnections(be, be.getBlockPos(), poseStack, multiBufferSource);
+    }
+
+    @Override
+    public boolean shouldRender(ManaTransmitterBlockEntity blockEntity, Vec3 cameraPos) {
+        return true;
     }
 
     @Override

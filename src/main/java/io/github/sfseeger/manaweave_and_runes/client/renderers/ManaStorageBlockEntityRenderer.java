@@ -6,6 +6,7 @@ import io.github.sfseeger.manaweave_and_runes.common.blockentities.ManaStorageBl
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.world.phys.Vec3;
 
 public class ManaStorageBlockEntityRenderer extends ManaNodeRenderer implements BlockEntityRenderer<ManaStorageBlockEntity> {
     private final BlockEntityRendererProvider.Context context;
@@ -20,6 +21,11 @@ public class ManaStorageBlockEntityRenderer extends ManaNodeRenderer implements 
             MultiBufferSource multiBufferSource, int packedLight, int packedOverlay) {
         renderManaConnections(manaStorageBlockEntity, manaStorageBlockEntity.getBlockPos(), poseStack,
                               multiBufferSource);
+    }
+
+    @Override
+    public boolean shouldRender(ManaStorageBlockEntity blockEntity, Vec3 cameraPos) {
+        return true;
     }
 
     @Override
