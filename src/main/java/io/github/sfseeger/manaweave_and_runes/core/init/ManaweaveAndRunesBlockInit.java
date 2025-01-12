@@ -52,4 +52,7 @@ public class ManaweaveAndRunesBlockInit {
     public static final DeferredBlock<RitualAnchorBlock> ASCENDED_RITUAL_ANCHOR_BLOCK =
             BLOCKS.register("ascended_ritual_anchor", () -> new RitualAnchorBlock(
                     RitualAnchorTypes.ASCENDED));
+
+    public static final DeferredBlock<ManaTransmitter> MANA_TRANSMITTER_BLOCK =
+            BLOCKS.register("mana_transmitter", ManaTransmitter::new);
 }

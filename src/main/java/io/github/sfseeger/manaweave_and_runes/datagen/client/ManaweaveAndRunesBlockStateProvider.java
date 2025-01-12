@@ -28,29 +28,32 @@ public class ManaweaveAndRunesBlockStateProvider extends BlockStateProvider {
         ResourceLocation runeBlockBase = this.blockTexture(deferredRuneBlock.get());
         ResourceLocation runeBlockActive = runeBlockBase.withSuffix("_active");
         ResourceLocation runeBlockInactive = runeBlockBase.withSuffix("_inactive");
-        this.horizontalBlock(deferredRuneBlock.get(), blockState -> blockState.getValue(
-                RuneBlock.ACTIVE) ? this.models()
-                .cubeAll(deferredRuneBlock.getRegisteredName() + "_active", runeBlockActive) : this.models()
-                .cubeAll(deferredRuneBlock.getRegisteredName() + "_inactive", runeBlockInactive));
-        this.simpleBlockItem(deferredRuneBlock.get(), this.models().getExistingFile(
-                ResourceLocation.parse(deferredRuneBlock.getRegisteredName() + "_inactive")));
+        this.horizontalBlock(deferredRuneBlock.get(),
+                             blockState -> blockState.getValue(RuneBlock.ACTIVE) ? this.models()
+                                     .cubeAll(deferredRuneBlock.getRegisteredName() + "_active",
+                                              runeBlockActive) : this.models()
+                                     .cubeAll(deferredRuneBlock.getRegisteredName() + "_inactive", runeBlockInactive));
+        this.simpleBlockItem(deferredRuneBlock.get(), this.models()
+                .getExistingFile(ResourceLocation.parse(deferredRuneBlock.getRegisteredName() + "_inactive")));
 
-        this.horizontalBlock(ManaweaveAndRunesBlockInit.RUNE_PEDESTAL_BLOCK.get(), this.models().getExistingFile(
-                ResourceLocation.parse(ManaweaveAndRunesBlockInit.RUNE_PEDESTAL_BLOCK.getRegisteredName())));
-        this.simpleBlockItem(ManaweaveAndRunesBlockInit.RUNE_PEDESTAL_BLOCK.get(), this.models().getExistingFile(
-                ResourceLocation.parse(ManaweaveAndRunesBlockInit.RUNE_PEDESTAL_BLOCK.getRegisteredName())));
+        this.horizontalBlock(ManaweaveAndRunesBlockInit.RUNE_PEDESTAL_BLOCK.get(), this.models()
+                .getExistingFile(
+                        ResourceLocation.parse(ManaweaveAndRunesBlockInit.RUNE_PEDESTAL_BLOCK.getRegisteredName())));
+        this.simpleBlockItem(ManaweaveAndRunesBlockInit.RUNE_PEDESTAL_BLOCK.get(), this.models()
+                .getExistingFile(
+                        ResourceLocation.parse(ManaweaveAndRunesBlockInit.RUNE_PEDESTAL_BLOCK.getRegisteredName())));
 
-        this.simpleBlockWithItem(ManaweaveAndRunesBlockInit.NOVICE_RITUAL_ANCHOR_BLOCK.get(),
-                                 this.models().getExistingFile(
-                                         ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID,
-                                                                               "block/ritual_anchor")));
-        this.simpleBlockWithItem(ManaweaveAndRunesBlockInit.MASTER_RITUAL_ANCHOR_BLOCK.get(),
-                                 this.models().getExistingFile(
-                                         ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID,
-                                                                               "block/ritual_anchor")));
-        this.simpleBlockWithItem(ManaweaveAndRunesBlockInit.ASCENDED_RITUAL_ANCHOR_BLOCK.get(),
-                                 this.models().getExistingFile(
-                                         ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID,
-                                                                               "block/ritual_anchor")));
+        this.simpleBlockWithItem(ManaweaveAndRunesBlockInit.NOVICE_RITUAL_ANCHOR_BLOCK.get(), this.models()
+                .getExistingFile(
+                        ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "block/ritual_anchor")));
+        this.simpleBlockWithItem(ManaweaveAndRunesBlockInit.MASTER_RITUAL_ANCHOR_BLOCK.get(), this.models()
+                .getExistingFile(
+                        ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "block/ritual_anchor")));
+        this.simpleBlockWithItem(ManaweaveAndRunesBlockInit.ASCENDED_RITUAL_ANCHOR_BLOCK.get(), this.models()
+                .getExistingFile(
+                        ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "block/ritual_anchor")));
+        this.simpleBlockWithItem(ManaweaveAndRunesBlockInit.MANA_TRANSMITTER_BLOCK.get(), this.models()
+                .getExistingFile(
+                        ResourceLocation.parse(ManaweaveAndRunesBlockInit.MANA_TRANSMITTER_BLOCK.getRegisteredName())));
     }
 }

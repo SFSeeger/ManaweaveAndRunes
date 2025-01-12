@@ -4,6 +4,7 @@
     "manaweave_and_runes:crystal_ore",
     "manaweave_and_runes:mana_storage",
     "manaweave_and_runes:rune_block",
-    "manaweave_and_runes:rune_pedestal"
+    "manaweave_and_runes:rune_pedestal",
+    "manaweave_and_runes:mana_transmitter"
   ]
 }

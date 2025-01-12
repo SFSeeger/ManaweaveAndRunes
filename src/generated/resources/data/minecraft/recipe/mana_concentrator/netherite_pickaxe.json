@@ -20,12 +20,12 @@
   ],
   "manaMap": [
     {
-      "amount": 400,
-      "manaType": "manaweave_and_runes:fire_mana"
-    },
-    {
       "amount": 250,
       "manaType": "manaweave_and_runes:air_mana"
+    },
+    {
+      "amount": 400,
+      "manaType": "manaweave_and_runes:fire_mana"
     }
   ],
   "result": {

@@ -25,7 +25,23 @@ public class ManaweaveAndRunesBlockTagsProvider extends BlockTagsProvider {
                 .add(ManaweaveAndRunesBlockInit.CRYSTAL_ORE.get())
                 .add(ManaweaveAndRunesBlockInit.MANA_STORAGE_BLOCK.get())
                 .add(ManaweaveAndRunesBlockInit.RUNE_BLOCK.get())
+                .add(ManaweaveAndRunesBlockInit.RUNE_PEDESTAL_BLOCK.get())
+                .add(ManaweaveAndRunesBlockInit.MANA_TRANSMITTER_BLOCK.get());
+
+        this.tag(BlockTags.NEEDS_STONE_TOOL)
+                .add(ManaweaveAndRunesBlockInit.RUNE_BLOCK.get())
                 .add(ManaweaveAndRunesBlockInit.RUNE_PEDESTAL_BLOCK.get());
+
+        this.tag(BlockTags.NEEDS_IRON_TOOL)
+                .add(ManaweaveAndRunesBlockInit.MANA_COLLECTOR_BLOCK.get())
+                .add(ManaweaveAndRunesBlockInit.MANA_STORAGE_BLOCK.get())
+                .add(ManaweaveAndRunesBlockInit.NOVICE_MANA_CONCENTRATOR_BLOCK.get())
+                .add(ManaweaveAndRunesBlockInit.MASTER_MANA_CONCENTRATOR_BLOCK.get())
+                .add(ManaweaveAndRunesBlockInit.ASCENDED_MANA_CONCENTRATOR_BLOCK.get())
+                .add(ManaweaveAndRunesBlockInit.NOVICE_RITUAL_ANCHOR_BLOCK.get())
+                .add(ManaweaveAndRunesBlockInit.MASTER_RITUAL_ANCHOR_BLOCK.get())
+                .add(ManaweaveAndRunesBlockInit.ASCENDED_RITUAL_ANCHOR_BLOCK.get())
+                .add(ManaweaveAndRunesBlockInit.MANA_TRANSMITTER_BLOCK.get());
 
         this.tag(BlockTags.NEEDS_DIAMOND_TOOL)
                 .add(ManaweaveAndRunesBlockInit.CRYSTAL_ORE.get());

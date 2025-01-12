@@ -12,34 +12,34 @@ public class ManaweaveAndRunesItemInit {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(ManaweaveAndRunes.MODID);
 
     public static final DeferredItem<Item> CRYSTAL = ITEMS.register("crystal",
-            () -> new Item(new Item.Properties().rarity(
-                    Rarity.UNCOMMON)));
+                                                                    () -> new Item(new Item.Properties().rarity(
+                                                                            Rarity.UNCOMMON)));
     public static final DeferredItem<Item> DIAMOND_CHISEL = ITEMS.register("diamond_chisel",
-            () -> new Item(
-                    new Item.Properties().durability(
-                            1561).stacksTo(1)));
+                                                                           () -> new Item(
+                                                                                   new Item.Properties().durability(
+                                                                                           1561).stacksTo(1)));
 
 
     public static final DeferredItem<Item> AMETHYST_BASE_RUNE = ITEMS.register("amethyst_base_rune",
-            () -> new Item(
-                    new Item.Properties().stacksTo(
-                            1)));
+                                                                               () -> new Item(
+                                                                                       new Item.Properties().stacksTo(
+                                                                                               1)));
     public static final DeferredItem<FireRuneItem> AMETHYST_FIRE_RUNE_ITEM = ITEMS.register("amethyst_fire_rune",
-            FireRuneItem::new);
+                                                                                            FireRuneItem::new);
     public static final DeferredItem<AirRuneItem> AMETHYST_AIR_RUNE_ITEM = ITEMS.register("amethyst_air_rune",
-            AirRuneItem::new);
+                                                                                          AirRuneItem::new);
 
 
     public static final DeferredItem<ManaDebugStickItem> MANA_DEBUG_STICK_ITEM = ITEMS.register("mana_debug_stick",
-            ManaDebugStickItem::new);
+                                                                                                ManaDebugStickItem::new);
 
     public static final DeferredItem<PositionRuneItem> POSITION_RUNE_ITEM = ITEMS.register("position_rune",
-            PositionRuneItem::new);
+                                                                                           PositionRuneItem::new);
     public static final DeferredItem<SoulContainerRuneItem> SOUL_CONTAINER_RUNE_ITEM = ITEMS.register(
             "soul_container_rune", SoulContainerRuneItem::new);
 
     public static final DeferredItem<ManaConnector> MANA_CONNECTOR = ITEMS.register("mana_connector",
-            ManaConnector::new);
+                                                                                    ManaConnector::new);
 
     public static final DeferredItem<BlockItem> CRYSTAL_ORE_ITEM =
             ITEMS.registerSimpleBlockItem("crystal_ore", ManaweaveAndRunesBlockInit.CRYSTAL_ORE);
@@ -59,21 +59,25 @@ public class ManaweaveAndRunesItemInit {
             ITEMS.registerSimpleBlockItem("rune_carver", ManaweaveAndRunesBlockInit.RUNE_CARVER_BLOCK);
     public static final DeferredItem<BlockItem> NOVICE_MANA_CONCENTRATOR_BLOCK_ITEM =
             ITEMS.registerSimpleBlockItem("novice_mana_concentrator",
-                    ManaweaveAndRunesBlockInit.NOVICE_MANA_CONCENTRATOR_BLOCK);
+                                          ManaweaveAndRunesBlockInit.NOVICE_MANA_CONCENTRATOR_BLOCK);
     public static final DeferredItem<BlockItem> MASTER_MANA_CONCENTRATOR_BLOCK_ITEM =
             ITEMS.registerSimpleBlockItem("master_mana_concentrator",
-                    ManaweaveAndRunesBlockInit.MASTER_MANA_CONCENTRATOR_BLOCK);
+                                          ManaweaveAndRunesBlockInit.MASTER_MANA_CONCENTRATOR_BLOCK);
     public static final DeferredItem<BlockItem> ASCENDED_MANA_CONCENTRATOR_BLOCK_ITEM =
             ITEMS.registerSimpleBlockItem("ascended_mana_concentrator",
-                    ManaweaveAndRunesBlockInit.ASCENDED_MANA_CONCENTRATOR_BLOCK);
+                                          ManaweaveAndRunesBlockInit.ASCENDED_MANA_CONCENTRATOR_BLOCK);
 
     public static final DeferredItem<BlockItem> RITUAL_ANCHOR_BLOCK_ITEM =
             ITEMS.registerSimpleBlockItem("novice_ritual_anchor",
-                    ManaweaveAndRunesBlockInit.NOVICE_RITUAL_ANCHOR_BLOCK);
+                                          ManaweaveAndRunesBlockInit.NOVICE_RITUAL_ANCHOR_BLOCK);
     public static final DeferredItem<BlockItem> MASTER_RITUAL_ANCHOR_BLOCK_ITEM =
             ITEMS.registerSimpleBlockItem("master_ritual_anchor",
-                    ManaweaveAndRunesBlockInit.MASTER_RITUAL_ANCHOR_BLOCK);
+                                          ManaweaveAndRunesBlockInit.MASTER_RITUAL_ANCHOR_BLOCK);
     public static final DeferredItem<BlockItem> ASCENDED_RITUAL_ANCHOR_BLOCK_ITEM =
             ITEMS.registerSimpleBlockItem("ascended_ritual_anchor",
-                    ManaweaveAndRunesBlockInit.ASCENDED_RITUAL_ANCHOR_BLOCK);
+                                          ManaweaveAndRunesBlockInit.ASCENDED_RITUAL_ANCHOR_BLOCK);
+
+    public static final DeferredItem<BlockItem> MANA_TRANSMITTER_BLOCK_ITEM =
+            ITEMS.registerSimpleBlockItem("mana_transmitter",
+                                          ManaweaveAndRunesBlockInit.MANA_TRANSMITTER_BLOCK);
 }
