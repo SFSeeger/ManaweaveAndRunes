@@ -22,10 +22,13 @@ public class ManaNetworkNode {
     private UUID networkId;
     private int priority = 0;
     private ManaNetwork manaNetwork;
+    private boolean shouldExtractWhenSaturated = true;
 
-    public ManaNetworkNode(BlockEntity blockEntity, ManaNetworkNodeType type, int priority) {
-        this(blockEntity, ManaNetworkNodeType.HYBRID);
+    public ManaNetworkNode(BlockEntity blockEntity, ManaNetworkNodeType type, int priority,
+            boolean shouldExtractWhenSaturated) {
+        this(blockEntity, type);
         this.priority = priority;
+        this.shouldExtractWhenSaturated = shouldExtractWhenSaturated;
     }
 
     public ManaNetworkNode(BlockEntity blockEntity, ManaNetworkNodeType type) {
@@ -46,9 +49,13 @@ public class ManaNetworkNode {
         ManaNetworkNodeType type =
                 tag.get("type") != null ? ManaNetworkNodeType.values()[tag.getInt("type")] : ManaNetworkNodeType.HYBRID;
         UUID manaNetworkId = tag.getUUID("mana_network");
+        int priority = tag.getInt("priority");
+        boolean shouldExtractWhenSaturated = tag.getBoolean("should_extract_when_saturated");
 
         ManaNetworkNode node = new ManaNetworkNode(blockEntity, type);
         node.setNetworkId(manaNetworkId);
+        node.setPriority(priority);
+        node.shouldExtractWhenSaturated = shouldExtractWhenSaturated;
 
         node.pendingConnections.addAll(
                 BlockPos.CODEC.listOf().parse(NbtOps.INSTANCE, tag.get("connected_nodes")).result().orElse(List.of()));
@@ -137,10 +144,8 @@ public class ManaNetworkNode {
                 network.merge(nodeNetwork, level);
             }
         } else if (hasNetwork) {
-            getManaNetwork().get().addNode(node);
             node.setManaNetwork(getManaNetwork().get());
         } else if (nodeHasNetwork) {
-            node.getManaNetwork().get().addNode(this);
             setManaNetwork(node.getManaNetwork().get());
         } else {
             ManaNetwork newNetwork = ManaNetworkHandler.getInstance(level.getDataStorage()).createNetwork();
@@ -210,7 +215,7 @@ public class ManaNetworkNode {
     public int extractMana(int amount, Mana mana) {
         IManaHandler handler = ((IManaNetworkSubscriber) blockEntity).getManaHandler(null);
         if (handler == null) return 0;
-        return handler.receiveMana(amount, mana, false);
+        return handler.extractMana(amount, mana, false);
     }
 
     public boolean hasMana(Mana mana) {
@@ -223,7 +228,7 @@ public class ManaNetworkNode {
 
     public boolean setNodeType(ManaNetworkNodeType type) {
         boolean flag = false;
-        if (manaNetwork != null) {
+        if (manaNetwork != null && type != nodeType) {
             this.nodeType = type;
             manaNetwork.removeNode(this);
             manaNetwork.addNode(this);
@@ -260,6 +265,7 @@ public class ManaNetworkNode {
         tag.put("connected_nodes", Utils.encode(BlockPos.CODEC.listOf(),
                 connectedNodes.stream().map(i -> i.blockEntity.getBlockPos()).toList(),
                 registries));
+        tag.putBoolean("should_extract_when_saturated", shouldExtractWhenSaturated);
         return tag;
     }
 
@@ -267,5 +273,9 @@ public class ManaNetworkNode {
         if (manaNetwork != null) {
             manaNetwork.splitNetwork(this, level);
         }
+    }
+
+    public boolean shouldExtractWhenSaturated() {
+        return shouldExtractWhenSaturated;
     }
 }

@@ -43,6 +43,8 @@ public class ManaDebugStickItem extends Item {
             message.append("Network ID: ").append(networkId != null ? networkId.toString() : "null");
             message.append("\nConnected Nodes: ")
                     .append(Integer.toString(subscriber.getManaNetworkNode().getConnectedNodes().size()));
+            message.append("\nPriority: ").append(Integer.toString(subscriber.getManaNetworkNode().getPriority()));
+            message.append("\nType: ").append(subscriber.getManaNetworkNode().getNodeType().toString());
             player.sendSystemMessage(message);
         }
 

@@ -67,8 +67,7 @@ public class ManaStorageBlockEntity extends BlockEntity implements IManaNetworkS
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
         tag.put("mana", manaHandler.serializeNBT(registries));
-        tag.put("mana_network_node",
-                manaNetworkNode != null ? manaNetworkNode.serializeNBT(registries) : new CompoundTag());
+        tag.put("mana_network_node", manaNetworkNode.serializeNBT(registries));
     }
 
     @Override
