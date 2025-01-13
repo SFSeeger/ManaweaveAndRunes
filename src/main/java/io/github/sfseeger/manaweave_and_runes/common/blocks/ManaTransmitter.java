@@ -6,6 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -21,9 +22,10 @@ public class ManaTransmitter extends ManaNetworkBlock implements EntityBlock {
 
     public ManaTransmitter() {
         super(BlockBehaviour.Properties.of()
-                      .strength(0.5f)
-                      .requiresCorrectToolForDrops()
-                      .lightLevel((blockState) -> 5));
+                .strength(0.5f)
+                .sound(SoundType.AMETHYST)
+                .requiresCorrectToolForDrops()
+                .lightLevel((blockState) -> 5));
     }
 
     @Override

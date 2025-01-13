@@ -10,11 +10,16 @@
       "item": "manaweave_and_runes:position_rune"
     }
   ],
-  "tickItemCost": [],
+  "tickItemCost": [
+    {
+      "item": "minecraft:blaze_powder"
+    }
+  ],
   "manaCost": [
     {
       "amount": 10,
       "manaType": "manaweave_and_runes:fire_mana"
     }
-  ]
+  ],
+  "itemRate": 20
 }

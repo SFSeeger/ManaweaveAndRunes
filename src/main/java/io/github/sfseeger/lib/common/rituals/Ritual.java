@@ -102,15 +102,17 @@ public abstract class Ritual {
     /**
      * Returns the rate in ticks at which items are consumed
      */
-    public int getItemRate() {
-        return 1;
+    public int getItemRate(Level level) {
+        RitualInput input = getInput(level).orElse(null);
+        return input != null ? input.getItemRate() : 1;
     }
 
     /**
      * Returns the rate in ticks at which mana is consumed
      */
-    public int getManaRate() {
-        return 1;
+    public int getManaRate(Level level) {
+        RitualInput input = getInput(level).orElse(null);
+        return input != null ? input.getManaRate() : 1;
     }
 
 
