@@ -9,15 +9,20 @@ import java.util.*;
 public class ManaNetwork {
     private final UUID id;
 
-    public static final Comparator<ManaNetworkNode> NODE_COMPARATOR = Comparator.comparingInt(ManaNetworkNode::getPriority).reversed();
+    public static final Comparator<ManaNetworkNode> NODE_COMPARATOR =
+            Comparator.comparingInt(ManaNetworkNode::getPriority)
+                    .reversed()
+                    .thenComparingLong(value -> value.getBlockPos().asLong());
+    public static final Comparator<ManaTransaction> TRANSACTION_COMPARATOR =
+            Comparator.comparingInt(i -> i.node().getPriority());
 
     Set<ManaNetworkNode> nodes = new LinkedHashSet<>();
     Set<ManaNetworkNode> receiverNodes = new LinkedHashSet<>();
     Set<ManaNetworkNode> providerNodes = new LinkedHashSet<>();
     Set<ManaNetworkNode> hybridNodes = new TreeSet<>(NODE_COMPARATOR);
 
-    Queue<ManaTransaction> manaRequests = new PriorityQueue<>(Comparator.comparingInt(i -> -i.node().getPriority()));
-    List<ManaTransaction> manaOffers = new ArrayList<>();
+    Queue<ManaTransaction> manaRequests = new PriorityQueue<>(TRANSACTION_COMPARATOR.reversed());
+    Queue<ManaTransaction> manaOffers = new PriorityQueue<>(TRANSACTION_COMPARATOR.reversed());
 
     public ManaNetwork(@Nullable UUID id) {
         this.id = id != null ? id : UUID.randomUUID();
@@ -41,7 +46,6 @@ public class ManaNetwork {
 
         for (ManaTransaction offer : manaOffers) {
             totalOffered.merge(offer.mana(), offer.amount(), Integer::sum);
-            offer.node().extractMana(offer.amount(), offer.mana());
         }
 
         Set<Mana> allMana = new HashSet<>(totalRequested.keySet());
@@ -78,6 +82,26 @@ public class ManaNetwork {
                     totalOffered.put(mana, totalOffered.getOrDefault(mana, 0) - amountToReceive);
                 });
             }
+
+            boolean overSaturated = diff > 0;
+            int extracted = manaOffers.stream()
+                    .filter(i -> i.mana().equals(mana))
+                    .filter(i -> !overSaturated || i.node().shouldExtractWhenSaturated())
+                    .mapToInt(of -> of.node().extractMana(of.amount(), of.mana()))
+                    .sum();
+
+            if (extracted < request && overSaturated) {
+                for (ManaTransaction of : manaOffers.stream()
+                        .filter(i -> i.mana().equals(mana) && i.node().shouldExtractWhenSaturated())
+                        .toList()) {
+                    int amount = of.node().extractMana(request - extracted, mana);
+                    extracted += amount;
+                    if (extracted >= request) {
+                        break;
+                    }
+                }
+            }
+
             if(diff != 0) {
                 System.out.println("ManaNetwork.distributeMana: diff != 0 for mana " + mana + " diff: " + diff);
             }

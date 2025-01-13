@@ -120,6 +120,10 @@ public class RunePedestalBlock extends ManaNetworkBlock implements EntityBlock {
                         blockState,
                         (RunePedestalBlockEntity) blockEntity);
             }
+            return (level1, blockPos, blockState, blockEntity) -> RunePedestalBlockEntity.clientTick(level1,
+                    blockPos,
+                    blockState,
+                    (RunePedestalBlockEntity) blockEntity);
         }
         return null;
     }

@@ -13,10 +13,12 @@
         * [ ] Update network to be able to request last state
     * [ ] Add texture for connector
     * [X] Allow Mana pedestals to act as storage using runes
-      * [ ] Add switching modes to pedestals
+      * [X] Add switching modes to pedestals
+      * [ ] Better particle effects
     * [ ] Add network instability
     * [ ] Add particles when mana is dissipated
     * [ ] \(Make transmitters placeable on walls\) 
+  * [ ] Mana storage not updating ui when getting emptied
 * [ ] Rituals
     * [ ] Multiblocks
     * [X] Request Mana after Item consume instead of start

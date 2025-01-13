@@ -15,9 +15,9 @@ import io.github.sfseeger.manaweave_and_runes.common.blocks.ritual_anchor.Ritual
 import io.github.sfseeger.manaweave_and_runes.common.blocks.ritual_anchor.RitualAnchorType;
 import io.github.sfseeger.manaweave_and_runes.common.blocks.ritual_anchor.RitualAnchorTypes;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRParticleTypeInit;
-import io.github.sfseeger.manaweave_and_runes.core.init.MRTagInit;
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockEntityInit;
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockInit;
+import io.github.sfseeger.manaweave_and_runes.core.util.Utils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -40,12 +40,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Predicate;
 
 public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManager, IManaNetworkSubscriber {
     public static final Ritual.RitualOriginType ORIGIN_TYPE = Ritual.RitualOriginType.ANCHOR;
-    public static final Predicate<BlockState> MANA_CAPABLE_BLOCK =
-            blockState -> blockState.is(MRTagInit.RITUAL_MANA_PROVIDERS);
     public final ManaHandler manaHandler = new ManaHandler(10_000, 10_000, 10_000, null);
     RitualState currentRitualState = RitualState.IDLE;
     Ritual currentRitual;
@@ -56,7 +53,7 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
     List<Ingredient> requiredItems = new ArrayList<>();
     List<ItemStack> consumedItems = new ArrayList<>();
     RitualContext ritualContext = new RitualContext();
-    ManaNetworkNode manaNetworkNode = new ManaNetworkNode(this, ManaNetworkNodeType.RECEIVER, 20);
+    ManaNetworkNode manaNetworkNode = new ManaNetworkNode(this, ManaNetworkNodeType.RECEIVER, 20, true);
 
     public RitualAnchorBlockEntity(BlockPos pos, BlockState blockState) {
         super(ManaweaveAndRunesBlockEntityInit.RITUAL_ANCHOR_BLOCK_ENTITY.get(), pos, blockState);
@@ -155,7 +152,7 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
             return RitualStepResult.SUCCESS;
         }
         if (pedestalsToVisit.isEmpty()) {
-            if (requiredItems.stream().allMatch(ing -> consumedItems.stream().anyMatch(ing::test))) {
+            if (Utils.compareIngredientsToItems(requiredItems, consumedItems)) {
                 requestRequiredMana();
                 return RitualStepResult.SKIP;
             }
@@ -203,8 +200,9 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
                 }
             }
         }
-        if (requiredItems.stream().allMatch(ing -> consumedItems.stream().anyMatch(ing::test))) {
-            return RitualStepResult.SKIP;
+        if (Utils.compareIngredientsToItems(requiredItems, consumedItems)) {
+            requestRequiredMana();
+            return RitualStepResult.SUCCESS;
         }
         return RitualStepResult.END;
     }
@@ -329,7 +327,7 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
         if (tag.contains("context")) ritualContext = RitualContext.deserializeNBT(tag.getCompound("context"));
         manaHandler.deserializeNBT(registries, tag.getCompound("mana"));
         manaNetworkNode = ManaNetworkNode.deserializeNBT(tag.getCompound("mana_network_node"), registries, this)
-                .orElse(new ManaNetworkNode(this, ManaNetworkNodeType.RECEIVER, 20));
+                .orElse(new ManaNetworkNode(this, ManaNetworkNodeType.RECEIVER, 20, true));
     }
 
     @Override
