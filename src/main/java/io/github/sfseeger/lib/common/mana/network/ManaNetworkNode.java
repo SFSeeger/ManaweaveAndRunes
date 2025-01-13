@@ -2,6 +2,7 @@ package io.github.sfseeger.lib.common.mana.network;
 
 import io.github.sfseeger.lib.common.mana.IManaNetworkSubscriber;
 import io.github.sfseeger.lib.common.mana.Mana;
+import io.github.sfseeger.lib.common.mana.capability.IManaHandler;
 import io.github.sfseeger.manaweave_and_runes.core.util.Utils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -16,7 +17,7 @@ import java.util.*;
 public class ManaNetworkNode {
     private final Set<ManaNetworkNode> connectedNodes = new LinkedHashSet<>();
     private final BlockEntity blockEntity;
-    private final ManaNetworkNodeType nodeType;
+    private ManaNetworkNodeType nodeType;
     public List<BlockPos> pendingConnections = new ArrayList<>();
     private UUID networkId;
     private int priority = 0;
@@ -36,7 +37,7 @@ public class ManaNetworkNode {
     }
 
     public static Optional<ManaNetworkNode> deserializeNBT(CompoundTag tag, HolderLookup.Provider registries,
-            BlockEntity blockEntity) {
+                                                           BlockEntity blockEntity) {
         if (!tag.contains("mana_network") || !tag.contains("type")) return Optional.empty();
 
         boolean performLevelOperations = blockEntity.getLevel() != null;
@@ -201,11 +202,15 @@ public class ManaNetworkNode {
     }
 
     public int receiveMana(int amount, Mana mana) {
-        return ((IManaNetworkSubscriber) blockEntity).getManaHandler(null).receiveMana(amount, mana, false);
+        IManaHandler handler = ((IManaNetworkSubscriber) blockEntity).getManaHandler(null);
+        if (handler == null) return 0;
+        return handler.receiveMana(amount, mana, false);
     }
 
     public int extractMana(int amount, Mana mana) {
-        return ((IManaNetworkSubscriber) blockEntity).getManaHandler(null).extractMana(amount, mana, false);
+        IManaHandler handler = ((IManaNetworkSubscriber) blockEntity).getManaHandler(null);
+        if (handler == null) return 0;
+        return handler.receiveMana(amount, mana, false);
     }
 
     public boolean hasMana(Mana mana) {
@@ -214,6 +219,17 @@ public class ManaNetworkNode {
 
     public ManaNetworkNodeType getNodeType() {
         return nodeType;
+    }
+
+    public boolean setNodeType(ManaNetworkNodeType type) {
+        boolean flag = false;
+        if (manaNetwork != null) {
+            this.nodeType = type;
+            manaNetwork.removeNode(this);
+            manaNetwork.addNode(this);
+            flag = true;
+        }
+        return flag;
     }
 
     public void provideMana(int amount, Mana mana) {
@@ -242,8 +258,8 @@ public class ManaNetworkNode {
         tag.putInt("priority", priority);
         tag.putInt("type", nodeType.ordinal());
         tag.put("connected_nodes", Utils.encode(BlockPos.CODEC.listOf(),
-                                                connectedNodes.stream().map(i -> i.blockEntity.getBlockPos()).toList(),
-                                                registries));
+                connectedNodes.stream().map(i -> i.blockEntity.getBlockPos()).toList(),
+                registries));
         return tag;
     }
 

@@ -66,14 +66,14 @@ Used to store Mana by placing a Rune on top of it. Here items can be recharged a
 Using an Transmutation circle on a crystal as well as a collection of  _Storage runes_, spells can be cast. The
 following Spells are currently planned:
 
-| Spell | Effect | Resources | Upgradable |
-| :---: | :---: | :---: | :---: |
-| Teleport | Teleports a player a certain ammount of blocks in a given direction | Mana: Void, Soul, Order | [X] |
-| Fireball | Summons a fireball, that does damage | Mana: Fire | [X] |
-| Elemental Spells tbd... |  |  | |
-| Chaos Orb | Randomly creates an elemental effect. Simmilar to DnD spell | Mana: Chaos, Elemental | [X] |
-| Shield | Grants Immunity against Damage for a certain time | Mana: Void | [] |
-| Energy Beam | Creates an large beam of energy | ... | [] |
+|          Spell          |                               Effect                                |        Resources        | Upgradable |
+|:-----------------------:|:-------------------------------------------------------------------:|:-----------------------:|:----------:|
+|        Teleport         | Teleports a player a certain ammount of blocks in a given direction | Mana: Void, Soul, Order |    [X]     |
+|        Fireball         |                Summons a fireball, that does damage                 |       Mana: Fire        |    [X]     |
+| Elemental Spells tbd... |                                                                     |                         |            |
+|        Chaos Orb        |     Randomly creates an elemental effect. Simmilar to DnD spell     | Mana: Chaos, Elemental  |    [X]     |
+|         Shield          |          Grants Immunity against Damage for a certain time          |       Mana: Void        |     []     |
+|       Energy Beam       |                   Creates an large beam of energy                   |           ...           |     []     |
 
 ### Rituals
 |       Ritual       |                     Effect                     |                   Resources                    | Core Tier |

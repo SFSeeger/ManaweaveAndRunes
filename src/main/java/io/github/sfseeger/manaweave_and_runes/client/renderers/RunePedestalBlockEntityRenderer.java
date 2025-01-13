@@ -2,6 +2,7 @@ package io.github.sfseeger.manaweave_and_runes.client.renderers;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
+import io.github.sfseeger.lib.client.ber.ManaNodeRenderer;
 import io.github.sfseeger.manaweave_and_runes.common.blockentities.RunePedestalBlockEntity;
 import io.github.sfseeger.manaweave_and_runes.common.blocks.RunePedestalBlock;
 import net.minecraft.client.Minecraft;
@@ -24,12 +25,13 @@ import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.items.IItemHandler;
 
 @OnlyIn(Dist.CLIENT)
-public class RunePedestalBlockEntityRenderer implements BlockEntityRenderer<RunePedestalBlockEntity> {
+public class RunePedestalBlockEntityRenderer extends ManaNodeRenderer<RunePedestalBlockEntity> {
 
     private final BlockEntityRendererProvider.Context context;
     private static final float ROTATION_PERIOD = 150f;
 
     public RunePedestalBlockEntityRenderer(BlockEntityRendererProvider.Context ctx) {
+        super(ctx);
         this.context = ctx;
     }
 
@@ -78,6 +80,7 @@ public class RunePedestalBlockEntityRenderer implements BlockEntityRenderer<Rune
 //                             multiBufferSource,
 //                             Font.DisplayMode.NORMAL, 0xFF0000, packedLight, true);
             poseStack.popPose();
+            super.render(blockEntity, partialTick, poseStack, multiBufferSource, packedLight, packedOverlay);
         }
     }
 }

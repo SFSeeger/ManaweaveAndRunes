@@ -12,17 +12,19 @@
         * [ ] Add blockmodel
         * [ ] Update network to be able to request last state
     * [ ] Add texture for connector
-    * [ ] Allow Mana pedestals to act as storage using runes
+    * [X] Allow Mana pedestals to act as storage using runes
+      * [ ] Add switching modes to pedestals
     * [ ] Add network instability
-    * [ ] Add particles when mana is dissapated
+    * [ ] Add particles when mana is dissipated
     * [ ] \(Make transmitters placeable on walls\) 
 * [ ] Rituals
     * [ ] Multiblocks
-    * [ ] Request Mana after Item consume instead of start
-    * [ ] Add item tick consume
-    * [ ] Make consumption rate data driven
+    * [X] Request Mana after Item consume instead of start
+    * [X] Add item tick consume
+    * [X] Make consumption rate data driven
     * [ ] Add additional rituals & ingredients
-    * [ ] Fix item ammount not taken into account
+    * [ ] Fix item amount not taken into account
+    * [ ] Add advancement for rituals (unlocking)
 * [ ] Add early game enchantments
     * [ ] 3x3 Enchantment
     * [ ] Tree instachop
@@ -45,3 +47,5 @@
     * [ ] Add translations
     * [ ] Add missing textures / models
     * [ ] Add crafting recipes and resources
+    * [ ] Add Docs / Patchouli Book
+    * [ ] Add advancements

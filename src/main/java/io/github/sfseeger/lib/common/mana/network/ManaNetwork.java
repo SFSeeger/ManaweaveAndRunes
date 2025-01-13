@@ -8,10 +8,13 @@ import java.util.*;
 
 public class ManaNetwork {
     private final UUID id;
+
+    public static final Comparator<ManaNetworkNode> NODE_COMPARATOR = Comparator.comparingInt(ManaNetworkNode::getPriority).reversed();
+
     Set<ManaNetworkNode> nodes = new LinkedHashSet<>();
     Set<ManaNetworkNode> receiverNodes = new LinkedHashSet<>();
     Set<ManaNetworkNode> providerNodes = new LinkedHashSet<>();
-    Set<ManaNetworkNode> hybridNodes = new LinkedHashSet<>();
+    Set<ManaNetworkNode> hybridNodes = new TreeSet<>(NODE_COMPARATOR);
 
     Queue<ManaTransaction> manaRequests = new PriorityQueue<>(Comparator.comparingInt(i -> -i.node().getPriority()));
     List<ManaTransaction> manaOffers = new ArrayList<>();
@@ -74,6 +77,9 @@ public class ManaNetwork {
                     i.node().receiveMana(amountToReceive, mana);
                     totalOffered.put(mana, totalOffered.getOrDefault(mana, 0) - amountToReceive);
                 });
+            }
+            if(diff != 0) {
+                System.out.println("ManaNetwork.distributeMana: diff != 0 for mana " + mana + " diff: " + diff);
             }
         }
 

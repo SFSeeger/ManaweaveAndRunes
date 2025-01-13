@@ -1,11 +1,13 @@
 package io.github.sfseeger.manaweave_and_runes.client.event;
 
+import io.github.sfseeger.lib.client.ber.ManaNodeRenderer;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
 import io.github.sfseeger.manaweave_and_runes.client.particles.ManaConcentratedParticle;
 import io.github.sfseeger.manaweave_and_runes.client.particles.ManaParticle;
 import io.github.sfseeger.manaweave_and_runes.client.renderers.*;
 import io.github.sfseeger.manaweave_and_runes.client.screens.ManaStorageBlockScreen;
 import io.github.sfseeger.manaweave_and_runes.client.screens.RuneCarverBlockScreen;
+import io.github.sfseeger.manaweave_and_runes.common.blockentities.ManaStorageBlockEntity;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRParticleTypeInit;
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockEntityInit;
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaverAndRunesMenuInit;
@@ -27,11 +29,11 @@ public class ClientEventHandler {
         event.registerBlockEntityRenderer(ManaweaveAndRunesBlockEntityInit.MANA_CONCENTRATOR_BLOCK_ENTITY.get(),
                                           ManaConcentratorBlockEntityRenderer::new);
         event.registerBlockEntityRenderer(ManaweaveAndRunesBlockEntityInit.MANA_STORAGE_BLOCK_ENTITY.get(),
-                                          ManaStorageBlockEntityRenderer::new);
+                                          ManaNodeRenderer::new);
         event.registerBlockEntityRenderer(ManaweaveAndRunesBlockEntityInit.RITUAL_ANCHOR_BLOCK_ENTITY.get(),
-                                          RitualAnchorBlockEntityRenderer::new);
+                                          ManaNodeRenderer::new);
         event.registerBlockEntityRenderer(ManaweaveAndRunesBlockEntityInit.MANA_TRANSMITTER_BLOCK_ENTITY.get(),
-                                          ManaTransmitterBlockEntityRenderer::new);
+                                          ManaNodeRenderer::new);
     }
 
     @SubscribeEvent

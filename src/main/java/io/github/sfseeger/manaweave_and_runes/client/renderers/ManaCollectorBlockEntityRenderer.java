@@ -20,17 +20,17 @@ import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.items.IItemHandler;
 
 @OnlyIn(Dist.CLIENT)
-public class ManaCollectorBlockEntityRenderer extends ManaNodeRenderer implements BlockEntityRenderer<ManaCollectorBlockEntity> {
-
-    private final BlockEntityRendererProvider.Context context;
+public class ManaCollectorBlockEntityRenderer extends ManaNodeRenderer<ManaCollectorBlockEntity> {
+    private BlockEntityRendererProvider.Context context;
 
     public ManaCollectorBlockEntityRenderer(BlockEntityRendererProvider.Context ctx) {
+        super(ctx);
         this.context = ctx;
     }
 
     @Override
-    public void render(ManaCollectorBlockEntity manaCollectorBlockEntity, float partialTick, PoseStack poseStack,
-            MultiBufferSource multiBufferSource, int packedLight, int packedOverlay) {
+    public void render(ManaCollectorBlockEntity manaCollectorBlockEntity, float partialTick, PoseStack poseStack, MultiBufferSource multiBufferSource, int packedLight, int packedOverlay) {
+        super.render(manaCollectorBlockEntity, partialTick, poseStack, multiBufferSource, packedLight, packedOverlay);
         BlockPos pos = manaCollectorBlockEntity.getBlockPos();
         BlockPos posAbove = pos.above();
         IItemHandler itemHandler = manaCollectorBlockEntity.getItemHandler(null);
@@ -39,33 +39,15 @@ public class ManaCollectorBlockEntityRenderer extends ManaNodeRenderer implement
 
 
         if (level != null && !stack.isEmpty()) {
-            packedLight = LightTexture.pack(
-                    level.getBrightness(LightLayer.BLOCK, posAbove),
-                    level.getBrightness(LightLayer.SKY, posAbove)
-            );
+            packedLight = LightTexture.pack(level.getBrightness(LightLayer.BLOCK, posAbove), level.getBrightness(LightLayer.SKY, posAbove));
 
             poseStack.pushPose();
 
             poseStack.translate(0.5, 1.01f, 0.5);
             poseStack.mulPose(Axis.XP.rotationDegrees(90));
             poseStack.scale(0.5f, 0.5f, 0.5f);
-            this.context.getItemRenderer()
-                    .renderStatic(stack, ItemDisplayContext.FIXED, packedLight, OverlayTexture.NO_OVERLAY,
-                                  poseStack,
-                                  multiBufferSource, level, 0);
+            this.context.getItemRenderer().renderStatic(stack, ItemDisplayContext.FIXED, packedLight, OverlayTexture.NO_OVERLAY, poseStack, multiBufferSource, level, 0);
             poseStack.popPose();
-
-            renderManaConnections(manaCollectorBlockEntity, pos, poseStack, multiBufferSource);
         }
-    }
-
-    @Override
-    public boolean shouldRender(ManaCollectorBlockEntity blockEntity, Vec3 cameraPos) {
-        return true;
-    }
-
-    @Override
-    public boolean shouldRenderOffScreen(ManaCollectorBlockEntity blockEntity) {
-        return !blockEntity.getManaNetworkNode().getConnectedNodes().isEmpty();
     }
 }
