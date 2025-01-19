@@ -25,8 +25,8 @@
     * [X] Add item tick consume
     * [X] Make consumption rate data driven
     * [ ] Add additional rituals & ingredients
-    * [ ] Fix item amount not taken into account
-    * [ ] Add advancement for rituals (unlocking)
+  * [X] Fix item amount not taken into account
+  * [X] Add advancement for rituals (unlocking)
 * [ ] Add early game enchantments
     * [ ] 3x3 Enchantment
     * [ ] Tree instachop

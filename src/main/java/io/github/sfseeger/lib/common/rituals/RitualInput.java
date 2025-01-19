@@ -4,6 +4,7 @@ import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.github.sfseeger.lib.common.mana.Mana;
+import io.github.sfseeger.manaweave_and_runes.core.util.Utils;
 import net.minecraft.core.Holder;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -70,7 +71,7 @@ public class RitualInput {
     public boolean matches(List<ItemStack> items) {
         List<Ingredient> costs = new ArrayList<>(initialItemCost);
         costs.addAll(tickItemCost);
-        return costs.stream().allMatch(i -> items.stream().anyMatch(i::test));
+        return Utils.compareIngredientsToItems(costs, items);
     }
 
     public int getItemRate() {

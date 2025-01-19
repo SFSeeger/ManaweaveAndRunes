@@ -67,7 +67,7 @@ public class ManaweaveAndRunesItemInit {
             ITEMS.registerSimpleBlockItem("ascended_mana_concentrator",
                                           ManaweaveAndRunesBlockInit.ASCENDED_MANA_CONCENTRATOR_BLOCK);
 
-    public static final DeferredItem<BlockItem> RITUAL_ANCHOR_BLOCK_ITEM =
+    public static final DeferredItem<BlockItem> NOVICE_RITUAL_ANCHOR_BLOCK_ITEM =
             ITEMS.registerSimpleBlockItem("novice_ritual_anchor",
                                           ManaweaveAndRunesBlockInit.NOVICE_RITUAL_ANCHOR_BLOCK);
     public static final DeferredItem<BlockItem> MASTER_RITUAL_ANCHOR_BLOCK_ITEM =
