@@ -1,0 +1,36 @@
+{
+  "parent": "manaweave_and_runes:rituals/root",
+  "criteria": {
+    "pickup_master_ritual_anchor": {
+      "conditions": {
+        "items": [
+          {
+            "items": "manaweave_and_runes:master_ritual_anchor"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.manaweave_and_runes.master_anchor.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "manaweave_and_runes:master_ritual_anchor"
+    },
+    "title": {
+      "translate": "advancements.manaweave_and_runes.master_anchor.title"
+    }
+  },
+  "requirements": [
+    [
+      "pickup_master_ritual_anchor"
+    ]
+  ],
+  "rewards": {
+    "experience": 500
+  },
+  "sends_telemetry_event": true
+}

@@ -159,7 +159,7 @@ public abstract class Ritual {
         return res;
     }
 
-    protected ResourceLocation getRegistryName() {
+    public ResourceLocation getRegistryName() {
         return ManaweaveAndRunesRegistries.RITUAL_REGISTRY.getKey(this);
     }
 

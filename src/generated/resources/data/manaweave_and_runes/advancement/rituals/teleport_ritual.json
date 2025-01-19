@@ -1,0 +1,21 @@
+{
+  "parent": "manaweave_and_runes:rituals/root",
+  "criteria": {
+    "has_ender_pearl": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:ender_pearl"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_ender_pearl"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

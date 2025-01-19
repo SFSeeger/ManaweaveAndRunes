@@ -18,13 +18,16 @@ import io.github.sfseeger.manaweave_and_runes.core.init.MRParticleTypeInit;
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockEntityInit;
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockInit;
 import io.github.sfseeger.manaweave_and_runes.core.util.Utils;
+import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -40,6 +43,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import static io.github.sfseeger.lib.common.rituals.ritual_data.RitualDataTypes.PLAYER_TYPE;
 
 public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManager, IManaNetworkSubscriber {
     public static final Ritual.RitualOriginType ORIGIN_TYPE = Ritual.RitualOriginType.ANCHOR;
@@ -89,8 +94,8 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
                         for (int i = 0; i < 4; i++) {
                             Vec3 randomPedestalVec = vecToConcentrator.offsetRandom(randomsource, .5f);
                             level.addParticle(MRParticleTypeInit.MANA_PARTICLE.get(), pos.getX() + 0.5f,
-                                    pos.getY() + 1.5f, pos.getZ() + 0.5f, randomPedestalVec.x(),
-                                    randomPedestalVec.y(), randomPedestalVec.z());
+                                              pos.getY() + 1.5f, pos.getZ() + 0.5f, randomPedestalVec.x(),
+                                              randomPedestalVec.y(), randomPedestalVec.z());
                         }
                     }
                 }
@@ -98,7 +103,7 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
                     Ritual ritual = blockEntity.getRitual();
                     if (ritual != null) {
                         ritual.onRitualClientTick(level, pos, state, blockEntity.ritualTicks, blockEntity.ritualContext,
-                                ORIGIN_TYPE);
+                                                  ORIGIN_TYPE);
                     }
                 }
             }
@@ -112,7 +117,7 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
         }
 
         blockEntity.executeStepAndTransition(level, pos, state, blockEntity.ritualTicks, blockEntity.ritualContext,
-                ORIGIN_TYPE);
+                                             ORIGIN_TYPE);
 
         switch (blockEntity.getState()) {
             case TICK -> {
@@ -125,7 +130,7 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
             }
             case FINISH, ABORT -> {
                 blockEntity.executeStep(level, pos, state, blockEntity.ritualTicks, blockEntity.ritualContext,
-                        ORIGIN_TYPE);
+                                        ORIGIN_TYPE);
                 blockEntity.ritualTicks = 0;
                 blockEntity.pedestalPositions.clear();
                 blockEntity.pedestalsToVisit.clear();
@@ -139,6 +144,16 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
         }
     }
 
+    private static void displayMessageToStartingPlayer(Component message, Level level, RitualContext context) {
+        PlayerRitualData starting_player = context.getData("starting_player", PLAYER_TYPE);
+        if (starting_player != null) {
+            Player player = level.getPlayerByUUID(starting_player.getPlayerUUID());
+            if (player != null) {
+                player.displayClientMessage(message, false);
+            }
+        }
+    }
+
     @Override
     public void startRitual(Ritual ritual) {
         ritualTicks = 0;
@@ -147,16 +162,20 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
 
     @Override
     public RitualStepResult consumeInitialItem(Level level, BlockPos pos, BlockState blockState, int ticksPassed,
-                                               RitualContext context, Ritual.RitualOriginType originType) {
+            RitualContext context, Ritual.RitualOriginType originType) {
         if (level.getGameTime() % 20 != 0) {
             return RitualStepResult.SUCCESS;
         }
         if (pedestalsToVisit.isEmpty()) {
             if (Utils.compareIngredientsToItems(requiredItems, consumedItems)) {
                 requestRequiredMana();
+                requiredItems = List.of();
+                consumedItems.clear();
                 return RitualStepResult.SKIP;
             }
-            return RitualStepResult.END;
+            displayMessageToStartingPlayer(Component.translatable("ritual.manaweave_and_runes.item_insufficient"),
+                                           level, context);
+            return RitualStepResult.ABORT;
         }
 
         Iterator<BlockPos> iterator = pedestalsToVisit.iterator();
@@ -183,7 +202,7 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
 
     @Override
     public RitualStepResult consumeTickItem(Level level, BlockPos pos, BlockState blockState, int ticksPassed,
-                                            RitualContext context, Ritual.RitualOriginType originType) {
+            RitualContext context, Ritual.RitualOriginType originType) {
         List<Ingredient> requiredItems = getRitual().getTickItemCost(level);
         if (ticksPassed % getRitual().getItemRate(level) != 0 || requiredItems.isEmpty()) {
             return RitualStepResult.SUCCESS;
@@ -204,17 +223,21 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
             requestRequiredMana();
             return RitualStepResult.SUCCESS;
         }
-        return RitualStepResult.END;
+        displayMessageToStartingPlayer(Component.translatable("ritual.manaweave_and_runes.item_insufficient"), level,
+                                       context);
+        return RitualStepResult.ABORT;
     }
 
     @Override
     public RitualStepResult consumeMana(Level level, BlockPos pos, BlockState blockState, int ticksPassed,
-                                        RitualContext context, Ritual.RitualOriginType originType) {
+            RitualContext context, Ritual.RitualOriginType originType) {
         if (getRitual() != null && ticksPassed % getRitual().getManaRate(level) == 0) {
             Map<Mana, Integer> requiredMana = getRitual().getManaCost(level);
             for (Map.Entry<Mana, Integer> entry : requiredMana.entrySet()) {
                 Integer amount = entry.getValue();
                 if (manaHandler.extractMana(amount, entry.getKey(), false) != amount) {
+                    displayMessageToStartingPlayer(
+                            Component.translatable("ritual.manaweave_and_runes.mana_insufficient"), level, context);
                     return RitualStepResult.ABORT;
                 }
             }
@@ -267,15 +290,15 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
     }
 
     public boolean checkAndStartRitual(Level level, Player player, ItemStack stack) {
-        //TODO: Check if player knows this ritual
         //TODO: Check if all required extra data is provided
         if (getState() != RitualState.IDLE || !stack.is(Items.CARROT_ON_A_STICK)) {
             return false;
         }
+
         List<ItemStack> items = new ArrayList<>();
         RitualContext ritualContext = new RitualContext();
         for (BlockPos offset : getRitualAnchorType().findBlocks(level,
-                ManaweaveAndRunesBlockInit.RUNE_PEDESTAL_BLOCK.get())) {
+                                                                ManaweaveAndRunesBlockInit.RUNE_PEDESTAL_BLOCK.get())) {
             BlockPos worldPos = getBlockPos().offset(offset);
             BlockEntity blockEntity = level.getBlockEntity(worldPos);
             if (blockEntity instanceof RunePedestalBlockEntity pBE) {
@@ -293,7 +316,19 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
         if (ritual == null) {
             return false;
         }
+
         ritualContext.putData("starting_player", new PlayerRitualData(player));
+
+        AdvancementHolder
+                advancement = player.getServer().getAdvancements().get(ritual.getRegistryName().withPrefix("rituals/"));
+        if (advancement != null && !player.isCreative() && !((ServerPlayer) player).getAdvancements()
+                .getOrStartProgress(advancement)
+                .isDone()) {
+            displayMessageToStartingPlayer(Component.translatable("ritual.manaweave_and_runes.unknown_ritual"), level,
+                                           ritualContext);
+            return false;
+        }
+
 
         this.pedestalPositions =
                 getRitualAnchorType().findBlocks(level, ManaweaveAndRunesBlockInit.RUNE_PEDESTAL_BLOCK.get());

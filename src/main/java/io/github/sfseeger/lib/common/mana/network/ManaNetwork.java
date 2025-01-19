@@ -103,7 +103,7 @@ public class ManaNetwork {
             }
 
             if(diff != 0) {
-                System.out.println("ManaNetwork.distributeMana: diff != 0 for mana " + mana + " diff: " + diff);
+                //System.out.println("ManaNetwork.distributeMana: diff != 0 for mana " + mana + " diff: " + diff);
             }
         }
 

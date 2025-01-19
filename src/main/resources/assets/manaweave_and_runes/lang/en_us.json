@@ -14,5 +14,12 @@
   "lore.manaweave_and_runes.mana_stored": "%d / %d",
   "container.manaweave_and_runes.mana_storage_block": "Mana Storage",
   "item.manaweave_and_runes.soul_container_rune.stole_soul_fragment": "Someone tried to steal a soul fragment from you",
-  "item.manaweave_and_runes.soul_container_rune.detected": "You got noticed trying to steal a soul fragment"
+  "item.manaweave_and_runes.soul_container_rune.detected": "You got noticed trying to steal a soul fragment",
+  "advancements.manaweave_and_runes.ritual_anchor.title": "Anchored in Arcana",
+  "advancements.manaweave_and_runes.ritual_anchor.description": "Build a Ritual Anchor. Who knows what power lies within?",
+  "advancements.manaweave_and_runes.master_anchor.title": "Advanced Arcana",
+  "advancements.manaweave_and_runes.master_anchor.description": "Upgrade a ritual anchor to master",
+  "ritual.manaweave_and_runes.mana_insufficient": "It seems like there was not enough mana to supply the ritual",
+  "ritual.manaweave_and_runes.item_insufficient": "The ritual could not consume an item it needed",
+  "ritual.manaweave_and_runes.unknown_ritual": "You don't know how to use this start this..."
 }
