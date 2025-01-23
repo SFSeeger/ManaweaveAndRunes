@@ -15,8 +15,8 @@
     * [X] Allow Mana pedestals to act as storage using runes
       * [X] Add switching modes to pedestals
       * [ ] Better particle effects
-    * [ ] Add network instability
-    * [ ] Add particles when mana is dissipated
+  * [ ] (Add network instability)
+  * [ ] (Add particles when mana is dissipated)
     * [ ] \(Make transmitters placeable on walls\) 
   * [ ] Mana storage not updating ui when getting emptied
 * [ ] Rituals
