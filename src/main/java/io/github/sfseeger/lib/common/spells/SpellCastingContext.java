@@ -6,7 +6,7 @@ import net.minecraft.world.level.Level;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SpellCastingContext {
+public class SpellCastingContext implements Cloneable {
     private final Level level;
     private final LivingEntity caster;
     private final Map<String, Object> variables = new HashMap<>();
@@ -30,5 +30,16 @@ public class SpellCastingContext {
 
     public void setVariable(String key, Object value) {
         variables.put(key, value);
+    }
+
+    @Override
+    public SpellCastingContext clone() {
+        try {
+            SpellCastingContext clone = (SpellCastingContext) super.clone();
+            clone.variables.putAll(variables);
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

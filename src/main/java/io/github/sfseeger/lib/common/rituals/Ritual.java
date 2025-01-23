@@ -27,7 +27,7 @@ import java.util.Optional;
 
 public abstract class Ritual {
     public static final Codec<Ritual> CODEC =
-            Codec.lazyInitialized(() -> ManaweaveAndRunesRegistries.RITUAL_REGISTRY.byNameCodec());
+            Codec.lazyInitialized(ManaweaveAndRunesRegistries.RITUAL_REGISTRY::byNameCodec);
 
     final Tier tier;
     final int duration;

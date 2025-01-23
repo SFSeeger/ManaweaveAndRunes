@@ -4,6 +4,7 @@ import io.github.sfseeger.lib.common.mana.Mana;
 import io.github.sfseeger.lib.common.rituals.Ritual;
 import io.github.sfseeger.lib.common.rituals.RitualInput;
 import io.github.sfseeger.lib.common.rituals.ritual_data.RitualDataType;
+import io.github.sfseeger.lib.common.spells.AbstractSpellNode;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
 import io.github.sfseeger.manaweave_and_runes.core.util.MultiblockValidator;
 import net.minecraft.core.Registry;
@@ -39,6 +40,14 @@ public class ManaweaveAndRunesRegistries {
                                                                       "default")) //TODO: Change this to the actual default key
                     .maxId(64)
                     .create();
+
+    public static final ResourceKey<Registry<AbstractSpellNode>> SPELL_NODE_REGISTRY_KEY =
+            ResourceKey.createRegistryKey(ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "spell_node"));
+    public static final Registry<AbstractSpellNode> SPELL_NODE_REGISTRY = new RegistryBuilder<>(SPELL_NODE_REGISTRY_KEY)
+            .sync(true)
+            .defaultKey(ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "default_spell_node"))
+            .maxId(256)
+            .create();
 
     // Datapack registries
     public static final ResourceKey<Registry<MultiblockValidator>>
