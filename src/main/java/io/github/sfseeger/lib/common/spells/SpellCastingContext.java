@@ -9,7 +9,7 @@ import java.util.Map;
 public class SpellCastingContext implements Cloneable {
     private final Level level;
     private final LivingEntity caster;
-    private final Map<String, Object> variables = new HashMap<>();
+    private final Map<String, Object> variables = new HashMap<>(Map.of("strength", 1f, "duration", 1f));
 
     public SpellCastingContext(Level level, LivingEntity caster) {
         this.level = level;
@@ -19,6 +19,7 @@ public class SpellCastingContext implements Cloneable {
     public Map<String, Object> getVariables() {
         return variables;
     }
+    public Object getVariable(String key) {return variables.get(key);}
 
     public Level getLevel() {
         return level;

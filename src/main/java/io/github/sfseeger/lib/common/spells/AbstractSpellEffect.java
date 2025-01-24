@@ -18,7 +18,7 @@ public abstract class AbstractSpellEffect extends AbstractSpellNode {
         } else if (rayTrace instanceof EntityHitResult entityHitResult) {
             return resolveEntity(entityHitResult, context);
         }
-        return SpellCastingResult.FAILED;
+        return SpellCastingResult.FAILURE;
     }
 
     public abstract SpellCastingResult resolveBlock(BlockHitResult blockHitResult, SpellCastingContext context);

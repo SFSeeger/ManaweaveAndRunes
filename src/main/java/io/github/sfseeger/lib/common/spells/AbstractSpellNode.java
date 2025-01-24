@@ -26,7 +26,7 @@ public abstract class AbstractSpellNode {
         return Component.literal("This is a spell node");
     }
 
-    public Map<Mana, Integer> getManaCosts() {
+    public Map<Mana, Integer> getManaCost() {
         return baseCosts;
     }
 

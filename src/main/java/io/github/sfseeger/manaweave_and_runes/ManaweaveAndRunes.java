@@ -45,6 +45,8 @@ public class ManaweaveAndRunes {
         RitualDataTypesInit.register(modEventBus);
         RitualInit.RITUALS.register(modEventBus);
 
+        SpellNodeInit.SPELL_NODES.register(modEventBus);
+
         NeoForge.EVENT_BUS.register(ManaNetworkHandler.class);
 
         NeoForge.EVENT_BUS.register(this);
