@@ -17,6 +17,7 @@ public class CommonEventHandler {
         event.register(ManaweaveAndRunesRegistries.MANA_REGISTRY);
         event.register(ManaweaveAndRunesRegistries.RITUAL_REGISTRY);
         event.register(ManaweaveAndRunesRegistries.RITUAL_DATA_TYPE_REGISTRY);
+        event.register(ManaweaveAndRunesRegistries.SPELL_NODE_REGISTRY);
     }
 
     @SubscribeEvent

@@ -1,9 +1,7 @@
 package io.github.sfseeger.lib.common.spells.buildin.types;
 
-import io.github.sfseeger.lib.common.mana.Mana;
 import io.github.sfseeger.lib.common.spells.*;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 
@@ -11,6 +9,8 @@ import java.util.Map;
 import java.util.Set;
 
 public class SpellTypeTouch extends AbstractSpellType {
+    public static final SpellTypeTouch INSTANCE = new SpellTypeTouch();
+
     public SpellTypeTouch() {
         super(Map.of(), 5);
     }

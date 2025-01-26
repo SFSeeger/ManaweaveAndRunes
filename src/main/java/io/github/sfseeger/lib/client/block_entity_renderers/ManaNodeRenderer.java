@@ -1,4 +1,4 @@
-package io.github.sfseeger.lib.client.ber;
+package io.github.sfseeger.lib.client.block_entity_renderers;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import io.github.sfseeger.lib.client.utils.AssetUtils;
