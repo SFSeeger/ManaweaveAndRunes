@@ -1,13 +1,16 @@
 package io.github.sfseeger.manaweave_and_runes.client.event;
 
-import io.github.sfseeger.lib.client.ber.ManaNodeRenderer;
+import io.github.sfseeger.lib.client.block_entity_renderers.ManaNodeRenderer;
+import io.github.sfseeger.lib.client.entity_renderers.SpellProjectileRenderer;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
 import io.github.sfseeger.manaweave_and_runes.client.particles.ManaConcentratedParticle;
 import io.github.sfseeger.manaweave_and_runes.client.particles.ManaParticle;
-import io.github.sfseeger.manaweave_and_runes.client.renderers.*;
+import io.github.sfseeger.manaweave_and_runes.client.renderers.ManaCollectorBlockEntityRenderer;
+import io.github.sfseeger.manaweave_and_runes.client.renderers.ManaConcentratorBlockEntityRenderer;
+import io.github.sfseeger.manaweave_and_runes.client.renderers.RunePedestalBlockEntityRenderer;
 import io.github.sfseeger.manaweave_and_runes.client.screens.ManaStorageBlockScreen;
 import io.github.sfseeger.manaweave_and_runes.client.screens.RuneCarverBlockScreen;
-import io.github.sfseeger.manaweave_and_runes.common.blockentities.ManaStorageBlockEntity;
+import io.github.sfseeger.manaweave_and_runes.core.init.EntityTypeInit;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRParticleTypeInit;
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockEntityInit;
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaverAndRunesMenuInit;
@@ -34,6 +37,11 @@ public class ClientEventHandler {
                                           ManaNodeRenderer::new);
         event.registerBlockEntityRenderer(ManaweaveAndRunesBlockEntityInit.MANA_TRANSMITTER_BLOCK_ENTITY.get(),
                                           ManaNodeRenderer::new);
+    }
+
+    @SubscribeEvent
+    public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
+        event.registerEntityRenderer(EntityTypeInit.SPELL_PROJECTILE.get(), SpellProjectileRenderer::new);
     }
 
     @SubscribeEvent

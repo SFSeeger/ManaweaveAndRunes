@@ -35,8 +35,11 @@ public class ManaweaveAndRunes {
         ManaweaveAndRunesBlockInit.BLOCKS.register(modEventBus);
         ManaweaveAndRunesBlockEntityInit.BLOCK_ENTITY_TYPES.register(modEventBus);
         ManaweaveAndRunesItemInit.ITEMS.register(modEventBus);
+
         ManaweaveAndRunesItemGroupInit.CREATIVE_MODE_TABS.register(modEventBus);
         MRParticleTypeInit.PARTICLE_TYPES.register(modEventBus);
+
+        EntityTypeInit.ENTITY_TYPES.register(modEventBus);
 
         ManaweaveAndRunesRecipeInit.RECIPE_TYPES.register(modEventBus);
         ManaweaveAndRunesRecipeInit.RECIPE_SERIALIZERS.register(modEventBus);

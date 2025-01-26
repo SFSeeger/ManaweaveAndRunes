@@ -41,6 +41,11 @@ public class ManaweaveAndRunesItemInit {
     public static final DeferredItem<ManaConnector> MANA_CONNECTOR = ITEMS.register("mana_connector",
                                                                                     ManaConnector::new);
 
+    public static final DeferredItem<ManaWeaversWandItem> MANA_WEAVERS_WAND_ITEM = ITEMS.register("mana_weavers_wand",
+                                                                                                  ManaWeaversWandItem::new);
+
+
+    // BLOCK ITEMS TODO: REPLACE WITH EVENT LISTENER
     public static final DeferredItem<BlockItem> CRYSTAL_ORE_ITEM =
             ITEMS.registerSimpleBlockItem("crystal_ore", ManaweaveAndRunesBlockInit.CRYSTAL_ORE);
     public static final DeferredItem<BlockItem> RUNE_BLOCK_ITEM =

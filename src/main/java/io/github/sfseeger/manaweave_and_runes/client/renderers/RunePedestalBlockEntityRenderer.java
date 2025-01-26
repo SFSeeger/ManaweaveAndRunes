@@ -2,14 +2,13 @@ package io.github.sfseeger.manaweave_and_runes.client.renderers;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import io.github.sfseeger.lib.client.ber.ManaNodeRenderer;
+import io.github.sfseeger.lib.client.block_entity_renderers.ManaNodeRenderer;
 import io.github.sfseeger.manaweave_and_runes.common.blockentities.RunePedestalBlockEntity;
 import io.github.sfseeger.manaweave_and_runes.common.blocks.RunePedestalBlock;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
