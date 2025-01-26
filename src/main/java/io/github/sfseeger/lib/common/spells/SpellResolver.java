@@ -1,11 +1,10 @@
 package io.github.sfseeger.lib.common.spells;
 
-import io.github.sfseeger.lib.common.mana.Mana;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
-import java.util.Arrays;
-import java.util.Map;
+
+import java.util.List;
 
 public class SpellResolver {
     private final Spell spell;
@@ -26,13 +25,20 @@ public class SpellResolver {
         SpellCastingResult result = SpellCastingResult.SUCCESS;
         for(AbstractSpellEffect effect : spell.getEffects()){
             SpellCastingContext localContext = context.clone();
-            AbstractSpellModifier[] modifiers = spell.getModifiers().get(effect);
-            Arrays.stream(modifiers).forEach(modifier -> {
-                modifier.onGatherContext(rayTrace, localContext);
-                modifier.preResolve(rayTrace, localContext);
-            });
+            List<AbstractSpellModifier> modifiers = spell.getModifiers().get(effect);
+            boolean hasModifiers = modifiers != null;
+            if (hasModifiers) {
+                for (AbstractSpellModifier modifier : modifiers) {
+                    modifier.onGatherContext(rayTrace, localContext);
+                    modifier.preResolve(rayTrace, localContext);
+                }
+            }
             result = effect.resolve(rayTrace, localContext).compare(result);
-            Arrays.stream(modifiers).forEach(modifier -> modifier.postResolve(rayTrace, localContext));
+            if (hasModifiers) {
+                for (AbstractSpellModifier modifier : modifiers) {
+                    modifier.postResolve(rayTrace, localContext);
+                }
+            }
         }
         return result;
     }
