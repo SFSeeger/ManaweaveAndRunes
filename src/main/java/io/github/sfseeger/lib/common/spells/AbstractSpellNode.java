@@ -5,6 +5,7 @@ import io.github.sfseeger.lib.common.mana.Mana;
 import io.github.sfseeger.lib.core.ManaweaveAndRunesRegistries;
 import net.minecraft.Util;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 
 import java.util.Map;
 import java.util.Set;
@@ -22,7 +23,11 @@ public abstract class AbstractSpellNode {
         this.baseCooldown = baseCooldown;
     }
 
-    public Component getDescription() {
+    public MutableComponent getName() {
+        return Component.translatable(this.getDescriptionId());
+    }
+
+    public MutableComponent getDescription() {
         return Component.literal("This is a spell node");
     }
 
@@ -38,7 +43,7 @@ public abstract class AbstractSpellNode {
 
     public String getDescriptionId() {
         if (this.descriptionId == null) {
-            this.descriptionId = Util.makeDescriptionId("mana", ManaweaveAndRunesRegistries.SPELL_NODE_REGISTRY.getKey(this));
+            this.descriptionId = Util.makeDescriptionId("spell", ManaweaveAndRunesRegistries.SPELL_NODE_REGISTRY.getKey(this));
         }
         return this.descriptionId;
     }

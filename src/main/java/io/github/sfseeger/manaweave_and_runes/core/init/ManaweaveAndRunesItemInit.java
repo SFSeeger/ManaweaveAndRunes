@@ -1,5 +1,6 @@
 package io.github.sfseeger.manaweave_and_runes.core.init;
 
+import io.github.sfseeger.lib.common.items.SpellHolderItem;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
 import io.github.sfseeger.manaweave_and_runes.common.items.*;
 import net.minecraft.world.item.BlockItem;
@@ -45,6 +46,9 @@ public class ManaweaveAndRunesItemInit {
                                                                                                   ManaWeaversWandItem::new);
 
 
+    public static final DeferredItem<SpellHolderItem> AMETHYST_SPELL_HOLDER_ITEM = ITEMS.register(
+            "amethyst_spell_holder", () -> new SpellHolderItem(new Item.Properties().stacksTo(1)));
+
     // BLOCK ITEMS TODO: REPLACE WITH EVENT LISTENER
     public static final DeferredItem<BlockItem> CRYSTAL_ORE_ITEM =
             ITEMS.registerSimpleBlockItem("crystal_ore", ManaweaveAndRunesBlockInit.CRYSTAL_ORE);
@@ -85,4 +89,8 @@ public class ManaweaveAndRunesItemInit {
     public static final DeferredItem<BlockItem> MANA_TRANSMITTER_BLOCK_ITEM =
             ITEMS.registerSimpleBlockItem("mana_transmitter",
                                           ManaweaveAndRunesBlockInit.MANA_TRANSMITTER_BLOCK);
+
+    public static final DeferredItem<BlockItem> WAND_MODIFICATION_TABLE_BLOCK_ITEM =
+            ITEMS.registerSimpleBlockItem("wand_modification_table",
+                                          ManaweaveAndRunesBlockInit.WAND_MODIFICATION_TABLE_BLOCK);
 }

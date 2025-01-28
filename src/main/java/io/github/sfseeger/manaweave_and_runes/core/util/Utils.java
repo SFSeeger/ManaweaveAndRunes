@@ -13,10 +13,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Utils {
-    public static <T> Tag encode(Codec<T> codec, T value, HolderLookup.Provider levelRegistry) {
-        return (Tag) codec.encodeStart(levelRegistry.createSerializationContext(NbtOps.INSTANCE), value).getOrThrow();
-    }
-
     public static boolean compareIngredientsToItems(List<Ingredient> input, List<ItemStack> supplied){
         List<ItemStack> unmatchedItemStacks = new ArrayList<>(supplied);
         // Check each ingredient in the ingredient list

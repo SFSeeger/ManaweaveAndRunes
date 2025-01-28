@@ -43,8 +43,9 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
+import static io.github.sfseeger.lib.common.LibUtils.encode;
 import static io.github.sfseeger.lib.common.ManaweaveAndRunesCodecs.BLOCK_POS_LIST_CODEC;
-import static io.github.sfseeger.manaweave_and_runes.core.util.Utils.encode;
+import static io.github.sfseeger.lib.common.LibUtils.encode;
 
 public class ManaConcentratorBlockEntity extends BlockEntity {
     private boolean isActive;
