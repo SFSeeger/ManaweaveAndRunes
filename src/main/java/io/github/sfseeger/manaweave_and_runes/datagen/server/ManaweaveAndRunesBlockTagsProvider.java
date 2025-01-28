@@ -41,7 +41,8 @@ public class ManaweaveAndRunesBlockTagsProvider extends BlockTagsProvider {
                 .add(ManaweaveAndRunesBlockInit.NOVICE_RITUAL_ANCHOR_BLOCK.get())
                 .add(ManaweaveAndRunesBlockInit.MASTER_RITUAL_ANCHOR_BLOCK.get())
                 .add(ManaweaveAndRunesBlockInit.ASCENDED_RITUAL_ANCHOR_BLOCK.get())
-                .add(ManaweaveAndRunesBlockInit.MANA_TRANSMITTER_BLOCK.get());
+                .add(ManaweaveAndRunesBlockInit.MANA_TRANSMITTER_BLOCK.get())
+                .add(ManaweaveAndRunesBlockInit.WAND_MODIFICATION_TABLE_BLOCK.get());
 
         this.tag(BlockTags.NEEDS_DIAMOND_TOOL)
                 .add(ManaweaveAndRunesBlockInit.CRYSTAL_ORE.get());

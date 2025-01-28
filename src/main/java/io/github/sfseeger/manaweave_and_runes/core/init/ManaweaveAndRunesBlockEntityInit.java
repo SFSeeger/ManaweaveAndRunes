@@ -54,5 +54,11 @@ public class ManaweaveAndRunesBlockEntityInit {
                                                                          ManaweaveAndRunesBlockInit.ASCENDED_RITUAL_ANCHOR_BLOCK.get())
                                                 .build(null));
 
+    public static final Supplier<BlockEntityType<WandModificationTableBlockEntity>> WAND_MODIFICATION_TABLE_BLOCK_ENTITY =
+            BLOCK_ENTITY_TYPES.register("wand_modification_table_block_entity",
+                                        () -> BlockEntityType.Builder.of(WandModificationTableBlockEntity::new,
+                                                                         ManaweaveAndRunesBlockInit.WAND_MODIFICATION_TABLE_BLOCK.get())
+                                                .build(null));
+
 
 }

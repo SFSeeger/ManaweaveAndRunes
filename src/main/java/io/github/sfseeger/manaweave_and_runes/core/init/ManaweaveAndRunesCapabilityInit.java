@@ -69,6 +69,11 @@ public class ManaweaveAndRunesCapabilityInit {
                 ManaweaveAndRunesBlockEntityInit.RUNE_PEDESTAL_BLOCK_ENTITY.get(),
                 RunePedestalBlockEntity::getItemHandler
         );
+        event.registerBlockEntity(
+                Capabilities.ItemHandler.BLOCK,
+                ManaweaveAndRunesBlockEntityInit.WAND_MODIFICATION_TABLE_BLOCK_ENTITY.get(),
+                WandModificationTableBlockEntity::getItemHandler
+        );
 
         // SpellHolderItemHandler
         event.registerItem(

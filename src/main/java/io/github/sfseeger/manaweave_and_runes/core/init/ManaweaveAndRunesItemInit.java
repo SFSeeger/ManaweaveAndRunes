@@ -89,4 +89,8 @@ public class ManaweaveAndRunesItemInit {
     public static final DeferredItem<BlockItem> MANA_TRANSMITTER_BLOCK_ITEM =
             ITEMS.registerSimpleBlockItem("mana_transmitter",
                                           ManaweaveAndRunesBlockInit.MANA_TRANSMITTER_BLOCK);
+
+    public static final DeferredItem<BlockItem> WAND_MODIFICATION_TABLE_BLOCK_ITEM =
+            ITEMS.registerSimpleBlockItem("wand_modification_table",
+                                          ManaweaveAndRunesBlockInit.WAND_MODIFICATION_TABLE_BLOCK);
 }
