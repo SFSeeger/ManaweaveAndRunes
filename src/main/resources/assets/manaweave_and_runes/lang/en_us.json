@@ -21,5 +21,10 @@
   "advancements.manaweave_and_runes.master_anchor.description": "Upgrade a ritual anchor to master",
   "ritual.manaweave_and_runes.mana_insufficient": "It seems like there was not enough mana to supply the ritual",
   "ritual.manaweave_and_runes.item_insufficient": "The ritual could not consume an item it needed",
-  "ritual.manaweave_and_runes.unknown_ritual": "You don't know how to use this start this..."
+  "ritual.manaweave_and_runes.unknown_ritual": "You don't know how to use this start this...",
+  "spell.manaweave_and_runes.spell_type.touch": "Touch",
+  "spell.manaweave_and_runes.spell_type.ranged": "Ranged",
+  "spell.manaweave_and_runes.spell_effect.burn": "Burn",
+  "spell.manaweave_and_runes.spell_modifier.strengthen": "Strengthen",
+  "key.manaweave_and_runes.toggle_spell": "Toggle Spell"
 }

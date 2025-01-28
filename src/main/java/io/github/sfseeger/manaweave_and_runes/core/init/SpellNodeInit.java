@@ -25,14 +25,14 @@ public class SpellNodeInit {
     });
 
     public static final Supplier<AbstractSpellNode> SPELL_TYPE_TOUCH =
-            SPELL_NODES.register("spell_type_touch", () -> SpellTypeTouch.INSTANCE);
+            SPELL_NODES.register("spell_type.touch", () -> SpellTypeTouch.INSTANCE);
     public static final Supplier<AbstractSpellNode> SPELL_TYPE_PROJECTILE =
-            SPELL_NODES.register("spell_type_projectile", () -> SpellTypeProjectile.INSTANCE);
+            SPELL_NODES.register("spell_type.projectile", () -> SpellTypeProjectile.INSTANCE);
 
     public static final Supplier<AbstractSpellNode> SPELL_EFFECT_BURN =
-            SPELL_NODES.register("spell_effect_burn", () -> SpellEffectBurn.INSTANCE);
+            SPELL_NODES.register("spell_effect.burn", () -> SpellEffectBurn.INSTANCE);
 
     public static final Supplier<AbstractSpellNode> SPELL_MODIFIER_STRENGTHEN =
-            SPELL_NODES.register("spell_modifier_strengthen", () -> SpellModifierStrengthen.INSTANCE);
+            SPELL_NODES.register("spell_modifier.strengthen", () -> SpellModifierStrengthen.INSTANCE);
 
 }

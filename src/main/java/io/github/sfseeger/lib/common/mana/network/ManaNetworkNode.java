@@ -1,5 +1,6 @@
 package io.github.sfseeger.lib.common.mana.network;
 
+import io.github.sfseeger.lib.common.LibUtils;
 import io.github.sfseeger.lib.common.mana.IManaNetworkSubscriber;
 import io.github.sfseeger.lib.common.mana.Mana;
 import io.github.sfseeger.lib.common.mana.capability.IManaHandler;
@@ -262,7 +263,7 @@ public class ManaNetworkNode {
         if (manaNetwork != null) tag.putUUID("mana_network", manaNetwork.getId());
         tag.putInt("priority", priority);
         tag.putInt("type", nodeType.ordinal());
-        tag.put("connected_nodes", Utils.encode(BlockPos.CODEC.listOf(),
+        tag.put("connected_nodes", LibUtils.encode(BlockPos.CODEC.listOf(),
                 connectedNodes.stream().map(i -> i.blockEntity.getBlockPos()).toList(),
                 registries));
         tag.putBoolean("should_extract_when_saturated", shouldExtractWhenSaturated);

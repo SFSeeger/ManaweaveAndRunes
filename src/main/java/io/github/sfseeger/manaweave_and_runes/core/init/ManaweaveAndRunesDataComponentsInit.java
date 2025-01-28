@@ -1,6 +1,7 @@
 package io.github.sfseeger.manaweave_and_runes.core.init;
 
 import io.github.sfseeger.lib.common.mana.ManaDataComponent;
+import io.github.sfseeger.lib.common.spells.SpellDataComponent;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
 import io.github.sfseeger.manaweave_and_runes.common.data_components.BlockPosDataComponent;
 import io.github.sfseeger.manaweave_and_runes.common.data_components.PlayerDataComponent;
@@ -18,6 +19,13 @@ public class ManaweaveAndRunesDataComponentsInit {
                     "mana_data",
                     builder -> builder.persistent(ManaDataComponent.CODEC)
                             .networkSynchronized(ManaDataComponent.STREAM_CODEC)
+            );
+
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<SpellDataComponent>> SPELL_DATA_COMPOENTN =
+            DATA_COMPONENTS.registerComponentType(
+                    "spell_data",
+                    builder -> builder.persistent(SpellDataComponent.CODEC)
+                            .networkSynchronized(SpellDataComponent.STREAM_CODEC)
             );
 
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<BlockPosDataComponent>>

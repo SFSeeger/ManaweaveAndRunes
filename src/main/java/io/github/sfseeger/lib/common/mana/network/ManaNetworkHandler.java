@@ -2,6 +2,7 @@ package io.github.sfseeger.lib.common.mana.network;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import io.github.sfseeger.lib.common.LibUtils;
 import io.github.sfseeger.manaweave_and_runes.core.util.Utils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -59,7 +60,7 @@ public class ManaNetworkHandler extends SavedData {
 
     @Override
     public CompoundTag save(CompoundTag compoundTag, HolderLookup.Provider provider) {
-        compoundTag.put("mana_network_handler", Utils.encode(CODEC, this, provider));
+        compoundTag.put("mana_network_handler", LibUtils.encode(CODEC, this, provider));
         logger.info("Saving mana networks");
         return compoundTag;
     }

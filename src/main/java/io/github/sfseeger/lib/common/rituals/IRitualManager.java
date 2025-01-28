@@ -1,5 +1,6 @@
 package io.github.sfseeger.lib.common.rituals;
 
+import io.github.sfseeger.lib.common.LibUtils;
 import io.github.sfseeger.lib.common.Tier;
 import io.github.sfseeger.lib.common.rituals.ritual_data.RitualContext;
 import io.github.sfseeger.lib.core.ManaweaveAndRunesRegistries;
@@ -108,7 +109,7 @@ public interface IRitualManager {
         CompoundTag tag = new CompoundTag();
 
         tag.putInt("state", getState().ordinal());
-        tag.put("ritual", Utils.encode(Ritual.CODEC, getRitual(), provider));
+        tag.put("ritual", LibUtils.encode(Ritual.CODEC, getRitual(), provider));
 
         return tag;
     }

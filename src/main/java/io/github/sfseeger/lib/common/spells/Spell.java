@@ -3,8 +3,19 @@ package io.github.sfseeger.lib.common.spells;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import io.github.sfseeger.lib.common.LibUtils;
 import io.github.sfseeger.lib.common.mana.Mana;
+import io.github.sfseeger.lib.core.ManaweaveAndRunesRegistries;
+import io.github.sfseeger.manaweave_and_runes.core.util.Utils;
+import io.netty.buffer.ByteBuf;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -12,12 +23,27 @@ import java.util.stream.Collectors;
 public class Spell {
     // TODO: Add codec to serialize into saved data
     public static final Codec<Spell> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+            Codec.STRING.fieldOf("name").forGetter(Spell::getName),
             AbstractSpellType.CODEC.fieldOf("spellType").forGetter(Spell::getSpellType),
             AbstractSpellEffect.CODEC.listOf().fieldOf("effects").forGetter(Spell::getEffectAsNodes),
             Codec.pair(AbstractSpellNode.CODEC, AbstractSpellModifier.CODEC.listOf()).listOf()
                     .fieldOf("modifiers")
                     .forGetter(Spell::getModifiersAsPairs)
     ).apply(instance, Spell::fromCodec));
+
+    public static final StreamCodec<RegistryFriendlyByteBuf, AbstractSpellNode> SPELL_NODE_STREAM_CODEC = ByteBufCodecs.registry(ManaweaveAndRunesRegistries.SPELL_NODE_REGISTRY_KEY);
+
+    public static final StreamCodec<RegistryFriendlyByteBuf, Spell> STREAM_CODEC = StreamCodec.composite(
+            ByteBufCodecs.STRING_UTF8, Spell::getName,
+            SPELL_NODE_STREAM_CODEC, Spell::getSpellTypeAsNodes,
+            ByteBufCodecs.collection(ArrayList::new, SPELL_NODE_STREAM_CODEC, 26), Spell::getEffectAsNodes,
+            ByteBufCodecs.map(
+                    HashMap::new,
+                    SPELL_NODE_STREAM_CODEC,
+                    ByteBufCodecs.collection(ArrayList::new, SPELL_NODE_STREAM_CODEC, 26)
+            ), Spell::getModifiersAsNodes,
+            Spell::new
+    );
 
     private AbstractSpellType spellType;
     private List<AbstractSpellEffect> effects;
@@ -31,16 +57,34 @@ public class Spell {
         this.modifiers = modifiers;
     }
 
-    public static Spell fromCodec(AbstractSpellNode type, List<AbstractSpellNode> effects,
+    public Spell(String name, AbstractSpellNode spellType, List<AbstractSpellNode> effects,
+                 Map<AbstractSpellNode, List<AbstractSpellNode>> modifiers){
+        this((AbstractSpellType) spellType, effects.stream().map(effect -> (AbstractSpellEffect) effect).toList(),
+                modifiers.entrySet().stream().collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        entry -> entry.getValue().stream().map(modifier -> (AbstractSpellModifier) modifier).toList()
+                )));
+        setName(name);
+    }
+
+    public static Spell fromCodec(String name, AbstractSpellNode type, List<AbstractSpellNode> effects,
             List<Pair<AbstractSpellNode, List<AbstractSpellNode>>> modifiers) {
         Map<AbstractSpellNode, List<AbstractSpellModifier>> modifierMap = modifiers.stream().collect(Collectors.toMap(
                 Pair::getFirst,
                 pair -> pair.getSecond().stream().map(modifier -> (AbstractSpellModifier) modifier).toList()));
-        return new Spell((AbstractSpellType) type,
+        Spell instance =  new Spell((AbstractSpellType) type,
                          effects.stream().map(effect -> (AbstractSpellEffect) effect).toList(), modifierMap);
+
+        instance.setName(name);
+
+        return instance;
     }
 
     public AbstractSpellType getSpellType() {
+        return spellType;
+    }
+
+    public AbstractSpellNode getSpellTypeAsNodes() {
         return spellType;
     }
 
@@ -54,6 +98,11 @@ public class Spell {
 
     public Map<AbstractSpellNode, List<AbstractSpellModifier>> getModifiers() {
         return modifiers;
+    }
+
+    public Map<AbstractSpellNode, List<AbstractSpellNode>> getModifiersAsNodes() {
+        return modifiers.entrySet().stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue().stream().map(modifier -> (AbstractSpellNode) modifier).toList()));
     }
 
     public List<Pair<AbstractSpellNode, List<AbstractSpellNode>>> getModifiersAsPairs() {
@@ -101,4 +150,16 @@ public class Spell {
         }
         return cooldown;
     }
+
+    public CompoundTag serializeNBT(HolderLookup.Provider registries) {
+        CompoundTag tag = new CompoundTag();
+        LibUtils.encode(CODEC, this, registries);
+        return tag;
+    }
+
+    public static Spell deserializeNBT(CompoundTag tag, HolderLookup.Provider registries) {
+        return LibUtils.decode(CODEC, tag, registries);
+    }
+
+
 }

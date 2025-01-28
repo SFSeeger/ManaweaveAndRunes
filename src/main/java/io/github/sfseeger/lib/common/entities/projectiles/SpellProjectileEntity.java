@@ -3,6 +3,7 @@ package io.github.sfseeger.lib.common.entities.projectiles;
 import io.github.sfseeger.lib.common.spells.SpellCastingContext;
 import io.github.sfseeger.lib.common.spells.SpellResolver;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -86,6 +87,20 @@ public class SpellProjectileEntity extends Projectile {
 
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
+    }
+
+    public void recreateFromPacket(ClientboundAddEntityPacket packet) {
+        super.recreateFromPacket(packet);
+        double d0 = packet.getXa();
+        double d1 = packet.getYa();
+        double d2 = packet.getZa();
+
+        for(int i = 0; i < 7; ++i) {
+            double d3 = 0.4 + 0.1 * (double)i;
+            this.level().addParticle(ParticleTypes.GLOW, this.getX(), this.getY(), this.getZ(), d0 * d3, d1, d2 * d3);
+        }
+
+        this.setDeltaMovement(d0, d1, d2);
     }
 
     @Override
