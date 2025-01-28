@@ -2,6 +2,7 @@ package io.github.sfseeger.manaweave_and_runes.client.event;
 
 import io.github.sfseeger.lib.client.block_entity_renderers.ManaNodeRenderer;
 import io.github.sfseeger.lib.client.entity_renderers.SpellProjectileRenderer;
+import io.github.sfseeger.lib.client.models.SpellProjectileModel;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
 import io.github.sfseeger.manaweave_and_runes.client.particles.ManaConcentratedParticle;
 import io.github.sfseeger.manaweave_and_runes.client.particles.ManaParticle;
@@ -37,6 +38,11 @@ public class ClientEventHandler {
                                           ManaNodeRenderer::new);
         event.registerBlockEntityRenderer(ManaweaveAndRunesBlockEntityInit.MANA_TRANSMITTER_BLOCK_ENTITY.get(),
                                           ManaNodeRenderer::new);
+    }
+
+    @SubscribeEvent
+    public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        event.registerLayerDefinition(SpellProjectileModel.LAYER_LOCATION, SpellProjectileModel::createBodyLayer);
     }
 
     @SubscribeEvent

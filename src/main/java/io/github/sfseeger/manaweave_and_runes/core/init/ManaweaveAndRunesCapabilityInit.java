@@ -1,15 +1,19 @@
 package io.github.sfseeger.manaweave_and_runes.core.init;
 
+import io.github.sfseeger.lib.common.items.IItemHandlerItem;
+import io.github.sfseeger.lib.common.items.SpellHolderItem;
 import io.github.sfseeger.lib.common.mana.Mana;
 import io.github.sfseeger.lib.common.mana.capability.IManaItem;
 import io.github.sfseeger.lib.common.mana.capability.ItemStackManaHandler;
 import io.github.sfseeger.lib.common.mana.capability.ManaweaveAndRunesCapabilities;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
 import io.github.sfseeger.manaweave_and_runes.common.blockentities.*;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+import net.neoforged.neoforge.items.ItemStackHandler;
 
 import java.util.List;
 import java.util.function.Supplier;
@@ -47,7 +51,7 @@ public class ManaweaveAndRunesCapabilityInit {
                         allowedMana = List.of(manaItem::getManaType);
                     }
                     return new ItemStackManaHandler(itemstack, capacity, maxExtract, maxInsert,
-                                                    allowedMana);
+                            allowedMana);
                 },
                 ManaweaveAndRunesItemInit.AMETHYST_FIRE_RUNE_ITEM.get(),
                 ManaweaveAndRunesItemInit.AMETHYST_AIR_RUNE_ITEM.get()
@@ -64,6 +68,34 @@ public class ManaweaveAndRunesCapabilityInit {
                 Capabilities.ItemHandler.BLOCK,
                 ManaweaveAndRunesBlockEntityInit.RUNE_PEDESTAL_BLOCK_ENTITY.get(),
                 RunePedestalBlockEntity::getItemHandler
+        );
+        event.registerBlockEntity(
+                Capabilities.ItemHandler.BLOCK,
+                ManaweaveAndRunesBlockEntityInit.WAND_MODIFICATION_TABLE_BLOCK_ENTITY.get(),
+                WandModificationTableBlockEntity::getItemHandler
+        );
+
+        // SpellHolderItemHandler
+        event.registerItem(
+                Capabilities.ItemHandler.ITEM,
+                (itemstack, context) -> {
+                    int size = 1;
+                    if (itemstack.getItem() instanceof IItemHandlerItem itemHandlerItem) {
+                        size = itemHandlerItem.getSlotCount();
+                    }
+                    return new ItemStackHandler(size) {
+                        @Override
+                        public boolean isItemValid(int slot, net.minecraft.world.item.ItemStack stack) {
+                            return stack.getItem() instanceof SpellHolderItem;
+                        }
+
+                        @Override
+                        protected int getStackLimit(int slot, ItemStack stack) {
+                            return 1;
+                        }
+                    };
+                },
+                ManaweaveAndRunesItemInit.MANA_WEAVERS_WAND_ITEM.get()
         );
     }
 
