@@ -4,6 +4,7 @@ import io.github.sfseeger.lib.common.mana.ManaDataComponent;
 import io.github.sfseeger.lib.common.spells.SpellDataComponent;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
 import io.github.sfseeger.manaweave_and_runes.common.data_components.BlockPosDataComponent;
+import io.github.sfseeger.manaweave_and_runes.common.data_components.ItemStackHandlerDataComponent;
 import io.github.sfseeger.manaweave_and_runes.common.data_components.PlayerDataComponent;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
@@ -21,7 +22,8 @@ public class ManaweaveAndRunesDataComponentsInit {
                             .networkSynchronized(ManaDataComponent.STREAM_CODEC)
             );
 
-    public static final DeferredHolder<DataComponentType<?>, DataComponentType<SpellDataComponent>> SPELL_DATA_COMPOENTN =
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<SpellDataComponent>>
+            SPELL_DATA_COMPONENT =
             DATA_COMPONENTS.registerComponentType(
                     "spell_data",
                     builder -> builder.persistent(SpellDataComponent.CODEC)
@@ -42,4 +44,13 @@ public class ManaweaveAndRunesDataComponentsInit {
                     builder -> builder.persistent(PlayerDataComponent.CODEC)
                             .networkSynchronized(PlayerDataComponent.STREAM_CODEC)
             );
+
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<ItemStackHandlerDataComponent>>
+            ITEM_STACK_HANDLER_DATA_COMPONENT =
+            DATA_COMPONENTS.registerComponentType(
+                    "item_stack_handler_data",
+                    builder -> builder.persistent(ItemStackHandlerDataComponent.CODEC)
+                            .networkSynchronized(ItemStackHandlerDataComponent.STREAM_CODEC)
+            );
+
 }

@@ -21,13 +21,13 @@ public class SpellHolderItem extends Item {
 
     public SpellHolderItem(Properties properties) {
         super(properties.stacksTo(1)
-                .component(ManaweaveAndRunesDataComponentsInit.SPELL_DATA_COMPOENTN, new SpellDataComponent(s1)));
+                      .component(ManaweaveAndRunesDataComponentsInit.SPELL_DATA_COMPONENT, new SpellDataComponent(s1)));
     }
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
-        SpellDataComponent component = stack.get(ManaweaveAndRunesDataComponentsInit.SPELL_DATA_COMPOENTN);
+        SpellDataComponent component = stack.get(ManaweaveAndRunesDataComponentsInit.SPELL_DATA_COMPONENT);
         if (component != null) {
             tooltipComponents.add(Component.literal(component.spell().getName()));
             tooltipComponents.add(component.spell().getSpellType().getName().withColor(0xFF0000));
