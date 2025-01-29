@@ -1,5 +1,8 @@
 package io.github.sfseeger.lib.common.spells;
 
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.item.ItemStack;
+
 public enum SpellCastingResult {
     SKIPPED(true),
     SUCCESS(true),
@@ -16,5 +19,16 @@ public enum SpellCastingResult {
 
     public boolean isSuccess() {
         return success;
+    }
+
+    public InteractionResultHolder<ItemStack> returnForResult(ItemStack stack) {
+        switch (this) {
+            case SUCCESS:
+                return InteractionResultHolder.success(stack);
+            case FAILURE:
+                return InteractionResultHolder.fail(stack);
+            default:
+                return InteractionResultHolder.pass(stack);
+        }
     }
 }

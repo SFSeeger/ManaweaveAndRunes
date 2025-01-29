@@ -1,6 +1,8 @@
 package io.github.sfseeger.manaweave_and_runes.common.blocks;
 
+import io.github.sfseeger.manaweave_and_runes.common.blockentities.SpellDesignerBlockEntity;
 import io.github.sfseeger.manaweave_and_runes.common.blockentities.WandModificationTableBlockEntity;
+import io.github.sfseeger.manaweave_and_runes.common.menus.SpellDesignerMenu;
 import io.github.sfseeger.manaweave_and_runes.common.menus.WandModificationTableMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -21,19 +23,20 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
-public class WandModificationTableBlock extends Block implements EntityBlock {
-    public WandModificationTableBlock() {
-        super(Properties.of().sound(SoundType.ANVIL).requiresCorrectToolForDrops());
+public class SpellDesignerBlock extends Block implements EntityBlock {
+    public SpellDesignerBlock() {
+        super(Properties.of().requiresCorrectToolForDrops().strength(1).sound(SoundType.STONE));
     }
 
     @Override
     public @Nullable BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return new WandModificationTableBlockEntity(blockPos, blockState);
+        return new SpellDesignerBlockEntity(blockPos, blockState);
     }
+
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player,
-            BlockHitResult hitResult) {
+                                               BlockHitResult hitResult) {
         if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
             serverPlayer.openMenu(Objects.requireNonNull(state.getMenuProvider(level, pos)), pos);
         }
@@ -42,22 +45,14 @@ public class WandModificationTableBlock extends Block implements EntityBlock {
 
     @Override
     protected @Nullable MenuProvider getMenuProvider(BlockState state, Level level, BlockPos pos) {
-        if (level.getBlockEntity(pos) instanceof WandModificationTableBlockEntity entity) {
+        if (level.getBlockEntity(pos) instanceof SpellDesignerBlockEntity entity) {
             return new SimpleMenuProvider(
-                    (id, playerInventory, player) -> new WandModificationTableMenu(id, playerInventory, entity,
-                                                                                   ContainerLevelAccess.create(level,
-                                                                                                               pos)),
-                    Component.translatable("container.manaweave_and_runes.wand_modification_table"));
+                    (id, playerInventory, player) -> new SpellDesignerMenu(id, playerInventory, entity,
+                            ContainerLevelAccess.create(level,
+                                    pos)),
+                    Component.translatable("container.manaweave_and_runes.spell_designer"));
         }
         return null;
     }
 
-    @Override
-    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (blockEntity instanceof WandModificationTableBlockEntity entity) {
-            entity.dropContents();
-        }
-        super.onRemove(state, level, pos, newState, movedByPiston);
-    }
 }

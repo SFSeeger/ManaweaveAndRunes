@@ -2,6 +2,7 @@ package io.github.sfseeger.manaweave_and_runes.client.event;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import io.github.sfseeger.lib.common.spells.ISpellCaster;
+import io.github.sfseeger.lib.common.spells.Spell;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
@@ -40,7 +41,11 @@ public class KeyManager {
     private static void toggleSpell(Minecraft mc, Player player) {
         ItemStack stack = player.getMainHandItem();
         if (stack.getItem() instanceof ISpellCaster casterItem){
-            player.displayClientMessage(Component.literal("Switched Spell"), true);
+            casterItem.switchSpell(stack, casterItem.getCurrentSpellIndex(stack) + 1);
+            Spell spell = casterItem.getCurrrntSpell(stack);
+            String spellName = spell != null ? spell.getName() : "No Spell";
+            player.displayClientMessage(Component.literal(
+                    "Switched to Spell " + spellName + " at " + casterItem.getCurrentSpellIndex(stack)), true);
         }
     }
 }
