@@ -3,6 +3,7 @@ package io.github.sfseeger.manaweave_and_runes.core.init;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
 import io.github.sfseeger.manaweave_and_runes.common.menus.ManaStorageBlockMenu;
 import io.github.sfseeger.manaweave_and_runes.common.menus.RuneCarverBlockMenu;
+import io.github.sfseeger.manaweave_and_runes.common.menus.SpellDesignerMenu;
 import io.github.sfseeger.manaweave_and_runes.common.menus.WandModificationTableMenu;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.flag.FeatureFlags;
@@ -22,4 +23,6 @@ public class ManaweaverAndRunesMenuInit {
             "mana_storage_menu", () -> IMenuTypeExtension.create(ManaStorageBlockMenu::new));
     public static final Supplier<MenuType<WandModificationTableMenu>> WAND_MODIFICARION_TABLE_MENU = MENUS.register(
             "wand_modification_table_menu", () -> IMenuTypeExtension.create(WandModificationTableMenu::new));
+    public static final Supplier<MenuType<SpellDesignerMenu>> SPELL_DESIGNER_MENU = MENUS.register(
+            "spell_designer_menu", () -> IMenuTypeExtension.create(SpellDesignerMenu::new));
 }

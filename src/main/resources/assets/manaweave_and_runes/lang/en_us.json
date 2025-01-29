@@ -23,8 +23,10 @@
   "ritual.manaweave_and_runes.item_insufficient": "The ritual could not consume an item it needed",
   "ritual.manaweave_and_runes.unknown_ritual": "You don't know how to use this start this...",
   "spell.manaweave_and_runes.spell_type.touch": "Touch",
-  "spell.manaweave_and_runes.spell_type.ranged": "Ranged",
+  "spell.manaweave_and_runes.spell_type.projectile": "Ranged",
   "spell.manaweave_and_runes.spell_effect.burn": "Burn",
   "spell.manaweave_and_runes.spell_modifier.strengthen": "Strengthen",
-  "key.manaweave_and_runes.toggle_spell": "Toggle Spell"
+  "key.manaweave_and_runes.toggle_spell": "Toggle Spell",
+  "container.manaweave_and_runes.wand_modification_table": "Wand Modification Table",
+  "container.manaweave_and_runes.spell_designer": "Spell Designer"
 }

@@ -79,11 +79,10 @@ public class ManaweaveAndRunesCapabilityInit {
         event.registerItem(
                 Capabilities.ItemHandler.ITEM,
                 (itemstack, context) -> {
-                    int size = 1;
                     if (itemstack.getItem() instanceof IItemHandlerItem itemHandlerItem) {
-                        size = itemHandlerItem.getSlotCount();
+                        return itemHandlerItem.getItemHandler(itemstack);
                     }
-                    return new ItemStackHandler(size) {
+                    return new ItemStackHandler(1) {
                         @Override
                         public boolean isItemValid(int slot, net.minecraft.world.item.ItemStack stack) {
                             return stack.getItem() instanceof SpellHolderItem;
@@ -95,6 +94,7 @@ public class ManaweaveAndRunesCapabilityInit {
                         }
                     };
                 },
+
                 ManaweaveAndRunesItemInit.MANA_WEAVERS_WAND_ITEM.get()
         );
     }
