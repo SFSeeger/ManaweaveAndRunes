@@ -1,6 +1,9 @@
 package io.github.sfseeger.manaweave_and_runes.core.init;
 
 import io.github.sfseeger.lib.common.items.SpellHolderItem;
+import io.github.sfseeger.lib.common.items.SpellPartHolderItem;
+import io.github.sfseeger.lib.common.spells.SpellPart;
+import io.github.sfseeger.lib.common.spells.data_components.SpellDataComponent;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
 import io.github.sfseeger.manaweave_and_runes.common.items.*;
 import net.minecraft.world.item.BlockItem;
@@ -8,6 +11,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
+
+import static io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesDataComponentsInit.SPELL_PART_DATA_COMPONENT;
 
 public class ManaweaveAndRunesItemInit {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(ManaweaveAndRunes.MODID);
@@ -47,7 +52,9 @@ public class ManaweaveAndRunesItemInit {
 
 
     public static final DeferredItem<SpellHolderItem> AMETHYST_SPELL_HOLDER_ITEM = ITEMS.register(
-            "amethyst_spell_holder", () -> new SpellHolderItem(new Item.Properties().stacksTo(1)));
+            "amethyst_spell_holder", () -> new SpellHolderItem(
+                    new Item.Properties().component(ManaweaveAndRunesDataComponentsInit.SPELL_DATA_COMPONENT,
+                                                    new SpellDataComponent(SpellHolderItem.s1))));
 
     // BLOCK ITEMS TODO: REPLACE WITH EVENT LISTENER
     public static final DeferredItem<BlockItem> CRYSTAL_ORE_ITEM =
@@ -93,4 +100,15 @@ public class ManaweaveAndRunesItemInit {
     public static final DeferredItem<BlockItem> WAND_MODIFICATION_TABLE_BLOCK_ITEM =
             ITEMS.registerSimpleBlockItem("wand_modification_table",
                                           ManaweaveAndRunesBlockInit.WAND_MODIFICATION_TABLE_BLOCK);
+    public static final DeferredItem<BlockItem> SPELL_DESIGNER_BLOCK_ITEM =
+            ITEMS.registerSimpleBlockItem("spell_designer", ManaweaveAndRunesBlockInit.SPELL_DESIGNER_BLOCK);
+
+
+    // Spell Part Items
+    static {
+        SpellNodeInit.SPELL_NODES.getEntries().forEach(entry -> {
+            ITEMS.register(entry.getId().getPath(), () -> new SpellPartHolderItem(
+                    new Item.Properties().component(SPELL_PART_DATA_COMPONENT, new SpellPart(entry))));
+        });
+    }
 }

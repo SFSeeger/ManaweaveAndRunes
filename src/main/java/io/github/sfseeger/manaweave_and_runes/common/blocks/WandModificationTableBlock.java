@@ -51,4 +51,13 @@ public class WandModificationTableBlock extends Block implements EntityBlock {
         }
         return null;
     }
+
+    @Override
+    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        if (blockEntity instanceof WandModificationTableBlockEntity entity) {
+            entity.dropContents();
+        }
+        super.onRemove(state, level, pos, newState, movedByPiston);
+    }
 }

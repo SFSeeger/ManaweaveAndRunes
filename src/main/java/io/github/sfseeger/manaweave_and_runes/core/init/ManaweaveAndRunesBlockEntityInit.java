@@ -11,6 +11,11 @@ import java.util.function.Supplier;
 public class ManaweaveAndRunesBlockEntityInit {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES =
             DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, ManaweaveAndRunes.MODID);
+    public static final Supplier<BlockEntityType<SpellDesignerBlockEntity>> SPELL_DESIGNER_BLOCK_ENTITY =
+            BLOCK_ENTITY_TYPES.register("spell_designer_block_entity",
+                                        () -> BlockEntityType.Builder.of(SpellDesignerBlockEntity::new,
+                                                                         ManaweaveAndRunesBlockInit.SPELL_DESIGNER_BLOCK.get())
+                                                .build(null));
     public static final Supplier<BlockEntityType<ManaTransmitterBlockEntity>> MANA_TRANSMITTER_BLOCK_ENTITY =
             BLOCK_ENTITY_TYPES.register("mana_transmitter_block_entity",
                                         () -> BlockEntityType.Builder.of(ManaTransmitterBlockEntity::new,
@@ -54,11 +59,11 @@ public class ManaweaveAndRunesBlockEntityInit {
                                                                          ManaweaveAndRunesBlockInit.ASCENDED_RITUAL_ANCHOR_BLOCK.get())
                                                 .build(null));
 
-    public static final Supplier<BlockEntityType<WandModificationTableBlockEntity>> WAND_MODIFICATION_TABLE_BLOCK_ENTITY =
+    public static final Supplier<BlockEntityType<WandModificationTableBlockEntity>>
+            WAND_MODIFICATION_TABLE_BLOCK_ENTITY =
             BLOCK_ENTITY_TYPES.register("wand_modification_table_block_entity",
                                         () -> BlockEntityType.Builder.of(WandModificationTableBlockEntity::new,
                                                                          ManaweaveAndRunesBlockInit.WAND_MODIFICATION_TABLE_BLOCK.get())
                                                 .build(null));
-
 
 }

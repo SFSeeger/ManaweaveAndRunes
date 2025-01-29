@@ -17,7 +17,7 @@ public class SpellTypeTouch extends AbstractSpellType {
 
     @Override
     public SpellCastingResult cast(SpellCastingContext context, SpellResolver resolver) {
-        return null;
+        return SpellCastingResult.SKIPPED;
     }
 
     @Override

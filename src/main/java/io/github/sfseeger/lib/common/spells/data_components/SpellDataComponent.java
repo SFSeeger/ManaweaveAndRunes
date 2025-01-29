@@ -1,7 +1,8 @@
-package io.github.sfseeger.lib.common.spells;
+package io.github.sfseeger.lib.common.spells.data_components;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import io.github.sfseeger.lib.common.spells.Spell;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 

@@ -7,6 +7,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.ItemStackHandler;
@@ -57,5 +58,11 @@ public class WandModificationTableBlockEntity extends BlockEntity {
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
         tag.put("inventory", wandStackHandler.serializeNBT(registries));
+    }
+
+    public void dropContents() {
+        for (int i = 0; i < wandStackHandler.getSlots(); i++) {
+            Block.popResource(level, worldPosition, wandStackHandler.getStackInSlot(i));
+        }
     }
 }

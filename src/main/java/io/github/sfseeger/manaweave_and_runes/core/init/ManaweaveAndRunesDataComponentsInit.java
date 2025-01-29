@@ -1,11 +1,13 @@
 package io.github.sfseeger.manaweave_and_runes.core.init;
 
 import io.github.sfseeger.lib.common.mana.ManaDataComponent;
-import io.github.sfseeger.lib.common.spells.SpellDataComponent;
+import io.github.sfseeger.lib.common.spells.SpellPart;
+import io.github.sfseeger.lib.common.spells.data_components.SpellDataComponent;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
 import io.github.sfseeger.manaweave_and_runes.common.data_components.BlockPosDataComponent;
 import io.github.sfseeger.manaweave_and_runes.common.data_components.ItemStackHandlerDataComponent;
 import io.github.sfseeger.manaweave_and_runes.common.data_components.PlayerDataComponent;
+import io.github.sfseeger.manaweave_and_runes.common.data_components.SelectedSlotDataComponent;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -45,6 +47,13 @@ public class ManaweaveAndRunesDataComponentsInit {
                             .networkSynchronized(PlayerDataComponent.STREAM_CODEC)
             );
 
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<SpellPart>> SPELL_PART_DATA_COMPONENT =
+            DATA_COMPONENTS.registerComponentType(
+                    "spell_part",
+                    builder -> builder.persistent(SpellPart.CODEC)
+                            .networkSynchronized(SpellPart.STREAM_CODEC)
+            );
+
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<ItemStackHandlerDataComponent>>
             ITEM_STACK_HANDLER_DATA_COMPONENT =
             DATA_COMPONENTS.registerComponentType(
@@ -53,4 +62,11 @@ public class ManaweaveAndRunesDataComponentsInit {
                             .networkSynchronized(ItemStackHandlerDataComponent.STREAM_CODEC)
             );
 
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<SelectedSlotDataComponent>>
+            SELECTED_SLOT_DATA_COMPONENT =
+            DATA_COMPONENTS.registerComponentType(
+                    "selected_slot",
+                    builder -> builder.persistent(SelectedSlotDataComponent.CODEC)
+                            .networkSynchronized(SelectedSlotDataComponent.STREAM_CODEC)
+            );
 }

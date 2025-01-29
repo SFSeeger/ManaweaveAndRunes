@@ -45,7 +45,7 @@ public class ManaweaveAndRunesRegistries {
             ResourceKey.createRegistryKey(ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "spell_node"));
     public static final Registry<AbstractSpellNode> SPELL_NODE_REGISTRY = new RegistryBuilder<>(SPELL_NODE_REGISTRY_KEY)
             .sync(true)
-            .defaultKey(ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "default_spell_node"))
+            .defaultKey(ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "spell_type.touch"))
             .maxId(256)
             .create();
 

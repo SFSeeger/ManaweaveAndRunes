@@ -57,6 +57,9 @@ public class ManaweaveAndRunesBlockInit {
             BLOCKS.register("mana_transmitter", ManaTransmitter::new);
 
 
-    public static final DeferredBlock<Block> WAND_MODIFICATION_TABLE_BLOCK =
+    public static final DeferredBlock<WandModificationTableBlock> WAND_MODIFICATION_TABLE_BLOCK =
             BLOCKS.register("wand_modification_table", WandModificationTableBlock::new);
+
+    public static final DeferredBlock<SpellDesignerBlock> SPELL_DESIGNER_BLOCK =
+            BLOCKS.register("spell_designer", SpellDesignerBlock::new);
 }

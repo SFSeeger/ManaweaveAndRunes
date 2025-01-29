@@ -5,9 +5,6 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.github.sfseeger.lib.common.LibUtils;
 import io.github.sfseeger.lib.common.mana.Mana;
-import io.github.sfseeger.lib.core.ManaweaveAndRunesRegistries;
-import io.github.sfseeger.manaweave_and_runes.core.util.Utils;
-import io.netty.buffer.ByteBuf;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -21,7 +18,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Spell {
-    // TODO: Add codec to serialize into saved data
     public static final Codec<Spell> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.STRING.fieldOf("name").forGetter(Spell::getName),
             AbstractSpellType.CODEC.fieldOf("spellType").forGetter(Spell::getSpellType),
@@ -31,16 +27,14 @@ public class Spell {
                     .forGetter(Spell::getModifiersAsPairs)
     ).apply(instance, Spell::fromCodec));
 
-    public static final StreamCodec<RegistryFriendlyByteBuf, AbstractSpellNode> SPELL_NODE_STREAM_CODEC = ByteBufCodecs.registry(ManaweaveAndRunesRegistries.SPELL_NODE_REGISTRY_KEY);
-
     public static final StreamCodec<RegistryFriendlyByteBuf, Spell> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.STRING_UTF8, Spell::getName,
-            SPELL_NODE_STREAM_CODEC, Spell::getSpellTypeAsNodes,
-            ByteBufCodecs.collection(ArrayList::new, SPELL_NODE_STREAM_CODEC, 26), Spell::getEffectAsNodes,
+            AbstractSpellNode.STREAM_CODEC, Spell::getSpellTypeAsNodes,
+            ByteBufCodecs.collection(ArrayList::new, AbstractSpellNode.STREAM_CODEC, 16), Spell::getEffectAsNodes,
             ByteBufCodecs.map(
                     HashMap::new,
-                    SPELL_NODE_STREAM_CODEC,
-                    ByteBufCodecs.collection(ArrayList::new, SPELL_NODE_STREAM_CODEC, 26)
+                    AbstractSpellNode.STREAM_CODEC,
+                    ByteBufCodecs.collection(ArrayList::new, AbstractSpellNode.STREAM_CODEC, 16)
             ), Spell::getModifiersAsNodes,
             Spell::new
     );
@@ -138,7 +132,7 @@ public class Spell {
         this.name = name;
     }
 
-    public int getCooldown() {
+    public int getCooldown() { //TODO: make this method context aware
         int cooldown = spellType.getCooldown();
         for (AbstractSpellEffect effect : effects) {
             cooldown += effect.getCooldown();
@@ -161,5 +155,25 @@ public class Spell {
         return LibUtils.decode(CODEC, tag, registries);
     }
 
+    public boolean isVanilla() {
+        if (spellType == null) {
+            return false;
+        }
+        if (effects.isEmpty()) {
+            return false;
+        }
+        for (Map.Entry<AbstractSpellNode, List<AbstractSpellModifier>> node : modifiers.entrySet()) {
+            if (node.getKey() == null || node.getValue().isEmpty()) {
+                return false;
+            }
+
+            for (AbstractSpellModifier modifier : node.getValue()) {
+                if (!node.getKey().getPossibleModifiers().stream().anyMatch(mod -> mod.equals(modifier))) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 
 }

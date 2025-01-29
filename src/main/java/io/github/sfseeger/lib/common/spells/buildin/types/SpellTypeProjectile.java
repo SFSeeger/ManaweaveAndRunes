@@ -41,7 +41,6 @@ public class SpellTypeProjectile extends AbstractSpellType {
         LivingEntity caster = context.getCaster();
         SpellProjectileEntity entity = new SpellProjectileEntity(level, context, resolver);
         entity.shootFromRotation(caster, caster.getXRot(), caster.getYRot(), 0.0F, 2.5F, 1.0F);
-        //Arrow entity = new Arrow(level, context.getCaster(), ItemStack.EMPTY, null);
         level.addFreshEntity(entity);
     }
 
