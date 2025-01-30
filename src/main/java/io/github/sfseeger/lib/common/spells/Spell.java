@@ -40,9 +40,13 @@ public class Spell {
     );
 
     private AbstractSpellType spellType;
-    private List<AbstractSpellEffect> effects;
-    private Map<AbstractSpellNode, List<AbstractSpellModifier>> modifiers;
+    private List<AbstractSpellEffect> effects = new ArrayList<>();
+    private Map<AbstractSpellNode, List<AbstractSpellModifier>> modifiers = new HashMap<>();
     private String name = "Unnamed Spell";
+
+    public Spell(){
+
+    }
 
     public Spell(AbstractSpellType spellType, List<AbstractSpellEffect> effects,
             Map<AbstractSpellNode, List<AbstractSpellModifier>> modifiers) {
@@ -72,6 +76,10 @@ public class Spell {
         instance.setName(name);
 
         return instance;
+    }
+
+    public void setSpellType(AbstractSpellType spellType) {
+        this.spellType = spellType;
     }
 
     public AbstractSpellType getSpellType() {
@@ -155,7 +163,7 @@ public class Spell {
         return LibUtils.decode(CODEC, tag, registries);
     }
 
-    public boolean isVanilla() {
+    public boolean isValid() {
         if (spellType == null) {
             return false;
         }
@@ -168,12 +176,11 @@ public class Spell {
             }
 
             for (AbstractSpellModifier modifier : node.getValue()) {
-                if (!node.getKey().getPossibleModifiers().stream().anyMatch(mod -> mod.equals(modifier))) {
+                if (node.getKey().getPossibleModifiers().stream().noneMatch(mod -> mod.equals(modifier))) {
                     return false;
                 }
             }
         }
         return true;
     }
-
 }

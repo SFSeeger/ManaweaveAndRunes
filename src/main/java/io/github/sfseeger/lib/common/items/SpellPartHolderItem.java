@@ -4,6 +4,6 @@ import net.minecraft.world.item.Item;
 
 public class SpellPartHolderItem extends Item {
     public SpellPartHolderItem(Properties properties) {
-        super(properties.stacksTo(16));
+        super(properties);
     }
 }

@@ -11,6 +11,7 @@ import io.github.sfseeger.manaweave_and_runes.client.renderers.ManaConcentratorB
 import io.github.sfseeger.manaweave_and_runes.client.renderers.RunePedestalBlockEntityRenderer;
 import io.github.sfseeger.manaweave_and_runes.client.screens.ManaStorageBlockScreen;
 import io.github.sfseeger.manaweave_and_runes.client.screens.RuneCarverBlockScreen;
+import io.github.sfseeger.manaweave_and_runes.client.screens.SpellDesignerScreen;
 import io.github.sfseeger.manaweave_and_runes.client.screens.WandModificationTableScreen;
 import io.github.sfseeger.manaweave_and_runes.core.init.EntityTypeInit;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRParticleTypeInit;
@@ -56,6 +57,7 @@ public class ClientEventHandler {
         event.register(ManaweaverAndRunesMenuInit.RUNE_CARVER_BLOCK_MENU.get(), RuneCarverBlockScreen::new);
         event.register(ManaweaverAndRunesMenuInit.MANA_STORAGE_BLOCK_MENU.get(), ManaStorageBlockScreen::new);
         event.register(ManaweaverAndRunesMenuInit.WAND_MODIFICARION_TABLE_MENU.get(), WandModificationTableScreen::new);
+        event.register(ManaweaverAndRunesMenuInit.SPELL_DESIGNER_MENU.get(), SpellDesignerScreen::new);
     }
 
     @SubscribeEvent

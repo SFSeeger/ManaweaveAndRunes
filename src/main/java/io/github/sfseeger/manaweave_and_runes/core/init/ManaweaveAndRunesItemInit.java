@@ -8,6 +8,7 @@ import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
 import io.github.sfseeger.manaweave_and_runes.common.items.*;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -105,6 +106,9 @@ public class ManaweaveAndRunesItemInit {
 
 
     // Spell Part Items
+    public static final DeferredItem<SpellPartHolderItem> AMETHYST_SPELL_PART_ITEM = ITEMS.register("amethyst_spell_part",
+            () -> new SpellPartHolderItem(new Item.Properties()));
+
     static {
         SpellNodeInit.SPELL_NODES.getEntries().forEach(entry -> {
             ITEMS.register(entry.getId().getPath(), () -> new SpellPartHolderItem(
