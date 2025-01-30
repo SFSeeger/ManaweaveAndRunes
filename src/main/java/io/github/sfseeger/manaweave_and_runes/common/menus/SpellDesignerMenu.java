@@ -2,6 +2,7 @@ package io.github.sfseeger.manaweave_and_runes.common.menus;
 
 import io.github.sfseeger.manaweave_and_runes.common.blockentities.SpellDesignerBlockEntity;
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockInit;
+import io.github.sfseeger.manaweave_and_runes.core.payloads.CraftPayload;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
@@ -12,6 +13,7 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 import static io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesItemInit.DIAMOND_CHISEL;
 import static io.github.sfseeger.manaweave_and_runes.core.init.ManaweaverAndRunesMenuInit.SPELL_DESIGNER_MENU;
@@ -88,13 +90,7 @@ public class SpellDesignerMenu extends AbstractContainerMenu {
         return blockEntity.getSpellName();
     }
 
-    public void craft(LocalPlayer player) {
-        if(!slots.get(6).hasItem()){
-            ItemStack stack = blockEntity.assembleSpell();
-            if(!stack.isEmpty()){
-                slots.get(6).set(stack);
-                blockEntity.markChanged();
-            }
-        }
+    public void craft(LocalPlayer player, String name) {
+        PacketDistributor.sendToServer(new CraftPayload(blockEntity.getBlockPos().asLong(), 0, name));
     }
 }

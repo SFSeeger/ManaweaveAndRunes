@@ -5,13 +5,9 @@ import io.github.sfseeger.manaweave_and_runes.common.menus.SpellDesignerMenu;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.protocol.game.ServerboundRenameItemPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.AnvilMenu;
-import net.minecraft.world.inventory.Slot;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
@@ -64,7 +60,6 @@ public class SpellDesignerScreen extends AbstractContainerScreen<SpellDesignerMe
         this.name.setTextColorUneditable(-1);
         this.name.setBordered(false);
         this.name.setMaxLength(50);
-        this.name.setResponder(this::onNameChanged);
         this.name.setValue(this.menu.getName());
         this.addWidget(this.name);
 
@@ -104,7 +99,7 @@ public class SpellDesignerScreen extends AbstractContainerScreen<SpellDesignerMe
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         if (isMouseInBounds(leftPos + 181, topPos + 88, 20, 19, (int) mouseX, (int) mouseY)) {
-            this.menu.craft(this.minecraft.player);
+            this.menu.craft(this.minecraft.player, this.name.getValue());
             return true;
         }
         return super.mouseClicked(mouseX, mouseY, button);
@@ -113,11 +108,5 @@ public class SpellDesignerScreen extends AbstractContainerScreen<SpellDesignerMe
     @Override
     protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
         super.renderLabels(guiGraphics, mouseX, mouseY);
-    }
-
-    private void onNameChanged(String name) {
-        if (this.menu.setName(name)) {
-            System.out.println("Name changed to: " + name);
-        }
     }
 }

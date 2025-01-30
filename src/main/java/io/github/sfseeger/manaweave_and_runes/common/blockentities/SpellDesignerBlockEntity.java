@@ -1,12 +1,16 @@
 package io.github.sfseeger.manaweave_and_runes.common.blockentities;
 
-import io.github.sfseeger.lib.common.items.SpellHolderItem;
 import io.github.sfseeger.lib.common.items.SpellPartHolderItem;
 import io.github.sfseeger.lib.common.spells.*;
 import io.github.sfseeger.lib.common.spells.data_components.SpellDataComponent;
+import io.github.sfseeger.manaweave_and_runes.core.payloads.CraftPayload;
+import io.github.sfseeger.manaweave_and_runes.core.payloads.ICraftingPacketHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -20,11 +24,12 @@ import static io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunes
 import static io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesItemInit.AMETHYST_SPELL_HOLDER_ITEM;
 import static io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesItemInit.AMETHYST_SPELL_PART_ITEM;
 
-public class SpellDesignerBlockEntity extends BlockEntity {
+public class SpellDesignerBlockEntity extends BlockEntity implements ICraftingPacketHandler {
     public static final int MAIN_SLOT_INDEX = 0;
 
     private ItemStackHandler itemHandler = new ItemStackHandler(7);
-    private String spellName = "";
+    private static final String DEFAULT_SPELL_NAME = "Unnamed Spell";
+    private String spellName = DEFAULT_SPELL_NAME;
 
     public SpellDesignerBlockEntity(BlockPos pos, BlockState blockState) {
         super(SPELL_DESIGNER_BLOCK_ENTITY.get(), pos, blockState);
@@ -60,11 +65,14 @@ public class SpellDesignerBlockEntity extends BlockEntity {
             if(hasEffects && part.getCore().value() instanceof AbstractSpellType spellType) {
                 //Spell creation logic
                 spell.setSpellType(spellType);
-                spell.getModifiers().computeIfAbsent(spellType, k -> new ArrayList<>()).addAll(part.getModifiers());
+                if (!part.getModifiers().isEmpty())
+                    spell.getModifiers().computeIfAbsent(spellType, k -> new ArrayList<>()).addAll(part.getModifiers());
                 for(SpellPart p : parts){
-                    if(p.getCore().value() instanceof AbstractSpellEffect effect){
+                    if (p != null && p.getCore().value() instanceof AbstractSpellEffect effect) {
                         spell.getEffects().add(effect);
-                        spell.getModifiers().computeIfAbsent(effect, k -> new ArrayList<>()).addAll(p.getModifiers());
+                        if (!p.getModifiers().isEmpty()) spell.getModifiers()
+                                .computeIfAbsent(effect, k -> new ArrayList<>())
+                                .addAll(p.getModifiers());
                     }
                 }
                 if(spell.isValid()){
@@ -75,7 +83,9 @@ public class SpellDesignerBlockEntity extends BlockEntity {
             } else if(!hasEffects){
                 SpellPart part1 = new SpellPart(part.getCore(), new ArrayList<>());
                 for(SpellPart p : parts){
-                    part1.getModifiers().add((AbstractSpellModifier) (p.getCore().value()));
+                    if (p != null && p.getCore().value() instanceof AbstractSpellModifier) {
+                        part1.getModifiers().add((AbstractSpellModifier) (p.getCore().value()));
+                    }
                 }
                 ItemStack stack1 = new ItemStack(AMETHYST_SPELL_PART_ITEM.get(), 1);
                 stack1.set(SPELL_PART_DATA_COMPONENT, part1);
@@ -117,5 +127,34 @@ public class SpellDesignerBlockEntity extends BlockEntity {
 
     public String getSpellName() {
         return spellName;
+    }
+
+    public void onCraft(Player player) {
+        if (itemHandler.getStackInSlot(6).isEmpty()) {
+            ItemStack stack = assembleSpell();
+            if (!stack.isEmpty() && !player.level().isClientSide) {
+                itemHandler.setStackInSlot(6, stack);
+                for (int i = 0; i < 5; i++) {
+                    if (!itemHandler.getStackInSlot(i).isEmpty()) itemHandler.extractItem(i, 1, false);
+                }
+                itemHandler.getStackInSlot(5)
+                        .hurtAndBreak(200, (ServerLevel) player.level(), (ServerPlayer) player, e -> {
+                        });
+                setSpellName("");
+                markChanged();
+            }
+        }
+    }
+
+    @Override
+    public void onPacketReceive(CraftPayload payload, Player player) {
+        switch (payload.actionId()) {
+            default -> {
+                if (payload.customName() != null && !payload.customName().isEmpty()) {
+                    setSpellName(payload.customName());
+                }
+                onCraft(player);
+            }
+        }
     }
 }

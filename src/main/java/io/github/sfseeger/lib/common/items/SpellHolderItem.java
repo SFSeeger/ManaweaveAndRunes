@@ -40,11 +40,23 @@ public class SpellHolderItem extends Item {
             tooltipComponents.add(spell.getSpellType().getName().withColor(0xFF0000));
             for (AbstractSpellEffect effect : spell.getEffects()) {
                 MutableComponent effectText = effect.getName().withColor(0x00FF00);
-                for (var modifier : spell.getModifiers().get(effect)) {
-                    effectText.append(", ").withColor(0x0000FF).append(modifier.getName().withColor(0x0000FF));
+                if (spell.getModifiers().get(effect) != null && !spell.getModifiers().get(effect).isEmpty()) {
+                    for (var modifier : spell.getModifiers().get(effect)) {
+                        effectText.append(", ").withColor(0x0000FF).append(modifier.getName().withColor(0x0000FF));
+                    }
                 }
                 tooltipComponents.add(effectText);
             }
         }
+    }
+
+    @Override
+    public Component getName(ItemStack stack) {
+        Spell spell = getSpell(stack);
+        MutableComponent name = super.getName(stack).plainCopy();
+        if (spell != null) {
+            return name.append(" :").append(spell.getName());
+        }
+        return name;
     }
 }
