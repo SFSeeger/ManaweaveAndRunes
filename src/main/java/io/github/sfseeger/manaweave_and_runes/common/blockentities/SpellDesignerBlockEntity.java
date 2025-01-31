@@ -21,8 +21,7 @@ import java.util.ArrayList;
 import static io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockEntityInit.SPELL_DESIGNER_BLOCK_ENTITY;
 import static io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesDataComponentsInit.SPELL_DATA_COMPONENT;
 import static io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesDataComponentsInit.SPELL_PART_DATA_COMPONENT;
-import static io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesItemInit.AMETHYST_SPELL_HOLDER_ITEM;
-import static io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesItemInit.AMETHYST_SPELL_PART_ITEM;
+import static io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesItemInit.*;
 
 public class SpellDesignerBlockEntity extends BlockEntity implements ICraftingPacketHandler {
     public static final int MAIN_SLOT_INDEX = 0;
@@ -130,7 +129,7 @@ public class SpellDesignerBlockEntity extends BlockEntity implements ICraftingPa
     }
 
     public void onCraft(Player player) {
-        if (itemHandler.getStackInSlot(6).isEmpty()) {
+        if (itemHandler.getStackInSlot(6).isEmpty() && (player.isCreative() || hasChisel())) {
             ItemStack stack = assembleSpell();
             if (!stack.isEmpty() && !player.level().isClientSide) {
                 itemHandler.setStackInSlot(6, stack);
@@ -138,7 +137,7 @@ public class SpellDesignerBlockEntity extends BlockEntity implements ICraftingPa
                     if (!itemHandler.getStackInSlot(i).isEmpty()) itemHandler.extractItem(i, 1, false);
                 }
                 itemHandler.getStackInSlot(5)
-                        .hurtAndBreak(200, (ServerLevel) player.level(), (ServerPlayer) player, e -> {
+                        .hurtAndBreak(4, (ServerLevel) player.level(), (ServerPlayer) player, e -> {
                         });
                 setSpellName("");
                 markChanged();
@@ -156,5 +155,10 @@ public class SpellDesignerBlockEntity extends BlockEntity implements ICraftingPa
                 onCraft(player);
             }
         }
+    }
+
+    public boolean hasChisel() {
+        ItemStack s = itemHandler.getStackInSlot(5);
+        return !s.isEmpty() && s.getItem() == DIAMOND_CHISEL.get(); //TODO: Change to chisel item
     }
 }

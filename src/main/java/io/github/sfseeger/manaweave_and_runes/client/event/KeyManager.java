@@ -4,6 +4,8 @@ import com.mojang.blaze3d.platform.InputConstants;
 import io.github.sfseeger.lib.common.spells.ISpellCaster;
 import io.github.sfseeger.lib.common.spells.Spell;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
+import io.github.sfseeger.manaweave_and_runes.core.payloads.CraftPayload;
+import io.github.sfseeger.manaweave_and_runes.core.payloads.SwitchSpellPayload;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
@@ -14,6 +16,7 @@ import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.client.settings.KeyConflictContext;
 import net.neoforged.neoforge.common.util.Lazy;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.lwjgl.glfw.GLFW;
 
 public class KeyManager {
@@ -41,7 +44,8 @@ public class KeyManager {
     private static void toggleSpell(Minecraft mc, Player player) {
         ItemStack stack = player.getMainHandItem();
         if (stack.getItem() instanceof ISpellCaster casterItem){
-            casterItem.switchSpell(stack, casterItem.getCurrentSpellIndex(stack) + 1);
+            int index = casterItem.getCurrentSpellIndex(stack);
+            PacketDistributor.sendToServer(new SwitchSpellPayload(index));
             Spell spell = casterItem.getCurrrntSpell(stack);
             String spellName = spell != null ? spell.getName() : "No Spell";
             player.displayClientMessage(Component.literal(
