@@ -1,5 +1,10 @@
 package io.github.sfseeger.manaweave_and_runes.common.menus;
 
+import io.github.sfseeger.lib.common.items.SpellHolderItem;
+import io.github.sfseeger.lib.common.items.SpellPartHolderItem;
+import io.github.sfseeger.lib.common.spells.AbstractSpellModifier;
+import io.github.sfseeger.lib.common.spells.ISpellCaster;
+import io.github.sfseeger.lib.common.spells.SpellPart;
 import io.github.sfseeger.manaweave_and_runes.common.blockentities.SpellDesignerBlockEntity;
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockInit;
 import io.github.sfseeger.manaweave_and_runes.core.payloads.CraftPayload;
@@ -15,10 +20,14 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
 import net.neoforged.neoforge.network.PacketDistributor;
 
+import static io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesDataComponentsInit.SPELL_PART_DATA_COMPONENT;
 import static io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesItemInit.DIAMOND_CHISEL;
 import static io.github.sfseeger.manaweave_and_runes.core.init.ManaweaverAndRunesMenuInit.SPELL_DESIGNER_MENU;
 
 public class SpellDesignerMenu extends AbstractContainerMenu {
+    private static final int INV_SLOT_START = 6;
+    private static final int HOTBAR_SLOT_START = INV_SLOT_START + 27;
+    private static final int HOTBAR_SLOT_END = HOTBAR_SLOT_START + 9;
     private final ContainerLevelAccess access;
     private final SpellDesignerBlockEntity blockEntity;
     private final ItemStackHandler itemHandler;
@@ -64,7 +73,57 @@ public class SpellDesignerMenu extends AbstractContainerMenu {
 
     @Override
     public ItemStack quickMoveStack(Player player, int index) {
-        return ItemStack.EMPTY;
+        ItemStack quickMovedStack = ItemStack.EMPTY;
+        Slot quickMovedSlot = this.slots.get(index);
+
+        if (quickMovedSlot != null && quickMovedSlot.hasItem()) {
+            ItemStack rawStack = quickMovedSlot.getItem();
+            quickMovedStack = rawStack.copy();
+            // Does the item come from the player's inventory?
+            if (index >= INV_SLOT_START && index < HOTBAR_SLOT_END + 1) {
+                boolean couldMove = false;
+                // Is the item a chisel?
+                if (quickMovedStack.getItem() == DIAMOND_CHISEL.get()) { //TODO: Replace wth chisel item
+                    couldMove = this.moveItemStackTo(rawStack, 5, 6, false);
+                // Is the item a spell Part?
+                } else if (quickMovedStack.getItem() instanceof SpellPartHolderItem) {
+                    SpellPart part = quickMovedStack.get(SPELL_PART_DATA_COMPONENT);
+                    if(part != null && part.getCore() != null && part.getCore().value() instanceof AbstractSpellModifier) {
+                        couldMove = this.moveItemStackTo(rawStack, 1, 5, false);
+                    } else {
+                        couldMove = this.moveItemStackTo(rawStack, 0, 5, false);
+                    }
+                    couldMove = this.moveItemStackTo(rawStack, 1, 13, false);
+                }
+                if (!couldMove) {
+                    if (index < HOTBAR_SLOT_START) {
+                        // Try to move the item to the player's hotbar
+                        if (!this.moveItemStackTo(rawStack, HOTBAR_SLOT_START, HOTBAR_SLOT_END + 1, false)) {
+                            return ItemStack.EMPTY;
+                        }
+                        // Move to the player's inventory
+                    } else if (!this.moveItemStackTo(rawStack, INV_SLOT_START, HOTBAR_SLOT_START, false)) {
+                        return ItemStack.EMPTY;
+                    }
+                }
+                // Else if the quick move was performed on the data inventory input slots, try to move to player inventory/hotbar
+            } else if (!this.moveItemStackTo(rawStack, INV_SLOT_START, HOTBAR_SLOT_END + 1, false)) {
+                return ItemStack.EMPTY;
+            }
+
+            if (rawStack.isEmpty()) {
+                quickMovedSlot.set(ItemStack.EMPTY);
+            } else {
+                quickMovedSlot.setChanged();
+            }
+
+            if (rawStack.getCount() == quickMovedStack.getCount()) {
+                return ItemStack.EMPTY;
+            }
+            quickMovedSlot.onTake(player, rawStack);
+        }
+
+        return quickMovedStack;
     }
 
     @Override
@@ -74,8 +133,7 @@ public class SpellDesignerMenu extends AbstractContainerMenu {
     }
 
     public boolean hasChisel() {
-        ItemStack s = itemHandler.getStackInSlot(5);
-        return !s.isEmpty() && s.getItem() == DIAMOND_CHISEL.get(); //TODO: Change to chisel item
+        return blockEntity.hasChisel();
     }
 
     public boolean setName(String name) {

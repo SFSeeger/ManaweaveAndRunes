@@ -2,9 +2,13 @@ package io.github.sfseeger.manaweave_and_runes.datagen.client;
 
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesItemInit;
+import io.github.sfseeger.manaweave_and_runes.core.init.SpellNodeInit;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
+import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 public class ManaweaveAndRunesItemModelProvider extends ItemModelProvider {
@@ -43,5 +47,16 @@ public class ManaweaveAndRunesItemModelProvider extends ItemModelProvider {
                                .parent(this.getExistingFile(mcLoc("item/generated")))
                                .texture("layer0", "item/position_rune_active"))
                 .end();
+
+        SpellNodeInit.SPELL_NODES.getEntries().forEach(spellNode -> {
+            ResourceLocation spellNodeId = spellNode.getId();
+            if(existingFileHelper.exists(spellNodeId.withPrefix("item/"), TEXTURE)) {
+                basicItem(spellNodeId).texture("layer0", "item/" + spellNodeId.getPath());
+            } else {
+                this.getBuilder(spellNodeId.toString())
+                        .parent(new ModelFile.UncheckedModelFile("item/generated"))
+                        .texture("layer0", "item/spell_holder_default_rune");
+            }
+        });
     }
 }
