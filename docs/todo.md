@@ -33,10 +33,10 @@
     * [ ] 3x3 hoe
 * [ ] Spell casting
     * [ ] Add rune bracelet
-    * [ ] Add mana weaver's wand
-    * [ ] Add Spell Registry
+    * [X] Add mana weaver's wand
+    * [X] Add Spell Registry
     * [ ] Add spells
-    * [ ] Add some way to store spells
+    * [X] Add some way to store spells
 * [ ] Rune Carving
     * [ ] Add rune smithing template
         * [ ] Add structures / loottables

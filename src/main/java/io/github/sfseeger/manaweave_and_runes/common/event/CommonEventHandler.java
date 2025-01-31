@@ -7,6 +7,7 @@ import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
 import io.github.sfseeger.manaweave_and_runes.client.ClientPayloadHandler;
 import io.github.sfseeger.manaweave_and_runes.common.ServerPayloadHandler;
 import io.github.sfseeger.manaweave_and_runes.core.payloads.CraftPayload;
+import io.github.sfseeger.manaweave_and_runes.core.payloads.SwitchSpellPayload;
 import net.minecraft.world.item.Items;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -39,6 +40,10 @@ public class CommonEventHandler {
         registrar.playBidirectional(CraftPayload.TYPE, CraftPayload.STREAM_CODEC, new DirectionalPayloadHandler<>(
                 ClientPayloadHandler::handleCraftPayload,
                 ServerPayloadHandler::handleCraftPayload
+        ));
+        registrar.playBidirectional(SwitchSpellPayload.TYPE, SwitchSpellPayload.STREAM_CODEC, new DirectionalPayloadHandler<>(
+                ClientPayloadHandler::handleSpellSwitchPayload,
+                ServerPayloadHandler::handleSpellSwitchPayload
         ));
     }
 }

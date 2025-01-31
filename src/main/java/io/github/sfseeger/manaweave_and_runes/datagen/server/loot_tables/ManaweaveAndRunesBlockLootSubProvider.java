@@ -34,6 +34,7 @@ public class ManaweaveAndRunesBlockLootSubProvider extends BlockLootSubProvider 
         this.dropSelf(ManaweaveAndRunesBlockInit.ASCENDED_RITUAL_ANCHOR_BLOCK.get());
         this.dropSelf(ManaweaveAndRunesBlockInit.MANA_TRANSMITTER_BLOCK.get());
         this.dropSelf(ManaweaveAndRunesBlockInit.WAND_MODIFICATION_TABLE_BLOCK.get());
+        this.dropSelf(ManaweaveAndRunesBlockInit.SPELL_DESIGNER_BLOCK.get());
 
     }
 
