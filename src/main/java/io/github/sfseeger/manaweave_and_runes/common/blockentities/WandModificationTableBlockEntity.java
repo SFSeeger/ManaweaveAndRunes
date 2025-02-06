@@ -1,6 +1,7 @@
 package io.github.sfseeger.manaweave_and_runes.common.blockentities;
 
 import io.github.sfseeger.lib.common.spells.ISpellCaster;
+import io.github.sfseeger.lib.common.spells.IUpgradable;
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockEntityInit;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -23,7 +24,7 @@ public class WandModificationTableBlockEntity extends BlockEntity {
 
         @Override
         public boolean isItemValid(int slot, ItemStack stack) {
-            return stack.getItem() instanceof ISpellCaster;
+            return stack.getItem() instanceof IUpgradable;
         }
 
         @Override

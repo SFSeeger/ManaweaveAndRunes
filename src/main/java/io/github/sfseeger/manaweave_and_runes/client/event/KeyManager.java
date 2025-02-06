@@ -45,7 +45,7 @@ public class KeyManager {
         ItemStack stack = player.getMainHandItem();
         if (stack.getItem() instanceof ISpellCaster casterItem){
             int index = casterItem.getCurrentSpellIndex(stack);
-            PacketDistributor.sendToServer(new SwitchSpellPayload(index));
+            PacketDistributor.sendToServer(new SwitchSpellPayload(index + 1));
             Spell spell = casterItem.getCurrrntSpell(stack);
             String spellName = spell != null ? spell.getName() : "No Spell";
             player.displayClientMessage(Component.literal(

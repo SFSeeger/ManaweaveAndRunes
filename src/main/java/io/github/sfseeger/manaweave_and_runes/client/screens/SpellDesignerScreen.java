@@ -88,6 +88,9 @@ public class SpellDesignerScreen extends AbstractContainerScreen<SpellDesignerMe
 
     public void renderFG(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         this.name.render(guiGraphics, mouseX, mouseY, partialTick);
+        guiGraphics.drawString(this.font,
+                Component.literal(menu.getCooldown() + "t"),
+                this.leftPos + 195, this.topPos + 29, 0x000000, false);
     }
 
     private void renderButtons(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {

@@ -144,6 +144,17 @@ public class SpellDesignerMenu extends AbstractContainerMenu {
         return true;
     }
 
+    public int getCooldown(){
+        int result = 0;
+        for(int i = 0; i < INV_SLOT_START; i++){
+            ItemStack stack = this.slots.get(i).getItem();
+            if(stack.getItem() instanceof SpellPartHolderItem){
+                result += stack.get(SPELL_PART_DATA_COMPONENT).getCooldown();
+            }
+        }
+        return result;
+    }
+
     public String getName() {
         return blockEntity.getSpellName();
     }
