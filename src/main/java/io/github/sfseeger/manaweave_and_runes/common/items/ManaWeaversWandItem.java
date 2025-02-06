@@ -2,10 +2,7 @@ package io.github.sfseeger.manaweave_and_runes.common.items;
 
 import io.github.sfseeger.lib.common.items.IItemHandlerItem;
 import io.github.sfseeger.lib.common.items.SpellHolderItem;
-import io.github.sfseeger.lib.common.spells.ISpellCaster;
-import io.github.sfseeger.lib.common.spells.Spell;
-import io.github.sfseeger.lib.common.spells.SpellCaster;
-import io.github.sfseeger.lib.common.spells.SpellCastingResult;
+import io.github.sfseeger.lib.common.spells.*;
 import io.github.sfseeger.manaweave_and_runes.common.data_components.ItemStackHandlerDataComponent;
 import io.github.sfseeger.manaweave_and_runes.common.data_components.SelectedSlotDataComponent;
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesDataComponentsInit;
@@ -19,7 +16,7 @@ import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 
-public class ManaWeaversWandItem extends Item implements IItemHandlerItem, ISpellCaster {
+public class ManaWeaversWandItem extends Item implements IItemHandlerItem, ISpellCaster, IUpgradable {
     public ManaWeaversWandItem() {
         super(new Item.Properties().stacksTo(1)
                       .rarity(Rarity.EPIC)

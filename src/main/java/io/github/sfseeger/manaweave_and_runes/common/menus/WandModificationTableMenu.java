@@ -2,6 +2,7 @@ package io.github.sfseeger.manaweave_and_runes.common.menus;
 
 import io.github.sfseeger.lib.common.items.SpellHolderItem;
 import io.github.sfseeger.lib.common.spells.ISpellCaster;
+import io.github.sfseeger.lib.common.spells.IUpgradable;
 import io.github.sfseeger.manaweave_and_runes.common.blockentities.WandModificationTableBlockEntity;
 import io.github.sfseeger.manaweave_and_runes.common.menus.slots.SpellCircleSlot;
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockInit;
@@ -117,7 +118,7 @@ public class WandModificationTableMenu extends AbstractContainerMenu {
             if (index >= INV_SLOT_START && index < HOTBAR_SLOT_END + 1) {
                 boolean couldMove = false;
                 // Is the item a wand?
-                if (quickMovedStack.getItem() instanceof ISpellCaster) {
+                if (quickMovedStack.getItem() instanceof IUpgradable) {
                     couldMove = this.moveItemStackTo(rawStack, 0, 1, false);
                 } else if (hasStaff() && quickMovedStack.getItem() instanceof SpellHolderItem) {
                     couldMove = this.moveItemStackTo(rawStack, 1, 13, false);

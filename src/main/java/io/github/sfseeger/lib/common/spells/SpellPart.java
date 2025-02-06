@@ -52,6 +52,10 @@ public class SpellPart {
         return modifiers.stream().map(n -> (AbstractSpellNode) n).collect(Collectors.toList());
     }
 
+    public int getCooldown(){
+        return modifiers.stream().mapToInt(AbstractSpellModifier::getCooldown).sum() + core.value().getCooldown();
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(core, modifiers);
