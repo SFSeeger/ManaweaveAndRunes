@@ -22,7 +22,9 @@ public class Spell {
             Codec.STRING.fieldOf("name").forGetter(Spell::getName),
             AbstractSpellType.CODEC.fieldOf("spellType").forGetter(Spell::getSpellType),
             AbstractSpellEffect.CODEC.listOf().fieldOf("effects").forGetter(Spell::getEffectAsNodes),
-            Codec.pair(AbstractSpellNode.CODEC, AbstractSpellModifier.CODEC.listOf()).listOf()
+            Codec.pair(AbstractSpellNode.CODEC.fieldOf("root").codec(),
+                       AbstractSpellModifier.CODEC.listOf().fieldOf("modifiers").codec())
+                    .listOf()
                     .fieldOf("modifiers")
                     .forGetter(Spell::getModifiersAsPairs)
     ).apply(instance, Spell::fromCodec));
@@ -109,9 +111,10 @@ public class Spell {
 
     public List<Pair<AbstractSpellNode, List<AbstractSpellNode>>> getModifiersAsPairs() {
         return modifiers.entrySet().stream()
-                .map(entry -> Pair.of(entry.getKey(), List.of(entry.getValue()).stream()
-                        .map(modifier -> (AbstractSpellNode) modifier).toList()))
-                .toList();
+                .map(entry -> Pair.of(entry.getKey(), entry.getValue().stream()
+                        .map(modifier -> (AbstractSpellNode) modifier)
+                        .collect(Collectors.toList())))
+                .collect(Collectors.toList());
     }
 
 
