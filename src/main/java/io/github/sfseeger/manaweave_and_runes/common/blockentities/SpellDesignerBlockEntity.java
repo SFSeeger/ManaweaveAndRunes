@@ -1,13 +1,16 @@
 package io.github.sfseeger.manaweave_and_runes.common.blockentities;
 
 import io.github.sfseeger.lib.common.items.SpellPartHolderItem;
+import io.github.sfseeger.lib.common.mana.Mana;
 import io.github.sfseeger.lib.common.spells.*;
 import io.github.sfseeger.lib.common.spells.data_components.SpellDataComponent;
 import io.github.sfseeger.manaweave_and_runes.core.payloads.CraftPayload;
 import io.github.sfseeger.manaweave_and_runes.core.payloads.ICraftingPacketHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -17,6 +20,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.ItemStackHandler;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import static io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockEntityInit.SPELL_DESIGNER_BLOCK_ENTITY;
 import static io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesDataComponentsInit.SPELL_DATA_COMPONENT;
@@ -25,9 +30,10 @@ import static io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunes
 
 public class SpellDesignerBlockEntity extends BlockEntity implements ICraftingPacketHandler {
     public static final int MAIN_SLOT_INDEX = 0;
-
-    private ItemStackHandler itemHandler = new ItemStackHandler(7);
-    private static final String DEFAULT_SPELL_NAME = "Unnamed Spell";
+    public static final int CHISEL_SLOT_INDEX = 5;
+    public static final int OUTPUT_SLOT_INDEX = 6;
+    private static final String DEFAULT_SPELL_NAME = "Spell";
+    private ItemStackHandler itemHandler = new ItemStackHandler(OUTPUT_SLOT_INDEX + 1);
     private String spellName = DEFAULT_SPELL_NAME;
 
     public SpellDesignerBlockEntity(BlockPos pos, BlockState blockState) {
@@ -80,7 +86,7 @@ public class SpellDesignerBlockEntity extends BlockEntity implements ICraftingPa
                     return stack1;
                 }
             } else if(!hasEffects){
-                SpellPart part1 = new SpellPart(part.getCore(), new ArrayList<>());
+                SpellPart part1 = new SpellPart(part.getCore(), new ArrayList<>()); //Replace with modifiers from parts?
                 for(SpellPart p : parts){
                     if (p != null && p.getCore().value() instanceof AbstractSpellModifier) {
                         part1.getModifiers().add((AbstractSpellModifier) (p.getCore().value()));
@@ -88,6 +94,7 @@ public class SpellDesignerBlockEntity extends BlockEntity implements ICraftingPa
                 }
                 ItemStack stack1 = new ItemStack(AMETHYST_SPELL_PART_ITEM.get(), 1);
                 stack1.set(SPELL_PART_DATA_COMPONENT, part1);
+                stack1.set(DataComponents.CUSTOM_NAME, Component.literal(spellName));
                 return stack1;
             }
         }
@@ -132,11 +139,11 @@ public class SpellDesignerBlockEntity extends BlockEntity implements ICraftingPa
         if (itemHandler.getStackInSlot(6).isEmpty() && (player.isCreative() || hasChisel())) {
             ItemStack stack = assembleSpell();
             if (!stack.isEmpty() && !player.level().isClientSide) {
-                itemHandler.setStackInSlot(6, stack);
+                itemHandler.setStackInSlot(OUTPUT_SLOT_INDEX, stack);
                 for (int i = 0; i < 5; i++) {
                     if (!itemHandler.getStackInSlot(i).isEmpty()) itemHandler.extractItem(i, 1, false);
                 }
-                itemHandler.getStackInSlot(5)
+                itemHandler.getStackInSlot(CHISEL_SLOT_INDEX)
                         .hurtAndBreak(4, (ServerLevel) player.level(), (ServerPlayer) player, e -> {
                         });
                 setSpellName("");
@@ -160,5 +167,24 @@ public class SpellDesignerBlockEntity extends BlockEntity implements ICraftingPa
     public boolean hasChisel() {
         ItemStack s = itemHandler.getStackInSlot(5);
         return !s.isEmpty() && s.getItem() == DIAMOND_CHISEL.get(); //TODO: Change to chisel item
+    }
+
+    public Map<Mana, Integer> getManaCost() {
+        Map<Mana, Integer> cost = new HashMap<>();
+        for (int i = 0; i < CHISEL_SLOT_INDEX; i++) {
+            ItemStack stack = itemHandler.getStackInSlot(i);
+            SpellPart part = stack.get(SPELL_PART_DATA_COMPONENT);
+            if (part != null) {
+                for (Map.Entry<Mana, Integer> entry : part.getCore().value().getManaCost().entrySet()) {
+                    cost.put(entry.getKey(), cost.getOrDefault(entry.getKey(), 0) + entry.getValue());
+                }
+                for (AbstractSpellModifier modifier : part.getModifiers()) {
+                    for (Map.Entry<Mana, Integer> entry : modifier.getManaCost().entrySet()) {
+                        cost.put(entry.getKey(), cost.getOrDefault(entry.getKey(), 0) + entry.getValue());
+                    }
+                }
+            }
+        }
+        return cost;
     }
 }

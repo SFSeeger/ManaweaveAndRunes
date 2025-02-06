@@ -8,7 +8,7 @@ public class Manas {
     public static final Mana EmptyMana = new Mana(new ManaProperties.Builder().canBeGenerated(false).build());
 
     public static final ResourceLocation FireManaIcon = ResourceLocation.fromNamespaceAndPath(
-            ManaweaveAndRunes.MODID, "textures/mana/fire_mana.png");
+            ManaweaveAndRunes.MODID, "container/mana/fire_mana");
     public static final Mana FireMana = new Mana(
             new ManaProperties.Builder().color(0xFF0000)
                     .addGenerationCondition(
@@ -18,7 +18,7 @@ public class Manas {
                     .build());
 
     public static final ResourceLocation AirManaIcon = ResourceLocation.fromNamespaceAndPath(
-            ManaweaveAndRunes.MODID, "textures/mana/air_mana.png");
+            ManaweaveAndRunes.MODID, "container/mana/air_mana");
     public static final Mana AirMana = new Mana(
             new ManaProperties.Builder().color(0xADF3FF)
                     .addGenerationCondition(

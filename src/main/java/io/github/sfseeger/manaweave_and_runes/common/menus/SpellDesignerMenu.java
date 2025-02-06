@@ -1,9 +1,8 @@
 package io.github.sfseeger.manaweave_and_runes.common.menus;
 
-import io.github.sfseeger.lib.common.items.SpellHolderItem;
 import io.github.sfseeger.lib.common.items.SpellPartHolderItem;
+import io.github.sfseeger.lib.common.mana.Mana;
 import io.github.sfseeger.lib.common.spells.AbstractSpellModifier;
-import io.github.sfseeger.lib.common.spells.ISpellCaster;
 import io.github.sfseeger.lib.common.spells.SpellPart;
 import io.github.sfseeger.manaweave_and_runes.common.blockentities.SpellDesignerBlockEntity;
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockInit;
@@ -19,6 +18,8 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
 import net.neoforged.neoforge.network.PacketDistributor;
+
+import java.util.Map;
 
 import static io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesDataComponentsInit.SPELL_PART_DATA_COMPONENT;
 import static io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesItemInit.DIAMOND_CHISEL;
@@ -161,5 +162,9 @@ public class SpellDesignerMenu extends AbstractContainerMenu {
 
     public void craft(LocalPlayer player, String name) {
         PacketDistributor.sendToServer(new CraftPayload(blockEntity.getBlockPos().asLong(), 0, name));
+    }
+
+    public Map<Mana, Integer> getManaCost() {
+        return blockEntity.getManaCost();
     }
 }
