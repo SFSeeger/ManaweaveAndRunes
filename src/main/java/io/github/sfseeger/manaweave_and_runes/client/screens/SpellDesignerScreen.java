@@ -1,5 +1,6 @@
 package io.github.sfseeger.manaweave_and_runes.client.screens;
 
+import io.github.sfseeger.lib.common.mana.Mana;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
 import io.github.sfseeger.manaweave_and_runes.common.menus.SpellDesignerMenu;
 import net.minecraft.client.gui.GuiGraphics;
@@ -10,6 +11,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+
+import java.util.Map;
 
 import static io.github.sfseeger.manaweave_and_runes.core.util.ScreenUtil.isMouseInBounds;
 
@@ -29,6 +32,9 @@ public class SpellDesignerScreen extends AbstractContainerScreen<SpellDesignerMe
 
     private static final ResourceLocation CHISEL_SLOT_HINT =
             ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "container/spell_designer/chisel_slot");
+
+    private static final ResourceLocation FALLBACK_ICON =
+            ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "textures/gui/sprites/container/fire_mana");
 
     private static final int GUI_WIDTH = 244;
     private static final int GUI_HEIGHT = 221;
@@ -91,6 +97,28 @@ public class SpellDesignerScreen extends AbstractContainerScreen<SpellDesignerMe
         guiGraphics.drawString(this.font,
                 Component.literal(menu.getCooldown() + "t"),
                 this.leftPos + 195, this.topPos + 29, 0x000000, false);
+        //180,39 - 240, 86
+        int i = 0;
+        for (Map.Entry<Mana, Integer> entry : menu.getManaCost().entrySet()) {
+            Mana mana = entry.getKey();
+            int cost = entry.getValue();
+            guiGraphics.blitSprite(mana.properties().getIcon().orElse(FALLBACK_ICON),
+                                   this.leftPos + 180 + (i % 2) * 30, this.topPos + 39 + (i / 2) * 20, 16, 16);
+            guiGraphics.drawString(this.font,
+                                   Component.literal(String.valueOf(cost)),
+                                   this.leftPos + 180 + (i % 2) * 30 + 16, this.topPos + 39 + (i / 2) * 20 + 4,
+                                   0x000000, false);
+            i++;
+        }
+    }
+
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        if (keyCode == 256) {
+            this.minecraft.player.closeContainer();
+        }
+
+        return this.name.keyPressed(keyCode, scanCode, modifiers) || this.name.canConsumeInput() || super.keyPressed(
+                keyCode, scanCode, modifiers);
     }
 
     private void renderButtons(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {

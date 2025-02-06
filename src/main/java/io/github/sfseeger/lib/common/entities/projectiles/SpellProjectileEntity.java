@@ -32,7 +32,7 @@ public class SpellProjectileEntity extends Projectile {
         this.resolver = resolver;
         LivingEntity caster = context.getCaster();
         this.setOwner(caster);
-        this.setPos(caster.getX(), caster.getY() + caster.getEyeHeight(), caster.getZ());
+        this.setPos(caster.getX(), caster.getEyeY() - 0.10000000149011612, caster.getZ());
     }
 
     public void tick() {

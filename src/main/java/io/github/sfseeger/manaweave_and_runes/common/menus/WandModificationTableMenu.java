@@ -111,7 +111,7 @@ public class WandModificationTableMenu extends AbstractContainerMenu {
         ItemStack quickMovedStack = ItemStack.EMPTY;
         Slot quickMovedSlot = this.slots.get(index);
 
-        if (quickMovedSlot != null && quickMovedSlot.hasItem()) {
+        if (quickMovedSlot.hasItem()) {
             ItemStack rawStack = quickMovedSlot.getItem();
             quickMovedStack = rawStack.copy();
             // Does the item come from the player's inventory?

@@ -16,7 +16,7 @@ public class ManaStorageBlockScreen extends AbstractContainerScreen<ManaStorageB
             ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID,
                                                   "textures/gui/container/mana_storage.png");
     private static final ResourceLocation FALLBACK_ICON =
-            ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "textures/mana/fire_mana.png");
+            ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "textures/gui/sprites/container/fire_mana");
 
 
     private int uiX;
@@ -73,8 +73,8 @@ public class ManaStorageBlockScreen extends AbstractContainerScreen<ManaStorageB
                 float fill = menu.getManaPercentage(mana);
                 guiGraphics.fill(uiX + 50 + i * 18, uiY + 51 - (int) (36 * fill), uiX + 53 + i * 18, uiY + 51,
                                  0xFF000000 + mana.properties().getColor());
-                guiGraphics.blit(mana.properties().getIcon().orElse(FALLBACK_ICON), uiX + 44 + i * 18, uiY + 56, 0, 0,
-                                 16, 16);
+                guiGraphics.blitSprite(mana.properties().getIcon().orElse(FALLBACK_ICON), uiX + 44 + i * 18, uiY + 56,
+                                       16, 16);
             }
         }
     }

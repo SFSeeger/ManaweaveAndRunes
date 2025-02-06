@@ -9,6 +9,8 @@ public class ManaWeaveAndRuneEntityTypes {
             EntityType.Builder.<SpellProjectileEntity>of(
                             SpellProjectileEntity::new, MobCategory.MISC)
                     .sized(0.5F, 0.5F)
+                    .updateInterval(20)
+                    .clientTrackingRange(4)
                     .build("spell_projectile");
 
 }
