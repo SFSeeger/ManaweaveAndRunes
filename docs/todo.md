@@ -37,6 +37,8 @@
     * [X] Add Spell Registry
     * [ ] Add spells
     * [X] Add some way to store spells
+    * [ ] Add wand model
+    * [ ] (Better spell switching)
 * [ ] Rune Carving
     * [ ] Add rune smithing template
         * [ ] Add structures / loottables
