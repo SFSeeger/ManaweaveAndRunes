@@ -9,10 +9,7 @@ import io.github.sfseeger.manaweave_and_runes.client.particles.ManaParticle;
 import io.github.sfseeger.manaweave_and_runes.client.renderers.ManaCollectorBlockEntityRenderer;
 import io.github.sfseeger.manaweave_and_runes.client.renderers.ManaConcentratorBlockEntityRenderer;
 import io.github.sfseeger.manaweave_and_runes.client.renderers.RunePedestalBlockEntityRenderer;
-import io.github.sfseeger.manaweave_and_runes.client.screens.ManaStorageBlockScreen;
-import io.github.sfseeger.manaweave_and_runes.client.screens.RuneCarverBlockScreen;
-import io.github.sfseeger.manaweave_and_runes.client.screens.SpellDesignerScreen;
-import io.github.sfseeger.manaweave_and_runes.client.screens.WandModificationTableScreen;
+import io.github.sfseeger.manaweave_and_runes.client.screens.*;
 import io.github.sfseeger.manaweave_and_runes.core.init.EntityTypeInit;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRParticleTypeInit;
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockEntityInit;
@@ -40,6 +37,8 @@ public class ClientEventHandler {
                                           ManaNodeRenderer::new);
         event.registerBlockEntityRenderer(ManaweaveAndRunesBlockEntityInit.MANA_TRANSMITTER_BLOCK_ENTITY.get(),
                                           ManaNodeRenderer::new);
+        event.registerBlockEntityRenderer(ManaweaveAndRunesBlockEntityInit.MANA_GENERATOR_BLOCK_ENTITY.get(),
+                                          ManaNodeRenderer::new);
     }
 
     @SubscribeEvent
@@ -56,8 +55,9 @@ public class ClientEventHandler {
     public static void registerScreens(RegisterMenuScreensEvent event) {
         event.register(ManaweaverAndRunesMenuInit.RUNE_CARVER_BLOCK_MENU.get(), RuneCarverBlockScreen::new);
         event.register(ManaweaverAndRunesMenuInit.MANA_STORAGE_BLOCK_MENU.get(), ManaStorageBlockScreen::new);
-        event.register(ManaweaverAndRunesMenuInit.WAND_MODIFICARION_TABLE_MENU.get(), WandModificationTableScreen::new);
+        event.register(ManaweaverAndRunesMenuInit.WAND_MODIFICATION_TABLE_MENU.get(), WandModificationTableScreen::new);
         event.register(ManaweaverAndRunesMenuInit.SPELL_DESIGNER_MENU.get(), SpellDesignerScreen::new);
+        event.register(ManaweaverAndRunesMenuInit.MANA_GENERATOR_MENU.get(), ManaGeneratorScreen::new);
     }
 
     @SubscribeEvent

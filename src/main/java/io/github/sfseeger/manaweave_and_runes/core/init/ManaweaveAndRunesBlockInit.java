@@ -7,7 +7,9 @@ import io.github.sfseeger.manaweave_and_runes.common.blocks.mana_concentrator.Ma
 import io.github.sfseeger.manaweave_and_runes.common.blocks.mana_concentrator.NoviceManaConcentratorBlock;
 import io.github.sfseeger.manaweave_and_runes.common.blocks.ritual_anchor.RitualAnchorBlock;
 import io.github.sfseeger.manaweave_and_runes.common.blocks.ritual_anchor.RitualAnchorTypes;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.DropExperienceBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.neoforge.registries.DeferredBlock;
@@ -16,11 +18,23 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public class ManaweaveAndRunesBlockInit {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(ManaweaveAndRunes.MODID);
 
-    public static final DeferredBlock<Block> CRYSTAL_ORE = BLOCKS.registerSimpleBlock("crystal_ore",
-                                                                                      BlockBehaviour.Properties.of()
-                                                                                              .strength(3.0F)
-                                                                                              .requiresCorrectToolForDrops()
-                                                                                              .sound(SoundType.AMETHYST));
+    public static final DeferredBlock<Block> TANZANITE_ORE = BLOCKS.register("tanzanite_ore",
+                                                                             () -> new DropExperienceBlock(
+                                                                                     UniformInt.of(2, 8),
+                                                                                     BlockBehaviour.Properties.of()
+                                                                                             .strength(3.0F)
+                                                                                             .requiresCorrectToolForDrops()
+                                                                                             .sound(SoundType.STONE)));
+
+
+    public static final DeferredBlock<Block> DEEPSLATE_TANZANITE_ORE = BLOCKS.register("deepslate_tanzanite_ore",
+                                                                                       () -> new DropExperienceBlock(
+                                                                                               UniformInt.of(4, 8),
+                                                                                               BlockBehaviour.Properties.of()
+                                                                                                       .strength(4.5F,
+                                                                                                                 3.0F)
+                                                                                                       .requiresCorrectToolForDrops()
+                                                                                                       .sound(SoundType.DEEPSLATE)));
     public static final DeferredBlock<RuneBlock> RUNE_BLOCK = BLOCKS.register("rune_block", RuneBlock::new);
     public static final DeferredBlock<RunePedestalBlock> RUNE_PEDESTAL_BLOCK =
             BLOCKS.register("rune_pedestal", RunePedestalBlock::new);

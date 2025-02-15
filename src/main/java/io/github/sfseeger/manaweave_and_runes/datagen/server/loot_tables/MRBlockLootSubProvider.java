@@ -9,15 +9,17 @@ import net.minecraft.world.level.block.Block;
 
 import java.util.Set;
 
-public class ManaweaveAndRunesBlockLootSubProvider extends BlockLootSubProvider {
-    public ManaweaveAndRunesBlockLootSubProvider(HolderLookup.Provider lookupProvider) {
+public class MRBlockLootSubProvider extends BlockLootSubProvider {
+    public MRBlockLootSubProvider(HolderLookup.Provider lookupProvider) {
         super(Set.of(), FeatureFlags.DEFAULT_FLAGS, lookupProvider);
     }
 
     @Override
     protected void generate() {
-        this.add(ManaweaveAndRunesBlockInit.CRYSTAL_ORE.get(), (block) -> createOreDrop(block,
-                                                                                        ManaweaveAndRunesItemInit.CRYSTAL.get()));
+        this.add(ManaweaveAndRunesBlockInit.TANZANITE_ORE.get(), (block) -> createOreDrop(block,
+                                                                                          ManaweaveAndRunesItemInit.TANZANITE.get()));
+        this.add(ManaweaveAndRunesBlockInit.DEEPSLATE_TANZANITE_ORE.get(), (block) -> createOreDrop(block,
+                                                                                                    ManaweaveAndRunesItemInit.TANZANITE.get()));
 
         this.dropSelf(ManaweaveAndRunesBlockInit.RUNE_BLOCK.get());
 
