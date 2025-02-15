@@ -1,7 +1,9 @@
 {
   "itemGroup.manaweave_and_runes": "Manaweave and Runes Tab",
+
   "mana.manaweave_and_runes.fire_mana": "Fire Mana",
   "mana.manaweave_and_runes.air_mana": "Air Mana",
+
   "block.manaweave_and_runes.rune_carver_block": "Rune Carver",
   "block.manaweave_and_runes.mana_storage_block": "Mana Storage",
   "block.manaweave_and_runes.novice_ritual_anchor": "Novice Ritual Anchor",
@@ -10,9 +12,25 @@
   "block.manaweave_and_runes.novice_mana_concentrator": "Novice Mana Concentrator",
   "block.manaweave_and_runes.master_mana_concentrator": "Master Mana Concentrator",
   "block.manaweave_and_runes.ascended_mana_concentrator": "Ascended Mana Concentrator",
-  "container.manaweave_and_runes.rune_carver_block": "Rune Carver",
+  "block.manaweave_and_runes.wand_modification_table": "Wand Modification Table",
+  "block.manaweave_and_runes.spell_designer": "Spell Designer",
+  "block.manaweave_and_runes.mana_generator": "Mana Generator",
+  "block.manaweave_and_runes.tanzanite_ore": "Tanzanite Ore",
+  "block.manaweave_and_runes.deepslate_tanzanite_ore": "Deepslate Tanzanite Ore",
+  "block.manaweave_and_runes.rune_block": "Rune Block",
+  "block.manaweave_and_runes.rune_pedestal": "Rune Pedestal",
+  "block.manaweave_and_runes.mana_collector": "Mana Collector",
+  "block.manaweave_and_runes.mana_transmitter": "Mana Transmitter",
+  "block.manaweave_and_runes.mana_storage": "Mana Storage",
+
+
   "lore.manaweave_and_runes.mana_stored": "%d / %d",
-  "container.manaweave_and_runes.mana_storage_block": "Mana Storage",
+  "item.manaweave_and_runes.tanzanite": "Tanazite",
+  "item.manaweave_and_runes.diamond_chisel": "Diamond Chisel",
+  "item.manaweave_and_runes.amethyst_base_rune": "Amethyst Base Rune",
+  "item.manaweave_and_runes.position_rune": "Position Rune",
+  "item.manaweave_and_runes.soul_container_rune": "Soul Container Rune",
+
   "item.manaweave_and_runes.soul_container_rune.stole_soul_fragment": "Someone tried to steal a soul fragment from you",
   "item.manaweave_and_runes.soul_container_rune.detected": "You got noticed trying to steal a soul fragment",
   "advancements.manaweave_and_runes.ritual_anchor.title": "Anchored in Arcana",
@@ -27,6 +45,9 @@
   "spell.manaweave_and_runes.spell_effect.burn": "Burn",
   "spell.manaweave_and_runes.spell_modifier.strengthen": "Strengthen",
   "key.manaweave_and_runes.toggle_spell": "Toggle Spell",
+  "container.manaweave_and_runes.rune_carver_block": "Rune Carver",
+  "container.manaweave_and_runes.mana_storage_block": "Mana Storage",
   "container.manaweave_and_runes.wand_modification_table": "Wand Modification Table",
-  "container.manaweave_and_runes.spell_designer": "Spell Designer"
+  "container.manaweave_and_runes.spell_designer": "Spell Designer",
+  "container.manaweave_and_runes.mana_generator": "Mana Generator"
 }

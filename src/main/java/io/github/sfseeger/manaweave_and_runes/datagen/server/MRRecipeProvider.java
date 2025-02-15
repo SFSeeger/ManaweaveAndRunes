@@ -19,9 +19,10 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 
-public class ManaweaveAndRunesRecipeProvider extends RecipeProvider {
+public class MRRecipeProvider extends RecipeProvider {
     private final CompletableFuture<HolderLookup.Provider> registries;
-    public ManaweaveAndRunesRecipeProvider(PackOutput output,
+
+    public MRRecipeProvider(PackOutput output,
             CompletableFuture<HolderLookup.Provider> registries) {
         super(output, registries);
         this.registries = registries;

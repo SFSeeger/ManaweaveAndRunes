@@ -8,9 +8,11 @@ import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.AdvancementType;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.common.data.AdvancementProvider;
@@ -20,9 +22,8 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
-public class ManaweaveAndRunesAdvancementProvider extends AdvancementProvider {
-    public ManaweaveAndRunesAdvancementProvider(PackOutput output,
-            CompletableFuture<HolderLookup.Provider> registries,
+public class MRAdvancementProvider extends AdvancementProvider {
+    public MRAdvancementProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries,
             ExistingFileHelper existingFileHelper) {
         super(output, registries, existingFileHelper, List.of(new RitualUnlockAdvancementGenerator()));
     }
@@ -33,30 +34,31 @@ public class ManaweaveAndRunesAdvancementProvider extends AdvancementProvider {
                 ExistingFileHelper existingFileHelper) {
             ResourceLocation id = ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "rituals/");
 
+            Item noviceRitualAnchor = BuiltInRegistries.ITEM.get(
+                    ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "novice_ritual_anchor"));
             AdvancementHolder root = Advancement.Builder.advancement()
-                    .addCriterion("pickup_novice_ritual_anchor", InventoryChangeTrigger.TriggerInstance.hasItems(
-                            ManaweaveAndRunesItemInit.NOVICE_RITUAL_ANCHOR_BLOCK_ITEM.get()))
-                    .display(
-                            new ItemStack(ManaweaveAndRunesItemInit.NOVICE_RITUAL_ANCHOR_BLOCK_ITEM.get()),
-                            Component.translatable("advancements.manaweave_and_runes.ritual_anchor.title"),
-                            Component.translatable("advancements.manaweave_and_runes.ritual_anchor.description"),
-                            ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID,
-                                                                  "textures/blocks/rune_block_inactive"),
-                            AdvancementType.TASK, true, true, false
-                    )
+                    .addCriterion("pickup_novice_ritual_anchor",
+                                  InventoryChangeTrigger.TriggerInstance.hasItems(noviceRitualAnchor))
+                    .display(new ItemStack(noviceRitualAnchor),
+                             Component.translatable("advancements.manaweave_and_runes.ritual_anchor.title"),
+                             Component.translatable("advancements.manaweave_and_runes.ritual_anchor.description"),
+                             ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID,
+                                                                   "textures/blocks/rune_block_inactive"),
+                             //TODO: Add texture
+                             AdvancementType.TASK, true, true, false)
                     .rewards(AdvancementRewards.Builder.experience(100))
                     .save(consumer, id.withSuffix("root"), existingFileHelper);
 
+            Item masterRitualAnchor = BuiltInRegistries.ITEM.get(
+                    ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "master_ritual_anchor"));
             AdvancementHolder masterAnchor = Advancement.Builder.advancement()
                     .parent(root)
-                    .addCriterion("pickup_master_ritual_anchor", InventoryChangeTrigger.TriggerInstance.hasItems(
-                            ManaweaveAndRunesItemInit.MASTER_RITUAL_ANCHOR_BLOCK_ITEM.get()))
-                    .display(
-                            new ItemStack(ManaweaveAndRunesItemInit.MASTER_RITUAL_ANCHOR_BLOCK_ITEM.get()),
-                            Component.translatable("advancements.manaweave_and_runes.master_anchor.title"),
-                            Component.translatable("advancements.manaweave_and_runes.master_anchor.description"),
-                            null, AdvancementType.TASK, true, true, false
-                    )
+                    .addCriterion("pickup_master_ritual_anchor",
+                                  InventoryChangeTrigger.TriggerInstance.hasItems(masterRitualAnchor))
+                    .display(new ItemStack(masterRitualAnchor),
+                             Component.translatable("advancements.manaweave_and_runes.master_anchor.title"),
+                             Component.translatable("advancements.manaweave_and_runes.master_anchor.description"), null,
+                             AdvancementType.TASK, true, true, false)
                     .rewards(AdvancementRewards.Builder.experience(500))
                     .save(consumer, id.withSuffix("master_ritual_anchor"), existingFileHelper);
 

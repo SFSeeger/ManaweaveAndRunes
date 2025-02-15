@@ -18,7 +18,7 @@ import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
 
-import static io.github.sfseeger.manaweave_and_runes.core.init.ManaweaverAndRunesMenuInit.WAND_MODIFICARION_TABLE_MENU;
+import static io.github.sfseeger.manaweave_and_runes.core.init.ManaweaverAndRunesMenuInit.WAND_MODIFICATION_TABLE_MENU;
 
 public class WandModificationTableMenu extends AbstractContainerMenu {
     private static final int INV_SLOT_START = 13;
@@ -38,7 +38,7 @@ public class WandModificationTableMenu extends AbstractContainerMenu {
     }
 
     public WandModificationTableMenu(int containerId, Inventory playerInventory, WandModificationTableBlockEntity blockEntity, ContainerLevelAccess access) {
-        super(WAND_MODIFICARION_TABLE_MENU.get(), containerId);
+        super(WAND_MODIFICATION_TABLE_MENU.get(), containerId);
         this.access = access;
         this.blockEntity = blockEntity;
         this.itemHandler = blockEntity.getItemHandler(null);

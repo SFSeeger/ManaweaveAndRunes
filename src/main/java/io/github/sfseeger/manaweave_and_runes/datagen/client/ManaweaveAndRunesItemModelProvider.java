@@ -3,10 +3,8 @@ package io.github.sfseeger.manaweave_and_runes.datagen.client;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesItemInit;
 import io.github.sfseeger.manaweave_and_runes.core.init.SpellNodeInit;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -20,7 +18,7 @@ public class ManaweaveAndRunesItemModelProvider extends ItemModelProvider {
     protected void registerModels() {
         basicItem(ManaweaveAndRunesItemInit.MANA_DEBUG_STICK_ITEM.get());
         basicItem(ManaweaveAndRunesItemInit.MANA_CONNECTOR.get());
-        basicItem(ManaweaveAndRunesItemInit.CRYSTAL.get());
+        basicItem(ManaweaveAndRunesItemInit.TANZANITE.get());
 
         handheldItem(ManaweaveAndRunesItemInit.DIAMOND_CHISEL.get());
 

@@ -1,13 +1,15 @@
 # Todo MVP
 * [ ] Mana system
-    * [ ] Add mana to items data driven instead of components
+    * [X] Add mana to items data driven instead of components
     * [ ] Add missing mana
         * [ ] Add generation methods for Mana
-    * [ ] Render Mana Icons
-    * [ ] Mana Generator
-        * [ ] Make generator tick based
-        * [ ] Add UI
-        * [ ] Make generator consume fuel
+    * [X] Render Mana Icons
+    * [X] Mana Generator
+        * [X] Make generator tick based
+        * [X] Add UI
+        * [X] Make generator consume fuel
+    * [ ] Mana Collector
+        * [ ] Random ticking instead of normal ticking
     * [ ] Add Network indicator
         * [ ] Add blockmodel
         * [ ] Update network to be able to request last state
