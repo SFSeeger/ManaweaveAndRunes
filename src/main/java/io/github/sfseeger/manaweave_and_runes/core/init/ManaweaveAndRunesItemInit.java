@@ -6,10 +6,7 @@ import io.github.sfseeger.lib.common.spells.SpellPart;
 import io.github.sfseeger.lib.common.spells.data_components.SpellDataComponent;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
 import io.github.sfseeger.manaweave_and_runes.common.items.*;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.Rarity;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -18,9 +15,8 @@ import static io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunes
 public class ManaweaveAndRunesItemInit {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(ManaweaveAndRunes.MODID);
 
-    public static final DeferredItem<Item> CRYSTAL = ITEMS.register("crystal",
-                                                                    () -> new Item(new Item.Properties().rarity(
-                                                                            Rarity.UNCOMMON)));
+    public static final DeferredItem<Item> TANZANITE = ITEMS.register("tanzanite",
+                                                                      () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> DIAMOND_CHISEL = ITEMS.register("diamond_chisel",
                                                                            () -> new Item(
                                                                                    new Item.Properties().durability(
@@ -57,53 +53,6 @@ public class ManaweaveAndRunesItemInit {
                     new Item.Properties().component(ManaweaveAndRunesDataComponentsInit.SPELL_DATA_COMPONENT,
                                                     new SpellDataComponent(SpellHolderItem.s1))));
 
-    // BLOCK ITEMS TODO: REPLACE WITH EVENT LISTENER
-    public static final DeferredItem<BlockItem> CRYSTAL_ORE_ITEM =
-            ITEMS.registerSimpleBlockItem("crystal_ore", ManaweaveAndRunesBlockInit.CRYSTAL_ORE);
-    public static final DeferredItem<BlockItem> RUNE_BLOCK_ITEM =
-            ITEMS.registerSimpleBlockItem("rune_block", ManaweaveAndRunesBlockInit.RUNE_BLOCK);
-    public static final DeferredItem<BlockItem> RUNE_PEDESTAL_BLOCK_ITEM =
-            ITEMS.registerSimpleBlockItem("rune_pedestal", ManaweaveAndRunesBlockInit.RUNE_PEDESTAL_BLOCK);
-
-
-    public static final DeferredItem<BlockItem> MANA_GENERATOR_BLOCK_ITEM =
-            ITEMS.registerSimpleBlockItem("mana_generator", ManaweaveAndRunesBlockInit.MANA_GENERATOR_BLOCK);
-    public static final DeferredItem<BlockItem> MANA_COLLECTOR_BLOCK_ITEM =
-            ITEMS.registerSimpleBlockItem("mana_collector", ManaweaveAndRunesBlockInit.MANA_COLLECTOR_BLOCK);
-    public static final DeferredItem<BlockItem> MANA_STORAGE_BLOCK_ITEM =
-            ITEMS.registerSimpleBlockItem("mana_storage", ManaweaveAndRunesBlockInit.MANA_STORAGE_BLOCK);
-    public static final DeferredItem<BlockItem> RUNE_CARVER_BLOCK_ITEM =
-            ITEMS.registerSimpleBlockItem("rune_carver", ManaweaveAndRunesBlockInit.RUNE_CARVER_BLOCK);
-    public static final DeferredItem<BlockItem> NOVICE_MANA_CONCENTRATOR_BLOCK_ITEM =
-            ITEMS.registerSimpleBlockItem("novice_mana_concentrator",
-                                          ManaweaveAndRunesBlockInit.NOVICE_MANA_CONCENTRATOR_BLOCK);
-    public static final DeferredItem<BlockItem> MASTER_MANA_CONCENTRATOR_BLOCK_ITEM =
-            ITEMS.registerSimpleBlockItem("master_mana_concentrator",
-                                          ManaweaveAndRunesBlockInit.MASTER_MANA_CONCENTRATOR_BLOCK);
-    public static final DeferredItem<BlockItem> ASCENDED_MANA_CONCENTRATOR_BLOCK_ITEM =
-            ITEMS.registerSimpleBlockItem("ascended_mana_concentrator",
-                                          ManaweaveAndRunesBlockInit.ASCENDED_MANA_CONCENTRATOR_BLOCK);
-
-    public static final DeferredItem<BlockItem> NOVICE_RITUAL_ANCHOR_BLOCK_ITEM =
-            ITEMS.registerSimpleBlockItem("novice_ritual_anchor",
-                                          ManaweaveAndRunesBlockInit.NOVICE_RITUAL_ANCHOR_BLOCK);
-    public static final DeferredItem<BlockItem> MASTER_RITUAL_ANCHOR_BLOCK_ITEM =
-            ITEMS.registerSimpleBlockItem("master_ritual_anchor",
-                                          ManaweaveAndRunesBlockInit.MASTER_RITUAL_ANCHOR_BLOCK);
-    public static final DeferredItem<BlockItem> ASCENDED_RITUAL_ANCHOR_BLOCK_ITEM =
-            ITEMS.registerSimpleBlockItem("ascended_ritual_anchor",
-                                          ManaweaveAndRunesBlockInit.ASCENDED_RITUAL_ANCHOR_BLOCK);
-
-    public static final DeferredItem<BlockItem> MANA_TRANSMITTER_BLOCK_ITEM =
-            ITEMS.registerSimpleBlockItem("mana_transmitter",
-                                          ManaweaveAndRunesBlockInit.MANA_TRANSMITTER_BLOCK);
-
-    public static final DeferredItem<BlockItem> WAND_MODIFICATION_TABLE_BLOCK_ITEM =
-            ITEMS.registerSimpleBlockItem("wand_modification_table",
-                                          ManaweaveAndRunesBlockInit.WAND_MODIFICATION_TABLE_BLOCK);
-    public static final DeferredItem<BlockItem> SPELL_DESIGNER_BLOCK_ITEM =
-            ITEMS.registerSimpleBlockItem("spell_designer", ManaweaveAndRunesBlockInit.SPELL_DESIGNER_BLOCK);
-
 
     // Spell Part Items
     public static final DeferredItem<SpellPartHolderItem> AMETHYST_SPELL_PART_ITEM = ITEMS.register("amethyst_spell_part",
@@ -114,5 +63,7 @@ public class ManaweaveAndRunesItemInit {
             ITEMS.register(entry.getId().getPath(), () -> new SpellPartHolderItem(
                     new Item.Properties().component(SPELL_PART_DATA_COMPONENT, new SpellPart(entry))));
         });
+
+        ManaweaveAndRunesBlockInit.BLOCKS.getEntries().forEach(ITEMS::registerSimpleBlockItem);
     }
 }

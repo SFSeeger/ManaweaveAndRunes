@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "manaweave_and_runes:block/crystal_ore"
+    "all": "manaweave_and_runes:block/tanzanite_ore"
   }
 }

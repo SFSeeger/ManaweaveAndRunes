@@ -1,0 +1,32 @@
+{
+  "values": {
+    "#minecraft:terracotta": {
+      "mana": [
+        {
+          "amount": 4,
+          "manaType": "manaweave_and_runes:fire_mana"
+        },
+        {
+          "amount": 2,
+          "manaType": "manaweave_and_runes:air_mana"
+        }
+      ]
+    },
+    "minecraft:blue_dye": {
+      "mana": [
+        {
+          "amount": 10,
+          "manaType": "manaweave_and_runes:air_mana"
+        }
+      ]
+    },
+    "minecraft:coal": {
+      "mana": [
+        {
+          "amount": 25,
+          "manaType": "manaweave_and_runes:fire_mana"
+        }
+      ]
+    }
+  }
+}

@@ -2,6 +2,7 @@ package io.github.sfseeger.lib.common.entities.projectiles;
 
 import io.github.sfseeger.lib.common.spells.SpellCastingContext;
 import io.github.sfseeger.lib.common.spells.SpellResolver;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRParticleTypeInit;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -73,6 +74,10 @@ public class SpellProjectileEntity extends Projectile {
         if (!this.level().isClientSide) {
             resolver.resolve(result, context);
             this.discard();
+        } else {
+            this.level()
+                    .addParticle(MRParticleTypeInit.MANA_CONCENTRATED.get(), this.getX(), this.getY(), this.getZ(),
+                                 0.0D, 0.0D, 0.0D);
         }
     }
 
@@ -82,6 +87,10 @@ public class SpellProjectileEntity extends Projectile {
         if (!this.level().isClientSide) {
             resolver.resolve(result, context);
             this.discard();
+        } else {
+            this.level()
+                    .addParticle(MRParticleTypeInit.MANA_CONCENTRATED.get(), this.getX(), this.getY(), this.getZ(),
+                                 0.0D, 0.0D, 0.0D);
         }
     }
 

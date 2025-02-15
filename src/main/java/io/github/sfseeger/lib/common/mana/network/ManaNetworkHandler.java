@@ -3,7 +3,6 @@ package io.github.sfseeger.lib.common.mana.network;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.github.sfseeger.lib.common.LibUtils;
-import io.github.sfseeger.manaweave_and_runes.core.util.Utils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -82,6 +81,6 @@ public class ManaNetworkHandler extends SavedData {
     }
 
     public List<String> getNetworkIds() {
-        return manaNetworks.keySet().stream().map(UUID::toString).toList();
+        return manaNetworks.keySet().stream().map(UUID::toString).toList(); //TODO: Remove empty networks
     }
 }

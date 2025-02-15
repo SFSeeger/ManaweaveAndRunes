@@ -119,7 +119,7 @@ public class Spell {
 
 
     public Map<Mana, Integer> getManaCost() {
-        Map<Mana, Integer> cost = spellType.getManaCost();
+        Map<Mana, Integer> cost = new HashMap<>(spellType.getManaCost());
         for (AbstractSpellEffect effect : effects) {
             for (Map.Entry<Mana, Integer> entry : effect.getManaCost().entrySet()) {
                 cost.put(entry.getKey(), cost.getOrDefault(entry.getKey(), 0) + entry.getValue());

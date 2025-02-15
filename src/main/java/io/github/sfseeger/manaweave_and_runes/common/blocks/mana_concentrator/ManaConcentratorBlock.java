@@ -3,6 +3,7 @@ package io.github.sfseeger.manaweave_and_runes.common.blocks.mana_concentrator;
 import io.github.sfseeger.manaweave_and_runes.common.blockentities.ManaConcentratorBlockEntity;
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockEntityInit;
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesItemInit;
+import io.github.sfseeger.manaweave_and_runes.core.util.InventoryUtil;
 import io.github.sfseeger.manaweave_and_runes.core.util.MultiblockValidator;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -21,6 +22,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -116,5 +118,15 @@ public class ManaConcentratorBlock extends Block implements EntityBlock {
 
     public ManaConcentratorType getType() {
         return type;
+    }
+
+    @Override
+    public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player, boolean willHarvest,
+            FluidState fluid) {
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        if (blockEntity instanceof ManaConcentratorBlockEntity be) {
+            InventoryUtil.dropItemHandlerContents(be.getItemHandler(null), level, pos);
+        }
+        return super.onDestroyedByPlayer(state, level, pos, player, willHarvest, fluid);
     }
 }
