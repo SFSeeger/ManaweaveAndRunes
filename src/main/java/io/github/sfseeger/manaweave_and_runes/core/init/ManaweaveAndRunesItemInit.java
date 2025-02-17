@@ -31,6 +31,8 @@ public class ManaweaveAndRunesItemInit {
                                                                                             FireRuneItem::new);
     public static final DeferredItem<AirRuneItem> AMETHYST_AIR_RUNE_ITEM = ITEMS.register("amethyst_air_rune",
                                                                                           AirRuneItem::new);
+    public static final DeferredItem<RuneBraceletItem> RUNE_BRACELET_ITEM = ITEMS.register("rune_bracelet",
+                                                                                           RuneBraceletItem::new);
 
 
     public static final DeferredItem<ManaDebugStickItem> MANA_DEBUG_STICK_ITEM = ITEMS.register("mana_debug_stick",

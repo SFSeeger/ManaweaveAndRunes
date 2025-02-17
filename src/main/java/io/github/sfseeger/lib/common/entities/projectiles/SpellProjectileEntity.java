@@ -66,32 +66,50 @@ public class SpellProjectileEntity extends Projectile {
         this.setDeltaMovement(vec3.scale(f));
         this.applyGravity();
         this.setPos(d0, d1, d2);
+
+        if (this.level().isClientSide()) {
+            double d3 = 0.4 + 0.1;
+            this.level().addParticle(ParticleTypes.GLOW, this.getX(), this.getY(), this.getZ(), d0 * d3, d1, d2 * d3);
+
+        }
     }
 
     @Override
     protected void onHitEntity(EntityHitResult result) {
         super.onHitEntity(result);
+        this.level().broadcastEntityEvent(this, (byte) 17);
         if (!this.level().isClientSide) {
             resolver.resolve(result, context);
             this.discard();
-        } else {
-            this.level()
-                    .addParticle(MRParticleTypeInit.MANA_CONCENTRATED.get(), this.getX(), this.getY(), this.getZ(),
-                                 0.0D, 0.0D, 0.0D);
         }
     }
 
     @Override
     protected void onHitBlock(BlockHitResult result) {
         super.onHitBlock(result);
+        this.level().broadcastEntityEvent(this, (byte) 17);
         if (!this.level().isClientSide) {
             resolver.resolve(result, context);
             this.discard();
-        } else {
+        }
+    }
+
+    private void onSpellCast() {
+        if (this.level().isClientSide()) {
+            Vec3 vec3 = this.getDeltaMovement();
             this.level()
                     .addParticle(MRParticleTypeInit.MANA_CONCENTRATED.get(), this.getX(), this.getY(), this.getZ(),
-                                 0.0D, 0.0D, 0.0D);
+                                 vec3.x, vec3.y, vec3.z);
         }
+    }
+
+    @Override
+    public void handleEntityEvent(byte id) {
+        if (id == 17) {
+            this.onSpellCast();
+        }
+        super.handleEntityEvent(id);
+
     }
 
     @Override
@@ -103,11 +121,6 @@ public class SpellProjectileEntity extends Projectile {
         double d0 = packet.getXa();
         double d1 = packet.getYa();
         double d2 = packet.getZa();
-
-        for(int i = 0; i < 7; ++i) {
-            double d3 = 0.4 + 0.1 * (double)i;
-            this.level().addParticle(ParticleTypes.GLOW, this.getX(), this.getY(), this.getZ(), d0 * d3, d1, d2 * d3);
-        }
 
         this.setDeltaMovement(d0, d1, d2);
     }

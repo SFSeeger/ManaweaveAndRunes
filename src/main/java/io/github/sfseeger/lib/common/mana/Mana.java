@@ -34,6 +34,13 @@ public class Mana {
                     ByteBufCodecs.INT,
                     256
             );
+    public static final StreamCodec<RegistryFriendlyByteBuf, Map<Holder<Mana>, Integer>> MANA_HOLDER_MAP_STREAM_CODEC =
+            ByteBufCodecs.map(
+                    HashMap::new,
+                    ByteBufCodecs.holderRegistry(ManaweaveAndRunesRegistries.MANA_REGISTRY_KEY),
+                    ByteBufCodecs.INT,
+                    256
+            );
 
     static {
         //  ManaRegistry.MANA_REGISTRY.holderByNameCodec().fieldOf("mana_id").forGetter(Mana::RegistryHolder)

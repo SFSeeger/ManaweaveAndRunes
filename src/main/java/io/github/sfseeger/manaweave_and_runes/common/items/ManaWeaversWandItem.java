@@ -41,20 +41,8 @@ public class ManaWeaversWandItem extends Item implements IItemHandlerItem, ISpel
 
     @Override
     public void switchSpell(ItemStack stack, int spellIndex) {
-        int slotCount = getSlotCount();
-        IItemHandler itemHandler = getItemHandler(stack);
-
-        for (int i = 0; i < slotCount; i++) {
-            int nextIndex = (spellIndex + i) % slotCount;
-            if (!itemHandler.getStackInSlot(nextIndex).isEmpty()) {
-                stack.set(ManaweaveAndRunesDataComponentsInit.SELECTED_SLOT_DATA_COMPONENT,
-                          new SelectedSlotDataComponent(nextIndex));
-
-                return;
-            }
-        }
         stack.set(ManaweaveAndRunesDataComponentsInit.SELECTED_SLOT_DATA_COMPONENT,
-                  new SelectedSlotDataComponent(0));
+                  new SelectedSlotDataComponent(getNextSpellIndex(stack, spellIndex)));
     }
 
     @Override
@@ -65,27 +53,47 @@ public class ManaWeaversWandItem extends Item implements IItemHandlerItem, ISpel
 
     @Override
     public Spell getCurrrntSpell(ItemStack stack) {
-        ItemStack spellItem = getItemHandler(stack).getStackInSlot(getCurrentSpellIndex(stack));
+        return getSpell(stack, getCurrentSpellIndex(stack));
+    }
+
+    @Override
+    public Spell getSpell(ItemStack stack, int index) {
+        ItemStack spellItem = getItemHandler(stack).getStackInSlot(index);
         if (spellItem.getItem() instanceof SpellHolderItem) {
             return SpellHolderItem.getSpell(spellItem);
         }
         return null;
     }
 
+    public int getNextSpellIndex(ItemStack stack, int targetIndex) {
+        int slotCount = getSlotCount();
+        IItemHandler itemHandler = getItemHandler(stack);
+
+        for (int i = 0; i < slotCount; i++) {
+            int nextIndex = (targetIndex + i) % slotCount;
+            if (!itemHandler.getStackInSlot(nextIndex).isEmpty()) {
+                stack.set(ManaweaveAndRunesDataComponentsInit.SELECTED_SLOT_DATA_COMPONENT,
+                          new SelectedSlotDataComponent(nextIndex));
+
+                return nextIndex;
+            }
+        }
+        return 0;
+    }
+
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack itemstack = player.getItemInHand(hand);
-        if (!level.isClientSide) {
-            SpellCaster caster = new SpellCaster();
-            Spell spell = getCurrrntSpell(itemstack);
-            if (spell != null) {
-                SpellCastingResult result = caster.cast(level, player, hand, spell);
-                if (result.isSuccess() && !(result == SpellCastingResult.SKIPPED)) {
-                    player.getCooldowns().addCooldown(this, spell.getCooldown());
-                }
-                return result.returnForResult(itemstack);
+        SpellCaster caster = new SpellCaster();
+        Spell spell = getCurrrntSpell(itemstack);
+        if (spell != null) {
+            SpellCastingResult result = caster.cast(level, player, hand, spell);
+            if (result.isSuccess() && !(result == SpellCastingResult.SKIPPED)) {
+                player.getCooldowns().addCooldown(this, spell.getCooldown());
             }
+            return result.returnForResult(itemstack);
         }
+
         return InteractionResultHolder.pass(itemstack);
     }
 }
