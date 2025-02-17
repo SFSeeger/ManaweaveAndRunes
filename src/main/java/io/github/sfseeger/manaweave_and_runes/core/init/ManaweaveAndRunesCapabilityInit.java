@@ -1,11 +1,13 @@
 package io.github.sfseeger.manaweave_and_runes.core.init;
 
+import io.github.sfseeger.lib.common.items.AbstractRuneItem;
 import io.github.sfseeger.lib.common.items.IItemHandlerItem;
 import io.github.sfseeger.lib.common.items.SpellHolderItem;
 import io.github.sfseeger.lib.common.mana.Mana;
 import io.github.sfseeger.lib.common.mana.capability.IManaItem;
 import io.github.sfseeger.lib.common.mana.capability.ItemStackManaHandler;
 import io.github.sfseeger.lib.common.mana.capability.ManaweaveAndRunesCapabilities;
+import io.github.sfseeger.lib.common.mana.capability.ProxyManaHandler;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
 import io.github.sfseeger.manaweave_and_runes.common.blockentities.*;
 import net.minecraft.world.item.ItemStack;
@@ -25,6 +27,16 @@ public class ManaweaveAndRunesCapabilityInit {
                 ManaweaveAndRunesCapabilities.MANA_HANDLER_BLOCK,
                 ManaweaveAndRunesBlockEntityInit.MANA_GENERATOR_BLOCK_ENTITY.get(),
                 ManaGeneratorBlockEntity::getManaHandler
+        );
+        event.registerBlockEntity(
+                ManaweaveAndRunesCapabilities.MANA_HANDLER_BLOCK,
+                ManaweaveAndRunesBlockEntityInit.MANA_COLLECTOR_BLOCK_ENTITY.get(),
+                ManaCollectorBlockEntity::getManaHandler
+        );
+        event.registerBlockEntity(
+                ManaweaveAndRunesCapabilities.MANA_HANDLER_BLOCK,
+                ManaweaveAndRunesBlockEntityInit.RUNE_PEDESTAL_BLOCK_ENTITY.get(),
+                RunePedestalBlockEntity::getManaHandler
         );
         event.registerBlockEntity(
                 ManaweaveAndRunesCapabilities.MANA_HANDLER_BLOCK,
@@ -55,6 +67,17 @@ public class ManaweaveAndRunesCapabilityInit {
                 },
                 ManaweaveAndRunesItemInit.AMETHYST_FIRE_RUNE_ITEM.get(),
                 ManaweaveAndRunesItemInit.AMETHYST_AIR_RUNE_ITEM.get()
+        );
+
+        event.registerItem(
+                ManaweaveAndRunesCapabilities.MANA_HANDLER_ITEM,
+                (itemstack, context) -> {
+                    if (itemstack.getItem() instanceof IItemHandlerItem itemHandlerItem) {
+                        return new ProxyManaHandler(itemHandlerItem.getItemHandler(itemstack));
+                    }
+                    return null;
+                },
+                ManaweaveAndRunesItemInit.RUNE_BRACELET_ITEM.get()
         );
     }
 
@@ -101,6 +124,29 @@ public class ManaweaveAndRunesCapabilityInit {
                 },
 
                 ManaweaveAndRunesItemInit.MANA_WEAVERS_WAND_ITEM.get()
+        );
+
+        // RuneBraceletItemHandler
+        event.registerItem(
+                Capabilities.ItemHandler.ITEM,
+                (itemstack, context) -> {
+                    if (itemstack.getItem() instanceof IItemHandlerItem itemHandlerItem) {
+                        return itemHandlerItem.getItemHandler(itemstack);
+                    }
+                    return new ItemStackHandler(1) {
+                        @Override
+                        protected int getStackLimit(int slot, ItemStack stack) {
+                            return 1;
+                        }
+
+                        @Override
+                        public boolean isItemValid(int slot, net.minecraft.world.item.ItemStack stack) {
+                            return stack.getItem() instanceof AbstractRuneItem;
+                        }
+                    };
+                },
+
+                ManaweaveAndRunesItemInit.RUNE_BRACELET_ITEM.get()
         );
     }
 

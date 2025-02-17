@@ -23,7 +23,7 @@ public class ManaStorageBlockEntity extends BlockEntity implements IManaNetworkS
 
     public ManaStorageBlockEntity(BlockPos pos, BlockState blockState) {
         super(ManaweaveAndRunesBlockEntityInit.MANA_STORAGE_BLOCK_ENTITY.get(), pos, blockState);
-        manaHandler = new ManaHandler(1000, 1000, 1000, MANA_SLOTS, null) {
+        manaHandler = new ManaHandler(10_000, 1000, 1000, MANA_SLOTS, null) {
             @Override
             public void onContentChanged() {
                 markUpdated();

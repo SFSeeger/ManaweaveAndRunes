@@ -61,5 +61,17 @@ public interface IManaItem {
         return stack.getCapability(ManaweaveAndRunesCapabilities.MANA_HANDLER_ITEM);
     }
 
+    /**
+     * @return The type of mana this item can store or interact with. If this returns null, the mana stored in this item is not set.
+     */
     Mana getManaType();
+
+    /**
+     * @return A list of mana types this item can store or interact with. Should read it from the actual ManaHandler if it has one.
+     */
+    default List<Mana> getManaTypes(ItemStack stack) {
+        IManaHandler handler = stack.getCapability(ManaweaveAndRunesCapabilities.MANA_HANDLER_ITEM);
+        if (handler == null) return List.of(getManaType());
+        return handler.getManaTypesStored();
+    }
 }

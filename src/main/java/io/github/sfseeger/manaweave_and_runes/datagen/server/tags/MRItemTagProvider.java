@@ -22,6 +22,7 @@ public class MRItemTagProvider extends ItemTagsProvider {
     protected void addTags(HolderLookup.Provider provider) {
         this.tag(MRTagInit.SPELL_MANA_PROVIDER)
                 .add(ManaweaveAndRunesItemInit.AMETHYST_FIRE_RUNE_ITEM.get())
-                .add(ManaweaveAndRunesItemInit.AMETHYST_AIR_RUNE_ITEM.get());
+                .add(ManaweaveAndRunesItemInit.AMETHYST_AIR_RUNE_ITEM.get())
+                .add(ManaweaveAndRunesItemInit.RUNE_BRACELET_ITEM.get());
     }
 }

@@ -3,10 +3,8 @@ package io.github.sfseeger.lib.common.mana;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import io.github.sfseeger.lib.core.ManaweaveAndRunesRegistries;
 import net.minecraft.core.Holder;
 import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 
 import java.util.*;
@@ -18,11 +16,7 @@ public class ManaDataComponent {
     ).apply(instance, ManaDataComponent::fromList));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, ManaDataComponent> STREAM_CODEC = StreamCodec.composite(
-            ByteBufCodecs.map(
-                    HashMap::new,
-                    ByteBufCodecs.holderRegistry(ManaweaveAndRunesRegistries.MANA_REGISTRY_KEY),
-                    ByteBufCodecs.INT
-            ), ManaDataComponent::getManaMap,
+            Mana.MANA_HOLDER_MAP_STREAM_CODEC, ManaDataComponent::getManaMap,
             ManaDataComponent::new
     );
 

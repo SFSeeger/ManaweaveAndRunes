@@ -4,7 +4,6 @@ import com.mojang.blaze3d.platform.InputConstants;
 import io.github.sfseeger.lib.common.spells.ISpellCaster;
 import io.github.sfseeger.lib.common.spells.Spell;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
-import io.github.sfseeger.manaweave_and_runes.core.payloads.CraftPayload;
 import io.github.sfseeger.manaweave_and_runes.core.payloads.SwitchSpellPayload;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
@@ -28,7 +27,7 @@ public class KeyManager {
             "key.categories.misc"
     ));
 
-    public static void registerKeyMapping(RegisterKeyMappingsEvent event){
+    public static void registerKeyMapping(RegisterKeyMappingsEvent event) {
         event.register(TOGGLE_SPELL.get());
     }
 
@@ -43,13 +42,14 @@ public class KeyManager {
 
     private static void toggleSpell(Minecraft mc, Player player) {
         ItemStack stack = player.getMainHandItem();
-        if (stack.getItem() instanceof ISpellCaster casterItem){
+        if (stack.getItem() instanceof ISpellCaster casterItem) {
             int index = casterItem.getCurrentSpellIndex(stack);
             PacketDistributor.sendToServer(new SwitchSpellPayload(index + 1));
-            Spell spell = casterItem.getCurrrntSpell(stack);
+            int nextIndex = casterItem.getNextSpellIndex(stack, index + 1);
+            Spell spell = casterItem.getSpell(stack, nextIndex);
             String spellName = spell != null ? spell.getName() : "No Spell";
             player.displayClientMessage(Component.literal(
-                    "Switched to Spell " + spellName + " at " + casterItem.getCurrentSpellIndex(stack)), true);
+                    "Switched to Spell " + spellName + " at " + nextIndex), true);
         }
     }
 }

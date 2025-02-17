@@ -34,7 +34,7 @@
     * [ ] Tree instachop
     * [ ] 3x3 hoe
 * [ ] Spell casting
-    * [ ] Add rune bracelet
+    * [X] Add rune bracelet
     * [X] Add mana weaver's wand
     * [X] Add Spell Registry
     * [ ] Add spells

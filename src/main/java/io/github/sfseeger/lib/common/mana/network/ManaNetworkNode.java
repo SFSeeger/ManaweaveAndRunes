@@ -4,7 +4,7 @@ import io.github.sfseeger.lib.common.LibUtils;
 import io.github.sfseeger.lib.common.mana.IManaNetworkSubscriber;
 import io.github.sfseeger.lib.common.mana.Mana;
 import io.github.sfseeger.lib.common.mana.capability.IManaHandler;
-import io.github.sfseeger.manaweave_and_runes.core.util.Utils;
+import io.github.sfseeger.lib.common.mana.capability.ManaweaveAndRunesCapabilities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -208,19 +208,21 @@ public class ManaNetworkNode {
     }
 
     public int receiveMana(int amount, Mana mana) {
-        IManaHandler handler = ((IManaNetworkSubscriber) blockEntity).getManaHandler(null);
+        IManaHandler handler = getManaHandler();
         if (handler == null) return 0;
         return handler.receiveMana(amount, mana, false);
     }
 
     public int extractMana(int amount, Mana mana) {
-        IManaHandler handler = ((IManaNetworkSubscriber) blockEntity).getManaHandler(null);
+        IManaHandler handler = getManaHandler();
         if (handler == null) return 0;
         return handler.extractMana(amount, mana, false);
     }
 
     public boolean hasMana(Mana mana) {
-        return ((IManaNetworkSubscriber) blockEntity).getManaHandler(null).hasMana(mana);
+        IManaHandler handler = getManaHandler();
+        if (handler == null) return false;
+        return handler.hasMana(mana);
     }
 
     public ManaNetworkNodeType getNodeType() {
@@ -278,5 +280,11 @@ public class ManaNetworkNode {
 
     public boolean shouldExtractWhenSaturated() {
         return shouldExtractWhenSaturated;
+    }
+
+    public @Nullable IManaHandler getManaHandler() {
+        if (blockEntity.getLevel() == null) return null;
+        return blockEntity.getLevel()
+                .getCapability(ManaweaveAndRunesCapabilities.MANA_HANDLER_BLOCK, getBlockPos(), null);
     }
 }

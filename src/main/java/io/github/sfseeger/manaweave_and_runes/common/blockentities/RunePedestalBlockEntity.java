@@ -7,7 +7,6 @@ import io.github.sfseeger.lib.common.mana.capability.IManaItem;
 import io.github.sfseeger.lib.common.mana.capability.ManaweaveAndRunesCapabilities;
 import io.github.sfseeger.lib.common.mana.network.ManaNetworkNode;
 import io.github.sfseeger.lib.common.mana.network.ManaNetworkNodeType;
-import io.github.sfseeger.manaweave_and_runes.client.particles.ManaParticle;
 import io.github.sfseeger.manaweave_and_runes.common.blocks.ManaCollectorBlock;
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockEntityInit;
 import io.github.sfseeger.manaweave_and_runes.core.util.ParticleUtils;
@@ -63,9 +62,13 @@ public class RunePedestalBlockEntity extends BlockEntity implements IManaNetwork
             case RECEIVER -> {
                 ItemStack stack = blockEntity.getItemHandler(null).getStackInSlot(0);
                 if (stack.getItem() instanceof IManaItem manaItem) {
-                    Mana mana = manaItem.getManaType();
-                    int maxReceive = handler.receiveMana(handler.getManaCapacity(), mana, true);
-                    blockEntity.node.requestMana(maxReceive, mana);
+                    List<Mana> manas = manaItem.getManaTypes(stack);
+                    if (manas.isEmpty()) return;
+
+                    for (Mana mana : manas) {
+                        int maxReceive = handler.receiveMana(handler.getManaCapacity(), mana, true);
+                        blockEntity.node.requestMana(maxReceive, mana);
+                    }
                 }
             }
         }
@@ -100,12 +103,10 @@ public class RunePedestalBlockEntity extends BlockEntity implements IManaNetwork
         return inventory;
     }
 
+    @SuppressWarnings("unchecked")
     public IManaHandler getManaHandler(@Nullable Direction side) {
         ItemStack stack = inventory.getStackInSlot(0);
-        if (!stack.isEmpty() && stack.getItem() instanceof IManaItem) {
-            return stack.getCapability(ManaweaveAndRunesCapabilities.MANA_HANDLER_ITEM);
-        }
-        return null;
+        return stack.getCapability(ManaweaveAndRunesCapabilities.MANA_HANDLER_ITEM);
     }
 
     @Override

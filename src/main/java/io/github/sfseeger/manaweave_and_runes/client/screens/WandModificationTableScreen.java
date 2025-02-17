@@ -49,14 +49,14 @@ public class WandModificationTableScreen extends AbstractContainerScreen<WandMod
     protected void renderBg(GuiGraphics guiGraphics, float pPartialTick, int mouseX, int mouseY) {
         guiGraphics.blit(GUI_TEXTURE, this.uiX, this.uiY, 0, 0, this.imageWidth, this.imageHeight);
 
-        if (!this.menu.hasStaff()) {
+        if (!this.menu.hasUpgradable()) {
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 4; j++) {
                     guiGraphics.blitSprite(CROSS, this.uiX + 53 + j * 18, this.uiY + 15 + i * 18, 16, 16);
                 }
             }
         } else {
-            int slots = this.menu.getStaffSlotAmount();
+            int slots = this.menu.getSlotAmount();
             for (int i = slots; i < 12; i++) {
                 guiGraphics.blitSprite(CROSS, this.uiX + 53 + (i % 4) * 18, this.uiY + 15 + (i / 4) * 18, 16, 16);
             }
