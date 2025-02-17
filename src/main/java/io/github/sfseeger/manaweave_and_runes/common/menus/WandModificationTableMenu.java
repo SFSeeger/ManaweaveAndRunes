@@ -1,7 +1,5 @@
 package io.github.sfseeger.manaweave_and_runes.common.menus;
 
-import io.github.sfseeger.lib.common.items.SpellHolderItem;
-import io.github.sfseeger.lib.common.spells.ISpellCaster;
 import io.github.sfseeger.lib.common.spells.IUpgradable;
 import io.github.sfseeger.manaweave_and_runes.common.blockentities.WandModificationTableBlockEntity;
 import io.github.sfseeger.manaweave_and_runes.common.menus.slots.SpellCircleSlot;
@@ -28,7 +26,7 @@ public class WandModificationTableMenu extends AbstractContainerMenu {
     private final WandModificationTableBlockEntity blockEntity;
     private final ItemStackHandler itemHandler;
     private final SpellCircleSlot[] spellCircleSlots = new SpellCircleSlot[12];
-    private IItemHandler staffItemHandler;
+    private IItemHandler upgradeableItemHandler;
 
     public WandModificationTableMenu(int containerId, Inventory playerInventory, FriendlyByteBuf buffer) {
         this(containerId,
@@ -46,8 +44,8 @@ public class WandModificationTableMenu extends AbstractContainerMenu {
         this.addSlot(new SlotItemHandler(itemHandler, 0, 16, 33) {
             @Override
             public void onTake(Player player, ItemStack stack) {
-                if (stack.getItem() instanceof ISpellCaster) {
-                    WandModificationTableMenu.this.staffItemHandler = null;
+                if (stack.getItem() instanceof IUpgradable) {
+                    WandModificationTableMenu.this.upgradeableItemHandler = null;
                     for (int i = 0; i < 12; i++) {
                         spellCircleSlots[i].setItemHandler(null);
                     }
@@ -58,7 +56,7 @@ public class WandModificationTableMenu extends AbstractContainerMenu {
             @Override
             public void setChanged() {
                 if (this.getItem().isEmpty()) {
-                    WandModificationTableMenu.this.staffItemHandler = null;
+                    WandModificationTableMenu.this.upgradeableItemHandler = null;
                     for (int i = 0; i < 12; i++) {
                         spellCircleSlots[i].setItemHandler(null);
                     }
@@ -68,26 +66,26 @@ public class WandModificationTableMenu extends AbstractContainerMenu {
 
             @Override
             public void set(ItemStack stack) {
-                if (stack.getItem() instanceof ISpellCaster) {
-                    WandModificationTableMenu.this.staffItemHandler =
+                if (stack.getItem() instanceof IUpgradable) {
+                    WandModificationTableMenu.this.upgradeableItemHandler =
                             stack.getCapability(Capabilities.ItemHandler.ITEM);
                     for (int i = 0; i < 12; i++) {
-                        spellCircleSlots[i].setItemHandler(WandModificationTableMenu.this.staffItemHandler);
+                        spellCircleSlots[i].setItemHandler(WandModificationTableMenu.this.upgradeableItemHandler);
                     }
                 }
                 super.set(stack);
             }
         });
 
-        if (hasStaff()) {
-            this.staffItemHandler = this.blockEntity.getItemHandler(null)
+        if (hasUpgradable()) {
+            this.upgradeableItemHandler = this.blockEntity.getItemHandler(null)
                     .getStackInSlot(0)
                     .getCapability(Capabilities.ItemHandler.ITEM);
         }
         // Add spell circle slots
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 4; j++) {
-                SpellCircleSlot slot = new SpellCircleSlot(staffItemHandler, j + i * 4, 53 + j * 18, 15 + i * 18);
+                SpellCircleSlot slot = new SpellCircleSlot(upgradeableItemHandler, j + i * 4, 53 + j * 18, 15 + i * 18);
                 spellCircleSlots[j + i * 4] = slot;
                 this.addSlot(slot);
             }
@@ -117,12 +115,14 @@ public class WandModificationTableMenu extends AbstractContainerMenu {
             // Does the item come from the player's inventory?
             if (index >= INV_SLOT_START && index < HOTBAR_SLOT_END + 1) {
                 boolean couldMove = false;
-                // Is the item a wand?
+                // Is the item a upgradable?
                 if (quickMovedStack.getItem() instanceof IUpgradable) {
                     couldMove = this.moveItemStackTo(rawStack, 0, 1, false);
-                } else if (hasStaff() && quickMovedStack.getItem() instanceof SpellHolderItem) {
+                } else {
                     couldMove = this.moveItemStackTo(rawStack, 1, 13, false);
+
                 }
+
                 if (!couldMove) {
                     if (index < HOTBAR_SLOT_START) {
                         // Try to move the item to the player's hotbar
@@ -160,11 +160,11 @@ public class WandModificationTableMenu extends AbstractContainerMenu {
                 player, ManaweaveAndRunesBlockInit.WAND_MODIFICATION_TABLE_BLOCK.get());
     }
 
-    public boolean hasStaff() {
-        return this.blockEntity.getItemHandler(null).getStackInSlot(0).getItem() instanceof ISpellCaster;
+    public boolean hasUpgradable() {
+        return this.blockEntity.getItemHandler(null).getStackInSlot(0).getItem() instanceof IUpgradable;
     }
 
-    public int getStaffSlotAmount() {
-        return staffItemHandler == null ? 0 : this.staffItemHandler.getSlots();
+    public int getSlotAmount() {
+        return upgradeableItemHandler == null ? 0 : this.upgradeableItemHandler.getSlots();
     }
 }

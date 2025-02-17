@@ -1,7 +1,6 @@
 package io.github.sfseeger.lib.common.spells;
 
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.items.IItemHandler;
 
 public interface ISpellCaster {
 
@@ -10,4 +9,8 @@ public interface ISpellCaster {
     int getCurrentSpellIndex(ItemStack stack);
 
     Spell getCurrrntSpell(ItemStack stack);
+
+    Spell getSpell(ItemStack stack, int index);
+
+    int getNextSpellIndex(ItemStack stack, int currentSpellIndex);
 }

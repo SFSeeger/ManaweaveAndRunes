@@ -94,9 +94,7 @@ public class ManaGeneratorBlockEntity extends BlockEntity implements IManaNetwor
                     ItemStack stack = itemStackHandler.getStackInSlot(0);
                     ManaMapData data = getManaMapData(stack).orElse(null);
                     if (data != null) {
-                        data.manaMap().forEach((mana, amount) -> {
-                            manaHandler.receiveMana(amount, mana, false);
-                        });
+                        data.manaMap().forEach((mana, amount) -> manaHandler.receiveMana(amount, mana, false));
                         stack.shrink(1);
                     }
                 }
@@ -148,12 +146,14 @@ public class ManaGeneratorBlockEntity extends BlockEntity implements IManaNetwor
     }
 
     public void startCooking(ItemStack resource, ItemStack fuel) {
-        if (fuel.getBurnTime(null) > 0
-                && !resource.isEmpty() && getManaMapData(resource).isPresent()) {
-            if (burnTimeRemaining == 0) {
-                burnTimeRemaining = maxBurnTime = fuel.getBurnTime(null);
-                fuel.shrink(1);
-                markUpdated();
+        if (fuel.getBurnTime(null) > 0) {
+            if (!resource.isEmpty() && getManaMapData(resource).isPresent()) {
+                if (burnTimeRemaining == 0) {
+                    burnTimeRemaining = maxBurnTime = fuel.getBurnTime(null);
+                    fuel.shrink(1);
+                }
+            } else {
+                cookTimeRemaining = getMaxCookTime();
             }
         }
     }
