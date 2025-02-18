@@ -1,6 +1,14 @@
 package io.github.sfseeger.lib.common.spells;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Vec3i;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
@@ -9,6 +17,7 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class SpellUtils {
@@ -61,5 +70,64 @@ public class SpellUtils {
         }
 
         return entity == null ? null : new EntityHitResult(entity, vec3d);
+    }
+
+
+    public static boolean canChangeBlockState(BlockPos pos, SpellCastingContext context) {
+        Level level = context.getLevel();
+        if (level == null) return false;
+        if (level.isClientSide) {
+            return false;
+        }
+        if (!level.getWorldBorder().isWithinBounds(pos)) {
+            return false;
+        }
+        MinecraftServer server = level.getServer();
+        if (server != null) {
+            if (context.getCaster() instanceof Player player) {
+                if (server.isUnderSpawnProtection((ServerLevel) level, pos, player)) {
+                    return false;
+                }
+            } else {
+                if (!server.getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING)) return false;
+                BlockPos blockpos = level.getSharedSpawnPos();
+                int i = Mth.abs(pos.getX() - blockpos.getX());
+                int j = Mth.abs(pos.getZ() - blockpos.getZ());
+                int k = Math.max(i, j);
+                return k <= server.getSpawnProtectionRadius();
+            }
+        }
+        return true;
+    }
+
+    public static boolean executeOnPlane(BlockPos pos, SpellCastingContext context, Direction direction,
+            Function<BlockPos, Boolean> function) {
+        int width = context.hasVariable("width") ? (int) context.getVariable("width") : 1;
+        int width2 = width / 2;
+        int height = context.hasVariable("height") ? (int) context.getVariable("height") : 1;
+        int height2 = height / 2;
+
+        Vec3i b1 = new Vec3i(0, 0, 1);
+        Vec3i b2 = new Vec3i(0, 1, 0);
+        switch (direction.getAxis()) {
+            case Direction.Axis.X -> b1 = new Vec3i(0, 0, 1);
+            case Direction.Axis.Y -> {
+                int i = context.getCaster().getDirection().getAxis() == Direction.Axis.Z ? 1 : 0;
+                b1 = new Vec3i(i, 0, 1 - i);
+                b2 = new Vec3i(1 - i, 0, i);
+            }
+            case Direction.Axis.Z -> b1 = new Vec3i(1, 0, 0);
+        }
+
+
+        boolean flag = false;
+        for (int x1 = -width2; x1 <= width2; x1++) {
+            for (int x2 = -height2; x2 <= height2; x2++) {
+                BlockPos pos1 = pos.offset(b1.multiply(x1)).offset(b2.multiply(x2));
+
+                flag |= function.apply(pos1);
+            }
+        }
+        return flag;
     }
 }

@@ -3,7 +3,11 @@ package io.github.sfseeger.manaweave_and_runes.core.init;
 import io.github.sfseeger.lib.common.spells.AbstractSpellNode;
 import io.github.sfseeger.lib.common.spells.buildin.effects.SpellEffectBreak;
 import io.github.sfseeger.lib.common.spells.buildin.effects.SpellEffectBurn;
+import io.github.sfseeger.lib.common.spells.buildin.effects.SpellEffectExplode;
+import io.github.sfseeger.lib.common.spells.buildin.effects.SpellEffectHarm;
+import io.github.sfseeger.lib.common.spells.buildin.modifiers.SpellModifierElongate;
 import io.github.sfseeger.lib.common.spells.buildin.modifiers.SpellModifierStrengthen;
+import io.github.sfseeger.lib.common.spells.buildin.modifiers.SpellModifierWiden;
 import io.github.sfseeger.lib.common.spells.buildin.types.SpellTypeProjectile;
 import io.github.sfseeger.lib.common.spells.buildin.types.SpellTypeSelf;
 import io.github.sfseeger.lib.common.spells.buildin.types.SpellTypeTouch;
@@ -28,8 +32,17 @@ public class SpellNodeInit {
             SPELL_NODES.register("spell_effect.burn", () -> SpellEffectBurn.INSTANCE);
     public static final Supplier<AbstractSpellNode> SPELL_EFFECT_BREAK =
             SPELL_NODES.register("spell_effect.break", () -> SpellEffectBreak.INSTANCE);
+    public static final Supplier<AbstractSpellNode> SPELL_EFFECT_HARM =
+            SPELL_NODES.register("spell_effect.harm", () -> SpellEffectHarm.INSTANCE);
+    public static final Supplier<AbstractSpellNode> SPELL_EFFECT_EXPLODE =
+            SPELL_NODES.register("spell_effect.explode", () -> SpellEffectExplode.INSTANCE);
+
 
     public static final Supplier<AbstractSpellNode> SPELL_MODIFIER_STRENGTHEN =
             SPELL_NODES.register("spell_modifier.strengthen", () -> SpellModifierStrengthen.INSTANCE);
+    public static final Supplier<AbstractSpellNode> SPELL_MODIFIER_WIDEN =
+            SPELL_NODES.register("spell_modifier.widen", () -> SpellModifierWiden.INSTANCE);
+    public static final Supplier<AbstractSpellNode> SPELL_MODIFIER_ELONGATE =
+            SPELL_NODES.register("spell_modifier.elongate", () -> SpellModifierElongate.INSTANCE);
 
 }
