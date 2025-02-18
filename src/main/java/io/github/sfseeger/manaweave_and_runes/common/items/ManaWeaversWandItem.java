@@ -6,15 +6,19 @@ import io.github.sfseeger.lib.common.spells.*;
 import io.github.sfseeger.manaweave_and_runes.common.data_components.ItemStackHandlerDataComponent;
 import io.github.sfseeger.manaweave_and_runes.common.data_components.SelectedSlotDataComponent;
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesDataComponentsInit;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
+
+import java.util.List;
 
 public class ManaWeaversWandItem extends Item implements IItemHandlerItem, ISpellCaster, IUpgradable {
     public ManaWeaversWandItem() {
@@ -95,5 +99,15 @@ public class ManaWeaversWandItem extends Item implements IItemHandlerItem, ISpel
         }
 
         return InteractionResultHolder.pass(itemstack);
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents,
+            TooltipFlag tooltipFlag) {
+        super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
+        Spell spell = getCurrrntSpell(stack);
+        if (spell != null) {
+            tooltipComponents.add(Component.literal(spell.getName()));
+        }
     }
 }

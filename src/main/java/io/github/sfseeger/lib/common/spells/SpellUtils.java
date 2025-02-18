@@ -102,9 +102,14 @@ public class SpellUtils {
 
     public static boolean executeOnPlane(BlockPos pos, SpellCastingContext context, Direction direction,
             Function<BlockPos, Boolean> function) {
-        int width = context.hasVariable("width") ? (int) context.getVariable("width") : 1;
+        return executeOnPlane(pos, context, direction, 1, function);
+    }
+
+    public static boolean executeOnPlane(BlockPos pos, SpellCastingContext context, Direction direction, int steps,
+            Function<BlockPos, Boolean> function) {
+        int width = context.getVariableSave("width", 1);
         int width2 = width / 2;
-        int height = context.hasVariable("height") ? (int) context.getVariable("height") : 1;
+        int height = context.getVariableSave("height", 1);
         int height2 = height / 2;
 
         Vec3i b1 = new Vec3i(0, 0, 1);
@@ -121,8 +126,8 @@ public class SpellUtils {
 
 
         boolean flag = false;
-        for (int x1 = -width2; x1 <= width2; x1++) {
-            for (int x2 = -height2; x2 <= height2; x2++) {
+        for (int x1 = -width2; x1 <= width2; x1 += steps) {
+            for (int x2 = -height2; x2 <= height2; x2 += steps) {
                 BlockPos pos1 = pos.offset(b1.multiply(x1)).offset(b2.multiply(x2));
 
                 flag |= function.apply(pos1);

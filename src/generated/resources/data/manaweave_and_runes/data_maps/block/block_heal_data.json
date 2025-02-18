@@ -1,0 +1,47 @@
+{
+  "values": {
+    "minecraft:blackstone": {
+      "block": "minecraft:polished_blackstone",
+      "chance": 0.8
+    },
+    "minecraft:clay": {
+      "block": "minecraft:sand",
+      "chance": 0.9,
+      "strength": 0.0
+    },
+    "minecraft:cobbled_deepslate": {
+      "block": "minecraft:deepslate",
+      "chance": 0.8,
+      "strength": 1.5
+    },
+    "minecraft:cobblestone": {
+      "block": "minecraft:stone",
+      "chance": 0.8,
+      "strength": 0.0
+    },
+    "minecraft:cracked_deepslate_bricks": {
+      "block": "minecraft:deepslate_bricks",
+      "chance": 0.8,
+      "strength": 1.5
+    },
+    "minecraft:cracked_polished_blackstone_bricks": {
+      "block": "minecraft:polished_blackstone_bricks",
+      "chance": 0.8
+    },
+    "minecraft:deepslate": {
+      "block": "minecraft:polished_deepslate",
+      "chance": 0.8,
+      "strength": 1.5
+    },
+    "minecraft:gravel": {
+      "block": "minecraft:cobblestone",
+      "chance": 0.8,
+      "strength": 0.0
+    },
+    "minecraft:sand": {
+      "block": "minecraft:gravel",
+      "chance": 0.9,
+      "strength": 0.0
+    }
+  }
+}

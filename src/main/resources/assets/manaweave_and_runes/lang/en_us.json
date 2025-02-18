@@ -42,12 +42,16 @@
   "ritual.manaweave_and_runes.mana_insufficient": "It seems like there was not enough mana to supply the ritual",
   "ritual.manaweave_and_runes.item_insufficient": "The ritual could not consume an item it needed",
   "ritual.manaweave_and_runes.unknown_ritual": "You don't know how to use this start this...",
+  "spell.manaweave_and_runes.spell_type.self": "Self",
   "spell.manaweave_and_runes.spell_type.touch": "Touch",
   "spell.manaweave_and_runes.spell_type.projectile": "Ranged",
+
   "spell.manaweave_and_runes.spell_effect.burn": "Burn",
   "spell.manaweave_and_runes.spell_effect.break": "Break",
   "spell.manaweave_and_runes.spell_effect.harm": "Harm",
+  "spell.manaweave_and_runes.spell_effect.heal": "Heal",
   "spell.manaweave_and_runes.spell_effect.explode": "Explode",
+  "spell.manaweave_and_runes.spell_effect.push": "Push",
 
   "spell.manaweave_and_runes.spell_modifier.strengthen": "Strengthen",
   "spell.manaweave_and_runes.spell_modifier.widen": "Widen",
@@ -58,5 +62,6 @@
   "container.manaweave_and_runes.mana_storage_block": "Mana Storage",
   "container.manaweave_and_runes.wand_modification_table": "Wand Modification Table",
   "container.manaweave_and_runes.spell_designer": "Spell Designer",
-  "container.manaweave_and_runes.mana_generator": "Mana Generator"
+  "container.manaweave_and_runes.mana_generator": "Mana Generator",
+  "item.manaweave_and_runes.spell_part_holder": "Spell Part"
 }

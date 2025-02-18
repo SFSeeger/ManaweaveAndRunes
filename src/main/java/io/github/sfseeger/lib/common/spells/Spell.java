@@ -141,8 +141,9 @@ public class Spell {
         return cost;
     }
 
-    private Integer getModifierCostScalar(int size) {
-        return (int) Math.pow((double) (size / 5) + 1, 2);
+    public static Integer getModifierCostScalar(int size) {
+        //return (int) Math.pow((double) (size / 5) + 1, 2);
+        return size / 5 + 1;
     }
 
     public String getName() {

@@ -98,7 +98,7 @@ public class SpellDesignerBlockEntity extends BlockEntity implements ICraftingPa
                         part1.getModifiers().add((AbstractSpellModifier) (p.getCore().value()));
                     }
                 }
-                ItemStack stack1 = new ItemStack(AMETHYST_SPELL_PART_ITEM.get(), 1);
+                ItemStack stack1 = new ItemStack(SPELL_PART.get(), 1);
                 stack1.set(SPELL_PART_DATA_COMPONENT, part1);
                 stack1.set(DataComponents.CUSTOM_NAME, Component.literal(spellName));
                 return stack1;
@@ -177,6 +177,7 @@ public class SpellDesignerBlockEntity extends BlockEntity implements ICraftingPa
 
     public Map<Mana, Integer> getManaCost() {
         Map<Mana, Integer> cost = new HashMap<>();
+        int count = 0;
         for (int i = 0; i < CHISEL_SLOT_INDEX; i++) {
             ItemStack stack = itemHandler.getStackInSlot(i);
             SpellPart part = stack.get(SPELL_PART_DATA_COMPONENT);
@@ -189,7 +190,12 @@ public class SpellDesignerBlockEntity extends BlockEntity implements ICraftingPa
                         cost.put(entry.getKey(), cost.getOrDefault(entry.getKey(), 0) + entry.getValue());
                     }
                 }
+                count = count + part.getModifiers().size() + 1;
             }
+        }
+        int scalar = Spell.getModifierCostScalar(count - 1);
+        for (Map.Entry<Mana, Integer> entry : cost.entrySet()) {
+            entry.setValue(entry.getValue() * scalar);
         }
         return cost;
     }

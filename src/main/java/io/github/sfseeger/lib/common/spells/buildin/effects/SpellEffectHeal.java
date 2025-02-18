@@ -1,6 +1,7 @@
 package io.github.sfseeger.lib.common.spells.buildin.effects;
 
-import io.github.sfseeger.lib.common.datamaps.BlockHarmDataMap;
+import io.github.sfseeger.lib.common.datamaps.BlockHealDataMap;
+import io.github.sfseeger.lib.common.mana.Manas;
 import io.github.sfseeger.lib.common.spells.*;
 import io.github.sfseeger.lib.common.spells.buildin.modifiers.SpellModifierStrengthen;
 import net.minecraft.core.BlockPos;
@@ -16,10 +17,11 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-public class SpellEffectHarm extends AbstractSpellEffect {
-    public static final SpellEffectHarm INSTANCE = new SpellEffectHarm();
-    public SpellEffectHarm() {
-        super(Map.of(), 4);
+public class SpellEffectHeal extends AbstractSpellEffect {
+    public static final SpellEffectHeal INSTANCE = new SpellEffectHeal();
+
+    public SpellEffectHeal() {
+        super(Map.of(Manas.AirMana, 10), 10);
     }
 
     @Override
@@ -30,7 +32,7 @@ public class SpellEffectHarm extends AbstractSpellEffect {
         if (SpellUtils.canChangeBlockState(pos, context)) {
             BlockState state = level.getBlockState(pos);
             Block block = state.getBlock();
-            Optional<Block> replacement = BlockHarmDataMap.getConvertedBlock(block, level.getRandom(), strength);
+            Optional<Block> replacement = BlockHealDataMap.getConvertedBlock(block, level.getRandom(), strength);
             if (replacement.isPresent()) {
                 level.setBlockAndUpdate(blockHitResult.getBlockPos(), replacement.get().defaultBlockState());
                 return SpellCastingResult.SUCCESS;
@@ -45,8 +47,8 @@ public class SpellEffectHarm extends AbstractSpellEffect {
         Entity entity = entityHitResult.getEntity();
         if (entity instanceof LivingEntity livingEntity) {
             float strength = (float) context.getVariable("strength");
-            return entity.hurt(context.getCaster().damageSources().magic(),
-                               1 * strength) ? SpellCastingResult.SUCCESS : SpellCastingResult.FAILURE;
+            livingEntity.heal(1 * strength);
+            return SpellCastingResult.SUCCESS;
         }
         return SpellCastingResult.SKIPPED;
     }

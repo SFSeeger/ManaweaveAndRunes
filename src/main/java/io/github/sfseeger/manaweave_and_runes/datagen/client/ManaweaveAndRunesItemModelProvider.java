@@ -46,6 +46,7 @@ public class ManaweaveAndRunesItemModelProvider extends ItemModelProvider {
                                .texture("layer0", "item/position_rune_active"))
                 .end();
 
+        basicItem(ManaweaveAndRunesItemInit.SPELL_PART.get());
         SpellNodeInit.SPELL_NODES.getEntries().forEach(spellNode -> {
             ResourceLocation spellNodeId = spellNode.getId();
             if(existingFileHelper.exists(spellNodeId.withPrefix("item/"), TEXTURE)) {

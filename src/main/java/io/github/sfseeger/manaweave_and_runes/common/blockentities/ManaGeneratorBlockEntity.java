@@ -1,7 +1,7 @@
 package io.github.sfseeger.manaweave_and_runes.common.blockentities;
 
+import io.github.sfseeger.lib.common.datamaps.ManaMapData;
 import io.github.sfseeger.lib.common.mana.IManaNetworkSubscriber;
-import io.github.sfseeger.lib.common.mana.ManaMapData;
 import io.github.sfseeger.lib.common.mana.capability.IManaHandler;
 import io.github.sfseeger.lib.common.mana.capability.ManaHandler;
 import io.github.sfseeger.lib.common.mana.network.ManaNetworkNode;

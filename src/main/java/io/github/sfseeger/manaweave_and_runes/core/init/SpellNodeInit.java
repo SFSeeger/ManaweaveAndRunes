@@ -1,10 +1,7 @@
 package io.github.sfseeger.manaweave_and_runes.core.init;
 
 import io.github.sfseeger.lib.common.spells.AbstractSpellNode;
-import io.github.sfseeger.lib.common.spells.buildin.effects.SpellEffectBreak;
-import io.github.sfseeger.lib.common.spells.buildin.effects.SpellEffectBurn;
-import io.github.sfseeger.lib.common.spells.buildin.effects.SpellEffectExplode;
-import io.github.sfseeger.lib.common.spells.buildin.effects.SpellEffectHarm;
+import io.github.sfseeger.lib.common.spells.buildin.effects.*;
 import io.github.sfseeger.lib.common.spells.buildin.modifiers.SpellModifierElongate;
 import io.github.sfseeger.lib.common.spells.buildin.modifiers.SpellModifierStrengthen;
 import io.github.sfseeger.lib.common.spells.buildin.modifiers.SpellModifierWiden;
@@ -34,8 +31,12 @@ public class SpellNodeInit {
             SPELL_NODES.register("spell_effect.break", () -> SpellEffectBreak.INSTANCE);
     public static final Supplier<AbstractSpellNode> SPELL_EFFECT_HARM =
             SPELL_NODES.register("spell_effect.harm", () -> SpellEffectHarm.INSTANCE);
+    public static final Supplier<AbstractSpellNode> SPELL_EFFECT_HEAL =
+            SPELL_NODES.register("spell_effect.heal", () -> SpellEffectHeal.INSTANCE);
     public static final Supplier<AbstractSpellNode> SPELL_EFFECT_EXPLODE =
             SPELL_NODES.register("spell_effect.explode", () -> SpellEffectExplode.INSTANCE);
+    public static final Supplier<AbstractSpellNode> SPELL_EFFECT_PUSH =
+            SPELL_NODES.register("spell_effect.push", () -> SpellEffectPush.INSTANCE);
 
 
     public static final Supplier<AbstractSpellNode> SPELL_MODIFIER_STRENGTHEN =

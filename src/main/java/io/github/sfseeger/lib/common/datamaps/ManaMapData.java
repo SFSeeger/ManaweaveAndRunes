@@ -1,9 +1,10 @@
-package io.github.sfseeger.lib.common.mana;
+package io.github.sfseeger.lib.common.datamaps;
 
 import com.mojang.datafixers.util.Either;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import io.github.sfseeger.lib.common.mana.Mana;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
