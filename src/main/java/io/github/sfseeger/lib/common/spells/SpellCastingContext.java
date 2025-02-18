@@ -25,6 +25,11 @@ public class SpellCastingContext implements Cloneable {
     }
     public Object getVariable(String key) {return variables.get(key);}
 
+    @SuppressWarnings("unchecked")
+    public <T> T getVariableSave(String key, T defaultValue) {
+        return variables.containsKey(key) ? (T) variables.get(key) : defaultValue;
+    }
+
     public Level getLevel() {
         return level;
     }
