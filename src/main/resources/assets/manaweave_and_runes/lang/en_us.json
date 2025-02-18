@@ -33,17 +33,26 @@
 
   "item.manaweave_and_runes.soul_container_rune.stole_soul_fragment": "Someone tried to steal a soul fragment from you",
   "item.manaweave_and_runes.soul_container_rune.detected": "You got noticed trying to steal a soul fragment",
+
   "advancements.manaweave_and_runes.ritual_anchor.title": "Anchored in Arcana",
   "advancements.manaweave_and_runes.ritual_anchor.description": "Build a Ritual Anchor. Who knows what power lies within?",
   "advancements.manaweave_and_runes.master_anchor.title": "Advanced Arcana",
   "advancements.manaweave_and_runes.master_anchor.description": "Upgrade a ritual anchor to master",
+
   "ritual.manaweave_and_runes.mana_insufficient": "It seems like there was not enough mana to supply the ritual",
   "ritual.manaweave_and_runes.item_insufficient": "The ritual could not consume an item it needed",
   "ritual.manaweave_and_runes.unknown_ritual": "You don't know how to use this start this...",
   "spell.manaweave_and_runes.spell_type.touch": "Touch",
   "spell.manaweave_and_runes.spell_type.projectile": "Ranged",
   "spell.manaweave_and_runes.spell_effect.burn": "Burn",
+  "spell.manaweave_and_runes.spell_effect.break": "Break",
+  "spell.manaweave_and_runes.spell_effect.harm": "Harm",
+  "spell.manaweave_and_runes.spell_effect.explode": "Explode",
+
   "spell.manaweave_and_runes.spell_modifier.strengthen": "Strengthen",
+  "spell.manaweave_and_runes.spell_modifier.widen": "Widen",
+  "spell.manaweave_and_runes.spell_modifier.elongate": "Elongate",
+
   "key.manaweave_and_runes.toggle_spell": "Toggle Spell",
   "container.manaweave_and_runes.rune_carver_block": "Rune Carver",
   "container.manaweave_and_runes.mana_storage_block": "Mana Storage",

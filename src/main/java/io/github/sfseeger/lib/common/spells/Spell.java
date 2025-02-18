@@ -126,13 +126,23 @@ public class Spell {
             }
         }
         for (List<AbstractSpellModifier> modifier : modifiers.values()) {
+            Map<Mana, Integer> ringCost = new HashMap<>();
             for (AbstractSpellModifier m : modifier) {
                 for (Map.Entry<Mana, Integer> entry : m.getManaCost().entrySet()) {
-                    cost.put(entry.getKey(), cost.getOrDefault(entry.getKey(), 0) + entry.getValue());
+                    ringCost.put(entry.getKey(), ringCost.getOrDefault(entry.getKey(), 0) + entry.getValue());
                 }
+            }
+            for (Map.Entry<Mana, Integer> entry : ringCost.entrySet()) {
+                cost.put(entry.getKey(),
+                         cost.getOrDefault(entry.getKey(), 0) + entry.getValue() * getModifierCostScalar(
+                                 modifier.size()));
             }
         }
         return cost;
+    }
+
+    private Integer getModifierCostScalar(int size) {
+        return (int) Math.pow((double) (size / 5) + 1, 2);
     }
 
     public String getName() {

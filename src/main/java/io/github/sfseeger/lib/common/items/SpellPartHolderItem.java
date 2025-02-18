@@ -6,4 +6,6 @@ public class SpellPartHolderItem extends Item {
     public SpellPartHolderItem(Properties properties) {
         super(properties);
     }
+
+
 }

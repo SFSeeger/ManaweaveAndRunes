@@ -20,7 +20,7 @@ import static io.github.sfseeger.manaweave_and_runes.core.init.ManaweaverAndRune
 
 public class WandModificationTableMenu extends AbstractContainerMenu {
     private static final int INV_SLOT_START = 13;
-    private static final int HOTBAR_SLOT_START = 13 + 27;
+    private static final int HOTBAR_SLOT_START = INV_SLOT_START + 27;
     private static final int HOTBAR_SLOT_END = HOTBAR_SLOT_START + 9;
     private final ContainerLevelAccess access;
     private final WandModificationTableBlockEntity blockEntity;
@@ -113,20 +113,19 @@ public class WandModificationTableMenu extends AbstractContainerMenu {
             ItemStack rawStack = quickMovedSlot.getItem();
             quickMovedStack = rawStack.copy();
             // Does the item come from the player's inventory?
-            if (index >= INV_SLOT_START && index < HOTBAR_SLOT_END + 1) {
-                boolean couldMove = false;
+            if (index >= INV_SLOT_START && index < HOTBAR_SLOT_END) {
+                boolean couldMove;
                 // Is the item a upgradable?
                 if (quickMovedStack.getItem() instanceof IUpgradable) {
                     couldMove = this.moveItemStackTo(rawStack, 0, 1, false);
                 } else {
                     couldMove = this.moveItemStackTo(rawStack, 1, 13, false);
-
                 }
 
                 if (!couldMove) {
                     if (index < HOTBAR_SLOT_START) {
                         // Try to move the item to the player's hotbar
-                        if (!this.moveItemStackTo(rawStack, HOTBAR_SLOT_START, HOTBAR_SLOT_END + 1, false)) {
+                        if (!this.moveItemStackTo(rawStack, HOTBAR_SLOT_START, HOTBAR_SLOT_END, false)) {
                             return ItemStack.EMPTY;
                         }
                         // Move to the player's inventory
@@ -135,7 +134,7 @@ public class WandModificationTableMenu extends AbstractContainerMenu {
                     }
                 }
                 // Else if the quick move was performed on the data inventory input slots, try to move to player inventory/hotbar
-            } else if (!this.moveItemStackTo(rawStack, INV_SLOT_START, HOTBAR_SLOT_END + 1, false)) {
+            } else if (!this.moveItemStackTo(rawStack, INV_SLOT_START, HOTBAR_SLOT_END, false)) {
                 return ItemStack.EMPTY;
             }
 

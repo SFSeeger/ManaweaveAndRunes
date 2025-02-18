@@ -47,4 +47,8 @@ public class SpellCastingContext implements Cloneable {
             throw new AssertionError();
         }
     }
+
+    public boolean hasVariable(String name) {
+        return variables.containsKey(name);
+    }
 }

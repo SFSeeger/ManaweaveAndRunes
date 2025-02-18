@@ -1,12 +1,13 @@
 package io.github.sfseeger.lib.common.spells.buildin.effects;
 
 import io.github.sfseeger.lib.common.mana.Manas;
-import io.github.sfseeger.lib.common.spells.AbstractSpellEffect;
-import io.github.sfseeger.lib.common.spells.AbstractSpellNode;
-import io.github.sfseeger.lib.common.spells.SpellCastingContext;
-import io.github.sfseeger.lib.common.spells.SpellCastingResult;
+import io.github.sfseeger.lib.common.spells.*;
+import io.github.sfseeger.lib.common.spells.buildin.modifiers.SpellModifierElongate;
 import io.github.sfseeger.lib.common.spells.buildin.modifiers.SpellModifierStrengthen;
+import io.github.sfseeger.lib.common.spells.buildin.modifiers.SpellModifierWiden;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Tier;
@@ -28,48 +29,55 @@ public class SpellEffectBreak extends AbstractSpellEffect {
 
     @Override
     public SpellCastingResult resolveBlock(BlockHitResult blockHitResult, SpellCastingContext context) {
-        return breakBlock(blockHitResult.getBlockPos(), context) ? SpellCastingResult.SUCCESS : SpellCastingResult.FAILURE;
+        return breakBlock(blockHitResult.getBlockPos(), context,
+                          blockHitResult.getDirection()) ? SpellCastingResult.SUCCESS : SpellCastingResult.FAILURE;
     }
 
     @Override
     public SpellCastingResult resolveEntity(EntityHitResult entityHitResult, SpellCastingContext context) {
-        return breakBlock(entityHitResult.getEntity().getOnPos(), context)
+        return breakBlock(entityHitResult.getEntity().getOnPos(), context, Direction.UP)
                 ? SpellCastingResult.SUCCESS : SpellCastingResult.FAILURE;
     }
 
-    private boolean breakBlock(BlockPos pos, SpellCastingContext context) {
+    private boolean breakBlock(BlockPos pos, SpellCastingContext context, Direction direction) {
         Level level = context.getLevel();
-        BlockState state = level.getBlockState(pos);
-        float d = state.getDestroySpeed(level, pos);
         float strength = (float) context.getVariable("strength");
-        float strengthThreshold = (strength / 4.0f) * 100.0f;
 
-        if (d < 0) {
-            return false;
-        }
-        if (d > strengthThreshold) {
-            return false;
-        }
-        if (!level.getWorldBorder().isWithinBounds(pos)) {
-            return false;
-        }
 
-        return level.destroyBlock(pos, isHarvestable(state, strength), context.getCaster());
+        return SpellUtils.executeOnPlane(pos, context, direction, (pos1) -> {
+                                             boolean isPlayer = context.getCaster() instanceof Player;
+
+                                             BlockState state = level.getBlockState(pos1);
+                                             float d = state.getDestroySpeed(level, pos1);
+
+                                             float strengthThreshold = (strength / 3.0f) * 100.0f;
+
+                                             if (d < 0) {
+                                                 return false;
+                                             }
+                                             if (d > strengthThreshold) {
+                                                 return false;
+                                             }
+                                             if (!SpellUtils.canChangeBlockState(pos1, context)) {
+                                                 return false;
+                                             }
+
+                                             boolean shouldHarvest =
+                                                     isHarvestable(state, strength) && !(isPlayer && ((Player) context.getCaster()).isCreative());
+                                             return level.destroyBlock(pos1, shouldHarvest, context.getCaster());
+                                         }
+        );
     }
 
     private Tier getToolTier(float strength) {
-        if (strength <= 0.5) {
-            return Tiers.WOOD;
-        } else if (strength <= 1) {
-            return Tiers.STONE;
-        } else if (strength <= 2) {
+        if (strength <= 1) {
             return Tiers.IRON;
-        } else if (strength <= 3) {
+        } else if (strength <= 2) {
             return Tiers.DIAMOND;
-        } else if (strength <= 4) {
+        } else if (strength <= 3) {
             return Tiers.NETHERITE;
         } else {
-            return Tiers.STONE;
+            return Tiers.IRON;
         }
     }
 
@@ -90,6 +98,6 @@ public class SpellEffectBreak extends AbstractSpellEffect {
 
     @Override
     public Set<AbstractSpellNode> getPossibleModifiers() {
-        return Set.of(SpellModifierStrengthen.INSTANCE);
+        return Set.of(SpellModifierStrengthen.INSTANCE, SpellModifierWiden.INSTANCE, SpellModifierElongate.INSTANCE);
     }
 }
