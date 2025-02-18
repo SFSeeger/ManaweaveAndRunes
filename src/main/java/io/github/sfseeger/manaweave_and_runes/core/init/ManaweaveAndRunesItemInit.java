@@ -2,6 +2,7 @@ package io.github.sfseeger.manaweave_and_runes.core.init;
 
 import io.github.sfseeger.lib.common.items.SpellHolderItem;
 import io.github.sfseeger.lib.common.items.SpellPartHolderItem;
+import io.github.sfseeger.lib.common.spells.Spell;
 import io.github.sfseeger.lib.common.spells.SpellPart;
 import io.github.sfseeger.lib.common.spells.data_components.SpellDataComponent;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
@@ -53,12 +54,13 @@ public class ManaweaveAndRunesItemInit {
     public static final DeferredItem<SpellHolderItem> AMETHYST_SPELL_HOLDER_ITEM = ITEMS.register(
             "amethyst_spell_holder", () -> new SpellHolderItem(
                     new Item.Properties().component(ManaweaveAndRunesDataComponentsInit.SPELL_DATA_COMPONENT,
-                                                    new SpellDataComponent(SpellHolderItem.s1))));
+                                                    new SpellDataComponent(new Spell()))));
 
 
     // Spell Part Items
-    public static final DeferredItem<SpellPartHolderItem> AMETHYST_SPELL_PART_ITEM = ITEMS.register("amethyst_spell_part",
-            () -> new SpellPartHolderItem(new Item.Properties()));
+    public static final DeferredItem<SpellPartHolderItem> SPELL_PART = ITEMS.register("spell_part",
+                                                                                      () -> new SpellPartHolderItem(
+                                                                                              new Item.Properties()));
 
     static {
         SpellNodeInit.SPELL_NODES.getEntries().forEach(entry -> {

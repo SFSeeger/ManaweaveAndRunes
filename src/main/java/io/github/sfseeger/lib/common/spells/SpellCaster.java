@@ -37,11 +37,11 @@ public class SpellCaster {
                                         0,
                                         false);
 
-            if (result instanceof BlockHitResult) {
-                return type.castOnBlock((BlockHitResult) result, context, resolver);
+            if (result instanceof BlockHitResult r && r.getType() != HitResult.Type.MISS) {
+                return type.castOnBlock(r, context, resolver);
             }
-            if (result instanceof EntityHitResult) {
-                return type.castOnEntity(((EntityHitResult) result).getEntity(), context, resolver);
+            if (result instanceof EntityHitResult r && r.getType() != HitResult.Type.MISS) {
+                return type.castOnEntity(r.getEntity(), context, resolver);
             }
 
             return type.cast(context, resolver);
