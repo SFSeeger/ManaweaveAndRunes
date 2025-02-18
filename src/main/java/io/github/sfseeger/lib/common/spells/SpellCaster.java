@@ -27,7 +27,8 @@ public class SpellCaster {
         AbstractSpellType type = spell.getSpellType();
         SpellCastingContext context = new SpellCastingContext(level, entity, handIn);
         SpellResolver resolver = new SpellResolver(spell);
-        if (!extractRequiredMana(spell, context, false)) return SpellCastingResult.FAILURE;
+        if (!extractRequiredMana(spell, context, true)) return SpellCastingResult.FAILURE;
+        extractRequiredMana(spell, context, false);
 
         if (!level.isClientSide()) {
             HitResult result =

@@ -21,6 +21,7 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockEntityInit.SPELL_DESIGNER_BLOCK_ENTITY;
@@ -86,7 +87,12 @@ public class SpellDesignerBlockEntity extends BlockEntity implements ICraftingPa
                     return stack1;
                 }
             } else if(!hasEffects){
-                SpellPart part1 = new SpellPart(part.getCore(), new ArrayList<>()); //Replace with modifiers from parts?
+                List<AbstractSpellModifier> modifiers = new ArrayList<>();
+                if (!part.getModifiers().isEmpty()) {
+                    modifiers = part.getModifiers();
+                    if (modifiers.size() > 16) return ItemStack.EMPTY;
+                }
+                SpellPart part1 = new SpellPart(part.getCore(), modifiers); //Replace with modifiers from parts?
                 for(SpellPart p : parts){
                     if (p != null && p.getCore().value() instanceof AbstractSpellModifier) {
                         part1.getModifiers().add((AbstractSpellModifier) (p.getCore().value()));

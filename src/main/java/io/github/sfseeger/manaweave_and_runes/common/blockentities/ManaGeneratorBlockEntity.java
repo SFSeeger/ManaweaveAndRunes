@@ -153,7 +153,7 @@ public class ManaGeneratorBlockEntity extends BlockEntity implements IManaNetwor
                     fuel.shrink(1);
                 }
             } else {
-                cookTimeRemaining = getMaxCookTime();
+                cookTimeRemaining = 0;
             }
         }
     }
