@@ -9,7 +9,9 @@
         * [X] Add UI
         * [X] Make generator consume fuel
     * [ ] Mana Collector
-        * [ ] Random ticking instead of normal ticking
+        * [X] Random ticking instead of normal ticking
+        * [ ] Texture
+        * [ ] UI for creation inspection?
     * [ ] Add Network indicator
         * [ ] Add blockmodel
         * [ ] Update network to be able to request last state
@@ -46,7 +48,6 @@
     * [ ] Add rune smithing template
         * [ ] Add structures / loottables
     * [ ] Add Runecarver Block
-    * [ ] Figure out how to use rune carver table for both carving and upgrading
 * [ ] Add basic tools
     * [ ] Add own type
     * [ ] Add upgradability system

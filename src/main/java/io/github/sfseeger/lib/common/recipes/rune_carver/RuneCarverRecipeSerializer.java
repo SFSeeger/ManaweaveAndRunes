@@ -12,6 +12,7 @@ public class RuneCarverRecipeSerializer implements RecipeSerializer<RuneCarverRe
     public static final MapCodec<RuneCarverRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Ingredient.CODEC.fieldOf("chisel").forGetter(RuneCarverRecipe::getChisel),
             Ingredient.CODEC.fieldOf("rune_base").forGetter(RuneCarverRecipe::getRuneBase),
+            Ingredient.CODEC.fieldOf("rune_template").forGetter(RuneCarverRecipe::getRuneTemplate),
             ItemStack.CODEC.fieldOf("result").forGetter(RuneCarverRecipe::getResult)
     ).apply(instance, RuneCarverRecipe::new));
 
@@ -19,6 +20,7 @@ public class RuneCarverRecipeSerializer implements RecipeSerializer<RuneCarverRe
             StreamCodec.composite(
                     Ingredient.CONTENTS_STREAM_CODEC, RuneCarverRecipe::getChisel,
                     Ingredient.CONTENTS_STREAM_CODEC, RuneCarverRecipe::getRuneBase,
+                    Ingredient.CONTENTS_STREAM_CODEC, RuneCarverRecipe::getRuneTemplate,
                     ItemStack.STREAM_CODEC, RuneCarverRecipe::getResult,
                     RuneCarverRecipe::new
             );

@@ -4,6 +4,8 @@ import io.github.sfseeger.lib.common.blocks.ManaNetworkBlock;
 import io.github.sfseeger.manaweave_and_runes.common.blockentities.ManaCollectorBlockEntity;
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockEntityInit;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
@@ -22,7 +24,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class ManaCollectorBlock extends ManaNetworkBlock implements EntityBlock {
     public ManaCollectorBlock() {
-        super(Properties.of().strength(2.5f).requiresCorrectToolForDrops());
+        super(Properties.of().strength(2.5f).requiresCorrectToolForDrops().randomTicks());
     }
 
     @Override
@@ -37,17 +39,10 @@ public class ManaCollectorBlock extends ManaNetworkBlock implements EntityBlock 
     }
 
     @Override
-    public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state,
-            BlockEntityType<T> blockEntityType) {
-        if (blockEntityType == ManaweaveAndRunesBlockEntityInit.MANA_COLLECTOR_BLOCK_ENTITY.get()) {
-            if (!level.isClientSide) {
-                return (level1, blockPos, blockState, blockEntity) -> ManaCollectorBlockEntity.serverTick(level1,
-                                                                                                          blockPos,
-                                                                                                          blockState,
-                                                                                                          (ManaCollectorBlockEntity) blockEntity);
-            }
+    protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+        if(level.getBlockEntity(pos) instanceof ManaCollectorBlockEntity be) {
+            ManaCollectorBlockEntity.serverTick(level, pos, state, be);
         }
-        return null;
     }
 
     @Override

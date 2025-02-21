@@ -275,7 +275,7 @@ public class RuneCarverBlockMenu extends AbstractContainerMenu {
     }
 
     private RuneCarverRecipeInput getRecipeInput() {
-        return new RuneCarverRecipeInput(getChiselSlot().getItem(), getRuneSlot().getItem());
+        return new RuneCarverRecipeInput(getChiselSlot().getItem(), getRuneSlot().getItem(), getRuneSlot().getItem());
     }
 
     public void registerUpdateListener(Runnable listener) {

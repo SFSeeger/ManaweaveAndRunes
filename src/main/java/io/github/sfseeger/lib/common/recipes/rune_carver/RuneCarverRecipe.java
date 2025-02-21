@@ -13,18 +13,21 @@ import net.minecraft.world.level.Level;
 public class RuneCarverRecipe implements Recipe<RuneCarverRecipeInput> {
     private final Ingredient chisel;
     private final Ingredient runeBase;
+    private final Ingredient runeTemplate;
     private final ItemStack result;
 
-    public RuneCarverRecipe(Ingredient chisel, Ingredient runeBase, ItemStack result) {
+    public RuneCarverRecipe(Ingredient chisel, Ingredient runeBase, Ingredient runeTemplate, ItemStack result) {
         this.chisel = chisel;
         this.runeBase = runeBase;
+        this.runeTemplate = runeTemplate;
         this.result = result;
     }
 
     @Override
     public boolean matches(RuneCarverRecipeInput runeCarverRecipeInput, Level level) {
-        return this.chisel.test(runeCarverRecipeInput.chisel()) && this.runeBase.test(
-                runeCarverRecipeInput.runeBasePlate());
+        return this.chisel.test(runeCarverRecipeInput.chisel())
+                && this.runeBase.test(runeCarverRecipeInput.runeBasePlate())
+                && this.runeTemplate.test(runeCarverRecipeInput.runeTemplate());
     }
 
     @Override
@@ -47,6 +50,7 @@ public class RuneCarverRecipe implements Recipe<RuneCarverRecipeInput> {
         NonNullList<Ingredient> list = NonNullList.create();
         list.add(this.chisel);
         list.add(this.runeBase);
+        list.add(this.runeTemplate);
         return list;
     }
 
@@ -72,6 +76,8 @@ public class RuneCarverRecipe implements Recipe<RuneCarverRecipeInput> {
     public Ingredient getRuneBase() {
         return this.runeBase;
     }
+
+    public Ingredient getRuneTemplate(){return this.runeTemplate;}
 
     public ItemStack getResult() {
         return this.result;
