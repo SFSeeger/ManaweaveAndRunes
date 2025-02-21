@@ -14,8 +14,8 @@ public class ManaweaverAndRunesMenuInit {
     public static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(Registries.MENU,
                                                                                       ManaweaveAndRunes.MODID);
 
-    public static final Supplier<MenuType<RuneCarverBlockMenu>> RUNE_CARVER_BLOCK_MENU = MENUS.register(
-            "rune_carver_menu", () -> new MenuType<>(RuneCarverBlockMenu::new, FeatureFlags.DEFAULT_FLAGS));
+    public static final Supplier<MenuType<RuneCarverMenu>> RUNE_CARVER_BLOCK_MENU = MENUS.register(
+            "rune_carver_menu", () -> new MenuType<>(RuneCarverMenu::new, FeatureFlags.DEFAULT_FLAGS));
 
     public static final Supplier<MenuType<ManaStorageBlockMenu>> MANA_STORAGE_BLOCK_MENU = MENUS.register(
             "mana_storage_menu", () -> IMenuTypeExtension.create(ManaStorageBlockMenu::new));

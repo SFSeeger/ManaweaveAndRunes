@@ -1,6 +1,6 @@
 package io.github.sfseeger.manaweave_and_runes.common.blocks;
 
-import io.github.sfseeger.manaweave_and_runes.common.menus.RuneCarverBlockMenu;
+import io.github.sfseeger.manaweave_and_runes.common.menus.RuneCarverMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -13,7 +13,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 
 public class RuneCarverBlock extends Block {
@@ -35,9 +34,9 @@ public class RuneCarverBlock extends Block {
 
     @Override
     protected @Nullable MenuProvider getMenuProvider(BlockState state, Level level, BlockPos pos) {
-        return new SimpleMenuProvider((id, playerInventory, player) -> {
-            return new RuneCarverBlockMenu(id, playerInventory, new ItemStackHandler(3),
-                                           ContainerLevelAccess.create(level, pos));
-        }, CONTAINER_TITLE);
+        return new SimpleMenuProvider((id, playerInventory, player) -> new RuneCarverMenu(id, playerInventory,
+                                                                                          ContainerLevelAccess.create(
+                                                                                                  level, pos)),
+                                      CONTAINER_TITLE);
     }
 }

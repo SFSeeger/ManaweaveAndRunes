@@ -1,5 +1,6 @@
 package io.github.sfseeger.manaweave_and_runes.core.init;
 
+import io.github.sfseeger.lib.common.items.RuneCarvingTemplate;
 import io.github.sfseeger.lib.common.items.SpellHolderItem;
 import io.github.sfseeger.lib.common.items.SpellPartHolderItem;
 import io.github.sfseeger.lib.common.spells.Spell;
@@ -8,6 +9,7 @@ import io.github.sfseeger.lib.common.spells.data_components.SpellDataComponent;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
 import io.github.sfseeger.manaweave_and_runes.common.items.*;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Rarity;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -56,6 +58,11 @@ public class ManaweaveAndRunesItemInit {
                     new Item.Properties().component(ManaweaveAndRunesDataComponentsInit.SPELL_DATA_COMPONENT,
                                                     new SpellDataComponent(new Spell()))));
 
+
+    public static final DeferredItem<RuneCarvingTemplate> AIR_RUNE_CARVING_TEMPLATE = ITEMS.register(
+            "air_rune_carving_template", () -> new RuneCarvingTemplate(new Item.Properties().rarity(Rarity.COMMON)));
+    public static final DeferredItem<RuneCarvingTemplate> FIRE_RUNE_CARVING_TEMPLATE = ITEMS.register(
+            "fire_rune_carving_template", () -> new RuneCarvingTemplate(new Item.Properties().rarity(Rarity.COMMON)));
 
     // Spell Part Items
     public static final DeferredItem<SpellPartHolderItem> SPELL_PART = ITEMS.register("spell_part",

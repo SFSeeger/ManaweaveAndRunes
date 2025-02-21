@@ -22,11 +22,13 @@ public class RuneCarverRecipeBuilder implements RecipeBuilder {
     protected final Map<String, Criterion<?>> criteria = new LinkedHashMap<>();
     protected Ingredient chisel;
     protected Ingredient runeBase;
+    protected Ingredient runeTemplate;
 
-    public RuneCarverRecipeBuilder(ItemStack result, Ingredient chisel, Ingredient baseRune) {
+    public RuneCarverRecipeBuilder(ItemStack result, Ingredient chisel, Ingredient baseRune, Ingredient runeTemplate) {
         this.result = result;
         this.chisel = chisel;
         this.runeBase = baseRune;
+        this.runeTemplate = runeTemplate;
     }
 
     @Override
@@ -52,7 +54,7 @@ public class RuneCarverRecipeBuilder implements RecipeBuilder {
                 .rewards(AdvancementRewards.Builder.recipe(resourceLocation))
                 .requirements(AdvancementRequirements.Strategy.AND);
         this.criteria.forEach(advancement::addCriterion);
-        RuneCarverRecipe recipe = new RuneCarverRecipe(this.chisel, this.runeBase, this.result);
+        RuneCarverRecipe recipe = new RuneCarverRecipe(this.chisel, this.runeBase, this.runeTemplate, this.result);
         output.accept(resourceLocation, recipe, advancement.build(resourceLocation.withPrefix("recipes/")));
     }
 }
