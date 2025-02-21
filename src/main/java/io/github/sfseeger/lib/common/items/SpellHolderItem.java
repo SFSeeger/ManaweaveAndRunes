@@ -51,7 +51,7 @@ public class SpellHolderItem extends Item {
         Spell spell = getSpell(stack);
         MutableComponent name = super.getName(stack).plainCopy();
         if (spell != null) {
-            return name.append(" :").append(spell.getName());
+            return name.append(": ").append(spell.getName());
         }
         return name;
     }

@@ -41,6 +41,7 @@
     * [X] Add some way to store spells
     * [ ] Add wand model
     * [ ] (Better spell switching)
+  * [ ] (Add HUD)
 * [ ] Rune Carving
     * [ ] Add rune smithing template
         * [ ] Add structures / loottables

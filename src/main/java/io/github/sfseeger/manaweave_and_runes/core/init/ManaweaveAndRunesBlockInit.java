@@ -36,6 +36,16 @@ public class ManaweaveAndRunesBlockInit {
                                                                                                        .requiresCorrectToolForDrops()
                                                                                                        .sound(SoundType.DEEPSLATE)));
     public static final DeferredBlock<RuneBlock> RUNE_BLOCK = BLOCKS.register("rune_block", RuneBlock::new);
+
+    public static final DeferredBlock<Block> MANA_INFUSED_ROCK_BLOCK = BLOCKS.register("mana_infused_rock",
+                                                                                       () -> new Block(
+                                                                                               BlockBehaviour.Properties.of()
+                                                                                                       .strength(1.5F)
+                                                                                                       .lightLevel(
+                                                                                                               (s) -> 3)
+                                                                                                       .requiresCorrectToolForDrops()
+                                                                                                       .sound(SoundType.STONE)));
+
     public static final DeferredBlock<RunePedestalBlock> RUNE_PEDESTAL_BLOCK =
             BLOCKS.register("rune_pedestal", RunePedestalBlock::new);
 

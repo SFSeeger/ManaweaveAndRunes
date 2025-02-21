@@ -26,10 +26,12 @@ public class MRBlockTagsProvider extends BlockTagsProvider {
                 .add(ManaweaveAndRunesBlockInit.MANA_STORAGE_BLOCK.get())
                 .add(ManaweaveAndRunesBlockInit.RUNE_BLOCK.get())
                 .add(ManaweaveAndRunesBlockInit.RUNE_PEDESTAL_BLOCK.get())
+                .add(ManaweaveAndRunesBlockInit.MANA_INFUSED_ROCK_BLOCK.get())
                 .add(ManaweaveAndRunesBlockInit.MANA_TRANSMITTER_BLOCK.get());
 
         this.tag(BlockTags.NEEDS_STONE_TOOL)
                 .add(ManaweaveAndRunesBlockInit.RUNE_BLOCK.get())
+                .add(ManaweaveAndRunesBlockInit.MANA_INFUSED_ROCK_BLOCK.get())
                 .add(ManaweaveAndRunesBlockInit.RUNE_PEDESTAL_BLOCK.get());
 
         this.tag(BlockTags.NEEDS_IRON_TOOL)

@@ -102,7 +102,7 @@ public class ManaConcentratorBlock extends Block implements EntityBlock {
                     } else {
                         player.sendSystemMessage(Component.literal("Multiblock is invalid!"));
                         player.sendSystemMessage(Component.literal(
-                                "Wrong Block at: " + validationData.errorLocation() + " Expected: " + validationData.expectedBlock() + " Found: " + validationData.currentBlock()));
+                                "Wrong Block at: " + validationData.errorLocation() + " Expected: " + validationData.expected() + " Found: " + validationData.currentBlock()));
                     }
                     return ItemInteractionResult.SUCCESS;
                 }
@@ -123,9 +123,11 @@ public class ManaConcentratorBlock extends Block implements EntityBlock {
     @Override
     public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player, boolean willHarvest,
             FluidState fluid) {
-        BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (blockEntity instanceof ManaConcentratorBlockEntity be) {
-            InventoryUtil.dropItemHandlerContents(be.getItemHandler(null), level, pos);
+        if (!level.isClientSide) {
+            BlockEntity blockEntity = level.getBlockEntity(pos);
+            if (blockEntity instanceof ManaConcentratorBlockEntity be) {
+                InventoryUtil.dropItemHandlerContents(be.getItemHandler(null), level, pos);
+            }
         }
         return super.onDestroyedByPlayer(state, level, pos, player, willHarvest, fluid);
     }

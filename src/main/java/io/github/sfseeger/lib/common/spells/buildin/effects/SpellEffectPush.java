@@ -46,11 +46,11 @@ public class SpellEffectPush extends AbstractSpellEffect {
     public SpellCastingResult resolveEntity(EntityHitResult entityHitResult, SpellCastingContext context) {
         Vec3 look = context.getCaster().getLookAngle();
         Entity entity = entityHitResult.getEntity();
-        float strength = (Float) context.getVariable("strength") / 2;
+        float strength = Math.min((Float) context.getVariable("strength") / 2, 1);
         int width = context.getVariableSave("width", 1);
         int height = context.getVariableSave("height", 1);
 
-        entity.addDeltaMovement(look.multiply(new Vec3(width, height, width).scale(strength)));
+        entity.addDeltaMovement(look.scale(2).multiply(new Vec3(width, height, width).scale(strength)));
         entity.hurtMarked = true;
         return SpellCastingResult.SUCCESS;
     }

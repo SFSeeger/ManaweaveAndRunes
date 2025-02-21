@@ -1,9 +1,10 @@
 package io.github.sfseeger.manaweave_and_runes.common.blocks;
 
 import io.github.sfseeger.lib.common.blocks.ManaNetworkBlock;
-import io.github.sfseeger.manaweave_and_runes.common.blockentities.ManaCollectorBlockEntity;
 import io.github.sfseeger.manaweave_and_runes.common.blockentities.RunePedestalBlockEntity;
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockEntityInit;
+import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesItemInit;
+import io.github.sfseeger.manaweave_and_runes.core.util.InventoryUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -12,7 +13,6 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -27,6 +27,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -90,7 +91,7 @@ public class RunePedestalBlock extends ManaNetworkBlock implements EntityBlock {
         if (!level.isClientSide) {
             BlockEntity blockEntity = level.getBlockEntity(pos);
             if (blockEntity instanceof RunePedestalBlockEntity runePedestal) {
-                if (stack.is(Items.CARROT_ON_A_STICK)) {
+                if (stack.is(ManaweaveAndRunesItemInit.MANA_CONNECTOR)) {
                     if (runePedestal.toggleState()) {
                         player.displayClientMessage(Component.literal("New mode: " + runePedestal.node.getNodeType()), false);
                         return ItemInteractionResult.SUCCESS;
@@ -126,5 +127,17 @@ public class RunePedestalBlock extends ManaNetworkBlock implements EntityBlock {
                     (RunePedestalBlockEntity) blockEntity);
         }
         return null;
+    }
+
+    @Override
+    public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player, boolean willHarvest,
+            FluidState fluid) {
+        if (!level.isClientSide) {
+            BlockEntity blockEntity = level.getBlockEntity(pos);
+            if (blockEntity instanceof RunePedestalBlockEntity runePedestal) {
+                InventoryUtil.dropItemHandlerContents(runePedestal.getItemHandler(null), level, pos);
+            }
+        }
+        return super.onDestroyedByPlayer(state, level, pos, player, willHarvest, fluid);
     }
 }

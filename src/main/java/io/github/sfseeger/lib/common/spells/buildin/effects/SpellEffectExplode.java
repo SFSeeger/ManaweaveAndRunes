@@ -5,6 +5,7 @@ import io.github.sfseeger.lib.common.spells.*;
 import io.github.sfseeger.lib.common.spells.buildin.modifiers.SpellModifierStrengthen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
@@ -33,9 +34,15 @@ public class SpellEffectExplode extends AbstractSpellEffect {
     private boolean explode(BlockPos pos, SpellCastingContext context) {
         Level level = context.getLevel();
         LivingEntity entity = context.getCaster();
+        float strength = (Float) context.getVariable("strength") / 1.5f;
         if (SpellUtils.canChangeBlockState(pos, context)) {
-            level.explode(entity, pos.getX(), pos.getY(), pos.getZ(),
-                          3 + (Float) context.getVariable("strength") / 1.5f, Level.ExplosionInteraction.BLOCK);
+            level.explode(null,
+                          Explosion.getDefaultDamageSource(level, entity),
+                          null,
+                          pos.getCenter(),
+                          3 + strength,
+                          false,
+                          Level.ExplosionInteraction.TNT);
             return true;
         }
         return false;

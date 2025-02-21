@@ -18,6 +18,7 @@
   "block.manaweave_and_runes.tanzanite_ore": "Tanzanite Ore",
   "block.manaweave_and_runes.deepslate_tanzanite_ore": "Deepslate Tanzanite Ore",
   "block.manaweave_and_runes.rune_block": "Rune Block",
+  "block.manaweave_and_runes.mana_infused_rock": "Mana Infused Rock",
   "block.manaweave_and_runes.rune_pedestal": "Rune Pedestal",
   "block.manaweave_and_runes.mana_collector": "Mana Collector",
   "block.manaweave_and_runes.mana_transmitter": "Mana Transmitter",
@@ -30,6 +31,7 @@
   "item.manaweave_and_runes.amethyst_base_rune": "Amethyst Base Rune",
   "item.manaweave_and_runes.position_rune": "Position Rune",
   "item.manaweave_and_runes.soul_container_rune": "Soul Container Rune",
+  "item.manaweave_and_runes.spell_holder": "Spell Holder",
 
   "item.manaweave_and_runes.soul_container_rune.stole_soul_fragment": "Someone tried to steal a soul fragment from you",
   "item.manaweave_and_runes.soul_container_rune.detected": "You got noticed trying to steal a soul fragment",
