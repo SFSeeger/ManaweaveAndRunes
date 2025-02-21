@@ -9,7 +9,9 @@
         * [X] Add UI
         * [X] Make generator consume fuel
     * [ ] Mana Collector
-        * [ ] Random ticking instead of normal ticking
+        * [X] Random ticking instead of normal ticking
+        * [ ] Texture
+        * [ ] UI for creation inspection?
     * [ ] Add Network indicator
         * [ ] Add blockmodel
         * [ ] Update network to be able to request last state
@@ -37,16 +39,18 @@
     * [X] Add rune bracelet
     * [X] Add mana weaver's wand
     * [X] Add Spell Registry
-    * [ ] Add spells
+  * [X] Add spells
     * [X] Add some way to store spells
     * [ ] Add wand model
     * [ ] (Better spell switching)
   * [ ] (Add HUD)
 * [ ] Rune Carving
-    * [ ] Add rune smithing template
+    * [X] Add rune smithing template
         * [ ] Add structures / loottables
     * [ ] Add Runecarver Block
-    * [ ] Figure out how to use rune carver table for both carving and upgrading
+        * [X] Add UI
+        * [ ] Add texture
+        * [ ] Add template placeholder
 * [ ] Add basic tools
     * [ ] Add own type
     * [ ] Add upgradability system
