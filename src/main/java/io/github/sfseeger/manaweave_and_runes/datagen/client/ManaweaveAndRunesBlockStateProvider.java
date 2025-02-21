@@ -37,6 +37,7 @@ public class ManaweaveAndRunesBlockStateProvider extends BlockStateProvider {
         this.simpleBlockItem(deferredRuneBlock.get(), this.models()
                 .getExistingFile(ResourceLocation.parse(deferredRuneBlock.getRegisteredName() + "_inactive")));
 
+        this.registerSimpleBlock(ManaweaveAndRunesBlockInit.MANA_INFUSED_ROCK_BLOCK);
         this.horizontalBlock(ManaweaveAndRunesBlockInit.RUNE_PEDESTAL_BLOCK.get(), this.models()
                 .getExistingFile(
                         ResourceLocation.parse(ManaweaveAndRunesBlockInit.RUNE_PEDESTAL_BLOCK.getRegisteredName())));
