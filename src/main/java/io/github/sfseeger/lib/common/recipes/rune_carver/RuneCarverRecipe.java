@@ -82,4 +82,16 @@ public class RuneCarverRecipe implements Recipe<RuneCarverRecipeInput> {
     public ItemStack getResult() {
         return this.result;
     }
+
+    public boolean isChiselIngredient(ItemStack itemStack) {
+        return this.chisel.test(itemStack);
+    }
+
+    public boolean isTemplateIngredient(ItemStack itemStack) {
+        return this.runeTemplate.test(itemStack);
+    }
+
+    public boolean isBase(ItemStack itemStack) {
+        return this.runeBase.test(itemStack);
+    }
 }

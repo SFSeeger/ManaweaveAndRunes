@@ -27,7 +27,7 @@ import net.neoforged.neoforge.items.SlotItemHandler;
 
 import java.util.List;
 
-public class RuneCarverBlockMenu extends AbstractContainerMenu {
+public class LegecyRuneCarverBlockMenu extends AbstractContainerMenu {
     public static final int CHISEL_SLOT = 0;
     public static final int RUNE_SLOT = 1;
     public static final int RESULT_SLOT = 2;
@@ -45,12 +45,12 @@ public class RuneCarverBlockMenu extends AbstractContainerMenu {
     private ItemStack runeItem;
 
 
-    public RuneCarverBlockMenu(int containerId, Inventory playerInventory) {
+    public LegecyRuneCarverBlockMenu(int containerId, Inventory playerInventory) {
         this(containerId, playerInventory, new ItemStackHandler(3), ContainerLevelAccess.NULL);
     }
 
-    public RuneCarverBlockMenu(int containerId, Inventory playerInventory, IItemHandler handler,
-            ContainerLevelAccess access) {
+    public LegecyRuneCarverBlockMenu(int containerId, Inventory playerInventory, IItemHandler handler,
+                                     ContainerLevelAccess access) {
         super(ManaweaverAndRunesMenuInit.RUNE_CARVER_BLOCK_MENU.get(), containerId);
         this.selectedRecipeIndex = DataSlot.standalone();
         this.recipes = Lists.newArrayList();
@@ -66,16 +66,16 @@ public class RuneCarverBlockMenu extends AbstractContainerMenu {
             @Override
             public void setChanged() {
                 super.setChanged();
-                RuneCarverBlockMenu.this.slotsChanged(this.container);
-                RuneCarverBlockMenu.this.slotUpdateListener.run();
+                LegecyRuneCarverBlockMenu.this.slotsChanged(this.container);
+                LegecyRuneCarverBlockMenu.this.slotUpdateListener.run();
             }
         });
         this.addSlot(new SlotItemHandler(handler, RUNE_SLOT, 20, 53) {
             @Override
             public void setChanged() {
                 super.setChanged();
-                RuneCarverBlockMenu.this.slotsChanged(this.container);
-                RuneCarverBlockMenu.this.slotUpdateListener.run();
+                LegecyRuneCarverBlockMenu.this.slotsChanged(this.container);
+                LegecyRuneCarverBlockMenu.this.slotUpdateListener.run();
             }
         });
         SlotItemHandler outputSlotItemHandler = new SlotItemHandler(handler, RESULT_SLOT, 143, 33) {
@@ -87,24 +87,24 @@ public class RuneCarverBlockMenu extends AbstractContainerMenu {
             @Override
             public void onTake(Player player, ItemStack stack) {
                 stack.onCraftedBy(player.level(), player, stack.getCount());
-                ItemStack chiselStack = RuneCarverBlockMenu.this.getChiselSlot().getItem();
-                ItemStack runeStack = RuneCarverBlockMenu.this.getRuneSlot().getItem().copy();
+                ItemStack chiselStack = LegecyRuneCarverBlockMenu.this.getChiselSlot().getItem();
+                ItemStack runeStack = LegecyRuneCarverBlockMenu.this.getRuneSlot().getItem().copy();
                 runeStack.shrink(1);
-                RuneCarverBlockMenu.this.getChiselSlot().set(new ItemStack(Items.ACACIA_LEAVES));
-                RuneCarverBlockMenu.this.getResultSlot().set(runeStack);
-                if (RuneCarverBlockMenu.this.getChiselSlot().hasItem() || RuneCarverBlockMenu.this.getRuneSlot()
+                LegecyRuneCarverBlockMenu.this.getChiselSlot().set(new ItemStack(Items.ACACIA_LEAVES));
+                LegecyRuneCarverBlockMenu.this.getResultSlot().set(runeStack);
+                if (LegecyRuneCarverBlockMenu.this.getChiselSlot().hasItem() || LegecyRuneCarverBlockMenu.this.getRuneSlot()
                         .hasItem()) {
-                    RuneCarverBlockMenu.this.setupResultSlot();
+                    LegecyRuneCarverBlockMenu.this.setupResultSlot();
                 } else {
-                    RuneCarverBlockMenu.this.selectedRecipeIndex.set(-1);
+                    LegecyRuneCarverBlockMenu.this.selectedRecipeIndex.set(-1);
                 }
 
                 access.execute((level, blockPos) -> {
                     long l = level.getGameTime();
-                    if (RuneCarverBlockMenu.this.lastSoundTime != l) {
+                    if (LegecyRuneCarverBlockMenu.this.lastSoundTime != l) {
                         level.playSound(null, blockPos, SoundEvents.ANVIL_USE, SoundSource.BLOCKS,
                                         1.0F, 1.0F);
-                        RuneCarverBlockMenu.this.lastSoundTime = l;
+                        LegecyRuneCarverBlockMenu.this.lastSoundTime = l;
                     }
                 });
                 broadcastChanges();
@@ -114,7 +114,7 @@ public class RuneCarverBlockMenu extends AbstractContainerMenu {
             @Override
             public void setChanged() {
                 super.setChanged();
-                RuneCarverBlockMenu.this.slotUpdateListener.run();
+                LegecyRuneCarverBlockMenu.this.slotUpdateListener.run();
             }
         };
         this.addSlot(outputSlotItemHandler);

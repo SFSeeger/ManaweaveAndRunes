@@ -1,6 +1,6 @@
 package io.github.sfseeger.manaweave_and_runes.common.blocks;
 
-import io.github.sfseeger.manaweave_and_runes.common.menus.RuneCarverBlockMenu;
+import io.github.sfseeger.manaweave_and_runes.common.menus.LegecyRuneCarverBlockMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -36,7 +36,7 @@ public class RuneCarverBlock extends Block {
     @Override
     protected @Nullable MenuProvider getMenuProvider(BlockState state, Level level, BlockPos pos) {
         return new SimpleMenuProvider((id, playerInventory, player) -> {
-            return new RuneCarverBlockMenu(id, playerInventory, new ItemStackHandler(3),
+            return new LegecyRuneCarverBlockMenu(id, playerInventory, new ItemStackHandler(3),
                                            ContainerLevelAccess.create(level, pos));
         }, CONTAINER_TITLE);
     }

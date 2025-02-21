@@ -1,7 +1,7 @@
 package io.github.sfseeger.manaweave_and_runes.client.screens;
 
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
-import io.github.sfseeger.manaweave_and_runes.common.menus.RuneCarverBlockMenu;
+import io.github.sfseeger.manaweave_and_runes.common.menus.LegecyRuneCarverBlockMenu;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
@@ -11,7 +11,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class RuneCarverBlockScreen extends AbstractContainerScreen<RuneCarverBlockMenu> {
+public class RuneCarverBlockScreen extends AbstractContainerScreen<LegecyRuneCarverBlockMenu> {
     private static final ResourceLocation GUI_TEXTURE =
             ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID,
                                                   "textures/gui/container/rune_carver_block.png");
@@ -46,8 +46,8 @@ public class RuneCarverBlockScreen extends AbstractContainerScreen<RuneCarverBlo
     private static final int SELECTOR_X = 49;
     private static final int SELECTOR_Y = 15;
 
-    public RuneCarverBlockScreen(RuneCarverBlockMenu menu, Inventory playerInventory,
-            Component title) {
+    public RuneCarverBlockScreen(LegecyRuneCarverBlockMenu menu, Inventory playerInventory,
+                                 Component title) {
         super(menu, playerInventory, title);
         menu.registerUpdateListener(this::containerChanged);
     }
