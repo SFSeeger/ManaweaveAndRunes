@@ -36,12 +36,14 @@ public class MRRecipeProvider extends RecipeProvider {
     protected void buildRecipes(RecipeOutput recipeOutput) {
         new RuneCarverRecipeBuilder(itemStackFromRegistry(ManaweaveAndRunesItemInit.AMETHYST_FIRE_RUNE_ITEM),
                                     Ingredient.of(ManaweaveAndRunesItemInit.DIAMOND_CHISEL.asItem()),
-                                    Ingredient.of(ManaweaveAndRunesItemInit.AMETHYST_BASE_RUNE.asItem()))
+                                    Ingredient.of(ManaweaveAndRunesItemInit.AMETHYST_BASE_RUNE.asItem()),
+                                    Ingredient.of(ManaweaveAndRunesItemInit.AIR_RUNE_CARVING_TEMPLATE))
                 .unlockedBy("has_base_rune", has(ManaweaveAndRunesItemInit.AMETHYST_BASE_RUNE.asItem()))
                 .save(recipeOutput);
         new RuneCarverRecipeBuilder(itemStackFromRegistry(ManaweaveAndRunesItemInit.AMETHYST_AIR_RUNE_ITEM),
                                     Ingredient.of(ManaweaveAndRunesItemInit.DIAMOND_CHISEL.asItem()),
-                                    Ingredient.of(ManaweaveAndRunesItemInit.AMETHYST_BASE_RUNE.asItem()))
+                                    Ingredient.of(ManaweaveAndRunesItemInit.AMETHYST_BASE_RUNE.asItem()),
+                                    Ingredient.of(ManaweaveAndRunesItemInit.FIRE_RUNE_CARVING_TEMPLATE))
                 .unlockedBy("has_base_rune", has(ManaweaveAndRunesItemInit.AMETHYST_BASE_RUNE.asItem()))
                 .save(recipeOutput);
 

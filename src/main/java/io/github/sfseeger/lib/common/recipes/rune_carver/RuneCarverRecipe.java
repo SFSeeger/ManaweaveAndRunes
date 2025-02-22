@@ -91,7 +91,7 @@ public class RuneCarverRecipe implements Recipe<RuneCarverRecipeInput> {
         return this.runeTemplate.test(itemStack);
     }
 
-    public boolean isBase(ItemStack itemStack) {
+    public boolean isBaseIngredient(ItemStack itemStack) {
         return this.runeBase.test(itemStack);
     }
 }
