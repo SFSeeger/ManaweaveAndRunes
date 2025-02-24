@@ -4,8 +4,9 @@ import io.github.sfseeger.lib.common.Tier;
 import io.github.sfseeger.lib.common.rituals.Ritual;
 import io.github.sfseeger.lib.common.rituals.RitualStepResult;
 import io.github.sfseeger.lib.common.rituals.ritual_data.RitualContext;
+import io.github.sfseeger.lib.common.rituals.ritual_data.builtin.PlayerRitualData;
 import io.github.sfseeger.lib.common.rituals.ritual_data.builtin.PositionRitualData;
-import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesItemInit;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRItemInit;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -57,18 +58,23 @@ public class ThunderRitual extends Ritual {
     @Override
     public void onRitualInterrupt(Level level, BlockPos pos, BlockState state, RitualContext context,
             RitualOriginType originType) {
-        Player p = level.getPlayerByUUID(context.getData("starting_player", PLAYER_TYPE).getPlayerUUID());
-        if (p != null) {
-            BlockPos pPos = p.blockPosition();
-            EntityType.LIGHTNING_BOLT.spawn((ServerLevel) level, pPos, MobSpawnType.TRIGGERED);
-            p.hurt(p.damageSources().magic(), 10);
-        }
         returnPositionRune(level, pos);
 
+        PlayerRitualData player = context.getData("starting_player", PLAYER_TYPE);
+        if (player == null) {
+            return;
+        }
+        Player p = level.getPlayerByUUID(player.getPlayerUUID());
+        if (p == null) {
+            return;
+        }
+        BlockPos pPos = p.blockPosition();
+        EntityType.LIGHTNING_BOLT.spawn((ServerLevel) level, pPos, MobSpawnType.TRIGGERED);
+        p.hurt(p.damageSources().magic(), 10);
     }
 
     public void returnPositionRune(Level level, BlockPos pos) {
         level.addFreshEntity(new ItemEntity(level, pos.getX(), pos.getY() + 1, pos.getZ(),
-                                            new ItemStack(ManaweaveAndRunesItemInit.POSITION_RUNE_ITEM.get())));
+                                            new ItemStack(MRItemInit.POSITION_RUNE_ITEM.get())));
     }
 }

@@ -21,6 +21,8 @@ public class ManaNetwork {
     Set<ManaNetworkNode> providerNodes = new LinkedHashSet<>();
     Set<ManaNetworkNode> hybridNodes = new TreeSet<>(NODE_COMPARATOR);
 
+    List<DistributionResult> resultsLastTick = new ArrayList<>();
+
     Queue<ManaTransaction> manaRequests = new PriorityQueue<>(TRANSACTION_COMPARATOR.reversed());
     Queue<ManaTransaction> manaOffers = new PriorityQueue<>(TRANSACTION_COMPARATOR.reversed());
 
@@ -39,6 +41,7 @@ public class ManaNetwork {
     public void distributeMana() {
         Map<Mana, Integer> totalRequested = new HashMap<>();
         Map<Mana, Integer> totalOffered = new HashMap<>();
+        this.resultsLastTick.clear();
 
         for (ManaTransaction request : manaRequests) {
             totalRequested.merge(request.mana(), request.amount(), Integer::sum);
@@ -101,14 +104,19 @@ public class ManaNetwork {
                     }
                 }
             }
+            manaRequests.clear();
+            manaOffers.clear();
 
-            if(diff != 0) {
-                //System.out.println("ManaNetwork.distributeMana: diff != 0 for mana " + mana + " diff: " + diff);
+            if (diff == 0) {
+                resultsLastTick.add(new DistributionResult(DistributionResult.DistributionTickState.EVEN, 0, mana));
+            } else if (diff > 0) {
+                resultsLastTick.add(
+                        new DistributionResult(DistributionResult.DistributionTickState.OVERFLOW, diff, mana));
+            } else {
+                resultsLastTick.add(
+                        new DistributionResult(DistributionResult.DistributionTickState.UNDERFLOW, -diff, mana));
             }
         }
-
-        manaRequests.clear();
-        manaOffers.clear();
     }
 
     public void addNode(ManaNetworkNode node) {
@@ -195,7 +203,7 @@ public class ManaNetwork {
         target.manaOffers.addAll(source.manaOffers);
 
         for (ManaNetworkNode node : source.nodes) {
-            node.setManaNetworkNoEval(this);
+            node.setManaNetwork(this);
         }
         ManaNetworkHandler.getInstance(level.getDataStorage()).removeNetwork(source);
     }
@@ -213,6 +221,18 @@ public class ManaNetwork {
         distributeMana();
     }
 
+    public List<DistributionResult> getResultsLastTick() {
+        return resultsLastTick;
+    }
+
     public record BFSResult(boolean isValid, Set<ManaNetworkNode> visitedNodes) {
+    }
+
+    public record DistributionResult(DistributionTickState state, int amount, Mana mana) {
+        public enum DistributionTickState {
+            OVERFLOW,
+            UNDERFLOW,
+            EVEN
+        }
     }
 }

@@ -13,9 +13,9 @@ import net.minecraft.world.item.Rarity;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-import static io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesDataComponentsInit.SPELL_PART_DATA_COMPONENT;
+import static io.github.sfseeger.manaweave_and_runes.core.init.MRDataComponentsInit.SPELL_PART_DATA_COMPONENT;
 
-public class ManaweaveAndRunesItemInit {
+public class MRItemInit {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(ManaweaveAndRunes.MODID);
 
     public static final DeferredItem<Item> TANZANITE = ITEMS.register("tanzanite",
@@ -54,9 +54,9 @@ public class ManaweaveAndRunesItemInit {
                            ManaWeaversStaffItem::new);
 
 
-    public static final DeferredItem<SpellHolderItem> AMETHYST_SPELL_HOLDER_ITEM = ITEMS.register(
-            "amethyst_spell_holder", () -> new SpellHolderItem(
-                    new Item.Properties().component(ManaweaveAndRunesDataComponentsInit.SPELL_DATA_COMPONENT,
+    public static final DeferredItem<SpellHolderItem> SPELL_HOLDER_ITEM = ITEMS.register(
+            "spell_holder", () -> new SpellHolderItem(
+                    new Item.Properties().component(MRDataComponentsInit.SPELL_DATA_COMPONENT,
                                                     new SpellDataComponent(new Spell()))));
 
 
@@ -73,12 +73,21 @@ public class ManaweaveAndRunesItemInit {
                                                                                       () -> new SpellPartHolderItem(
                                                                                               new Item.Properties()));
 
-    static {
-        SpellNodeInit.SPELL_NODES.getEntries().forEach(entry -> {
-            ITEMS.register(entry.getId().getPath(), () -> new SpellPartHolderItem(
-                    new Item.Properties().component(SPELL_PART_DATA_COMPONENT, new SpellPart(entry))));
-        });
+    //Custom Block Items
+    public static final DeferredItem<RitualAnchorBlockItem> NOVICE_RITUAL_ANCHOR_BLOCK_ITEM = ITEMS.register(
+            "novice_ritual_anchor",
+            () -> new RitualAnchorBlockItem(MRBlockInit.NOVICE_RITUAL_ANCHOR_BLOCK.get(), new Item.Properties()));
+    public static final DeferredItem<RitualAnchorBlockItem> MASTER_RITUAL_ANCHOR_BLOCK_ITEM = ITEMS.register(
+            "master_ritual_anchor",
+            () -> new RitualAnchorBlockItem(MRBlockInit.MASTER_RITUAL_ANCHOR_BLOCK.get(), new Item.Properties()));
+    public static final DeferredItem<RitualAnchorBlockItem> ASCENDED_RITUAL_ANCHOR_BLOCK_ITEM = ITEMS.register(
+            "ascended_ritual_anchor",
+            () -> new RitualAnchorBlockItem(MRBlockInit.ASCENDED_RITUAL_ANCHOR_BLOCK.get(), new Item.Properties()));
 
-        ManaweaveAndRunesBlockInit.BLOCKS.getEntries().forEach(ITEMS::registerSimpleBlockItem);
+    static {
+        SpellNodeInit.SPELL_NODES.getEntries()
+                .forEach(entry -> ITEMS.register(entry.getId().getPath(), () -> new SpellPartHolderItem(
+                        new Item.Properties().component(SPELL_PART_DATA_COMPONENT, new SpellPart(entry)))));
+
     }
 }

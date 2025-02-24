@@ -7,7 +7,7 @@ import io.github.sfseeger.lib.common.mana.capability.ManaHandler;
 import io.github.sfseeger.lib.common.mana.network.ManaNetworkNode;
 import io.github.sfseeger.lib.common.mana.network.ManaNetworkNodeType;
 import io.github.sfseeger.manaweave_and_runes.common.blocks.ManaGeneratorBlock;
-import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockEntityInit;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRBlockEntityInit;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -54,7 +54,7 @@ public class ManaGeneratorBlockEntity extends BlockEntity implements IManaNetwor
     private int cookTimeRemaining = 0;
 
     public ManaGeneratorBlockEntity(BlockPos pos, BlockState blockState) {
-        super(ManaweaveAndRunesBlockEntityInit.MANA_GENERATOR_BLOCK_ENTITY.get(), pos, blockState);
+        super(MRBlockEntityInit.MANA_GENERATOR_BLOCK_ENTITY.get(), pos, blockState);
         manaHandler =
                 new ManaHandler(CAPACITY, MAX_EXTRACT, MAX_RECEIVE, null) {
                     @Override

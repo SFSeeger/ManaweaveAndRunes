@@ -1,8 +1,7 @@
 package io.github.sfseeger.manaweave_and_runes.common.blockentities;
 
-import io.github.sfseeger.lib.common.spells.ISpellCaster;
 import io.github.sfseeger.lib.common.spells.IUpgradable;
-import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockEntityInit;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRBlockEntityInit;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -42,7 +41,7 @@ public class WandModificationTableBlockEntity extends BlockEntity {
     }
 
     public WandModificationTableBlockEntity(BlockPos pos, BlockState blockState) {
-        super(ManaweaveAndRunesBlockEntityInit.WAND_MODIFICATION_TABLE_BLOCK_ENTITY.get(), pos, blockState);
+        super(MRBlockEntityInit.WAND_MODIFICATION_TABLE_BLOCK_ENTITY.get(), pos, blockState);
     }
 
     public ItemStackHandler getItemHandler(@Nullable Direction side) {

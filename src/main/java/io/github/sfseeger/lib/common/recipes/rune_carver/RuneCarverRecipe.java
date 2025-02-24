@@ -1,6 +1,6 @@
 package io.github.sfseeger.lib.common.recipes.rune_carver;
 
-import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesRecipeInit;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRRecipeInit;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemStack;
@@ -61,12 +61,12 @@ public class RuneCarverRecipe implements Recipe<RuneCarverRecipeInput> {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return ManaweaveAndRunesRecipeInit.RUNE_CARVER_RECIPE_SERIALIZER.get();
+        return MRRecipeInit.RUNE_CARVER_RECIPE_SERIALIZER.get();
     }
 
     @Override
     public RecipeType<?> getType() {
-        return ManaweaveAndRunesRecipeInit.RUNE_CARVER_RECIPE_TYPE.get();
+        return MRRecipeInit.RUNE_CARVER_RECIPE_TYPE.get();
     }
 
     public Ingredient getChisel() {

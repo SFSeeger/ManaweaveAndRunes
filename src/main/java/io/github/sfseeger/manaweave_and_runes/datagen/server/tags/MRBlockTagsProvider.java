@@ -1,8 +1,8 @@
 package io.github.sfseeger.manaweave_and_runes.datagen.server.tags;
 
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRBlockInit;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRTagInit;
-import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockInit;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
@@ -21,37 +21,37 @@ public class MRBlockTagsProvider extends BlockTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider provider) {
         this.tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                .add(ManaweaveAndRunesBlockInit.MANA_COLLECTOR_BLOCK.get())
-                .add(ManaweaveAndRunesBlockInit.TANZANITE_ORE.get())
-                .add(ManaweaveAndRunesBlockInit.DEEPSLATE_TANZANITE_ORE.get())
-                .add(ManaweaveAndRunesBlockInit.MANA_STORAGE_BLOCK.get())
-                .add(ManaweaveAndRunesBlockInit.RUNE_BLOCK.get())
-                .add(ManaweaveAndRunesBlockInit.RUNE_PEDESTAL_BLOCK.get())
-                .add(ManaweaveAndRunesBlockInit.MANA_INFUSED_ROCK_BLOCK.get())
-                .add(ManaweaveAndRunesBlockInit.MANA_TRANSMITTER_BLOCK.get());
+                .add(MRBlockInit.MANA_COLLECTOR_BLOCK.get())
+                .add(MRBlockInit.TANZANITE_ORE.get())
+                .add(MRBlockInit.DEEPSLATE_TANZANITE_ORE.get())
+                .add(MRBlockInit.MANA_STORAGE_BLOCK.get())
+                .add(MRBlockInit.RUNE_BLOCK.get())
+                .add(MRBlockInit.RUNE_PEDESTAL_BLOCK.get())
+                .add(MRBlockInit.MANA_INFUSED_ROCK_BLOCK.get())
+                .add(MRBlockInit.MANA_TRANSMITTER_BLOCK.get());
 
         this.tag(BlockTags.NEEDS_STONE_TOOL)
-                .add(ManaweaveAndRunesBlockInit.RUNE_BLOCK.get())
-                .add(ManaweaveAndRunesBlockInit.MANA_INFUSED_ROCK_BLOCK.get())
-                .add(ManaweaveAndRunesBlockInit.RUNE_PEDESTAL_BLOCK.get());
+                .add(MRBlockInit.RUNE_BLOCK.get())
+                .add(MRBlockInit.MANA_INFUSED_ROCK_BLOCK.get())
+                .add(MRBlockInit.RUNE_PEDESTAL_BLOCK.get());
 
         this.tag(BlockTags.NEEDS_IRON_TOOL)
-                .add(ManaweaveAndRunesBlockInit.MANA_COLLECTOR_BLOCK.get())
-                .add(ManaweaveAndRunesBlockInit.MANA_STORAGE_BLOCK.get())
-                .add(ManaweaveAndRunesBlockInit.NOVICE_MANA_CONCENTRATOR_BLOCK.get())
-                .add(ManaweaveAndRunesBlockInit.MASTER_MANA_CONCENTRATOR_BLOCK.get())
-                .add(ManaweaveAndRunesBlockInit.ASCENDED_MANA_CONCENTRATOR_BLOCK.get())
-                .add(ManaweaveAndRunesBlockInit.NOVICE_RITUAL_ANCHOR_BLOCK.get())
-                .add(ManaweaveAndRunesBlockInit.MASTER_RITUAL_ANCHOR_BLOCK.get())
-                .add(ManaweaveAndRunesBlockInit.ASCENDED_RITUAL_ANCHOR_BLOCK.get())
-                .add(ManaweaveAndRunesBlockInit.MANA_TRANSMITTER_BLOCK.get())
-                .add(ManaweaveAndRunesBlockInit.WAND_MODIFICATION_TABLE_BLOCK.get());
+                .add(MRBlockInit.MANA_COLLECTOR_BLOCK.get())
+                .add(MRBlockInit.MANA_STORAGE_BLOCK.get())
+                .add(MRBlockInit.NOVICE_MANA_CONCENTRATOR_BLOCK.get())
+                .add(MRBlockInit.MASTER_MANA_CONCENTRATOR_BLOCK.get())
+                .add(MRBlockInit.ASCENDED_MANA_CONCENTRATOR_BLOCK.get())
+                .add(MRBlockInit.NOVICE_RITUAL_ANCHOR_BLOCK.get())
+                .add(MRBlockInit.MASTER_RITUAL_ANCHOR_BLOCK.get())
+                .add(MRBlockInit.ASCENDED_RITUAL_ANCHOR_BLOCK.get())
+                .add(MRBlockInit.MANA_TRANSMITTER_BLOCK.get())
+                .add(MRBlockInit.WAND_MODIFICATION_TABLE_BLOCK.get());
 
         this.tag(BlockTags.NEEDS_DIAMOND_TOOL)
-                .add(ManaweaveAndRunesBlockInit.TANZANITE_ORE.get())
-                .add(ManaweaveAndRunesBlockInit.DEEPSLATE_TANZANITE_ORE.get());
+                .add(MRBlockInit.TANZANITE_ORE.get())
+                .add(MRBlockInit.DEEPSLATE_TANZANITE_ORE.get());
 
         this.tag(MRTagInit.MANA_INFUSED_BLOCK)
-                .add(ManaweaveAndRunesBlockInit.MANA_INFUSED_ROCK_BLOCK.get());
+                .add(MRBlockInit.MANA_INFUSED_ROCK_BLOCK.get());
     }
 }

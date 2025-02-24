@@ -7,10 +7,9 @@ import io.github.sfseeger.lib.common.rituals.ritual_data.RitualContext;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.SaplingBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -33,8 +32,8 @@ public class GrowthRitual extends Ritual {
     @Override
     public RitualStepResult onRitualServerTick(ServerLevel level, BlockPos pos, BlockState state, int ticksPassed,
             RitualContext context, RitualOriginType originType) {
-        if (ticksPassed % 20 != 0) {
-            return RitualStepResult.SUCCESS;
+        if (ticksPassed % 20 + level.random.nextInt(4 * 20) != 0) {
+            return RitualStepResult.SKIP;
         }
 
         Vec3 dimension = getDimension();
@@ -43,14 +42,12 @@ public class GrowthRitual extends Ritual {
 
         // Collect all valid blocks within radius
         for (int x = (int) -dimension.x() / 2; x <= (int) dimension.x() / 2; x++) {
-            for (int z = -(int) -dimension.z() / 2; z <= (int) dimension.z() / 2; z++) {
+            for (int z = (int) -dimension.z() / 2; z <= (int) dimension.z() / 2; z++) {
                 for (int y = (int) -dimension.y() / 2; y <= (int) dimension.y() / 2; y++) {
                     BlockPos pos1 = pos.offset(x, y, z);
                     BlockState targetState = level.getBlockState(pos1);
 
-                    // Only consider bonemealable (growable) blocks
-                    //TODO: Maybe only consider crops and saplings?
-                    if (targetState.getBlock() instanceof CropBlock || targetState.getBlock() instanceof SaplingBlock) {
+                    if (targetState.is(BlockTags.BEE_GROWABLES) || targetState.is(BlockTags.SAPLINGS)) {
                         possibleBlocks.add(pos1);
                     }
                 }
@@ -61,16 +58,18 @@ public class GrowthRitual extends Ritual {
         // Shuffle the list and pick a random subset
         Collections.shuffle(possibleBlocks);
         System.out.println("Possible blocks: " + possibleBlocks.size());
-        int count = Math.min(10, possibleBlocks.size());
+        int count = Math.min(3, possibleBlocks.size());
 
         for (int i = 0; i < count; i++) {
             BlockPos pos1 = possibleBlocks.get(i);
             BlockState targetState = level.getBlockState(pos1);
 
-            if (targetState.getBlock() instanceof BonemealableBlock growable && growable.isValidBonemealTarget(level,
-                                                                                                               pos1,
-                                                                                                               targetState)) {
-                growable.performBonemeal(level, random, pos1, targetState);
+            if (targetState.getBlock() instanceof CropBlock growable) {
+                growable.growCrops(level, pos1, targetState);
+                level.sendParticles(ParticleTypes.HAPPY_VILLAGER, pos1.getX(), pos1.getY(), pos1.getZ(), 2, 0, 0.25, 0,
+                                    0);
+            } else if (targetState.getBlock() instanceof SaplingBlock sapling) {
+                sapling.advanceTree(level, pos1, targetState, random);
                 level.sendParticles(ParticleTypes.HAPPY_VILLAGER, pos1.getX(), pos1.getY(), pos1.getZ(), 2, 0, 0.25, 0,
                                     0);
             }

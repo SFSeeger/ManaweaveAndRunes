@@ -3,9 +3,11 @@ package io.github.sfseeger.manaweave_and_runes.common.items;
 import io.github.sfseeger.lib.common.items.IItemHandlerItem;
 import io.github.sfseeger.lib.common.items.SpellHolderItem;
 import io.github.sfseeger.lib.common.spells.*;
+import io.github.sfseeger.manaweave_and_runes.client.renderers.item.ManaWeaversStaffRenderer;
 import io.github.sfseeger.manaweave_and_runes.common.data_components.ItemStackHandlerDataComponent;
 import io.github.sfseeger.manaweave_and_runes.common.data_components.SelectedSlotDataComponent;
-import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesDataComponentsInit;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRDataComponentsInit;
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -17,25 +19,34 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
+import org.jetbrains.annotations.NotNull;
+import software.bernie.geckolib.animatable.GeoItem;
+import software.bernie.geckolib.animatable.client.GeoRenderProvider;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animatable.instance.SingletonAnimatableInstanceCache;
+import software.bernie.geckolib.animation.*;
 
 import java.util.List;
+import java.util.function.Consumer;
 
-public class ManaWeaversStaffItem extends Item implements IItemHandlerItem, ISpellCaster, IUpgradable {
+public class ManaWeaversStaffItem extends Item implements IItemHandlerItem, ISpellCaster, IUpgradable, GeoItem {
+    private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+
     public ManaWeaversStaffItem() {
         super(new Item.Properties().stacksTo(1)
                       .rarity(Rarity.EPIC)
-                      .component(ManaweaveAndRunesDataComponentsInit.SELECTED_SLOT_DATA_COMPONENT,
+                      .component(MRDataComponentsInit.SELECTED_SLOT_DATA_COMPONENT,
                                  new SelectedSlotDataComponent(0)));
     }
 
     @Override
     public IItemHandler getItemHandler(ItemStack stack) {
-        if (!stack.has(ManaweaveAndRunesDataComponentsInit.ITEM_STACK_HANDLER_DATA_COMPONENT)) {
-            stack.set(ManaweaveAndRunesDataComponentsInit.ITEM_STACK_HANDLER_DATA_COMPONENT.get(),
+        if (!stack.has(MRDataComponentsInit.ITEM_STACK_HANDLER_DATA_COMPONENT)) {
+            stack.set(MRDataComponentsInit.ITEM_STACK_HANDLER_DATA_COMPONENT.get(),
                       new ItemStackHandlerDataComponent(new ItemStackHandler(getSlotCount())));
         }
 
-        return stack.get(ManaweaveAndRunesDataComponentsInit.ITEM_STACK_HANDLER_DATA_COMPONENT).getItemHandler();
+        return stack.get(MRDataComponentsInit.ITEM_STACK_HANDLER_DATA_COMPONENT).getItemHandler();
     }
 
     @Override
@@ -45,13 +56,13 @@ public class ManaWeaversStaffItem extends Item implements IItemHandlerItem, ISpe
 
     @Override
     public void switchSpell(ItemStack stack, int spellIndex) {
-        stack.set(ManaweaveAndRunesDataComponentsInit.SELECTED_SLOT_DATA_COMPONENT,
+        stack.set(MRDataComponentsInit.SELECTED_SLOT_DATA_COMPONENT,
                   new SelectedSlotDataComponent(getNextSpellIndex(stack, spellIndex)));
     }
 
     @Override
     public int getCurrentSpellIndex(ItemStack stack) {
-        return stack.getOrDefault(ManaweaveAndRunesDataComponentsInit.SELECTED_SLOT_DATA_COMPONENT,
+        return stack.getOrDefault(MRDataComponentsInit.SELECTED_SLOT_DATA_COMPONENT,
                                   new SelectedSlotDataComponent(0)).selectedSlot();
     }
 
@@ -76,7 +87,7 @@ public class ManaWeaversStaffItem extends Item implements IItemHandlerItem, ISpe
         for (int i = 0; i < slotCount; i++) {
             int nextIndex = (targetIndex + i) % slotCount;
             if (!itemHandler.getStackInSlot(nextIndex).isEmpty()) {
-                stack.set(ManaweaveAndRunesDataComponentsInit.SELECTED_SLOT_DATA_COMPONENT,
+                stack.set(MRDataComponentsInit.SELECTED_SLOT_DATA_COMPONENT,
                           new SelectedSlotDataComponent(nextIndex));
 
                 return nextIndex;
@@ -109,5 +120,35 @@ public class ManaWeaversStaffItem extends Item implements IItemHandlerItem, ISpe
         if (spell != null) {
             tooltipComponents.add(Component.literal(spell.getName()));
         }
+    }
+
+    private PlayState idlePredicate(AnimationState<ManaWeaversStaffItem> state) {
+        state.getController().setAnimation(RawAnimation.begin().thenLoop("idle"));
+        return PlayState.CONTINUE;
+    }
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        controllers.add(new AnimationController<>(this, "controller", 0, this::idlePredicate));
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return cache;
+    }
+
+    @Override
+    public void createGeoRenderer(Consumer<GeoRenderProvider> consumer) {
+        consumer.accept(new GeoRenderProvider() {
+            private ManaWeaversStaffRenderer renderer;
+
+            @Override
+            public @NotNull BlockEntityWithoutLevelRenderer getGeoItemRenderer() {
+                if (this.renderer == null)
+                    this.renderer = new ManaWeaversStaffRenderer();
+
+                return this.renderer;
+            }
+        });
     }
 }

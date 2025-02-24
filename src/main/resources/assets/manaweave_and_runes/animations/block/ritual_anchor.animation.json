@@ -1,0 +1,207 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "idle_inactive": {
+      "loop": true,
+      "animation_length": 1,
+      "bones": {
+        "bone": {
+          "scale": {
+            "0.0": {
+              "vector": [
+                0,
+                0,
+                0
+              ]
+            },
+            "1.0": {
+              "vector": [
+                0,
+                0,
+                0
+              ]
+            }
+          }
+        }
+      }
+    },
+    "activate": {
+      "animation_length": 2,
+      "bones": {
+        "bone": {
+          "scale": {
+            "0.0": {
+              "vector": [
+                0,
+                0,
+                0
+              ]
+            },
+            "2.0": {
+              "vector": [
+                1,
+                1,
+                1
+              ],
+              "easing": "easeInOutElastic",
+              "easingArgs": [
+                3
+              ]
+            }
+          }
+        }
+      }
+    },
+    "idle_active": {
+      "loop": true,
+      "animation_length": 4,
+      "bones": {
+        "bone": {
+          "rotation": {
+            "0.0": {
+              "vector": [
+                0,
+                0,
+                0
+              ]
+            },
+            "4.0": {
+              "vector": [
+                0,
+                364,
+                0
+              ],
+              "easing": "linear"
+            }
+          }
+        }
+      }
+    },
+    "ritual_active": {
+      "loop": true,
+      "animation_length": 4,
+      "bones": {
+        "bone": {
+          "rotation": {
+            "0.0": {
+              "vector": [
+                0,
+                0,
+                0
+              ]
+            },
+            "1.25": {
+              "vector": [
+                0,
+                360,
+                0
+              ],
+              "easing": "easeInElastic"
+            },
+            "3.0": {
+              "vector": [
+                0,
+                -360,
+                0
+              ],
+              "easing": "easeInElastic"
+            },
+            "4.0": {
+              "vector": [
+                0,
+                0,
+                0
+              ],
+              "easing": "easeInElastic"
+            }
+          },
+          "position": {
+            "0.0": {
+              "vector": [
+                0,
+                0,
+                0
+              ]
+            },
+            "1.6667": {
+              "vector": [
+                0,
+                4,
+                0
+              ],
+              "easing": "easeInQuad"
+            },
+            "4.0": {
+              "vector": [
+                0,
+                0,
+                0
+              ],
+              "easing": "easeOutSine"
+            }
+          },
+          "scale": {
+            "0.0": {
+              "vector": [
+                1,
+                1,
+                1
+              ]
+            },
+            "1.75": {
+              "vector": [
+                1.5,
+                1.5,
+                1.5
+              ],
+              "easing": "easeInQuint"
+            },
+            "4.0": {
+              "vector": [
+                1,
+                1,
+                1
+              ],
+              "easing": "easeOutQuint"
+            }
+          }
+        }
+      },
+      "sound_effects": {},
+      "particle_effects": {},
+      "timeline": {}
+    },
+    "deactivate": {
+      "animation_length": 2,
+      "bones": {
+        "bone": {
+          "scale": {
+            "0.0": {
+              "vector": [
+                1,
+                1,
+                1
+              ]
+            },
+            "1.0": {
+              "vector": [
+                2,
+                2,
+                2
+              ]
+            },
+            "2.0": {
+              "vector": [
+                0,
+                0,
+                0
+              ],
+              "easing": "easeOutQuint"
+            }
+          }
+        }
+      }
+    }
+  },
+  "geckolib_format_version": 2
+}

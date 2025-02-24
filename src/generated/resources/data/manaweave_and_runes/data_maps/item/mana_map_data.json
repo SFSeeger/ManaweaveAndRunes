@@ -3,12 +3,12 @@
     "#minecraft:terracotta": {
       "mana": [
         {
-          "amount": 4,
-          "manaType": "manaweave_and_runes:fire_mana"
-        },
-        {
           "amount": 2,
           "manaType": "manaweave_and_runes:air_mana"
+        },
+        {
+          "amount": 4,
+          "manaType": "manaweave_and_runes:fire_mana"
         }
       ]
     },

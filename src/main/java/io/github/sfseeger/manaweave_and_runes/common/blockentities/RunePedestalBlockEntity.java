@@ -8,7 +8,7 @@ import io.github.sfseeger.lib.common.mana.capability.ManaweaveAndRunesCapabiliti
 import io.github.sfseeger.lib.common.mana.network.ManaNetworkNode;
 import io.github.sfseeger.lib.common.mana.network.ManaNetworkNodeType;
 import io.github.sfseeger.manaweave_and_runes.common.blocks.ManaCollectorBlock;
-import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockEntityInit;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRBlockEntityInit;
 import io.github.sfseeger.manaweave_and_runes.core.util.ParticleUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -40,7 +40,7 @@ public class RunePedestalBlockEntity extends BlockEntity implements IManaNetwork
     public ManaNetworkNode node = new ManaNetworkNode(this, ManaNetworkNodeType.HYBRID, 2, false);
 
     public RunePedestalBlockEntity(BlockPos pos, BlockState blockState) {
-        super(ManaweaveAndRunesBlockEntityInit.RUNE_PEDESTAL_BLOCK_ENTITY.get(), pos, blockState);
+        super(MRBlockEntityInit.RUNE_PEDESTAL_BLOCK_ENTITY.get(), pos, blockState);
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, RunePedestalBlockEntity blockEntity) {

@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-import static io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesDataComponentsInit.PLAYER_DATA_COMPONENT;
+import static io.github.sfseeger.manaweave_and_runes.core.init.MRDataComponentsInit.PLAYER_DATA_COMPONENT;
 
 public class SoulContainerRuneItem extends Item implements IRitualDataCapable {
     public SoulContainerRuneItem() {

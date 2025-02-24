@@ -2,7 +2,7 @@ package io.github.sfseeger.lib.common.mana.capability;
 
 import io.github.sfseeger.lib.common.mana.Mana;
 import io.github.sfseeger.lib.common.mana.ManaDataComponent;
-import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesDataComponentsInit;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRDataComponentsInit;
 import net.minecraft.core.Holder;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
@@ -52,11 +52,11 @@ public class ItemStackManaHandler extends ManaHandler {
         ManaDataComponent manaDataComponent = getManaDataComponent();
         manaDataComponent.setManaAmount(manaType,
                                         super.getManaStored(manaType));
-        this.stack.set(ManaweaveAndRunesDataComponentsInit.MANA_DATA_COMPONENT, manaDataComponent);
+        this.stack.set(MRDataComponentsInit.MANA_DATA_COMPONENT, manaDataComponent);
     }
 
     public ManaDataComponent getManaDataComponent() {
-        return this.stack.getOrDefault(ManaweaveAndRunesDataComponentsInit.MANA_DATA_COMPONENT,
+        return this.stack.getOrDefault(MRDataComponentsInit.MANA_DATA_COMPONENT,
                                        new ManaDataComponent());
     }
 }

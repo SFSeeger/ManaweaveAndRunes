@@ -8,7 +8,7 @@ import io.github.sfseeger.lib.common.mana.capability.IManaItem;
 import io.github.sfseeger.lib.common.mana.capability.ProxyManaHandler;
 import io.github.sfseeger.lib.common.spells.IUpgradable;
 import io.github.sfseeger.manaweave_and_runes.common.data_components.ItemStackHandlerDataComponent;
-import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesDataComponentsInit;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRDataComponentsInit;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.Item;
@@ -28,7 +28,7 @@ public class RuneBraceletItem extends Item implements IItemHandlerItem, IUpgrada
 
     @Override
     public IItemHandler getItemHandler(ItemStack stack) {
-        if (!stack.has(ManaweaveAndRunesDataComponentsInit.ITEM_STACK_HANDLER_DATA_COMPONENT)) {
+        if (!stack.has(MRDataComponentsInit.ITEM_STACK_HANDLER_DATA_COMPONENT)) {
             ItemStackHandler handler = new ItemStackHandler(getSlotCount()) {
                 @Override
                 protected int getStackLimit(int slot, ItemStack stack) {
@@ -41,11 +41,11 @@ public class RuneBraceletItem extends Item implements IItemHandlerItem, IUpgrada
                 }
             };
 
-            stack.set(ManaweaveAndRunesDataComponentsInit.ITEM_STACK_HANDLER_DATA_COMPONENT.get(),
+            stack.set(MRDataComponentsInit.ITEM_STACK_HANDLER_DATA_COMPONENT.get(),
                       new ItemStackHandlerDataComponent(handler));
         }
 
-        return stack.get(ManaweaveAndRunesDataComponentsInit.ITEM_STACK_HANDLER_DATA_COMPONENT).getItemHandler();
+        return stack.get(MRDataComponentsInit.ITEM_STACK_HANDLER_DATA_COMPONENT).getItemHandler();
     }
 
     @Override

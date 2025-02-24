@@ -17,9 +17,9 @@ public class ManaweaveAndRunesItemGroupInit {
             CREATIVE_MODE_TABS.register("manaweave_and_runes_tab", () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.manaweave_and_runes"))
                     .withTabsBefore(CreativeModeTabs.COMBAT)
-                    .icon(() -> new ItemStack(ManaweaveAndRunesItemInit.AMETHYST_BASE_RUNE.get()))// TODO: change item
+                    .icon(() -> new ItemStack(MRItemInit.AMETHYST_BASE_RUNE.get()))// TODO: change item
                     .displayItems((parameters, output) -> {
-                        ManaweaveAndRunesItemInit.ITEMS.getEntries().forEach(item -> output.accept(item.get()));
+                        MRItemInit.ITEMS.getEntries().forEach(item -> output.accept(item.get()));
 //                        output.accept(ManaweaveAndRunesItemInit.CRYSTAL_ORE_ITEM.get());
 //                        output.accept(ManaweaveAndRunesItemInit.CRYSTAL.get());
 //                        output.accept(ManaweaveAndRunesItemInit.RUNE_BLOCK_ITEM.get());

@@ -10,7 +10,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
 
-public class ManaweaverAndRunesMenuInit {
+public class MRMenuInit {
     public static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(Registries.MENU,
                                                                                       ManaweaveAndRunes.MODID);
 

@@ -21,31 +21,31 @@ import java.util.List;
 import java.util.function.Supplier;
 
 @EventBusSubscriber(modid = ManaweaveAndRunes.MODID, bus = EventBusSubscriber.Bus.MOD)
-public class ManaweaveAndRunesCapabilityInit {
+public class MRCapabilityInit {
     private static void registerManaCapabilities(RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(
                 ManaweaveAndRunesCapabilities.MANA_HANDLER_BLOCK,
-                ManaweaveAndRunesBlockEntityInit.MANA_GENERATOR_BLOCK_ENTITY.get(),
+                MRBlockEntityInit.MANA_GENERATOR_BLOCK_ENTITY.get(),
                 ManaGeneratorBlockEntity::getManaHandler
         );
         event.registerBlockEntity(
                 ManaweaveAndRunesCapabilities.MANA_HANDLER_BLOCK,
-                ManaweaveAndRunesBlockEntityInit.MANA_COLLECTOR_BLOCK_ENTITY.get(),
+                MRBlockEntityInit.MANA_COLLECTOR_BLOCK_ENTITY.get(),
                 ManaCollectorBlockEntity::getManaHandler
         );
         event.registerBlockEntity(
                 ManaweaveAndRunesCapabilities.MANA_HANDLER_BLOCK,
-                ManaweaveAndRunesBlockEntityInit.RUNE_PEDESTAL_BLOCK_ENTITY.get(),
+                MRBlockEntityInit.RUNE_PEDESTAL_BLOCK_ENTITY.get(),
                 RunePedestalBlockEntity::getManaHandler
         );
         event.registerBlockEntity(
                 ManaweaveAndRunesCapabilities.MANA_HANDLER_BLOCK,
-                ManaweaveAndRunesBlockEntityInit.MANA_STORAGE_BLOCK_ENTITY.get(),
+                MRBlockEntityInit.MANA_STORAGE_BLOCK_ENTITY.get(),
                 ManaStorageBlockEntity::getManaHandler
         );
         event.registerBlockEntity(
                 ManaweaveAndRunesCapabilities.MANA_HANDLER_BLOCK,
-                ManaweaveAndRunesBlockEntityInit.RITUAL_ANCHOR_BLOCK_ENTITY.get(),
+                MRBlockEntityInit.RITUAL_ANCHOR_BLOCK_ENTITY.get(),
                 RitualAnchorBlockEntity::getManaHandler
         );
 
@@ -65,8 +65,8 @@ public class ManaweaveAndRunesCapabilityInit {
                     return new ItemStackManaHandler(itemstack, capacity, maxExtract, maxInsert,
                             allowedMana);
                 },
-                ManaweaveAndRunesItemInit.AMETHYST_FIRE_RUNE_ITEM.get(),
-                ManaweaveAndRunesItemInit.AMETHYST_AIR_RUNE_ITEM.get()
+                MRItemInit.AMETHYST_FIRE_RUNE_ITEM.get(),
+                MRItemInit.AMETHYST_AIR_RUNE_ITEM.get()
         );
 
         event.registerItem(
@@ -77,29 +77,29 @@ public class ManaweaveAndRunesCapabilityInit {
                     }
                     return null;
                 },
-                ManaweaveAndRunesItemInit.RUNE_BRACELET_ITEM.get()
+                MRItemInit.RUNE_BRACELET_ITEM.get()
         );
     }
 
     private static void registerItemHandlerCapabilities(RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(
                 Capabilities.ItemHandler.BLOCK,
-                ManaweaveAndRunesBlockEntityInit.MANA_COLLECTOR_BLOCK_ENTITY.get(),
+                MRBlockEntityInit.MANA_COLLECTOR_BLOCK_ENTITY.get(),
                 ManaCollectorBlockEntity::getItemHandler
         );
         event.registerBlockEntity(
                 Capabilities.ItemHandler.BLOCK,
-                ManaweaveAndRunesBlockEntityInit.RUNE_PEDESTAL_BLOCK_ENTITY.get(),
+                MRBlockEntityInit.RUNE_PEDESTAL_BLOCK_ENTITY.get(),
                 RunePedestalBlockEntity::getItemHandler
         );
         event.registerBlockEntity(
                 Capabilities.ItemHandler.BLOCK,
-                ManaweaveAndRunesBlockEntityInit.WAND_MODIFICATION_TABLE_BLOCK_ENTITY.get(),
+                MRBlockEntityInit.WAND_MODIFICATION_TABLE_BLOCK_ENTITY.get(),
                 WandModificationTableBlockEntity::getItemHandler
         );
         event.registerBlockEntity(
                 Capabilities.ItemHandler.BLOCK,
-                ManaweaveAndRunesBlockEntityInit.MANA_GENERATOR_BLOCK_ENTITY.get(),
+                MRBlockEntityInit.MANA_GENERATOR_BLOCK_ENTITY.get(),
                 ManaGeneratorBlockEntity::getItemHandler
         );
 
@@ -123,7 +123,7 @@ public class ManaweaveAndRunesCapabilityInit {
                     };
                 },
 
-                ManaweaveAndRunesItemInit.MANA_WEAVERS_STAFF_ITEM.get()
+                MRItemInit.MANA_WEAVERS_STAFF_ITEM.get()
         );
 
         // RuneBraceletItemHandler
@@ -146,7 +146,7 @@ public class ManaweaveAndRunesCapabilityInit {
                     };
                 },
 
-                ManaweaveAndRunesItemInit.RUNE_BRACELET_ITEM.get()
+                MRItemInit.RUNE_BRACELET_ITEM.get()
         );
     }
 

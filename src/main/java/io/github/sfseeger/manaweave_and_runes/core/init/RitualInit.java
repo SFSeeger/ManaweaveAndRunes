@@ -25,4 +25,11 @@ public class RitualInit {
             RITUALS.register("teleport_ritual", TeleportRitual::new);
     public static final Supplier<Ritual> GROWTH_RITUAL =
             RITUALS.register("growth_ritual", GrowthRitual::new);
+    public static final Supplier<Ritual> SANCTUARY_RITUAL =
+            RITUALS.register("sanctuary_ritual", () -> new SanctuaryRitual());
+    public static final Supplier<Ritual> ASCENDED_SANCTUARY_RITUAL = RITUALS.register("ascended_sanctuary_ritual",
+                                                                                      AscendedSanctuaryRitual::new);
+    public static final Supplier<ShatteringRiteRitual> SHATTERING_RITE_RITUAL =
+            RITUALS.register("shattering_rite_ritual", ShatteringRiteRitual::new);
+
 }

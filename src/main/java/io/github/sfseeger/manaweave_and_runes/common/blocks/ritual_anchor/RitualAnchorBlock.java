@@ -2,7 +2,7 @@ package io.github.sfseeger.manaweave_and_runes.common.blocks.ritual_anchor;
 
 import io.github.sfseeger.lib.common.blocks.ManaNetworkBlock;
 import io.github.sfseeger.manaweave_and_runes.common.blockentities.RitualAnchorBlockEntity;
-import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockEntityInit;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRBlockEntityInit;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
@@ -12,6 +12,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -36,7 +37,7 @@ public class RitualAnchorBlock extends ManaNetworkBlock implements EntityBlock {
     public final RitualAnchorType ritualAnchorType;
 
     public RitualAnchorBlock(RitualAnchorType type) {
-        super(Properties.of().strength(1.5f).requiresCorrectToolForDrops().sound(SoundType.AMETHYST));
+        super(Properties.of().strength(1.5f).requiresCorrectToolForDrops().sound(SoundType.STONE));
         this.ritualAnchorType = type;
     }
 
@@ -51,9 +52,14 @@ public class RitualAnchorBlock extends ManaNetworkBlock implements EntityBlock {
     }
 
     @Override
+    protected RenderShape getRenderShape(BlockState state) {
+        return RenderShape.ENTITYBLOCK_ANIMATED;
+    }
+
+    @Override
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state,
             BlockEntityType<T> blockEntityType) {
-        if (blockEntityType == ManaweaveAndRunesBlockEntityInit.RITUAL_ANCHOR_BLOCK_ENTITY.get()) {
+        if (blockEntityType == MRBlockEntityInit.RITUAL_ANCHOR_BLOCK_ENTITY.get()) {
             if (!level.isClientSide) {
                 return (level1, blockPos, blockState, blockEntity) -> RitualAnchorBlockEntity.serverTick(level1,
                                                                                                          blockPos,

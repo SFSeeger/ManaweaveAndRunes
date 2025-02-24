@@ -1,8 +1,8 @@
 package io.github.sfseeger.manaweave_and_runes.datagen.server.tags;
 
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRItemInit;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRTagInit;
-import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesItemInit;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
@@ -21,8 +21,8 @@ public class MRItemTagProvider extends ItemTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider provider) {
         this.tag(MRTagInit.SPELL_MANA_PROVIDER)
-                .add(ManaweaveAndRunesItemInit.AMETHYST_FIRE_RUNE_ITEM.get())
-                .add(ManaweaveAndRunesItemInit.AMETHYST_AIR_RUNE_ITEM.get())
-                .add(ManaweaveAndRunesItemInit.RUNE_BRACELET_ITEM.get());
+                .add(MRItemInit.AMETHYST_FIRE_RUNE_ITEM.get())
+                .add(MRItemInit.AMETHYST_AIR_RUNE_ITEM.get())
+                .add(MRItemInit.RUNE_BRACELET_ITEM.get());
     }
 }

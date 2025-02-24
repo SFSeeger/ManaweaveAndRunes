@@ -3,7 +3,7 @@ package io.github.sfseeger.lib.common.recipes.mana_concentrator;
 import com.mojang.datafixers.util.Pair;
 import io.github.sfseeger.lib.common.Tier;
 import io.github.sfseeger.lib.common.mana.Mana;
-import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesRecipeInit;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRRecipeInit;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.ItemStack;
@@ -58,12 +58,12 @@ public record ManaConcentratorRecipe(Tier tier, List<Ingredient> inputs, Map<Man
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return ManaweaveAndRunesRecipeInit.MANA_CONCENTRATOR_RECIPE_SERIALIZER.get();
+        return MRRecipeInit.MANA_CONCENTRATOR_RECIPE_SERIALIZER.get();
     }
 
     @Override
     public RecipeType<?> getType() {
-        return ManaweaveAndRunesRecipeInit.MANA_CONCENTRATOR_RECIPE_TYPE.get();
+        return MRRecipeInit.MANA_CONCENTRATOR_RECIPE_TYPE.get();
     }
 
     public List<Pair<Holder<Mana>, Integer>> manaMapAsList() {

@@ -5,7 +5,7 @@ import io.github.sfseeger.lib.common.mana.Mana;
 import io.github.sfseeger.lib.common.spells.AbstractSpellModifier;
 import io.github.sfseeger.lib.common.spells.SpellPart;
 import io.github.sfseeger.manaweave_and_runes.common.blockentities.SpellDesignerBlockEntity;
-import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockInit;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRBlockInit;
 import io.github.sfseeger.manaweave_and_runes.core.payloads.CraftPayload;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
@@ -20,9 +20,9 @@ import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.Map;
 
-import static io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesDataComponentsInit.SPELL_PART_DATA_COMPONENT;
-import static io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesItemInit.DIAMOND_CHISEL;
-import static io.github.sfseeger.manaweave_and_runes.core.init.ManaweaverAndRunesMenuInit.SPELL_DESIGNER_MENU;
+import static io.github.sfseeger.manaweave_and_runes.core.init.MRDataComponentsInit.SPELL_PART_DATA_COMPONENT;
+import static io.github.sfseeger.manaweave_and_runes.core.init.MRItemInit.DIAMOND_CHISEL;
+import static io.github.sfseeger.manaweave_and_runes.core.init.MRMenuInit.SPELL_DESIGNER_MENU;
 
 public class SpellDesignerMenu extends AbstractContainerMenu {
     private static final int INV_SLOT_START = 6;
@@ -129,7 +129,7 @@ public class SpellDesignerMenu extends AbstractContainerMenu {
     @Override
     public boolean stillValid(Player player) {
         return AbstractContainerMenu.stillValid(this.access,
-                player, ManaweaveAndRunesBlockInit.SPELL_DESIGNER_BLOCK.get());
+                                                player, MRBlockInit.SPELL_DESIGNER_BLOCK.get());
     }
 
     public boolean hasChisel() {

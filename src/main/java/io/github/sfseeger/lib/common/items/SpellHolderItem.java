@@ -3,7 +3,7 @@ package io.github.sfseeger.lib.common.items;
 import io.github.sfseeger.lib.common.spells.AbstractSpellEffect;
 import io.github.sfseeger.lib.common.spells.Spell;
 import io.github.sfseeger.lib.common.spells.data_components.SpellDataComponent;
-import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesDataComponentsInit;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRDataComponentsInit;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.Item;
@@ -18,7 +18,7 @@ public class SpellHolderItem extends Item {
     }
 
     public static Spell getSpell(ItemStack stack) {
-        SpellDataComponent component = stack.get(ManaweaveAndRunesDataComponentsInit.SPELL_DATA_COMPONENT);
+        SpellDataComponent component = stack.get(MRDataComponentsInit.SPELL_DATA_COMPONENT);
         if (component != null) {
             return component.spell();
         }

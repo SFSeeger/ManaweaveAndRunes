@@ -6,7 +6,6 @@ import io.github.sfseeger.manaweave_and_runes.client.event.KeyManager;
 import io.github.sfseeger.manaweave_and_runes.core.init.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
@@ -32,25 +31,26 @@ public class ManaweaveAndRunes {
         modEventBus.addListener(this::commonSetup);
 
         ManaInit.MANA_TYPES.register(modEventBus);
-        ManaweaveAndRunesDataComponentsInit.DATA_COMPONENTS.register(modEventBus);
+        MRDataComponentsInit.DATA_COMPONENTS.register(modEventBus);
 
-        ManaweaveAndRunesBlockInit.BLOCKS.register(modEventBus);
-        ManaweaveAndRunesBlockEntityInit.BLOCK_ENTITY_TYPES.register(modEventBus);
-        ManaweaveAndRunesItemInit.ITEMS.register(modEventBus);
+        MRBlockInit.BLOCKS.register(modEventBus);
+        MRBlockEntityInit.BLOCK_ENTITY_TYPES.register(modEventBus);
+        MRItemInit.ITEMS.register(modEventBus);
 
         ManaweaveAndRunesItemGroupInit.CREATIVE_MODE_TABS.register(modEventBus);
         MRParticleTypeInit.PARTICLE_TYPES.register(modEventBus);
 
         EntityTypeInit.ENTITY_TYPES.register(modEventBus);
 
-        ManaweaveAndRunesRecipeInit.RECIPE_TYPES.register(modEventBus);
-        ManaweaveAndRunesRecipeInit.RECIPE_SERIALIZERS.register(modEventBus);
-        ManaweaverAndRunesMenuInit.MENUS.register(modEventBus);
+        MRRecipeInit.RECIPE_TYPES.register(modEventBus);
+        MRRecipeInit.RECIPE_SERIALIZERS.register(modEventBus);
+        MRMenuInit.MENUS.register(modEventBus);
 
         RitualDataTypesInit.register(modEventBus);
         RitualInit.RITUALS.register(modEventBus);
 
         SpellNodeInit.SPELL_NODES.register(modEventBus);
+
 
         NeoForge.EVENT_BUS.register(ManaNetworkHandler.class);
 

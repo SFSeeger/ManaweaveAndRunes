@@ -1,7 +1,7 @@
 package io.github.sfseeger.manaweave_and_runes.common.menus;
 
 import io.github.sfseeger.manaweave_and_runes.common.blockentities.ManaGeneratorBlockEntity;
-import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockInit;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRBlockInit;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
@@ -13,7 +13,7 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
 
-import static io.github.sfseeger.manaweave_and_runes.core.init.ManaweaverAndRunesMenuInit.MANA_GENERATOR_MENU;
+import static io.github.sfseeger.manaweave_and_runes.core.init.MRMenuInit.MANA_GENERATOR_MENU;
 
 public class ManaGeneratorMenu extends AbstractContainerMenu {
 
@@ -125,6 +125,6 @@ public class ManaGeneratorMenu extends AbstractContainerMenu {
     @Override
     public boolean stillValid(Player player) {
         return AbstractContainerMenu.stillValid(this.access,
-                                                player, ManaweaveAndRunesBlockInit.MANA_GENERATOR_BLOCK.get());
+                                                player, MRBlockInit.MANA_GENERATOR_BLOCK.get());
     }
 }

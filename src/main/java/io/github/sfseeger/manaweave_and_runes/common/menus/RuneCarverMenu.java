@@ -2,9 +2,9 @@ package io.github.sfseeger.manaweave_and_runes.common.menus;
 
 import io.github.sfseeger.lib.common.recipes.rune_carver.RuneCarverRecipe;
 import io.github.sfseeger.lib.common.recipes.rune_carver.RuneCarverRecipeInput;
-import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockInit;
-import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesRecipeInit;
-import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaverAndRunesMenuInit;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRBlockInit;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRMenuInit;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRRecipeInit;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
@@ -38,9 +38,9 @@ public class RuneCarverMenu extends ItemCombinerMenu {
     }
 
     public RuneCarverMenu(int containerId, Inventory playerInventory, ContainerLevelAccess access) {
-        super(ManaweaverAndRunesMenuInit.RUNE_CARVER_BLOCK_MENU.get(), containerId, playerInventory, access);
+        super(MRMenuInit.RUNE_CARVER_BLOCK_MENU.get(), containerId, playerInventory, access);
         this.level = playerInventory.player.level();
-        this.recipes = this.level.getRecipeManager().getAllRecipesFor(ManaweaveAndRunesRecipeInit.RUNE_CARVER_RECIPE_TYPE.get());
+        this.recipes = this.level.getRecipeManager().getAllRecipesFor(MRRecipeInit.RUNE_CARVER_RECIPE_TYPE.get());
     }
 
     private static OptionalInt findSlotMatchingIngredient(RuneCarverRecipe recipe, ItemStack stack) {
@@ -87,7 +87,7 @@ public class RuneCarverMenu extends ItemCombinerMenu {
 
     @Override
     protected boolean isValidBlock(BlockState blockState) {
-        return blockState.is(ManaweaveAndRunesBlockInit.RUNE_CARVER_BLOCK);
+        return blockState.is(MRBlockInit.RUNE_CARVER_BLOCK);
     }
 
     @Override
@@ -115,7 +115,8 @@ public class RuneCarverMenu extends ItemCombinerMenu {
     @Override
     public void createResult() {
         RuneCarverRecipeInput runeCarverRecipeInput = this.createRecipeInput();
-        List<RecipeHolder<RuneCarverRecipe>> list = this.level.getRecipeManager().getRecipesFor(ManaweaveAndRunesRecipeInit.RUNE_CARVER_RECIPE_TYPE.get(), runeCarverRecipeInput, this.level);
+        List<RecipeHolder<RuneCarverRecipe>> list = this.level.getRecipeManager()
+                .getRecipesFor(MRRecipeInit.RUNE_CARVER_RECIPE_TYPE.get(), runeCarverRecipeInput, this.level);
         if(list.isEmpty()){
             this.resultSlots.setItem(0, ItemStack.EMPTY);
         } else {

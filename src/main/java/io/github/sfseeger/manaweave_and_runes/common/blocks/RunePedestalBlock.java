@@ -2,8 +2,8 @@ package io.github.sfseeger.manaweave_and_runes.common.blocks;
 
 import io.github.sfseeger.lib.common.blocks.ManaNetworkBlock;
 import io.github.sfseeger.manaweave_and_runes.common.blockentities.RunePedestalBlockEntity;
-import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockEntityInit;
-import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesItemInit;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRBlockEntityInit;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRItemInit;
 import io.github.sfseeger.manaweave_and_runes.core.util.InventoryUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -27,7 +27,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
-import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -91,7 +90,7 @@ public class RunePedestalBlock extends ManaNetworkBlock implements EntityBlock {
         if (!level.isClientSide) {
             BlockEntity blockEntity = level.getBlockEntity(pos);
             if (blockEntity instanceof RunePedestalBlockEntity runePedestal) {
-                if (stack.is(ManaweaveAndRunesItemInit.MANA_CONNECTOR)) {
+                if (stack.is(MRItemInit.MANA_CONNECTOR)) {
                     if (runePedestal.toggleState()) {
                         player.displayClientMessage(Component.literal("New mode: " + runePedestal.node.getNodeType()), false);
                         return ItemInteractionResult.SUCCESS;
@@ -114,7 +113,7 @@ public class RunePedestalBlock extends ManaNetworkBlock implements EntityBlock {
 
     @Override
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
-        if (blockEntityType == ManaweaveAndRunesBlockEntityInit.RUNE_PEDESTAL_BLOCK_ENTITY.get()) {
+        if (blockEntityType == MRBlockEntityInit.RUNE_PEDESTAL_BLOCK_ENTITY.get()) {
             if (!level.isClientSide) {
                 return (level1, blockPos, blockState, blockEntity) -> RunePedestalBlockEntity.serverTick(level1,
                         blockPos,

@@ -6,7 +6,7 @@ import io.github.sfseeger.lib.common.rituals.RitualStepResult;
 import io.github.sfseeger.lib.common.rituals.ritual_data.RitualContext;
 import io.github.sfseeger.lib.common.rituals.ritual_data.builtin.PlayerRitualData;
 import io.github.sfseeger.manaweave_and_runes.common.blocks.ritual_anchor.RitualAnchorBlock;
-import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesItemInit;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRItemInit;
 import io.github.sfseeger.manaweave_and_runes.core.util.ParticleUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -108,6 +108,6 @@ public class TeleportRitual extends Ritual {
 
     public void returnRune(Level level, BlockPos pos) {
         level.addFreshEntity(new ItemEntity(level, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(
-                ManaweaveAndRunesItemInit.SOUL_CONTAINER_RUNE_ITEM.get())));
+                MRItemInit.SOUL_CONTAINER_RUNE_ITEM.get())));
     }
 }
