@@ -2,6 +2,7 @@ package io.github.sfseeger.manaweave_and_runes.core.init;
 
 import io.github.sfseeger.lib.common.spells.AbstractSpellNode;
 import io.github.sfseeger.lib.common.spells.buildin.effects.*;
+import io.github.sfseeger.lib.common.spells.buildin.modifiers.SpellModifierDelicate;
 import io.github.sfseeger.lib.common.spells.buildin.modifiers.SpellModifierElongate;
 import io.github.sfseeger.lib.common.spells.buildin.modifiers.SpellModifierStrengthen;
 import io.github.sfseeger.lib.common.spells.buildin.modifiers.SpellModifierWiden;
@@ -45,5 +46,7 @@ public class SpellNodeInit {
             SPELL_NODES.register("spell_modifier.widen", () -> SpellModifierWiden.INSTANCE);
     public static final Supplier<AbstractSpellNode> SPELL_MODIFIER_ELONGATE =
             SPELL_NODES.register("spell_modifier.elongate", () -> SpellModifierElongate.INSTANCE);
+    public static final Supplier<AbstractSpellNode> SPELL_MODIFIER_DELICATE =
+            SPELL_NODES.register("spell_modifier.delicate", () -> SpellModifierDelicate.INSTANCE);
 
 }

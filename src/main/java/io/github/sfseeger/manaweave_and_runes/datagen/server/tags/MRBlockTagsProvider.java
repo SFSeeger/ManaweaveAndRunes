@@ -1,6 +1,7 @@
 package io.github.sfseeger.manaweave_and_runes.datagen.server.tags;
 
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRTagInit;
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockInit;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -49,5 +50,8 @@ public class MRBlockTagsProvider extends BlockTagsProvider {
         this.tag(BlockTags.NEEDS_DIAMOND_TOOL)
                 .add(ManaweaveAndRunesBlockInit.TANZANITE_ORE.get())
                 .add(ManaweaveAndRunesBlockInit.DEEPSLATE_TANZANITE_ORE.get());
+
+        this.tag(MRTagInit.MANA_INFUSED_BLOCK)
+                .add(ManaweaveAndRunesBlockInit.MANA_INFUSED_ROCK_BLOCK.get());
     }
 }

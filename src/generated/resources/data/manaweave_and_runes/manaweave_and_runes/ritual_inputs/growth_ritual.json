@@ -1,0 +1,21 @@
+{
+  "initialItemCost": [
+    {
+      "item": "minecraft:bone_meal"
+    },
+    {
+      "tag": "minecraft:villager_plantable_seeds"
+    },
+    {
+      "tag": "minecraft:saplings"
+    }
+  ],
+  "manaCost": [
+    {
+      "amount": 5,
+      "manaType": "manaweave_and_runes:air_mana"
+    }
+  ],
+  "manaRate": 20,
+  "tickItemCost": []
+}

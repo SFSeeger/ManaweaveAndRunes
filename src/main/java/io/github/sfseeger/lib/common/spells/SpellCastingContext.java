@@ -18,6 +18,7 @@ public class SpellCastingContext implements Cloneable {
         this.level = level;
         this.caster = caster;
         this.handIn = handIn;
+        variables.put("delicate", false);
     }
 
     public Map<String, Object> getVariables() {

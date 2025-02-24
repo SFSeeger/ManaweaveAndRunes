@@ -1,9 +1,11 @@
 package io.github.sfseeger.manaweave_and_runes.datagen.server;
 
 import io.github.sfseeger.lib.common.Tier;
+import io.github.sfseeger.lib.common.mana.Manas;
 import io.github.sfseeger.lib.datagen.recipes.ManaConcentratorRecipeBuilder;
 import io.github.sfseeger.lib.datagen.recipes.RuneCarverRecipeBuilder;
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaInit;
+import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockInit;
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesItemInit;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -15,6 +17,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.block.Blocks;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
@@ -47,40 +50,23 @@ public class MRRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_base_rune", has(ManaweaveAndRunesItemInit.AMETHYST_BASE_RUNE.asItem()))
                 .save(recipeOutput);
 
+        new RuneCarverRecipeBuilder(new ItemStack(ManaweaveAndRunesBlockInit.RUNE_BLOCK.asItem()),
+                                    Ingredient.of(ManaweaveAndRunesItemInit.DIAMOND_CHISEL.asItem()),
+                                    Ingredient.of(Blocks.CHISELED_STONE_BRICKS),
+                                    Ingredient.of(ManaweaveAndRunesItemInit.RUNE_BLOCK_CARVING_TEMPLATE))
+                .unlockedBy("has_template", has(ManaweaveAndRunesItemInit.RUNE_BLOCK_CARVING_TEMPLATE.asItem()))
+                .save(recipeOutput);
+
 
         new ManaConcentratorRecipeBuilder.Builder()
                 .setTier(Tier.NOVICE)
-                .addInput(Ingredient.of(Items.DIAMOND))
-                .addInput(Ingredient.of(Items.NETHER_WART))
-                .addMana(ManaInit.FIRE_MANA.get(), 10)
                 .setCraftTime(100)
-                .unlockedBy("has_nether_wart", has(Items.NETHER_WART))
-                .setResult(new ItemStack(Items.ENCHANTED_GOLDEN_APPLE))
-                .save(recipeOutput);
-
-        ItemStack netheritePickaxe = new ItemStack(Items.NETHERITE_PICKAXE);
-        try {
-            registries.get()
-                    .lookup(Registries.ENCHANTMENT)
-                    .get()
-                    .get(Enchantments.EFFICIENCY)
-                    .ifPresent(enchantment -> {
-                        netheritePickaxe.enchant(enchantment, 3);
-                    });
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        new ManaConcentratorRecipeBuilder.Builder()
-                .setTier(Tier.MASTER)
-                .addInput(Ingredient.of(Items.REDSTONE))
-                .addInput(Ingredient.of(Items.AMETHYST_SHARD))
-                .addInput(Ingredient.of(Items.GOLD_BLOCK))
-                .addInput(Ingredient.of(Items.NETHERITE_INGOT))
-                .addInput(Ingredient.of(Items.NETHERITE_INGOT))
-                .addMana(ManaInit.FIRE_MANA.get(), 400)
-                .addMana(ManaInit.AIR_MANA.get(), 250)
-                .setCraftTime(600)
-                .setResult(netheritePickaxe)
+                .addInput(Ingredient.of(Items.FEATHER))
+                .addInput(Ingredient.of(Blocks.STONE_BRICKS))
+                .addInput(Ingredient.of(Blocks.STONE_BRICKS))
+                .addInput(Ingredient.of(Blocks.STONE_BRICKS))
+                .addMana(Manas.AirMana, 15)
+                .setResult(new ItemStack(ManaweaveAndRunesBlockInit.MANA_INFUSED_ROCK_BLOCK.asItem(), 4))
                 .save(recipeOutput);
     }
 }

@@ -240,7 +240,6 @@ public class ManaConcentratorBlockEntity extends BlockEntity {
                 }
 
                 // TODO: Allow for mana from storage blocks
-                // TODO: Implement the following workflow: Extract mana every crafting tick, then craft when enough mana is extracted when mana is missing, enter a grace period where the crafting time is paused until mana is available
                 // after that, abort with side effect
                 Mana manaType = manaItem.getManaType();
                 int manaAmount = this.currentRecipe.manaMap().getOrDefault(manaType, 0);

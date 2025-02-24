@@ -35,6 +35,13 @@ public class ManaweaveAndRunesBlockInit {
                                                                                                                  3.0F)
                                                                                                        .requiresCorrectToolForDrops()
                                                                                                        .sound(SoundType.DEEPSLATE)));
+    public static final DeferredBlock<Block> TANZANITE_BLOCK = BLOCKS.register("tanzanite_block",
+                                                                               () -> new Block(
+                                                                                       BlockBehaviour.Properties.of()
+                                                                                               .strength(3.0F)
+                                                                                               .requiresCorrectToolForDrops()
+                                                                                               .sound(SoundType.AMETHYST)));
+
     public static final DeferredBlock<RuneBlock> RUNE_BLOCK = BLOCKS.register("rune_block", RuneBlock::new);
 
     public static final DeferredBlock<Block> MANA_INFUSED_ROCK_BLOCK = BLOCKS.register("mana_infused_rock",

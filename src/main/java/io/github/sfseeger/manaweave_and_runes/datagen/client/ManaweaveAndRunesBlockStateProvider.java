@@ -24,6 +24,7 @@ public class ManaweaveAndRunesBlockStateProvider extends BlockStateProvider {
     protected void registerStatesAndModels() {
         this.registerSimpleBlock(ManaweaveAndRunesBlockInit.TANZANITE_ORE);
         this.registerSimpleBlock(ManaweaveAndRunesBlockInit.DEEPSLATE_TANZANITE_ORE);
+        this.registerSimpleBlock(ManaweaveAndRunesBlockInit.TANZANITE_BLOCK);
         this.registerSimpleBlock(ManaweaveAndRunesBlockInit.MANA_COLLECTOR_BLOCK);
         DeferredBlock<RuneBlock> deferredRuneBlock = ManaweaveAndRunesBlockInit.RUNE_BLOCK;
         ResourceLocation runeBlockBase = this.blockTexture(deferredRuneBlock.get());

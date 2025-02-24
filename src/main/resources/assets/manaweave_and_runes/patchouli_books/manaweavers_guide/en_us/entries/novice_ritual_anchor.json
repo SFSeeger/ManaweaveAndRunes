@@ -1,0 +1,68 @@
+{
+  "name": "Rituals",
+  "icon": "manaweave_and_runes:novice_ritual_anchor",
+  "category": "manaweave_and_runes:test_category",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Rituals are a powerful way to harness the energy of the world around you. They can be used to perform a variety of tasks, from simple enchantments to complex magical constructions. To perform a ritual, you will need a ritual anchor, which is a multiblock structure that acts as a focus for the ritual's energy. The structure of the ritual anchor will vary depending on the complexity of the ritual you wish to perform. The most basic ritual anchor is the novice ritual anchor, which is used to perform simple rituals that require only a small amount of energy."
+    },
+    {
+      "type": "patchouli:multiblock",
+      "multiblock": {
+        "mapping": {
+          "M": "#manaweave_and_runes:mana_infused_block",
+          "0": "manaweave_and_runes:novice_ritual_anchor",
+          "R": "manaweave_and_runes:rune_block",
+          "A": "manaweave_and_runes:rune_pedestal",
+          "B": "minecraft:amethyst_block"
+        },
+        "pattern": [
+          [
+            "A _ A",
+            "     ",
+            "_   _",
+            "     ",
+            "A _ A"
+          ],
+          [
+            "BMRMB",
+            "M   M",
+            "R 0 R",
+            "M   M",
+            "BMRMB"
+          ],
+          [
+            "_____",
+            "_MRM_",
+            "_RBR_",
+            "_MRM_",
+            "_____"
+          ],
+          [
+            "_____",
+            "__R__",
+            "_RBR_",
+            "__R__",
+            "_____"
+          ],
+          [
+            "_____",
+            "__R__",
+            "_RBR_",
+            "__R__",
+            "_____"
+          ],
+          [
+            "_____",
+            "__R__",
+            "_RBR_",
+            "__R__",
+            "_____"
+          ]
+        ],
+        "symmetric": true
+      }
+    }
+  ]
+}

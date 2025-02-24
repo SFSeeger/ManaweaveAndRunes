@@ -53,7 +53,7 @@ public class SpellEffectBurn extends AbstractSpellEffect {
 
     @Override
     public SpellCastingResult resolveEntity(EntityHitResult entityHitResult, SpellCastingContext context) {
-        entityHitResult.getEntity().setRemainingFireTicks((int) (20 * (float) context.getVariable("strength")));
+        entityHitResult.getEntity().setRemainingFireTicks((int) (30 * (float) context.getVariable("strength")));
         return SpellCastingResult.SUCCESS;
     }
 

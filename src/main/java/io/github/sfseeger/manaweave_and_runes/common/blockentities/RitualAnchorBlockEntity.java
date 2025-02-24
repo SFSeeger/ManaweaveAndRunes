@@ -204,6 +204,12 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
     public RitualStepResult consumeTickItem(Level level, BlockPos pos, BlockState blockState, int ticksPassed,
             RitualContext context, Ritual.RitualOriginType originType) {
         List<Ingredient> requiredItems = getRitual().getTickItemCost(level);
+
+        // To ensure that mana rate can be != to item rate
+        if (ticksPassed % getRitual().getManaRate(level) == 0) {
+            requestRequiredMana();
+        }
+
         if (ticksPassed % getRitual().getItemRate(level) != 0 || requiredItems.isEmpty()) {
             return RitualStepResult.SUCCESS;
         }
@@ -220,7 +226,6 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
             }
         }
         if (Utils.compareIngredientsToItems(requiredItems, consumedItems)) {
-            requestRequiredMana();
             return RitualStepResult.SUCCESS;
         }
         displayMessageToStartingPlayer(Component.translatable("ritual.manaweave_and_runes.item_insufficient"), level,
@@ -312,12 +317,15 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
                 }
             }
         }
+        ritualContext.putData("starting_player", new PlayerRitualData(player));
+
         Ritual ritual = getMatchingRitual(items, getRitualAnchorType().getTier(), ORIGIN_TYPE, level).orElse(null);
         if (ritual == null) {
+            displayMessageToStartingPlayer(Component.translatable("ritual.manaweave_and_runes.unknown_ritual"), level,
+                                           ritualContext);
             return false;
         }
 
-        ritualContext.putData("starting_player", new PlayerRitualData(player));
 
         AdvancementHolder
                 advancement = player.getServer().getAdvancements().get(ritual.getRegistryName().withPrefix("rituals/"));
