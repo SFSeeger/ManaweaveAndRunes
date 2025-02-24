@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_nether_wart": {
+    "has_template": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:nether_wart"
+            "items": "manaweave_and_runes:rune_block_carving_template"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:enchanted_golden_apple"
+        "recipe": "manaweave_and_runes:rune_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -23,12 +23,12 @@
       "has_the_recipe"
     ],
     [
-      "has_nether_wart"
+      "has_template"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:enchanted_golden_apple"
+      "manaweave_and_runes:rune_block"
     ]
   }
 }

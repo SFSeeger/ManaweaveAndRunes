@@ -2,6 +2,7 @@ package io.github.sfseeger.lib.common.spells.buildin.effects;
 
 import io.github.sfseeger.lib.common.mana.Manas;
 import io.github.sfseeger.lib.common.spells.*;
+import io.github.sfseeger.lib.common.spells.buildin.modifiers.SpellModifierDelicate;
 import io.github.sfseeger.lib.common.spells.buildin.modifiers.SpellModifierElongate;
 import io.github.sfseeger.lib.common.spells.buildin.modifiers.SpellModifierStrengthen;
 import io.github.sfseeger.lib.common.spells.buildin.modifiers.SpellModifierWiden;
@@ -42,12 +43,17 @@ public class SpellEffectBreak extends AbstractSpellEffect {
     private boolean breakBlock(BlockPos pos, SpellCastingContext context, Direction direction) {
         Level level = context.getLevel();
         float strength = (float) context.getVariable("strength");
+        boolean delicate = (boolean) context.getVariable("delicate");
+
+        BlockState targetState = level.getBlockState(pos);
 
 
         return SpellUtils.executeOnPlane(pos, context, direction, (pos1) -> {
                                              boolean isPlayer = context.getCaster() instanceof Player;
 
                                              BlockState state = level.getBlockState(pos1);
+            if (delicate && !state.equals(targetState)) return false;
+
                                              float d = state.getDestroySpeed(level, pos1);
 
                                              float strengthThreshold = (strength / 3.0f) * 100.0f;
@@ -98,6 +104,7 @@ public class SpellEffectBreak extends AbstractSpellEffect {
 
     @Override
     public Set<AbstractSpellNode> getPossibleModifiers() {
-        return Set.of(SpellModifierStrengthen.INSTANCE, SpellModifierWiden.INSTANCE, SpellModifierElongate.INSTANCE);
+        return Set.of(SpellModifierStrengthen.INSTANCE, SpellModifierWiden.INSTANCE, SpellModifierElongate.INSTANCE,
+                      SpellModifierDelicate.INSTANCE);
     }
 }

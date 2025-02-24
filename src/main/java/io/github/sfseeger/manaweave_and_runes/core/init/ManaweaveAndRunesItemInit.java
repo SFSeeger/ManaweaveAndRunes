@@ -49,8 +49,9 @@ public class ManaweaveAndRunesItemInit {
     public static final DeferredItem<ManaConnector> MANA_CONNECTOR = ITEMS.register("mana_connector",
                                                                                     ManaConnector::new);
 
-    public static final DeferredItem<ManaWeaversWandItem> MANA_WEAVERS_WAND_ITEM = ITEMS.register("mana_weavers_wand",
-                                                                                                  ManaWeaversWandItem::new);
+    public static final DeferredItem<ManaWeaversStaffItem> MANA_WEAVERS_STAFF_ITEM =
+            ITEMS.register("mana_weavers_staff",
+                           ManaWeaversStaffItem::new);
 
 
     public static final DeferredItem<SpellHolderItem> AMETHYST_SPELL_HOLDER_ITEM = ITEMS.register(
@@ -63,6 +64,9 @@ public class ManaweaveAndRunesItemInit {
             "air_rune_carving_template", () -> new RuneCarvingTemplate(new Item.Properties().rarity(Rarity.COMMON)));
     public static final DeferredItem<RuneCarvingTemplate> FIRE_RUNE_CARVING_TEMPLATE = ITEMS.register(
             "fire_rune_carving_template", () -> new RuneCarvingTemplate(new Item.Properties().rarity(Rarity.COMMON)));
+
+    public static final DeferredItem<RuneCarvingTemplate> RUNE_BLOCK_CARVING_TEMPLATE = ITEMS.register(
+            "rune_block_carving_template", () -> new RuneCarvingTemplate(new Item.Properties().rarity(Rarity.COMMON)));
 
     // Spell Part Items
     public static final DeferredItem<SpellPartHolderItem> SPELL_PART = ITEMS.register("spell_part",

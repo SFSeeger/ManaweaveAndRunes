@@ -17,6 +17,7 @@
   "block.manaweave_and_runes.mana_generator": "Mana Generator",
   "block.manaweave_and_runes.tanzanite_ore": "Tanzanite Ore",
   "block.manaweave_and_runes.deepslate_tanzanite_ore": "Deepslate Tanzanite Ore",
+  "block.manaweave_and_runes.tanzanite_block": "Tanzanite Block",
   "block.manaweave_and_runes.rune_block": "Rune Block",
   "block.manaweave_and_runes.mana_infused_rock": "Mana Infused Rock",
   "block.manaweave_and_runes.rune_pedestal": "Rune Pedestal",
@@ -43,7 +44,7 @@
 
   "ritual.manaweave_and_runes.mana_insufficient": "It seems like there was not enough mana to supply the ritual",
   "ritual.manaweave_and_runes.item_insufficient": "The ritual could not consume an item it needed",
-  "ritual.manaweave_and_runes.unknown_ritual": "You don't know how to use this start this...",
+  "ritual.manaweave_and_runes.unknown_ritual": "You don't know if this ritual exists",
   "spell.manaweave_and_runes.spell_type.self": "Self",
   "spell.manaweave_and_runes.spell_type.touch": "Touch",
   "spell.manaweave_and_runes.spell_type.projectile": "Ranged",

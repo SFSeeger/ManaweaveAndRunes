@@ -32,11 +32,11 @@ public class Spell {
     public static final StreamCodec<RegistryFriendlyByteBuf, Spell> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.STRING_UTF8, Spell::getName,
             AbstractSpellNode.STREAM_CODEC, Spell::getSpellTypeAsNodes,
-            ByteBufCodecs.collection(ArrayList::new, AbstractSpellNode.STREAM_CODEC, 16), Spell::getEffectAsNodes,
+            ByteBufCodecs.collection(ArrayList::new, AbstractSpellNode.STREAM_CODEC), Spell::getEffectAsNodes,
             ByteBufCodecs.map(
                     HashMap::new,
                     AbstractSpellNode.STREAM_CODEC,
-                    ByteBufCodecs.collection(ArrayList::new, AbstractSpellNode.STREAM_CODEC, 16)
+                    ByteBufCodecs.collection(ArrayList::new, AbstractSpellNode.STREAM_CODEC)
             ), Spell::getModifiersAsNodes,
             Spell::new
     );

@@ -1,9 +1,11 @@
 package io.github.sfseeger.manaweave_and_runes.common.blocks;
 
+import io.github.sfseeger.manaweave_and_runes.common.blockentities.RunePedestalBlockEntity;
 import io.github.sfseeger.manaweave_and_runes.common.blockentities.SpellDesignerBlockEntity;
 import io.github.sfseeger.manaweave_and_runes.common.blockentities.WandModificationTableBlockEntity;
 import io.github.sfseeger.manaweave_and_runes.common.menus.SpellDesignerMenu;
 import io.github.sfseeger.manaweave_and_runes.common.menus.WandModificationTableMenu;
+import io.github.sfseeger.manaweave_and_runes.core.util.InventoryUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -55,4 +57,9 @@ public class SpellDesignerBlock extends Block implements EntityBlock {
         return null;
     }
 
+    @Override
+    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
+        InventoryUtil.dropContentsOnDestroy(state, newState, level, pos);
+        super.onRemove(state, level, pos, newState, movedByPiston);
+    }
 }

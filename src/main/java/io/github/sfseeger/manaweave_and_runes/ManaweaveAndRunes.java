@@ -17,6 +17,7 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import org.slf4j.Logger;
@@ -24,7 +25,7 @@ import org.slf4j.Logger;
 @Mod(ManaweaveAndRunes.MODID)
 public class ManaweaveAndRunes {
     public static final String MODID = "manaweave_and_runes";
-    private static final Logger LOGGER = LogUtils.getLogger();
+    public static final Logger LOGGER = LogUtils.getLogger();
 
     public ManaweaveAndRunes(IEventBus modEventBus, ModContainer modContainer) {
         // Register the commonSetup method for modloading
@@ -53,8 +54,11 @@ public class ManaweaveAndRunes {
 
         NeoForge.EVENT_BUS.register(ManaNetworkHandler.class);
 
-        NeoForge.EVENT_BUS.register(KeyManager.class);
-        modEventBus.addListener(KeyManager::registerKeyMapping);
+        if (FMLEnvironment.dist == Dist.CLIENT) {
+            NeoForge.EVENT_BUS.register(KeyManager.class);
+            modEventBus.addListener(KeyManager::registerKeyMapping);
+        }
+
 
         NeoForge.EVENT_BUS.register(this);
 

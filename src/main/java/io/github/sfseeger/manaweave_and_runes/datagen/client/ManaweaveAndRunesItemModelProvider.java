@@ -26,7 +26,7 @@ public class ManaweaveAndRunesItemModelProvider extends ItemModelProvider {
         basicItem(ManaweaveAndRunesItemInit.AMETHYST_FIRE_RUNE_ITEM.get());
         basicItem(ManaweaveAndRunesItemInit.AMETHYST_AIR_RUNE_ITEM.get());
 
-        handheldItem(ManaweaveAndRunesItemInit.MANA_WEAVERS_WAND_ITEM.get());
+        handheldItem(ManaweaveAndRunesItemInit.MANA_WEAVERS_STAFF_ITEM.get());
 
         handheldItem(ManaweaveAndRunesItemInit.SOUL_CONTAINER_RUNE_ITEM.get())
                 .texture("layer0", "item/soul_container_rune")

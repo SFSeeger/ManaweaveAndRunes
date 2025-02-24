@@ -123,7 +123,7 @@ public class ManaweaveAndRunesCapabilityInit {
                     };
                 },
 
-                ManaweaveAndRunesItemInit.MANA_WEAVERS_WAND_ITEM.get()
+                ManaweaveAndRunesItemInit.MANA_WEAVERS_STAFF_ITEM.get()
         );
 
         // RuneBraceletItemHandler

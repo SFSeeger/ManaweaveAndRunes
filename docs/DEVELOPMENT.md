@@ -25,7 +25,9 @@ The _Mana Concentrator_ is a Crafting Table, which allows to use mana in the cra
 The _Mana Concentrator_ can also be upgraded by building a larger structure around it.
 
 ### Mana Collector (Block)
-Collects Mana of a certan type into a _Storage Rune_ inserted into the block. The Mana output depends on the Rune Tier, how ideal the collection position is (e.g. Being sorrounded by Lava in the Nether produces more) 
+
+Collects Mana of a certain type into a _Storage Rune_ inserted into the block. The Mana output depends on the Rune Tier,
+how ideal the collection position is (e.g. Being sorrounded by Lava in the Nether produces more)
 
 Plans for Mana Generation:
 #### Fire Mana

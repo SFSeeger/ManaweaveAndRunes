@@ -17,7 +17,6 @@ classDiagram
         +onCast(...)
         +onCastOnBlock(...)
         +onCastOnEntity(...)
-        +getPossibleEffects() Set~SpellEffect~
     }
     SpellNode <|-- SpellEffect
     class SpellEffect{

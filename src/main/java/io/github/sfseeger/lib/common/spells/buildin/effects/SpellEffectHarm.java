@@ -2,6 +2,7 @@ package io.github.sfseeger.lib.common.spells.buildin.effects;
 
 import io.github.sfseeger.lib.common.datamaps.BlockHarmDataMap;
 import io.github.sfseeger.lib.common.spells.*;
+import io.github.sfseeger.lib.common.spells.buildin.modifiers.SpellModifierDelicate;
 import io.github.sfseeger.lib.common.spells.buildin.modifiers.SpellModifierStrengthen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
@@ -27,6 +28,10 @@ public class SpellEffectHarm extends AbstractSpellEffect {
         Level level = context.getLevel();
         BlockPos pos = blockHitResult.getBlockPos();
         float strength = (float) context.getVariable("strength");
+
+        boolean delicate = (boolean) context.getVariable("delicate");
+        if (delicate) return SpellCastingResult.SUCCESS;
+
         if (SpellUtils.canChangeBlockState(pos, context)) {
             BlockState state = level.getBlockState(pos);
             Block block = state.getBlock();
@@ -53,6 +58,6 @@ public class SpellEffectHarm extends AbstractSpellEffect {
 
     @Override
     public Set<AbstractSpellNode> getPossibleModifiers() {
-        return Set.of(SpellModifierStrengthen.INSTANCE);
+        return Set.of(SpellModifierStrengthen.INSTANCE, SpellModifierDelicate.INSTANCE);
     }
 }

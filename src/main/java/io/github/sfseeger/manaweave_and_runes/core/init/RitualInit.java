@@ -4,10 +4,7 @@ import io.github.sfseeger.lib.common.rituals.Ritual;
 import io.github.sfseeger.lib.common.rituals.Rituals;
 import io.github.sfseeger.lib.core.ManaweaveAndRunesRegistries;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
-import io.github.sfseeger.manaweave_and_runes.common.rituals.FlightRitual;
-import io.github.sfseeger.manaweave_and_runes.common.rituals.ParticleRitual;
-import io.github.sfseeger.manaweave_and_runes.common.rituals.TeleportRitual;
-import io.github.sfseeger.manaweave_and_runes.common.rituals.ThunderRitual;
+import io.github.sfseeger.manaweave_and_runes.common.rituals.*;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
@@ -26,4 +23,6 @@ public class RitualInit {
             RITUALS.register("thunder_ritual", ThunderRitual::new);
     public static final Supplier<Ritual> TELEPORT_RITUAL =
             RITUALS.register("teleport_ritual", TeleportRitual::new);
+    public static final Supplier<Ritual> GROWTH_RITUAL =
+            RITUALS.register("growth_ritual", GrowthRitual::new);
 }

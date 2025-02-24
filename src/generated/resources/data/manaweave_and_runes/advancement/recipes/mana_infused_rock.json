@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:netherite_pickaxe"
+        "recipe": "manaweave_and_runes:mana_infused_rock"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -15,7 +15,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:netherite_pickaxe"
+      "manaweave_and_runes:mana_infused_rock"
     ]
   }
 }

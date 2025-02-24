@@ -7,7 +7,6 @@ import io.github.sfseeger.lib.common.spells.SpellPart;
 import io.github.sfseeger.manaweave_and_runes.common.blockentities.SpellDesignerBlockEntity;
 import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockInit;
 import io.github.sfseeger.manaweave_and_runes.core.payloads.CraftPayload;
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -160,7 +159,7 @@ public class SpellDesignerMenu extends AbstractContainerMenu {
         return blockEntity.getSpellName();
     }
 
-    public void craft(LocalPlayer player, String name) {
+    public void craft(Player player, String name) {
         PacketDistributor.sendToServer(new CraftPayload(blockEntity.getBlockPos().asLong(), 0, name));
     }
 

@@ -51,7 +51,7 @@ public class SoulContainerRuneItem extends Item implements IRitualDataCapable {
                 }
             }
         }
-        return false; // No players in the line of sight
+        return false; // No playerUUIDs in the line of sight
     }
 
     @Override

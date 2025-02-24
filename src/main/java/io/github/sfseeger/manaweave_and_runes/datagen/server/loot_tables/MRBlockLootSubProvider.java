@@ -20,6 +20,7 @@ public class MRBlockLootSubProvider extends BlockLootSubProvider {
                                                                                           ManaweaveAndRunesItemInit.TANZANITE.get()));
         this.add(ManaweaveAndRunesBlockInit.DEEPSLATE_TANZANITE_ORE.get(), (block) -> createOreDrop(block,
                                                                                                     ManaweaveAndRunesItemInit.TANZANITE.get()));
+        this.dropSelf(ManaweaveAndRunesBlockInit.TANZANITE_BLOCK.get());
 
         this.dropSelf(ManaweaveAndRunesBlockInit.RUNE_BLOCK.get());
         this.dropSelf(ManaweaveAndRunesBlockInit.MANA_INFUSED_ROCK_BLOCK.get());

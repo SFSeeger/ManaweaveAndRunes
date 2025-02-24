@@ -3,7 +3,10 @@ package io.github.sfseeger.manaweave_and_runes.client;
 import io.github.sfseeger.manaweave_and_runes.core.payloads.CraftPayload;
 import io.github.sfseeger.manaweave_and_runes.core.payloads.SwitchSpellPayload;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
+
 
 public class ClientPayloadHandler {
     public static void handleCraftPayload(CraftPayload data, IPayloadContext context) {

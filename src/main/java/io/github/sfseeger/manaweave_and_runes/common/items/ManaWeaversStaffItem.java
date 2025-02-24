@@ -20,8 +20,8 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 
 import java.util.List;
 
-public class ManaWeaversWandItem extends Item implements IItemHandlerItem, ISpellCaster, IUpgradable {
-    public ManaWeaversWandItem() {
+public class ManaWeaversStaffItem extends Item implements IItemHandlerItem, ISpellCaster, IUpgradable {
+    public ManaWeaversStaffItem() {
         super(new Item.Properties().stacksTo(1)
                       .rarity(Rarity.EPIC)
                       .component(ManaweaveAndRunesDataComponentsInit.SELECTED_SLOT_DATA_COMPONENT,
