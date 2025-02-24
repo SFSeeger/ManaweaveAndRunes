@@ -1,0 +1,21 @@
+{
+  "initialItemCost": [
+    {
+      "item": "minecraft:diamond"
+    },
+    {
+      "item": "minecraft:diamond_pickaxe"
+    },
+    {
+      "item": "manaweave_and_runes:position_rune"
+    }
+  ],
+  "manaCost": [
+    {
+      "amount": 5,
+      "manaType": "manaweave_and_runes:air_mana"
+    }
+  ],
+  "manaRate": 60,
+  "tickItemCost": []
+}

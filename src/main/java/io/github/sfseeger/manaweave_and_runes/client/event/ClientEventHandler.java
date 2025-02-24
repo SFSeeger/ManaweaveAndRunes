@@ -6,14 +6,15 @@ import io.github.sfseeger.lib.client.models.SpellProjectileModel;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
 import io.github.sfseeger.manaweave_and_runes.client.particles.ManaConcentratedParticle;
 import io.github.sfseeger.manaweave_and_runes.client.particles.ManaParticle;
-import io.github.sfseeger.manaweave_and_runes.client.renderers.ManaCollectorBlockEntityRenderer;
-import io.github.sfseeger.manaweave_and_runes.client.renderers.ManaConcentratorBlockEntityRenderer;
-import io.github.sfseeger.manaweave_and_runes.client.renderers.RunePedestalBlockEntityRenderer;
+import io.github.sfseeger.manaweave_and_runes.client.renderers.block.ManaCollectorBlockEntityRenderer;
+import io.github.sfseeger.manaweave_and_runes.client.renderers.block.ManaConcentratorBlockEntityRenderer;
+import io.github.sfseeger.manaweave_and_runes.client.renderers.block.RitualAnchorBlockEntityRenderer;
+import io.github.sfseeger.manaweave_and_runes.client.renderers.block.RunePedestalBlockEntityRenderer;
 import io.github.sfseeger.manaweave_and_runes.client.screens.*;
 import io.github.sfseeger.manaweave_and_runes.core.init.EntityTypeInit;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRBlockEntityInit;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRMenuInit;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRParticleTypeInit;
-import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockEntityInit;
-import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaverAndRunesMenuInit;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -25,19 +26,19 @@ import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 public class ClientEventHandler {
     @SubscribeEvent
     public static void registerBlockEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerBlockEntityRenderer(ManaweaveAndRunesBlockEntityInit.MANA_COLLECTOR_BLOCK_ENTITY.get(),
+        event.registerBlockEntityRenderer(MRBlockEntityInit.MANA_COLLECTOR_BLOCK_ENTITY.get(),
                                           ManaCollectorBlockEntityRenderer::new);
-        event.registerBlockEntityRenderer(ManaweaveAndRunesBlockEntityInit.RUNE_PEDESTAL_BLOCK_ENTITY.get(),
+        event.registerBlockEntityRenderer(MRBlockEntityInit.RUNE_PEDESTAL_BLOCK_ENTITY.get(),
                                           RunePedestalBlockEntityRenderer::new);
-        event.registerBlockEntityRenderer(ManaweaveAndRunesBlockEntityInit.MANA_CONCENTRATOR_BLOCK_ENTITY.get(),
+        event.registerBlockEntityRenderer(MRBlockEntityInit.MANA_CONCENTRATOR_BLOCK_ENTITY.get(),
                                           ManaConcentratorBlockEntityRenderer::new);
-        event.registerBlockEntityRenderer(ManaweaveAndRunesBlockEntityInit.MANA_STORAGE_BLOCK_ENTITY.get(),
+        event.registerBlockEntityRenderer(MRBlockEntityInit.MANA_STORAGE_BLOCK_ENTITY.get(),
                                           ManaNodeRenderer::new);
-        event.registerBlockEntityRenderer(ManaweaveAndRunesBlockEntityInit.RITUAL_ANCHOR_BLOCK_ENTITY.get(),
+        event.registerBlockEntityRenderer(MRBlockEntityInit.RITUAL_ANCHOR_BLOCK_ENTITY.get(),
+                                          RitualAnchorBlockEntityRenderer::new);
+        event.registerBlockEntityRenderer(MRBlockEntityInit.MANA_TRANSMITTER_BLOCK_ENTITY.get(),
                                           ManaNodeRenderer::new);
-        event.registerBlockEntityRenderer(ManaweaveAndRunesBlockEntityInit.MANA_TRANSMITTER_BLOCK_ENTITY.get(),
-                                          ManaNodeRenderer::new);
-        event.registerBlockEntityRenderer(ManaweaveAndRunesBlockEntityInit.MANA_GENERATOR_BLOCK_ENTITY.get(),
+        event.registerBlockEntityRenderer(MRBlockEntityInit.MANA_GENERATOR_BLOCK_ENTITY.get(),
                                           ManaNodeRenderer::new);
     }
 
@@ -53,11 +54,11 @@ public class ClientEventHandler {
 
     @SubscribeEvent
     public static void registerScreens(RegisterMenuScreensEvent event) {
-        event.register(ManaweaverAndRunesMenuInit.RUNE_CARVER_BLOCK_MENU.get(), RuneCarverBlockScreen::new);
-        event.register(ManaweaverAndRunesMenuInit.MANA_STORAGE_BLOCK_MENU.get(), ManaStorageBlockScreen::new);
-        event.register(ManaweaverAndRunesMenuInit.WAND_MODIFICATION_TABLE_MENU.get(), WandModificationTableScreen::new);
-        event.register(ManaweaverAndRunesMenuInit.SPELL_DESIGNER_MENU.get(), SpellDesignerScreen::new);
-        event.register(ManaweaverAndRunesMenuInit.MANA_GENERATOR_MENU.get(), ManaGeneratorScreen::new);
+        event.register(MRMenuInit.RUNE_CARVER_BLOCK_MENU.get(), RuneCarverBlockScreen::new);
+        event.register(MRMenuInit.MANA_STORAGE_BLOCK_MENU.get(), ManaStorageBlockScreen::new);
+        event.register(MRMenuInit.WAND_MODIFICATION_TABLE_MENU.get(), WandModificationTableScreen::new);
+        event.register(MRMenuInit.SPELL_DESIGNER_MENU.get(), SpellDesignerScreen::new);
+        event.register(MRMenuInit.MANA_GENERATOR_MENU.get(), ManaGeneratorScreen::new);
     }
 
     @SubscribeEvent

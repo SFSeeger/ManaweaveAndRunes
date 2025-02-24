@@ -10,10 +10,10 @@ import io.github.sfseeger.lib.common.recipes.mana_concentrator.ManaConcentratorR
 import io.github.sfseeger.manaweave_and_runes.common.blocks.RuneBlock;
 import io.github.sfseeger.manaweave_and_runes.common.blocks.mana_concentrator.ManaConcentratorBlock;
 import io.github.sfseeger.manaweave_and_runes.common.blocks.mana_concentrator.ManaConcentratorType;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRBlockEntityInit;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRBlockInit;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRParticleTypeInit;
-import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockEntityInit;
-import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockInit;
-import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesRecipeInit;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRRecipeInit;
 import io.github.sfseeger.manaweave_and_runes.core.util.MultiblockValidator;
 import io.github.sfseeger.manaweave_and_runes.core.util.ParticleUtils;
 import net.minecraft.core.BlockPos;
@@ -45,7 +45,6 @@ import java.util.*;
 
 import static io.github.sfseeger.lib.common.LibUtils.encode;
 import static io.github.sfseeger.lib.common.ManaweaveAndRunesCodecs.BLOCK_POS_LIST_CODEC;
-import static io.github.sfseeger.lib.common.LibUtils.encode;
 
 public class ManaConcentratorBlockEntity extends BlockEntity {
     private boolean isActive;
@@ -72,7 +71,7 @@ public class ManaConcentratorBlockEntity extends BlockEntity {
     }
 
     public ManaConcentratorBlockEntity(BlockPos pos, BlockState state) {
-        super(ManaweaveAndRunesBlockEntityInit.MANA_CONCENTRATOR_BLOCK_ENTITY.get(), pos, state);
+        super(MRBlockEntityInit.MANA_CONCENTRATOR_BLOCK_ENTITY.get(), pos, state);
     }
     private List<BlockPos> pedestalPositions;
 
@@ -119,7 +118,7 @@ public class ManaConcentratorBlockEntity extends BlockEntity {
         craftTime = 0;
         craftTimePassed = 0;
         markUpdated();
-        getManaConcentratorType().findBlocks(level, ManaweaveAndRunesBlockInit.RUNE_BLOCK.get()).forEach(pos -> {
+        getManaConcentratorType().findBlocks(level, MRBlockInit.RUNE_BLOCK.get()).forEach(pos -> {
             BlockPos blockPos = getBlockPos().offset(pos);
             BlockState state = level.getBlockState(blockPos);
             try {
@@ -167,7 +166,7 @@ public class ManaConcentratorBlockEntity extends BlockEntity {
             craftTimePassed = 0;
             isCrafting = true;
             level.playSound(null, getBlockPos(), SoundEvents.BEACON_ACTIVATE, SoundSource.BLOCKS, 1.0F, 1.0F);
-            getManaConcentratorType().findBlocks(level, ManaweaveAndRunesBlockInit.RUNE_BLOCK.get()).forEach(pos -> {
+            getManaConcentratorType().findBlocks(level, MRBlockInit.RUNE_BLOCK.get()).forEach(pos -> {
                 BlockPos blockPos = getBlockPos().offset(pos);
                 BlockState state = level.getBlockState(blockPos);
                 level.setBlockAndUpdate(blockPos, state.setValue(RuneBlock.ACTIVE, true));
@@ -186,7 +185,7 @@ public class ManaConcentratorBlockEntity extends BlockEntity {
         ManaConcentratorType type = getManaConcentratorType();
         ManaConcentratorInput input = getInput(type);
         Optional<RecipeHolder<ManaConcentratorRecipe>> optional = recipes.getRecipeFor(
-                ManaweaveAndRunesRecipeInit.MANA_CONCENTRATOR_RECIPE_TYPE.get(), input, level);
+                MRRecipeInit.MANA_CONCENTRATOR_RECIPE_TYPE.get(), input, level);
         return optional.map(RecipeHolder::value).orElse(null);
     }
 
@@ -229,7 +228,7 @@ public class ManaConcentratorBlockEntity extends BlockEntity {
         }
         ManaConcentratorType type = getManaConcentratorType();
         List<BlockPos> relativePedestalPositions =
-                type.findBlocks(level, ManaweaveAndRunesBlockInit.RUNE_PEDESTAL_BLOCK.get());
+                type.findBlocks(level, MRBlockInit.RUNE_PEDESTAL_BLOCK.get());
 
         if (this.currentRecipe != null) {
             Map<Mana, Integer> extractedMana = new HashMap<>();
@@ -326,7 +325,7 @@ public class ManaConcentratorBlockEntity extends BlockEntity {
 
     public ManaConcentratorInput getInput(ManaConcentratorType type) {
         List<BlockPos> relativePedestalPositions =
-                type.findBlocks(level, ManaweaveAndRunesBlockInit.RUNE_PEDESTAL_BLOCK.get());
+                type.findBlocks(level, MRBlockInit.RUNE_PEDESTAL_BLOCK.get());
         // We can set this here to save on updates
         pedestalPositions = relativePedestalPositions;
         List<ItemStack> inputItems = new ArrayList<>();

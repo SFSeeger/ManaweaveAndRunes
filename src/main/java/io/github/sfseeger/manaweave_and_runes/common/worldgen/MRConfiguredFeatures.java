@@ -1,7 +1,7 @@
 package io.github.sfseeger.manaweave_and_runes.common.worldgen;
 
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
-import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockInit;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRBlockInit;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
@@ -29,9 +29,9 @@ public class MRConfiguredFeatures {
 
         List<OreConfiguration.TargetBlockState> overworldCrystalOres = List.of(
                 OreConfiguration.target(stoneReplaceables,
-                                        ManaweaveAndRunesBlockInit.TANZANITE_ORE.get().defaultBlockState()),
+                                        MRBlockInit.TANZANITE_ORE.get().defaultBlockState()),
                 OreConfiguration.target(deepslateReplaceables,
-                                        ManaweaveAndRunesBlockInit.DEEPSLATE_TANZANITE_ORE.get().defaultBlockState())
+                                        MRBlockInit.DEEPSLATE_TANZANITE_ORE.get().defaultBlockState())
         );
         register(context, OVERWORLD_TANZANITE_ORE_KEY, Feature.ORE,
                  new OreConfiguration(overworldCrystalOres, 4, 0.2f));

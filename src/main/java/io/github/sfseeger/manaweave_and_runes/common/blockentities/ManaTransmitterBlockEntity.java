@@ -4,7 +4,7 @@ import io.github.sfseeger.lib.common.mana.IManaNetworkSubscriber;
 import io.github.sfseeger.lib.common.mana.capability.IManaHandler;
 import io.github.sfseeger.lib.common.mana.network.ManaNetworkNode;
 import io.github.sfseeger.lib.common.mana.network.ManaNetworkNodeType;
-import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockEntityInit;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRBlockEntityInit;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -20,7 +20,7 @@ public class ManaTransmitterBlockEntity extends BlockEntity implements IManaNetw
     private ManaNetworkNode node = new ManaNetworkNode(this, ManaNetworkNodeType.NONE);
 
     public ManaTransmitterBlockEntity(BlockPos pos, BlockState blockState) {
-        super(ManaweaveAndRunesBlockEntityInit.MANA_TRANSMITTER_BLOCK_ENTITY.get(), pos, blockState);
+        super(MRBlockEntityInit.MANA_TRANSMITTER_BLOCK_ENTITY.get(), pos, blockState);
     }
 
     @Override

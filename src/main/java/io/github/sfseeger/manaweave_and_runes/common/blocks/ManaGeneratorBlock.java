@@ -3,7 +3,7 @@ package io.github.sfseeger.manaweave_and_runes.common.blocks;
 import io.github.sfseeger.lib.common.blocks.ManaNetworkBlock;
 import io.github.sfseeger.manaweave_and_runes.common.blockentities.ManaGeneratorBlockEntity;
 import io.github.sfseeger.manaweave_and_runes.common.menus.ManaGeneratorMenu;
-import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockEntityInit;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRBlockEntityInit;
 import io.github.sfseeger.manaweave_and_runes.core.util.InventoryUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -32,7 +32,6 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
-import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
@@ -61,7 +60,7 @@ public class ManaGeneratorBlock extends ManaNetworkBlock implements EntityBlock 
     @Override
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state,
             BlockEntityType<T> blockEntityType) {
-        if (blockEntityType == ManaweaveAndRunesBlockEntityInit.MANA_GENERATOR_BLOCK_ENTITY.get()) {
+        if (blockEntityType == MRBlockEntityInit.MANA_GENERATOR_BLOCK_ENTITY.get()) {
             if (!level.isClientSide) {
                 return (level1, blockPos, blockState, blockEntity) -> ManaGeneratorBlockEntity.serverTick(level1,
                                                                                                           blockPos,

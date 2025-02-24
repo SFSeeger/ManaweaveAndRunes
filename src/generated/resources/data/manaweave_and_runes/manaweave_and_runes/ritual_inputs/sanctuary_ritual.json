@@ -1,0 +1,18 @@
+{
+  "initialItemCost": [
+    {
+      "item": "minecraft:gold_ingot"
+    },
+    {
+      "item": "minecraft:iron_sword"
+    }
+  ],
+  "manaCost": [
+    {
+      "amount": 5,
+      "manaType": "manaweave_and_runes:air_mana"
+    }
+  ],
+  "manaRate": 60,
+  "tickItemCost": []
+}

@@ -3,7 +3,7 @@ package io.github.sfseeger.manaweave_and_runes.common.menus;
 import io.github.sfseeger.lib.common.spells.IUpgradable;
 import io.github.sfseeger.manaweave_and_runes.common.blockentities.WandModificationTableBlockEntity;
 import io.github.sfseeger.manaweave_and_runes.common.menus.slots.SpellCircleSlot;
-import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockInit;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRBlockInit;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -16,7 +16,7 @@ import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
 
-import static io.github.sfseeger.manaweave_and_runes.core.init.ManaweaverAndRunesMenuInit.WAND_MODIFICATION_TABLE_MENU;
+import static io.github.sfseeger.manaweave_and_runes.core.init.MRMenuInit.WAND_MODIFICATION_TABLE_MENU;
 
 public class WandModificationTableMenu extends AbstractContainerMenu {
     private static final int INV_SLOT_START = 13;
@@ -156,7 +156,7 @@ public class WandModificationTableMenu extends AbstractContainerMenu {
     @Override
     public boolean stillValid(Player player) {
         return AbstractContainerMenu.stillValid(this.access,
-                player, ManaweaveAndRunesBlockInit.WAND_MODIFICATION_TABLE_BLOCK.get());
+                                                player, MRBlockInit.WAND_MODIFICATION_TABLE_BLOCK.get());
     }
 
     public boolean hasUpgradable() {

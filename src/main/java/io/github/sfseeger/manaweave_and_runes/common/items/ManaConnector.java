@@ -2,7 +2,7 @@ package io.github.sfseeger.manaweave_and_runes.common.items;
 
 import io.github.sfseeger.lib.common.mana.IManaNetworkSubscriber;
 import io.github.sfseeger.manaweave_and_runes.common.data_components.BlockPosDataComponent;
-import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesDataComponentsInit;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRDataComponentsInit;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -24,13 +24,13 @@ public class ManaConnector extends Item {
         Level level = context.getLevel();
         BlockPos pos = context.getClickedPos();
         Player p = context.getPlayer();
-        BlockPosDataComponent component = stack.get(ManaweaveAndRunesDataComponentsInit.BLOCK_POS_DATA_COMPONENT);
+        BlockPosDataComponent component = stack.get(MRDataComponentsInit.BLOCK_POS_DATA_COMPONENT);
 
         if (p == null) return InteractionResult.FAIL;
 
         if (p.isShiftKeyDown()) {
             if (level.getBlockEntity(pos) instanceof IManaNetworkSubscriber) {
-                stack.set(ManaweaveAndRunesDataComponentsInit.BLOCK_POS_DATA_COMPONENT, new BlockPosDataComponent(pos));
+                stack.set(MRDataComponentsInit.BLOCK_POS_DATA_COMPONENT, new BlockPosDataComponent(pos));
                 return InteractionResult.SUCCESS;
             }
         } else if (component != null && !component.pos().equals(pos) && component.pos().distManhattan(pos) <= 16) {

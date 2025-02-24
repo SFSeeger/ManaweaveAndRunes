@@ -2,8 +2,8 @@ package io.github.sfseeger.manaweave_and_runes.common.menus;
 
 import io.github.sfseeger.lib.common.mana.Mana;
 import io.github.sfseeger.manaweave_and_runes.common.blockentities.ManaStorageBlockEntity;
-import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockInit;
-import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaverAndRunesMenuInit;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRBlockInit;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRMenuInit;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -30,7 +30,7 @@ public class ManaStorageBlockMenu extends AbstractContainerMenu {
 
     public ManaStorageBlockMenu(int containerId, Inventory playerInventory, ManaStorageBlockEntity blockEntity,
             ContainerLevelAccess access) {
-        super(ManaweaverAndRunesMenuInit.MANA_STORAGE_BLOCK_MENU.get(), containerId);
+        super(MRMenuInit.MANA_STORAGE_BLOCK_MENU.get(), containerId);
         this.access = access;
         this.blockEntity = blockEntity;
         itemHandler = new ItemStackHandler(ManaStorageBlockEntity.MANA_SLOTS);
@@ -72,7 +72,7 @@ public class ManaStorageBlockMenu extends AbstractContainerMenu {
     @Override
     public boolean stillValid(Player player) {
         return AbstractContainerMenu.stillValid(this.access, player,
-                                                ManaweaveAndRunesBlockInit.MANA_STORAGE_BLOCK.get());
+                                                MRBlockInit.MANA_STORAGE_BLOCK.get());
     }
 
     public Mana getManaInSlot(int index) {

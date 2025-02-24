@@ -1,8 +1,8 @@
 package io.github.sfseeger.manaweave_and_runes.common.blocks.mana_concentrator;
 
 import io.github.sfseeger.manaweave_and_runes.common.blockentities.ManaConcentratorBlockEntity;
-import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockEntityInit;
-import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesItemInit;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRBlockEntityInit;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRItemInit;
 import io.github.sfseeger.manaweave_and_runes.core.util.InventoryUtil;
 import io.github.sfseeger.manaweave_and_runes.core.util.MultiblockValidator;
 import net.minecraft.core.BlockPos;
@@ -22,7 +22,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -56,7 +55,7 @@ public class ManaConcentratorBlock extends Block implements EntityBlock {
     @Override
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state,
             BlockEntityType<T> blockEntityType) {
-        if (blockEntityType == ManaweaveAndRunesBlockEntityInit.MANA_CONCENTRATOR_BLOCK_ENTITY.get()) {
+        if (blockEntityType == MRBlockEntityInit.MANA_CONCENTRATOR_BLOCK_ENTITY.get()) {
             if (!level.isClientSide) {
                 return (level1, blockPos, blockState, blockEntity) -> ManaConcentratorBlockEntity.serverTick(level1,
                                                                                                              blockPos,
@@ -94,7 +93,7 @@ public class ManaConcentratorBlock extends Block implements EntityBlock {
                         manaConcentratorBlockEntity.startCrafting();
                         return ItemInteractionResult.SUCCESS;
                     }
-                } else if (stack.is(ManaweaveAndRunesItemInit.MANA_DEBUG_STICK_ITEM)) {
+                } else if (stack.is(MRItemInit.MANA_DEBUG_STICK_ITEM)) {
                     MultiblockValidator.MultiBlockValidationData validationData =
                             manaConcentratorBlockEntity.validateMultiblock();
                     if (validationData.isValid()) {

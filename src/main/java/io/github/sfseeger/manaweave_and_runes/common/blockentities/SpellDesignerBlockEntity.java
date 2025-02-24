@@ -24,10 +24,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockEntityInit.SPELL_DESIGNER_BLOCK_ENTITY;
-import static io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesDataComponentsInit.SPELL_DATA_COMPONENT;
-import static io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesDataComponentsInit.SPELL_PART_DATA_COMPONENT;
-import static io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesItemInit.*;
+import static io.github.sfseeger.manaweave_and_runes.core.init.MRBlockEntityInit.SPELL_DESIGNER_BLOCK_ENTITY;
+import static io.github.sfseeger.manaweave_and_runes.core.init.MRDataComponentsInit.SPELL_DATA_COMPONENT;
+import static io.github.sfseeger.manaweave_and_runes.core.init.MRDataComponentsInit.SPELL_PART_DATA_COMPONENT;
+import static io.github.sfseeger.manaweave_and_runes.core.init.MRItemInit.*;
 
 public class SpellDesignerBlockEntity extends BlockEntity implements ICraftingPacketHandler {
     public static final int MAIN_SLOT_INDEX = 0;
@@ -82,7 +82,7 @@ public class SpellDesignerBlockEntity extends BlockEntity implements ICraftingPa
                     }
                 }
                 if(spell.isValid()){
-                    ItemStack stack1 = new ItemStack(AMETHYST_SPELL_HOLDER_ITEM.get(), 1);
+                    ItemStack stack1 = new ItemStack(SPELL_HOLDER_ITEM.get(), 1);
                     stack1.set(SPELL_DATA_COMPONENT, new SpellDataComponent(spell));
                     return stack1;
                 }

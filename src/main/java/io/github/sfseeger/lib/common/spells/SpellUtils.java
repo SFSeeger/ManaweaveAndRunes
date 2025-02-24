@@ -90,14 +90,32 @@ public class SpellUtils {
                 }
             } else {
                 if (!server.getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING)) return false;
-                BlockPos blockpos = level.getSharedSpawnPos();
-                int i = Mth.abs(pos.getX() - blockpos.getX());
-                int j = Mth.abs(pos.getZ() - blockpos.getZ());
-                int k = Math.max(i, j);
-                return k <= server.getSpawnProtectionRadius();
+                return !isInsideSpawn(pos, level, server);
             }
         }
         return true;
+    }
+
+    public static boolean canChangeBlockState(BlockPos pos, Level level) {
+        if (level.isClientSide) {
+            return false;
+        }
+        if (!level.getWorldBorder().isWithinBounds(pos)) {
+            return false;
+        }
+        MinecraftServer server = level.getServer();
+        if (server != null) {
+            return !isInsideSpawn(pos, level, server);
+        }
+        return true;
+    }
+
+    private static boolean isInsideSpawn(BlockPos pos, Level level, MinecraftServer server) {
+        BlockPos blockpos = level.getSharedSpawnPos();
+        int i = Mth.abs(pos.getX() - blockpos.getX());
+        int j = Mth.abs(pos.getZ() - blockpos.getZ());
+        int k = Math.max(i, j);
+        return k <= server.getSpawnProtectionRadius();
     }
 
     public static boolean executeOnPlane(BlockPos pos, SpellCastingContext context, Direction direction,

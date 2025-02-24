@@ -1,7 +1,7 @@
 package io.github.sfseeger.manaweave_and_runes.datagen.server;
 
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
-import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesItemInit;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRItemInit;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementRewards;
@@ -70,7 +70,7 @@ public class MRAdvancementProvider extends AdvancementProvider {
             Advancement.Builder.advancement()
                     .parent(root)
                     .addCriterion("has_position_rune", InventoryChangeTrigger.TriggerInstance.hasItems(
-                            ManaweaveAndRunesItemInit.POSITION_RUNE_ITEM.get()))
+                            MRItemInit.POSITION_RUNE_ITEM.get()))
                     .save(consumer, id.withSuffix("thunder_ritual"), existingFileHelper);
         }
     }

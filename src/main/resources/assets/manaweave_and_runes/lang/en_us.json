@@ -33,6 +33,7 @@
   "item.manaweave_and_runes.position_rune": "Position Rune",
   "item.manaweave_and_runes.soul_container_rune": "Soul Container Rune",
   "item.manaweave_and_runes.spell_holder": "Spell Holder",
+  "item.manaweave_and_runes.mana_weavers_staff": "Mana Weaver's Staff",
 
   "item.manaweave_and_runes.soul_container_rune.stole_soul_fragment": "Someone tried to steal a soul fragment from you",
   "item.manaweave_and_runes.soul_container_rune.detected": "You got noticed trying to steal a soul fragment",
@@ -66,5 +67,6 @@
   "container.manaweave_and_runes.wand_modification_table": "Wand Modification Table",
   "container.manaweave_and_runes.spell_designer": "Spell Designer",
   "container.manaweave_and_runes.mana_generator": "Mana Generator",
-  "item.manaweave_and_runes.spell_part_holder": "Spell Part"
+  "item.manaweave_and_runes.spell_part_holder": "Spell Part",
+  "ritual.shattering_rite.invalid_position": "This position is too far from the ritual anchor"
 }

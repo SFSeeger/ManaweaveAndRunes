@@ -4,6 +4,7 @@ import io.github.sfseeger.lib.common.mana.Manas;
 import io.github.sfseeger.lib.common.rituals.Ritual;
 import io.github.sfseeger.lib.common.rituals.RitualInput;
 import io.github.sfseeger.lib.core.ManaweaveAndRunesRegistries;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRItemInit;
 import io.github.sfseeger.manaweave_and_runes.core.init.RitualInit;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
@@ -13,6 +14,11 @@ import net.minecraft.world.item.crafting.Ingredient;
 
 public class RitualInputs {
     public static final ResourceKey<RitualInput> GROWTH_RITUAL = registerKey(RitualInit.GROWTH_RITUAL.get());
+    public static final ResourceKey<RitualInput> SANCTUARY = registerKey(RitualInit.SANCTUARY_RITUAL.get());
+    public static final ResourceKey<RitualInput> ASCENDED_SANCTUARY =
+            registerKey(RitualInit.ASCENDED_SANCTUARY_RITUAL.get());
+    public static final ResourceKey<RitualInput> SHATTERING_RITE = registerKey(RitualInit.SHATTERING_RITE_RITUAL.get());
+
 
     public static void bootsrap(BootstrapContext<RitualInput> context) {
         context.register(GROWTH_RITUAL, new RitualInput.Builder()
@@ -21,6 +27,30 @@ public class RitualInputs {
                 .addInitialItemCost(Ingredient.of(ItemTags.SAPLINGS))
                 .addManaCost(Manas.AirMana, 5)
                 .setManaRate(20)
+                .build()
+        );
+
+        context.register(SANCTUARY, new RitualInput.Builder()
+                .addInitialItemCost(Ingredient.of(Items.GOLD_INGOT))
+                .addInitialItemCost(Ingredient.of(Items.IRON_SWORD))
+                .addManaCost(Manas.AirMana, 5)
+                .setManaRate(60)
+                .build()
+        );
+        context.register(ASCENDED_SANCTUARY, new RitualInput.Builder()
+                .addInitialItemCost(Ingredient.of(Items.GOLD_INGOT))
+                .addInitialItemCost(Ingredient.of(Items.IRON_SWORD))
+                .addInitialItemCost(Ingredient.of(Items.GOLDEN_APPLE))
+                .addManaCost(Manas.AirMana, 5)
+                .setManaRate(60)
+                .build()
+        );
+        context.register(SHATTERING_RITE, new RitualInput.Builder()
+                .addInitialItemCost(Ingredient.of(Items.DIAMOND))
+                .addInitialItemCost(Ingredient.of(Items.DIAMOND_PICKAXE))
+                .addInitialItemCost(Ingredient.of(MRItemInit.POSITION_RUNE_ITEM))
+                .addManaCost(Manas.AirMana, 5)
+                .setManaRate(60)
                 .build()
         );
     }

@@ -14,7 +14,7 @@ import net.minecraft.world.item.context.UseOnContext;
 
 import java.util.List;
 
-import static io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesDataComponentsInit.BLOCK_POS_DATA_COMPONENT;
+import static io.github.sfseeger.manaweave_and_runes.core.init.MRDataComponentsInit.BLOCK_POS_DATA_COMPONENT;
 
 public class PositionRuneItem extends Item implements IRitualDataCapable {
     public PositionRuneItem() {

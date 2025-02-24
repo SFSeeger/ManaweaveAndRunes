@@ -8,15 +8,16 @@ import io.github.sfseeger.lib.common.mana.network.ManaNetworkNodeType;
 import io.github.sfseeger.lib.common.rituals.IRitualManager;
 import io.github.sfseeger.lib.common.rituals.Ritual;
 import io.github.sfseeger.lib.common.rituals.RitualStepResult;
+import io.github.sfseeger.lib.common.rituals.RitualUtils;
 import io.github.sfseeger.lib.common.rituals.ritual_data.IRitualDataCapable;
 import io.github.sfseeger.lib.common.rituals.ritual_data.RitualContext;
 import io.github.sfseeger.lib.common.rituals.ritual_data.builtin.PlayerRitualData;
 import io.github.sfseeger.manaweave_and_runes.common.blocks.ritual_anchor.RitualAnchorBlock;
 import io.github.sfseeger.manaweave_and_runes.common.blocks.ritual_anchor.RitualAnchorType;
 import io.github.sfseeger.manaweave_and_runes.common.blocks.ritual_anchor.RitualAnchorTypes;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRBlockEntityInit;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRBlockInit;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRParticleTypeInit;
-import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockEntityInit;
-import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockInit;
 import io.github.sfseeger.manaweave_and_runes.core.util.Utils;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.core.BlockPos;
@@ -38,35 +39,55 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib.animatable.GeoBlockEntity;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animation.*;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import static io.github.sfseeger.lib.common.rituals.ritual_data.RitualDataTypes.PLAYER_TYPE;
-
-public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManager, IManaNetworkSubscriber {
+public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManager, IManaNetworkSubscriber, GeoBlockEntity {
     public static final Ritual.RitualOriginType ORIGIN_TYPE = Ritual.RitualOriginType.ANCHOR;
+
+    //ANIMATIONS
+    protected static final RawAnimation DEPLOY_ANIMATION = RawAnimation.begin().thenLoop("idle_inactive");
+    protected static final RawAnimation IDLE_ACTIVE = RawAnimation.begin().thenLoop("idle_active");
+    protected static final RawAnimation ACTIVATION_ANIMATION =
+            RawAnimation.begin().thenPlay("activate").thenLoop("idle_active");
+    protected static final RawAnimation RUNNING_ANIMATION = RawAnimation.begin().thenLoop("ritual_active");
+    protected static final RawAnimation DEACTIVATION_ANIMATION = RawAnimation.begin().thenPlay("deactivate");
+
     public final ManaHandler manaHandler = new ManaHandler(10_000, 10_000, 10_000, null);
-    RitualState currentRitualState = RitualState.IDLE;
-    Ritual currentRitual;
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+    private RitualState currentRitualState = RitualState.IDLE;
     int ritualTicks = 0;
     boolean isActive = false;
-    List<BlockPos> pedestalPositions = new ArrayList<>();
-    List<BlockPos> pedestalsToVisit = new ArrayList<>();
-    List<Ingredient> requiredItems = new ArrayList<>();
-    List<ItemStack> consumedItems = new ArrayList<>();
-    RitualContext ritualContext = new RitualContext();
-    ManaNetworkNode manaNetworkNode = new ManaNetworkNode(this, ManaNetworkNodeType.RECEIVER, 20, true);
+    private Ritual currentRitual;
+    private List<BlockPos> pedestalPositions = new ArrayList<>();
+    private List<BlockPos> pedestalsToVisit = new ArrayList<>();
+    private List<Ingredient> requiredItems = new ArrayList<>();
+    private List<ItemStack> consumedItems = new ArrayList<>();
+    private RitualContext ritualContext = new RitualContext();
+    private ManaNetworkNode manaNetworkNode = new ManaNetworkNode(this, ManaNetworkNodeType.RECEIVER, 20, true);
 
     public RitualAnchorBlockEntity(BlockPos pos, BlockState blockState) {
-        super(ManaweaveAndRunesBlockEntityInit.RITUAL_ANCHOR_BLOCK_ENTITY.get(), pos, blockState);
+        super(MRBlockEntityInit.RITUAL_ANCHOR_BLOCK_ENTITY.get(), pos, blockState);
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, RitualAnchorBlockEntity blockEntity) {
         if (level.getGameTime() % 20 == 0) {
+            boolean oldState = blockEntity.isActive();
             blockEntity.setActive(blockEntity.getRitualAnchorType().isValidShape(level, pos));
+            if (oldState != blockEntity.isActive()) {
+                if (blockEntity.isActive()) {
+                    blockEntity.triggerAnim("controller", "activate");
+                } else {
+                    blockEntity.triggerAnim("controller", "deactivate");
+                }
+            }
         }
 
         ritualTick(level, pos, state, blockEntity);
@@ -78,7 +99,7 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
         if (!(currentState == RitualState.IDLE)) {
             if (level.getGameTime() % 50 == 0) {
                 blockEntity.pedestalPositions = blockEntity.getRitualAnchorType()
-                        .findBlocks(level, ManaweaveAndRunesBlockInit.RUNE_PEDESTAL_BLOCK.get());
+                        .findBlocks(level, MRBlockInit.RUNE_PEDESTAL_BLOCK.get());
             }
             switch (currentState) {
                 case INITIAL_ITEM_CONSUME -> {
@@ -116,42 +137,12 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
             return;
         }
 
-        blockEntity.executeStepAndTransition(level, pos, state, blockEntity.ritualTicks, blockEntity.ritualContext,
-                                             ORIGIN_TYPE);
+        blockEntity.triggerAnim("controller", "start_ritual");
 
-        switch (blockEntity.getState()) {
-            case TICK -> {
-                if (blockEntity.getRitual().getDuration() != -1) {
-                    blockEntity.ritualTicks++;
-                    if (blockEntity.ritualTicks >= blockEntity.getRitual().getDuration()) {
-                        blockEntity.transition(RitualStepResult.END);
-                    }
-                }
-            }
-            case FINISH, ABORT -> {
-                blockEntity.executeStep(level, pos, state, blockEntity.ritualTicks, blockEntity.ritualContext,
-                                        ORIGIN_TYPE);
-                blockEntity.ritualTicks = 0;
-                blockEntity.pedestalPositions.clear();
-                blockEntity.pedestalsToVisit.clear();
-                blockEntity.requiredItems = List.of();
-                blockEntity.consumedItems.clear();
-                blockEntity.ritualContext = new RitualContext();
-                blockEntity.transition(RitualStepResult.END);
-            }
-            default -> {
-            }
-        }
-    }
 
-    private static void displayMessageToStartingPlayer(Component message, Level level, RitualContext context) {
-        PlayerRitualData starting_player = context.getData("starting_player", PLAYER_TYPE);
-        if (starting_player != null) {
-            Player player = level.getPlayerByUUID(starting_player.getPlayerUUID());
-            if (player != null) {
-                player.displayClientMessage(message, false);
-            }
-        }
+        RitualState newState = blockEntity.executeStepAndTransition(level, pos, state, blockEntity.ritualTicks,
+                                                                    blockEntity.ritualContext,
+                                                                    ORIGIN_TYPE);
     }
 
     @Override
@@ -173,8 +164,9 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
                 consumedItems.clear();
                 return RitualStepResult.SKIP;
             }
-            displayMessageToStartingPlayer(Component.translatable("ritual.manaweave_and_runes.item_insufficient"),
-                                           level, context);
+            RitualUtils.displayMessageToStartingPlayer(
+                    Component.translatable("ritual.manaweave_and_runes.item_insufficient"),
+                    level, context);
             return RitualStepResult.ABORT;
         }
 
@@ -228,8 +220,9 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
         if (Utils.compareIngredientsToItems(requiredItems, consumedItems)) {
             return RitualStepResult.SUCCESS;
         }
-        displayMessageToStartingPlayer(Component.translatable("ritual.manaweave_and_runes.item_insufficient"), level,
-                                       context);
+        RitualUtils.displayMessageToStartingPlayer(
+                Component.translatable("ritual.manaweave_and_runes.item_insufficient"), level,
+                context);
         return RitualStepResult.ABORT;
     }
 
@@ -241,7 +234,7 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
             for (Map.Entry<Mana, Integer> entry : requiredMana.entrySet()) {
                 Integer amount = entry.getValue();
                 if (manaHandler.extractMana(amount, entry.getKey(), false) != amount) {
-                    displayMessageToStartingPlayer(
+                    RitualUtils.displayMessageToStartingPlayer(
                             Component.translatable("ritual.manaweave_and_runes.mana_insufficient"), level, context);
                     return RitualStepResult.ABORT;
                 }
@@ -278,6 +271,29 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
         this.currentRitualState = state;
     }
 
+    @Override
+    public void cleanUp(Level level, BlockPos pos, BlockState blockState, RitualContext context,
+            Ritual.RitualOriginType originType) {
+        this.ritualTicks = 0;
+        this.pedestalPositions.clear();
+        this.pedestalsToVisit.clear();
+        this.requiredItems = List.of();
+        this.consumedItems.clear();
+        this.ritualContext = new RitualContext();
+        this.triggerAnim("controller", "idle_active");
+    }
+
+    @Override
+    public RitualStepResult afterRitualTick(Level level, BlockPos pos, BlockState blockState, int ticksPassed,
+            RitualContext context, Ritual.RitualOriginType originType) {
+        ritualTicks++;
+
+        if (getRitual().getDuration() != -1 && ritualTicks >= getRitual().getDuration()) {
+            return RitualStepResult.END;
+        }
+        return RitualStepResult.SUCCESS;
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     public ManaHandler getManaHandler(@Nullable Direction side) {
@@ -303,7 +319,7 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
         List<ItemStack> items = new ArrayList<>();
         RitualContext ritualContext = new RitualContext();
         for (BlockPos offset : getRitualAnchorType().findBlocks(level,
-                                                                ManaweaveAndRunesBlockInit.RUNE_PEDESTAL_BLOCK.get())) {
+                                                                MRBlockInit.RUNE_PEDESTAL_BLOCK.get())) {
             BlockPos worldPos = getBlockPos().offset(offset);
             BlockEntity blockEntity = level.getBlockEntity(worldPos);
             if (blockEntity instanceof RunePedestalBlockEntity pBE) {
@@ -321,8 +337,9 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
 
         Ritual ritual = getMatchingRitual(items, getRitualAnchorType().getTier(), ORIGIN_TYPE, level).orElse(null);
         if (ritual == null) {
-            displayMessageToStartingPlayer(Component.translatable("ritual.manaweave_and_runes.unknown_ritual"), level,
-                                           ritualContext);
+            RitualUtils.displayMessageToStartingPlayer(
+                    Component.translatable("ritual.manaweave_and_runes.unknown_ritual"), level,
+                    ritualContext);
             return false;
         }
 
@@ -332,19 +349,21 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
         if (advancement != null && !player.isCreative() && !((ServerPlayer) player).getAdvancements()
                 .getOrStartProgress(advancement)
                 .isDone()) {
-            displayMessageToStartingPlayer(Component.translatable("ritual.manaweave_and_runes.unknown_ritual"), level,
-                                           ritualContext);
+            RitualUtils.displayMessageToStartingPlayer(
+                    Component.translatable("ritual.manaweave_and_runes.unknown_ritual"), level,
+                    ritualContext);
             return false;
         }
 
 
         this.pedestalPositions =
-                getRitualAnchorType().findBlocks(level, ManaweaveAndRunesBlockInit.RUNE_PEDESTAL_BLOCK.get());
+                getRitualAnchorType().findBlocks(level, MRBlockInit.RUNE_PEDESTAL_BLOCK.get());
         this.pedestalsToVisit = new ArrayList<>(pedestalPositions);
         this.requiredItems = ritual.getInitialItemCost(level);
         this.ritualContext = ritualContext;
 
         startRitual(ritual);
+        triggerAnim("controller", "start_ritual");
         return true;
     }
 
@@ -366,7 +385,6 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
         super.loadAdditional(tag, registries);
         deserializeNBT(tag.getCompound("current_ritual"), registries);
         ritualTicks = tag.getInt("ritual_ticks");
-        setActive(tag.getBoolean("is_active"));
         if (tag.contains("context")) ritualContext = RitualContext.deserializeNBT(tag.getCompound("context"));
         manaHandler.deserializeNBT(registries, tag.getCompound("mana"));
         manaNetworkNode = ManaNetworkNode.deserializeNBT(tag.getCompound("mana_network_node"), registries, this)
@@ -378,7 +396,6 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
         super.saveAdditional(tag, registries);
         tag.put("current_ritual", currentRitual != null ? serializeNBT(registries) : new CompoundTag());
         tag.putInt("ritual_ticks", ritualTicks);
-        tag.putBoolean("is_active", isActive());
         tag.put("context", ritualContext.serializeNBT());
         tag.put("mana", manaHandler.serializeNBT(registries));
         tag.put("mana_network_node", manaNetworkNode.serializeNBT(registries));
@@ -411,5 +428,23 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
 
     public void setActive(boolean active) {
         isActive = active;
+    }
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        controllers.add(new AnimationController<>(this, "controller", 0, this::deployAnimController)
+                                .triggerableAnim("activate", ACTIVATION_ANIMATION)
+                                .triggerableAnim("idle_active", IDLE_ACTIVE)
+                                .triggerableAnim("start_ritual", RUNNING_ANIMATION)
+                                .triggerableAnim("deactivate", DEACTIVATION_ANIMATION));
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return this.cache;
+    }
+
+    private PlayState deployAnimController(AnimationState<RitualAnchorBlockEntity> state) {
+        return state.setAndContinue(DEPLOY_ANIMATION);
     }
 }

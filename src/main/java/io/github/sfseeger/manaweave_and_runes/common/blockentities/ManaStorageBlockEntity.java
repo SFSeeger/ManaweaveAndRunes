@@ -4,7 +4,7 @@ import io.github.sfseeger.lib.common.mana.IManaNetworkSubscriber;
 import io.github.sfseeger.lib.common.mana.capability.ManaHandler;
 import io.github.sfseeger.lib.common.mana.network.ManaNetworkNode;
 import io.github.sfseeger.lib.common.mana.network.ManaNetworkNodeType;
-import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockEntityInit;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRBlockEntityInit;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -22,7 +22,7 @@ public class ManaStorageBlockEntity extends BlockEntity implements IManaNetworkS
     ManaNetworkNode manaNetworkNode = new ManaNetworkNode(this, ManaNetworkNodeType.HYBRID);
 
     public ManaStorageBlockEntity(BlockPos pos, BlockState blockState) {
-        super(ManaweaveAndRunesBlockEntityInit.MANA_STORAGE_BLOCK_ENTITY.get(), pos, blockState);
+        super(MRBlockEntityInit.MANA_STORAGE_BLOCK_ENTITY.get(), pos, blockState);
         manaHandler = new ManaHandler(10_000, 1000, 1000, MANA_SLOTS, null) {
             @Override
             public void onContentChanged() {

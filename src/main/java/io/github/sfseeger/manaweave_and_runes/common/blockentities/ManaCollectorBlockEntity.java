@@ -9,7 +9,7 @@ import io.github.sfseeger.lib.common.mana.capability.SingleManaHandler;
 import io.github.sfseeger.lib.common.mana.network.ManaNetworkNode;
 import io.github.sfseeger.lib.common.mana.network.ManaNetworkNodeType;
 import io.github.sfseeger.manaweave_and_runes.common.blocks.ManaCollectorBlock;
-import io.github.sfseeger.manaweave_and_runes.core.init.ManaweaveAndRunesBlockEntityInit;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRBlockEntityInit;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -55,7 +55,7 @@ public class ManaCollectorBlockEntity extends BlockEntity implements IManaNetwor
     private boolean isCollecting = false;
 
     public ManaCollectorBlockEntity(BlockPos pos, BlockState blockState) {
-        super(ManaweaveAndRunesBlockEntityInit.MANA_COLLECTOR_BLOCK_ENTITY.get(), pos, blockState);
+        super(MRBlockEntityInit.MANA_COLLECTOR_BLOCK_ENTITY.get(), pos, blockState);
 
         this.manaHandler = new SingleManaHandler(CAPACITY, MAX_RECEIVE, MAX_EXTRACT) {
             @Override

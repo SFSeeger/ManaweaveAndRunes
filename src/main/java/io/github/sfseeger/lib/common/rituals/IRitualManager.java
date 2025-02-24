@@ -4,7 +4,6 @@ import io.github.sfseeger.lib.common.LibUtils;
 import io.github.sfseeger.lib.common.Tier;
 import io.github.sfseeger.lib.common.rituals.ritual_data.RitualContext;
 import io.github.sfseeger.lib.core.ManaweaveAndRunesRegistries;
-import io.github.sfseeger.manaweave_and_runes.core.util.Utils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -23,7 +22,7 @@ import java.util.Optional;
 public interface IRitualManager {
     Map<RitualState, Map<RitualStepResult, RitualState>> transitionMap = Map.of(
             RitualState.IDLE, Map.of(
-                    RitualStepResult.SUCCESS, RitualState.START,
+                    RitualStepResult.SUCCESS, RitualState.IDLE,
                     RitualStepResult.SKIP, RitualState.IDLE,
                     RitualStepResult.END, RitualState.IDLE,
                     RitualStepResult.ABORT, RitualState.IDLE
@@ -68,10 +67,15 @@ public interface IRitualManager {
                 .findFirst();
     }
 
-    default void transition(RitualStepResult result) {
+    default RitualState transition(RitualStepResult result) {
         RitualState state = getState();
         setState(transitionMap.get(getState()).get(result));
         if (!getState().equals(state)) markUpdated();
+        return getState();
+    }
+
+    default RitualState getTransition(RitualStepResult result) {
+        return transitionMap.get(getState()).get(result);
     }
 
     default void startRitual(Ritual ritual) {
@@ -98,11 +102,11 @@ public interface IRitualManager {
         return getState().step(this, level, pos, blockState, ticksPassed, context, originType);
     }
 
-    default void executeStepAndTransition(Level level, BlockPos pos, BlockState blockState, int ticksPassed,
+    default RitualState executeStepAndTransition(Level level, BlockPos pos, BlockState blockState, int ticksPassed,
             RitualContext context,
             Ritual.RitualOriginType originType) {
         RitualStepResult result = executeStep(level, pos, blockState, ticksPassed, context, originType);
-        transition(result);
+        return transition(result);
     }
 
     default Tag serializeNBT(HolderLookup.Provider provider) {
@@ -134,6 +138,13 @@ public interface IRitualManager {
 
     void setState(RitualState state);
 
+    default void cleanUp(Level level, BlockPos pos, BlockState blockState, RitualContext context,
+            Ritual.RitualOriginType originType) {
+    }
+
+    RitualStepResult afterRitualTick(Level level, BlockPos pos, BlockState blockState, int ticksPassed,
+            RitualContext context, Ritual.RitualOriginType originType);
+
 
     enum RitualState {
         START((manager, level, pos, blockState, ticksPassed, context, originType) -> {
@@ -151,14 +162,18 @@ public interface IRitualManager {
                                                 originType));
             currentResult = currentResult.getHigherPriority(
                     manager.consumeTickItem(level, pos, blockState, ticksPassed, context, originType));
+            currentResult = currentResult.getHigherPriority(
+                    manager.afterRitualTick(level, pos, blockState, ticksPassed, context, originType));
             return currentResult;
         }),
         FINISH((manager, level, pos, blockState, ticksPassed, context, originType) -> {
             manager.getRitual().onRitualEnd(level, pos, blockState, context, originType);
+            manager.cleanUp(level, pos, blockState, context, originType);
             return RitualStepResult.SUCCESS;
         }),
         ABORT((manager, level, pos, blockState, ticksPassed, context, originType) -> {
             manager.getRitual().onRitualInterrupt(level, pos, blockState, context, originType);
+            manager.cleanUp(level, pos, blockState, context, originType);
             return RitualStepResult.SUCCESS;
         }),
         IDLE((manager, level, pos, blockState, ticksPassed, extraData, originType) -> RitualStepResult.SKIP);

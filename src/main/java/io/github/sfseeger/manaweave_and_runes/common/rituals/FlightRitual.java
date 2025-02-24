@@ -5,9 +5,7 @@ import io.github.sfseeger.lib.common.rituals.Ritual;
 import io.github.sfseeger.lib.common.rituals.RitualStepResult;
 import io.github.sfseeger.lib.common.rituals.ritual_data.RitualContext;
 import io.github.sfseeger.lib.common.rituals.ritual_data.builtin.PlayerListRitualData;
-import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -15,7 +13,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
-import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -24,7 +21,7 @@ import static io.github.sfseeger.lib.common.rituals.ritual_data.RitualDataTypes.
 
 public class FlightRitual extends Ritual {
     public FlightRitual() {
-        super(Tier.NOVICE, -1);
+        super(Tier.MASTER, -1);
     }
 
     @Override
