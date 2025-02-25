@@ -10,8 +10,8 @@ import net.minecraft.world.entity.player.Inventory;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
-import static io.github.sfseeger.manaweave_and_runes.common.menus.RuneCarverMenu.BASE_SLOT;
 import static io.github.sfseeger.manaweave_and_runes.common.menus.RuneCarverMenu.CHISEL_SLOT;
+import static io.github.sfseeger.manaweave_and_runes.common.menus.RuneCarverMenu.TEMPLATE_SLOT;
 
 @OnlyIn(Dist.CLIENT)
 public class RuneCarverBlockScreen extends ItemCombinerScreen<RuneCarverMenu> {
@@ -23,6 +23,8 @@ public class RuneCarverBlockScreen extends ItemCombinerScreen<RuneCarverMenu> {
             ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "container/rune_carver/chisel_slot_hint");
     private static final ResourceLocation RUNE_SLOT_HINT =
             ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "container/rune_carver/rune_slot_hint");
+    private static final ResourceLocation TEMPLATE_SLOT_HINT =
+            ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "container/rune_carver/template_slot_hint");
 
     private static final ResourceLocation ERROR_SPRITE =
             ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "container/rune_carver/error_sprite");
@@ -60,8 +62,8 @@ public class RuneCarverBlockScreen extends ItemCombinerScreen<RuneCarverMenu> {
         if (!this.menu.getSlot(CHISEL_SLOT).hasItem()) {
             guiGraphics.blitSprite(CHISEL_SLOT_HINT, leftPos + 33, topPos + 48, 16, 16);
         }
-        if (!this.menu.getSlot(BASE_SLOT).hasItem()) {
-            guiGraphics.blitSprite(RUNE_SLOT_HINT, leftPos + 69, topPos + 48, 16, 16);
+        if (!this.menu.getSlot(TEMPLATE_SLOT).hasItem()) {
+            guiGraphics.blitSprite(TEMPLATE_SLOT_HINT, leftPos + 51, topPos + 48, 16, 16);
         }
 
         if (this.hasRecipeError()) {
@@ -71,7 +73,7 @@ public class RuneCarverBlockScreen extends ItemCombinerScreen<RuneCarverMenu> {
 
     protected void renderErrorIcon(GuiGraphics guiGraphics, int x, int y) {
         if (this.hasRecipeError()) {
-            guiGraphics.blitSprite(ERROR_SPRITE, x + 65, y + 46, 28, 21);
+            guiGraphics.blitSprite(ERROR_SPRITE, x + 90, y + 46, 28, 21);
         }
     }
 

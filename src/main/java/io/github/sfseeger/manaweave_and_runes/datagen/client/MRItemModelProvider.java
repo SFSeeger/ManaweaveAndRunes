@@ -3,19 +3,14 @@ package io.github.sfseeger.manaweave_and_runes.datagen.client;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRItemInit;
 import io.github.sfseeger.manaweave_and_runes.core.init.SpellNodeInit;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.Block;
-import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
-import java.util.Objects;
-
-public class ManaweaveAndRunesItemModelProvider extends ItemModelProvider {
-    public ManaweaveAndRunesItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
+public class MRItemModelProvider extends ItemModelProvider {
+    public MRItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
         super(output, ManaweaveAndRunes.MODID, existingFileHelper);
     }
 
@@ -32,6 +27,9 @@ public class ManaweaveAndRunesItemModelProvider extends ItemModelProvider {
         basicItem(MRItemInit.AMETHYST_AIR_RUNE_ITEM.get());
 
         basicItem(MRItemInit.SPELL_HOLDER_ITEM.get());
+
+        basicItem(MRItemInit.AIR_RUNE_CARVING_TEMPLATE.get());
+        basicItem(MRItemInit.FIRE_RUNE_CARVING_TEMPLATE.get());
 
         handheldItem(MRItemInit.SOUL_CONTAINER_RUNE_ITEM.get())
                 .texture("layer0", "item/soul_container_rune")
@@ -62,10 +60,5 @@ public class ManaweaveAndRunesItemModelProvider extends ItemModelProvider {
                         .texture("layer0", "item/spell_holder_default_rune");
             }
         });
-    }
-
-    private ItemModelBuilder blockWithExistingModel(Block block, ResourceLocation existingModel) {
-        return this.withExistingParent(Objects.requireNonNull(BuiltInRegistries.BLOCK.getKey(block)).toString(),
-                                       existingModel);
     }
 }

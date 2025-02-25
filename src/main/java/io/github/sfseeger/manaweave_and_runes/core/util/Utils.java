@@ -1,16 +1,14 @@
 package io.github.sfseeger.manaweave_and_runes.core.util;
 
-import com.mojang.serialization.Codec;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.NbtOps;
-import net.minecraft.nbt.Tag;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Utils {
     public static boolean compareIngredientsToItems(List<Ingredient> input, List<ItemStack> supplied){
@@ -34,5 +32,12 @@ public class Utils {
 
         // If there are any unmatched ItemStacks remaining, return false
         return unmatchedItemStacks.isEmpty();
+    }
+
+    public static @NotNull BlockPos getRandomBlockPos(BlockPos pos, RandomSource random, Vec3 area) {
+        return pos
+                .offset(random.nextInt((int) area.x()) - (int) area.x() / 2,
+                        random.nextInt((int) area.y()) - ((int) area.y() / 2 + random.nextInt((int) area.y())),
+                        random.nextInt((int) area.z()) - (int) area.z() / 2);
     }
 }

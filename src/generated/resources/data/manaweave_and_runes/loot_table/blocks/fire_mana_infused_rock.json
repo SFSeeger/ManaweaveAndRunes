@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "manaweave_and_runes:mana_infused_rock"
+          "name": "manaweave_and_runes:fire_mana_infused_rock"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "manaweave_and_runes:blocks/mana_infused_rock"
+  "random_sequence": "manaweave_and_runes:blocks/fire_mana_infused_rock"
 }

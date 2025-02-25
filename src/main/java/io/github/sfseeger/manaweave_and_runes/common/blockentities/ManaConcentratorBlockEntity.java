@@ -30,6 +30,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
@@ -89,8 +90,13 @@ public class ManaConcentratorBlockEntity extends BlockEntity {
             if (blockEntity.craftTimePassed >= blockEntity.craftTime) {
                 ItemStack result = blockEntity.craft();
                 if (!result.isEmpty()) {
-                    level.addFreshEntity(
-                            new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, result));
+                    if (result.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof ManaConcentratorBlock block) {
+                        level.setBlockAndUpdate(pos, block.defaultBlockState());
+                    } else {
+                        level.addFreshEntity(
+                                new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, result));
+                    }
+
                     level.playSound(null, pos, SoundEvents.AMETHYST_BLOCK_RESONATE, SoundSource.BLOCKS, 1.0F, 1.0F);
 
                     float yOffset = blockEntity.getEffectYOffset();
@@ -214,7 +220,7 @@ public class ManaConcentratorBlockEntity extends BlockEntity {
                 Vec3 vecToConcentrator = new Vec3(pos.getX(), pos.getY(), pos.getZ()).vectorTo(pedestalVec);
                 for (int i = 0; i < 4; i++) {
                     Vec3 randomPedestalVec = vecToConcentrator.offsetRandom(randomsource, .5f);
-                    level.addParticle(MRParticleTypeInit.MANA_PARTICLE.get(),
+                    level.addParticle(MRParticleTypeInit.MANA_TRAVEL_PARTICLE.get(),
                                       pos.getX() + 0.5f, pos.getY() + 1.5f, pos.getZ() + 0.5f,
                                       randomPedestalVec.x(), randomPedestalVec.y(), randomPedestalVec.z());
                 }

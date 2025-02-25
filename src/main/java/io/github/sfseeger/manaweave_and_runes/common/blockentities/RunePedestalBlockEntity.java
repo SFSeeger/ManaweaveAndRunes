@@ -7,13 +7,13 @@ import io.github.sfseeger.lib.common.mana.capability.IManaItem;
 import io.github.sfseeger.lib.common.mana.capability.ManaweaveAndRunesCapabilities;
 import io.github.sfseeger.lib.common.mana.network.ManaNetworkNode;
 import io.github.sfseeger.lib.common.mana.network.ManaNetworkNodeType;
+import io.github.sfseeger.manaweave_and_runes.client.particles.mana_particle.ManaParticleOptions;
 import io.github.sfseeger.manaweave_and_runes.common.blocks.ManaCollectorBlock;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRBlockEntityInit;
 import io.github.sfseeger.manaweave_and_runes.core.util.ParticleUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
@@ -63,7 +63,7 @@ public class RunePedestalBlockEntity extends BlockEntity implements IManaNetwork
                 ItemStack stack = blockEntity.getItemHandler(null).getStackInSlot(0);
                 if (stack.getItem() instanceof IManaItem manaItem) {
                     List<Mana> manas = manaItem.getManaTypes(stack);
-                    if (manas.isEmpty()) return;
+                    if (manas.isEmpty()) manas = List.of(manaItem.getManaType());
 
                     for (Mana mana : manas) {
                         int maxReceive = handler.receiveMana(handler.getManaCapacity(), mana, true);
@@ -78,16 +78,15 @@ public class RunePedestalBlockEntity extends BlockEntity implements IManaNetwork
         ManaNetworkNode node = blockEntity.getManaNetworkNode();
         ManaNetworkNodeType type = node.getNodeType();
         if (!(blockEntity.getItem().getItem() instanceof IManaItem)) return;
-        boolean particleUp = type == ManaNetworkNodeType.RECEIVER || type == ManaNetworkNodeType.HYBRID;
-        boolean particleDown = type == ManaNetworkNodeType.PROVIDER || type == ManaNetworkNodeType.HYBRID;
-        Vec3 vec = ParticleUtils.randomPosInsideBox(blockPos, level.random, 0.3, 1.1, 0.3, 0.6, 1.3, 0.6);
-        Vec3 vec1 = ParticleUtils.randomPosInsideBox(blockPos, level.random, 0.3, 1.1, 0.3, 0.6, 1.3, 0.6);
+        boolean particleUp = type == ManaNetworkNodeType.PROVIDER || type == ManaNetworkNodeType.HYBRID;
+        boolean particleDown = type == ManaNetworkNodeType.RECEIVER || type == ManaNetworkNodeType.HYBRID;
+        Vec3 vec = ParticleUtils.randomPosInsideBox(blockPos, level.random, 0.25, 1.1, 0.25, 0.75, 1.3, 0.75);
+        Vec3 vec1 = ParticleUtils.randomPosInsideBox(blockPos, level.random, 0.25, 1.1, 0.25, 0.6, 1.3, 0.75);
 
-        //TODO: Replace with custom particles
         if (particleDown)
-            level.addParticle(ParticleTypes.ASH, vec.x, vec.y, vec.z, 0, -0.2, 0);
+            level.addParticle(new ManaParticleOptions(0.1f, 1f, 1f, 1f, -0.1f, 0.8f), vec.x, vec.y, vec.z, 0, 0, 0);
         if (particleUp)
-            level.addParticle(ParticleTypes.GLOW, vec1.x, vec1.y, vec1.z, 0, 0.2, 0);
+            level.addParticle(new ManaParticleOptions(0.1f, 1f, 1f, 1f, 0.1f, 0.8f), vec1.x, vec1.y, vec1.z, 0, 0, 0);
     }
 
     public void markChanged() {

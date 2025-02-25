@@ -1,4 +1,4 @@
-package io.github.sfseeger.manaweave_and_runes.datagen.server;
+package io.github.sfseeger.manaweave_and_runes.datagen.server.datapack;
 
 import io.github.sfseeger.lib.core.ManaweaveAndRunesRegistries;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
@@ -20,7 +20,8 @@ public class MRDataPackProvider extends DatapackBuiltinEntriesProvider {
             .add(Registries.CONFIGURED_FEATURE, MRConfiguredFeatures::bootstrap)
             .add(Registries.PLACED_FEATURE, MRPlacedFeatures::bootstrap)
             .add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, MRBiomeModifiers::bootstrap)
-            .add(ManaweaveAndRunesRegistries.RITUAL_INPUT_REGISTRY_KEY, RitualInputs::bootsrap);
+            .add(ManaweaveAndRunesRegistries.RITUAL_INPUT_REGISTRY_KEY, RitualInputs::bootsrap)
+            .add(Registries.DAMAGE_TYPE, MRDamageTypeProvider::bootstrap);
 
     public MRDataPackProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
         super(output, registries, BUILDER, Set.of(ManaweaveAndRunes.MODID));

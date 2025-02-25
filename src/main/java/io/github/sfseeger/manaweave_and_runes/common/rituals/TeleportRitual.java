@@ -5,13 +5,16 @@ import io.github.sfseeger.lib.common.rituals.Ritual;
 import io.github.sfseeger.lib.common.rituals.RitualStepResult;
 import io.github.sfseeger.lib.common.rituals.ritual_data.RitualContext;
 import io.github.sfseeger.lib.common.rituals.ritual_data.builtin.PlayerRitualData;
+import io.github.sfseeger.manaweave_and_runes.common.MRDamageTypes;
 import io.github.sfseeger.manaweave_and_runes.common.blocks.ritual_anchor.RitualAnchorBlock;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRItemInit;
 import io.github.sfseeger.manaweave_and_runes.core.util.ParticleUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -94,7 +97,11 @@ public class TeleportRitual extends Ritual {
                 .getPlayerList()
                 .getPlayer(context.getData("starting_player", PLAYER_TYPE).getPlayerUUID());
         if (p == null) return;
-        p.hurt(p.damageSources().magic(), 5);
+        p.hurt(new DamageSource(level.registryAccess()
+                                        .registryOrThrow(Registries.DAMAGE_TYPE)
+                                        .getHolderOrThrow(MRDamageTypes.RITUAL_FAILURE)), 5);
+
+        p.hurt(MRDamageTypes.createRitualFailure(level, pos), 5);
         // TODO: Add sparks or something
     }
 

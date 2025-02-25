@@ -19,6 +19,7 @@ import net.neoforged.neoforge.items.IItemHandler;
 
 @OnlyIn(Dist.CLIENT)
 public class ManaCollectorBlockEntityRenderer extends ManaNodeRenderer<ManaCollectorBlockEntity> {
+    private static final float ROTATION_PERIOD = 75f;
     private BlockEntityRendererProvider.Context context;
 
     public ManaCollectorBlockEntityRenderer(BlockEntityRendererProvider.Context ctx) {
@@ -38,11 +39,12 @@ public class ManaCollectorBlockEntityRenderer extends ManaNodeRenderer<ManaColle
 
         if (level != null && !stack.isEmpty()) {
             packedLight = LightTexture.pack(level.getBrightness(LightLayer.BLOCK, posAbove), level.getBrightness(LightLayer.SKY, posAbove));
+            float rot = (level.getGameTime() % ROTATION_PERIOD) * (360f / ROTATION_PERIOD);
 
             poseStack.pushPose();
 
-            poseStack.translate(0.5, 1.01f, 0.5);
-            poseStack.mulPose(Axis.XP.rotationDegrees(90));
+            poseStack.translate(0.5, 1.1f, 0.5);
+            poseStack.mulPose(Axis.YP.rotationDegrees(rot));
             poseStack.scale(0.5f, 0.5f, 0.5f);
             this.context.getItemRenderer().renderStatic(stack, ItemDisplayContext.FIXED, packedLight, OverlayTexture.NO_OVERLAY, poseStack, multiBufferSource, level, 0);
             poseStack.popPose();

@@ -1,0 +1,17 @@
+{
+  "type": "manaweave_and_runes:add_item_modifier",
+  "conditions": [
+    {
+      "condition": "neoforge:loot_table_id",
+      "loot_table_id": "minecraft:chests/desert_pyramid"
+    },
+    {
+      "chance": 0.9,
+      "condition": "minecraft:random_chance"
+    }
+  ],
+  "item": {
+    "count": 4,
+    "id": "manaweave_and_runes:rune_block_carving_template"
+  }
+}

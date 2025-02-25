@@ -18,7 +18,7 @@
     * [ ] Add texture for connector
     * [X] Allow Mana pedestals to act as storage using runes
       * [X] Add switching modes to pedestals
-      * [ ] Better particle effects
+      * [X] Better particle effects
   * [ ] (Add network instability)
   * [ ] (Add particles when mana is dissipated)
     * [ ] \(Make transmitters placeable on walls\) 
@@ -29,12 +29,9 @@
     * [X] Add item tick consume
     * [X] Make consumption rate data driven
     * [ ] Add additional rituals & ingredients
+  * [ ] Fix item renderer
   * [X] Fix item amount not taken into account
   * [X] Add advancement for rituals (unlocking)
-* [ ] Add early game enchantments
-    * [ ] 3x3 Enchantment
-    * [ ] Tree instachop
-    * [ ] 3x3 hoe
 * [ ] Spell casting
     * [X] Add rune bracelet
     * [X] Add mana weaver's wand
@@ -60,3 +57,5 @@
     * [ ] Add crafting recipes and resources
     * [ ] Add Docs / Patchouli Book
     * [ ] Add advancements
+  * [ ] Fix weird disconnection bug in mana network
+  * [ ] Blocks not dropping when destroyed

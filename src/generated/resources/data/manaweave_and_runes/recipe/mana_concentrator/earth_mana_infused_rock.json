@@ -2,9 +2,14 @@
   "type": "manaweave_and_runes:mana_concentrator",
   "craftTime": 100,
   "inputs": [
-    {
-      "item": "minecraft:feather"
-    },
+    [
+      {
+        "item": "minecraft:dirt"
+      },
+      {
+        "item": "minecraft:cobblestone"
+      }
+    ],
     {
       "item": "minecraft:stone_bricks"
     },
@@ -15,15 +20,10 @@
       "item": "minecraft:stone_bricks"
     }
   ],
-  "manaMap": [
-    {
-      "amount": 15,
-      "manaType": "manaweave_and_runes:air_mana"
-    }
-  ],
+  "manaMap": [],
   "result": {
     "count": 4,
-    "id": "manaweave_and_runes:mana_infused_rock"
+    "id": "manaweave_and_runes:earth_mana_infused_rock"
   },
   "tier": "NOVICE"
 }

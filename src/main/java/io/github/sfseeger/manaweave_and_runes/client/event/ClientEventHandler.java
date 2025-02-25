@@ -5,7 +5,8 @@ import io.github.sfseeger.lib.client.entity_renderers.SpellProjectileRenderer;
 import io.github.sfseeger.lib.client.models.SpellProjectileModel;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
 import io.github.sfseeger.manaweave_and_runes.client.particles.ManaConcentratedParticle;
-import io.github.sfseeger.manaweave_and_runes.client.particles.ManaParticle;
+import io.github.sfseeger.manaweave_and_runes.client.particles.ManaTravelParticle;
+import io.github.sfseeger.manaweave_and_runes.client.particles.mana_particle.ManaParticleType;
 import io.github.sfseeger.manaweave_and_runes.client.renderers.block.ManaCollectorBlockEntityRenderer;
 import io.github.sfseeger.manaweave_and_runes.client.renderers.block.ManaConcentratorBlockEntityRenderer;
 import io.github.sfseeger.manaweave_and_runes.client.renderers.block.RitualAnchorBlockEntityRenderer;
@@ -63,8 +64,10 @@ public class ClientEventHandler {
 
     @SubscribeEvent
     public static void registerParticleProviders(RegisterParticleProvidersEvent event) {
-        event.registerSpriteSet(MRParticleTypeInit.MANA_PARTICLE.get(), ManaParticle.ManaParticleProvider::new);
+        event.registerSpriteSet(MRParticleTypeInit.MANA_TRAVEL_PARTICLE.get(),
+                                ManaTravelParticle.ManaTravelParticleProvider::new);
         event.registerSpriteSet(MRParticleTypeInit.MANA_CONCENTRATED.get(),
                                 ManaConcentratedParticle.ManaConcentratedProvider::new);
+        event.registerSpriteSet(MRParticleTypeInit.MANA_PARTICLE.get(), ManaParticleType.Factory::new);
     }
 }

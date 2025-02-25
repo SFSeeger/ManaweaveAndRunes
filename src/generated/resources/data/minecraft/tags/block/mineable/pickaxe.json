@@ -1,12 +1,19 @@
 {
   "values": [
     "manaweave_and_runes:mana_collector",
-    "manaweave_and_runes:tanzanite_ore",
-    "manaweave_and_runes:deepslate_tanzanite_ore",
     "manaweave_and_runes:mana_storage",
+    "manaweave_and_runes:novice_mana_concentrator",
+    "manaweave_and_runes:master_mana_concentrator",
+    "manaweave_and_runes:ascended_mana_concentrator",
+    "manaweave_and_runes:novice_ritual_anchor",
+    "manaweave_and_runes:master_ritual_anchor",
+    "manaweave_and_runes:ascended_ritual_anchor",
+    "manaweave_and_runes:mana_transmitter",
+    "manaweave_and_runes:wand_modification_table",
     "manaweave_and_runes:rune_block",
-    "manaweave_and_runes:rune_pedestal",
-    "manaweave_and_runes:mana_infused_rock",
-    "manaweave_and_runes:mana_transmitter"
+    "manaweave_and_runes:fire_mana_infused_rock",
+    "manaweave_and_runes:air_mana_infused_rock",
+    "manaweave_and_runes:earth_mana_infused_rock",
+    "manaweave_and_runes:rune_pedestal"
   ]
 }

@@ -23,7 +23,9 @@ public class MRBlockLootSubProvider extends BlockLootSubProvider {
         this.dropSelf(MRBlockInit.TANZANITE_BLOCK.get());
 
         this.dropSelf(MRBlockInit.RUNE_BLOCK.get());
-        this.dropSelf(MRBlockInit.MANA_INFUSED_ROCK_BLOCK.get());
+        this.dropSelf(MRBlockInit.FIRE_MANA_INFUSED_ROCK_BLOCK.get());
+        this.dropSelf(MRBlockInit.AIR_MANA_INFUSED_ROCK_BLOCK.get());
+        this.dropSelf(MRBlockInit.EARTH_MANA_INFUSED_ROCK_BLOCK.get());
 
         this.dropSelf(MRBlockInit.MANA_GENERATOR_BLOCK.get());
         this.dropSelf(MRBlockInit.MANA_COLLECTOR_BLOCK.get());
