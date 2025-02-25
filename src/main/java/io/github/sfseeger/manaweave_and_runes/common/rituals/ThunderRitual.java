@@ -6,6 +6,7 @@ import io.github.sfseeger.lib.common.rituals.RitualStepResult;
 import io.github.sfseeger.lib.common.rituals.ritual_data.RitualContext;
 import io.github.sfseeger.lib.common.rituals.ritual_data.builtin.PlayerRitualData;
 import io.github.sfseeger.lib.common.rituals.ritual_data.builtin.PositionRitualData;
+import io.github.sfseeger.manaweave_and_runes.common.MRDamageTypes;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRItemInit;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -70,7 +71,7 @@ public class ThunderRitual extends Ritual {
         }
         BlockPos pPos = p.blockPosition();
         EntityType.LIGHTNING_BOLT.spawn((ServerLevel) level, pPos, MobSpawnType.TRIGGERED);
-        p.hurt(p.damageSources().magic(), 10);
+        p.hurt(MRDamageTypes.createRitualFailure(level, pos), 5);
     }
 
     public void returnPositionRune(Level level, BlockPos pos) {

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "manaweave_and_runes:air_mana_infused_rock"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "manaweave_and_runes:blocks/air_mana_infused_rock"
+}

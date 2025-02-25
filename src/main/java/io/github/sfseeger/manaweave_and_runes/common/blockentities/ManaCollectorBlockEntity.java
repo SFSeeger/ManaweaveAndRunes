@@ -8,6 +8,7 @@ import io.github.sfseeger.lib.common.mana.capability.ManaweaveAndRunesCapabiliti
 import io.github.sfseeger.lib.common.mana.capability.SingleManaHandler;
 import io.github.sfseeger.lib.common.mana.network.ManaNetworkNode;
 import io.github.sfseeger.lib.common.mana.network.ManaNetworkNodeType;
+import io.github.sfseeger.manaweave_and_runes.client.particles.mana_particle.ManaParticleOptions;
 import io.github.sfseeger.manaweave_and_runes.common.blocks.ManaCollectorBlock;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRBlockEntityInit;
 import net.minecraft.core.BlockPos;
@@ -17,6 +18,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -30,7 +32,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class ManaCollectorBlockEntity extends BlockEntity implements IManaNetworkSubscriber {
     public static final int CAPACITY = 5000;
-    public static final int MANA_PER_SOURCE = 5;
+    public static final int MANA_PER_SOURCE = 30;
     private static final int MAX_RECEIVE = 5000;
     private static final int MAX_EXTRACT = 5000;
     private final ItemStackHandler inventory = new ItemStackHandler(1) {
@@ -68,7 +70,6 @@ public class ManaCollectorBlockEntity extends BlockEntity implements IManaNetwor
 
     public static void serverTick(Level level, BlockPos pos, BlockState state,
             ManaCollectorBlockEntity blockEntity) {
-        if (level.getGameTime() % 20 != 0) return;
         IItemHandler itemHandler = blockEntity.getItemHandler(null);
         ItemStack stack = itemHandler.getStackInSlot(0);
         Item item = stack.getItem();
@@ -83,6 +84,9 @@ public class ManaCollectorBlockEntity extends BlockEntity implements IManaNetwor
             }
             blockEntity.getManaNetworkNode().provideMana(potentialMana, mamaType);
             blockEntity.markUpdated();
+            ((ServerLevel) level).sendParticles(
+                    new ManaParticleOptions(Math.min(0.4f, level.getRandom().nextFloat()), 1f, 1f, 1f, 0.1f, 0.5f),
+                    pos.getX() + 0.5f, pos.getY() + 1.2f, pos.getZ() + 0.5f, 15, 0.2, 0, 0.2, 0);
         }
     }
 

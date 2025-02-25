@@ -81,6 +81,7 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
         if (level.getGameTime() % 20 == 0) {
             boolean oldState = blockEntity.isActive();
             blockEntity.setActive(blockEntity.getRitualAnchorType().isValidShape(level, pos));
+
             if (oldState != blockEntity.isActive()) {
                 if (blockEntity.isActive()) {
                     blockEntity.triggerAnim("controller", "activate");
@@ -96,6 +97,7 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
     public static void clientTick(Level level, BlockPos pos, BlockState state, RitualAnchorBlockEntity blockEntity) {
         RandomSource randomsource = level.random;
         RitualState currentState = blockEntity.getState();
+
         if (!(currentState == RitualState.IDLE)) {
             if (level.getGameTime() % 50 == 0) {
                 blockEntity.pedestalPositions = blockEntity.getRitualAnchorType()
@@ -114,7 +116,7 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
                         Vec3 vecToConcentrator = new Vec3(pos.getX(), pos.getY(), pos.getZ()).vectorTo(pedestalVec);
                         for (int i = 0; i < 4; i++) {
                             Vec3 randomPedestalVec = vecToConcentrator.offsetRandom(randomsource, .5f);
-                            level.addParticle(MRParticleTypeInit.MANA_PARTICLE.get(), pos.getX() + 0.5f,
+                            level.addParticle(MRParticleTypeInit.MANA_TRAVEL_PARTICLE.get(), pos.getX() + 0.5f,
                                               pos.getY() + 1.5f, pos.getZ() + 0.5f, randomPedestalVec.x(),
                                               randomPedestalVec.y(), randomPedestalVec.z());
                         }
@@ -410,7 +412,14 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
     public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
         CompoundTag tag = super.getUpdateTag(registries);
         saveAdditional(tag, registries);
+        tag.putBoolean("Active", isActive());
         return tag;
+    }
+
+    @Override
+    public void handleUpdateTag(CompoundTag tag, HolderLookup.Provider lookupProvider) {
+        super.handleUpdateTag(tag, lookupProvider);
+        isActive = tag.contains("Active") && tag.getBoolean("Active");
     }
 
     @Override

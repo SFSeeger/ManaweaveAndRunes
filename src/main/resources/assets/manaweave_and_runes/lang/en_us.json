@@ -68,5 +68,6 @@
   "container.manaweave_and_runes.spell_designer": "Spell Designer",
   "container.manaweave_and_runes.mana_generator": "Mana Generator",
   "item.manaweave_and_runes.spell_part_holder": "Spell Part",
-  "ritual.shattering_rite.invalid_position": "This position is too far from the ritual anchor"
+  "ritual.shattering_rite.invalid_position": "This position is too far from the ritual anchor",
+  "death.manaweave_and_runes.ritual_failure": "%1$s ritual backfired"
 }

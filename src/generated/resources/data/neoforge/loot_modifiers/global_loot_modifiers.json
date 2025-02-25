@@ -1,0 +1,8 @@
+{
+  "entries": [
+    "manaweave_and_runes:add_air_carving_template_to_trial_common",
+    "manaweave_and_runes:add_rune_block_carving_template_to_dessert_pyramid",
+    "manaweave_and_runes:add_fire_carving_template_to_ruined_portal"
+  ],
+  "replace": false
+}

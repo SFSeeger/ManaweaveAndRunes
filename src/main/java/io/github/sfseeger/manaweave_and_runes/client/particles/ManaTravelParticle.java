@@ -10,10 +10,10 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class ManaParticle extends FlyTowardsPositionParticle {
+public class ManaTravelParticle extends FlyTowardsPositionParticle {
     private final SpriteSet spriteSet;
 
-    protected ManaParticle(ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed,
+    protected ManaTravelParticle(ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed,
             double zSpeed, SpriteSet spriteSet) {
         super(level, x, y, z, xSpeed, ySpeed, zSpeed);
         this.spriteSet = spriteSet;
@@ -34,17 +34,17 @@ public class ManaParticle extends FlyTowardsPositionParticle {
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static class ManaParticleProvider implements ParticleProvider<SimpleParticleType> {
+    public static class ManaTravelParticleProvider implements ParticleProvider<SimpleParticleType> {
         private final SpriteSet spriteSet;
 
-        public ManaParticleProvider(SpriteSet spriteSet) {
+        public ManaTravelParticleProvider(SpriteSet spriteSet) {
             this.spriteSet = spriteSet;
         }
 
         @Override
         public Particle createParticle(SimpleParticleType type, ClientLevel level,
                 double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-            return new ManaParticle(level, x, y, z, xSpeed, ySpeed, zSpeed, spriteSet);
+            return new ManaTravelParticle(level, x, y, z, xSpeed, ySpeed, zSpeed, spriteSet);
         }
     }
 }

@@ -22,17 +22,26 @@ public class MRBlockTagsProvider extends BlockTagsProvider {
     protected void addTags(HolderLookup.Provider provider) {
         this.tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(MRBlockInit.MANA_COLLECTOR_BLOCK.get())
-                .add(MRBlockInit.TANZANITE_ORE.get())
-                .add(MRBlockInit.DEEPSLATE_TANZANITE_ORE.get())
                 .add(MRBlockInit.MANA_STORAGE_BLOCK.get())
+                .add(MRBlockInit.NOVICE_MANA_CONCENTRATOR_BLOCK.get())
+                .add(MRBlockInit.MASTER_MANA_CONCENTRATOR_BLOCK.get())
+                .add(MRBlockInit.ASCENDED_MANA_CONCENTRATOR_BLOCK.get())
+                .add(MRBlockInit.NOVICE_RITUAL_ANCHOR_BLOCK.get())
+                .add(MRBlockInit.MASTER_RITUAL_ANCHOR_BLOCK.get())
+                .add(MRBlockInit.ASCENDED_RITUAL_ANCHOR_BLOCK.get())
+                .add(MRBlockInit.MANA_TRANSMITTER_BLOCK.get())
+                .add(MRBlockInit.WAND_MODIFICATION_TABLE_BLOCK.get())
                 .add(MRBlockInit.RUNE_BLOCK.get())
-                .add(MRBlockInit.RUNE_PEDESTAL_BLOCK.get())
-                .add(MRBlockInit.MANA_INFUSED_ROCK_BLOCK.get())
-                .add(MRBlockInit.MANA_TRANSMITTER_BLOCK.get());
+                .add(MRBlockInit.FIRE_MANA_INFUSED_ROCK_BLOCK.get())
+                .add(MRBlockInit.AIR_MANA_INFUSED_ROCK_BLOCK.get())
+                .add(MRBlockInit.EARTH_MANA_INFUSED_ROCK_BLOCK.get())
+                .add(MRBlockInit.RUNE_PEDESTAL_BLOCK.get());
 
         this.tag(BlockTags.NEEDS_STONE_TOOL)
                 .add(MRBlockInit.RUNE_BLOCK.get())
-                .add(MRBlockInit.MANA_INFUSED_ROCK_BLOCK.get())
+                .add(MRBlockInit.FIRE_MANA_INFUSED_ROCK_BLOCK.get())
+                .add(MRBlockInit.AIR_MANA_INFUSED_ROCK_BLOCK.get())
+                .add(MRBlockInit.EARTH_MANA_INFUSED_ROCK_BLOCK.get())
                 .add(MRBlockInit.RUNE_PEDESTAL_BLOCK.get());
 
         this.tag(BlockTags.NEEDS_IRON_TOOL)
@@ -52,6 +61,8 @@ public class MRBlockTagsProvider extends BlockTagsProvider {
                 .add(MRBlockInit.DEEPSLATE_TANZANITE_ORE.get());
 
         this.tag(MRTagInit.MANA_INFUSED_BLOCK)
-                .add(MRBlockInit.MANA_INFUSED_ROCK_BLOCK.get());
+                .add(MRBlockInit.FIRE_MANA_INFUSED_ROCK_BLOCK.get())
+                .add(MRBlockInit.AIR_MANA_INFUSED_ROCK_BLOCK.get())
+                .add(MRBlockInit.EARTH_MANA_INFUSED_ROCK_BLOCK.get());
     }
 }

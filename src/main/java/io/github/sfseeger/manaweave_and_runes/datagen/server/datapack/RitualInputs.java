@@ -1,4 +1,4 @@
-package io.github.sfseeger.manaweave_and_runes.datagen.server;
+package io.github.sfseeger.manaweave_and_runes.datagen.server.datapack;
 
 import io.github.sfseeger.lib.common.mana.Manas;
 import io.github.sfseeger.lib.common.rituals.Ritual;

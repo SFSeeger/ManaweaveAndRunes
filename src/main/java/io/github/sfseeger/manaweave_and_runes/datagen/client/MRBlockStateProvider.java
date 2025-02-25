@@ -10,8 +10,8 @@ import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DeferredBlock;
 
-public class ManaweaveAndRunesBlockStateProvider extends BlockStateProvider {
-    public ManaweaveAndRunesBlockStateProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
+public class MRBlockStateProvider extends BlockStateProvider {
+    public MRBlockStateProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
         super(output, ManaweaveAndRunes.MODID, existingFileHelper);
     }
 
@@ -20,12 +20,27 @@ public class ManaweaveAndRunesBlockStateProvider extends BlockStateProvider {
         this.simpleBlockWithItem(block, this.models().cubeAll(deferredBlock.getRegisteredName(), blockTexture(block)));
     }
 
+    private void blockWithExistingModel(DeferredBlock<? extends Block> deferredBlock) {
+        simpleBlockWithItem(deferredBlock.get(),
+                            this.models().getExistingFile(ResourceLocation.parse(deferredBlock.getRegisteredName())));
+    }
+
     @Override
     protected void registerStatesAndModels() {
         this.registerSimpleBlock(MRBlockInit.TANZANITE_ORE);
         this.registerSimpleBlock(MRBlockInit.DEEPSLATE_TANZANITE_ORE);
         this.registerSimpleBlock(MRBlockInit.TANZANITE_BLOCK);
-        this.registerSimpleBlock(MRBlockInit.MANA_COLLECTOR_BLOCK);
+        this.registerSimpleBlock(MRBlockInit.FIRE_MANA_INFUSED_ROCK_BLOCK);
+        this.registerSimpleBlock(MRBlockInit.AIR_MANA_INFUSED_ROCK_BLOCK);
+        this.registerSimpleBlock(MRBlockInit.EARTH_MANA_INFUSED_ROCK_BLOCK);
+
+        blockWithExistingModel(MRBlockInit.RUNE_PEDESTAL_BLOCK);
+        blockWithExistingModel(MRBlockInit.MANA_TRANSMITTER_BLOCK);
+        blockWithExistingModel(MRBlockInit.MANA_COLLECTOR_BLOCK);
+
+
+
+
         DeferredBlock<RuneBlock> deferredRuneBlock = MRBlockInit.RUNE_BLOCK;
         ResourceLocation runeBlockBase = this.blockTexture(deferredRuneBlock.get());
         ResourceLocation runeBlockActive = runeBlockBase.withSuffix("_active");
@@ -37,26 +52,5 @@ public class ManaweaveAndRunesBlockStateProvider extends BlockStateProvider {
                                      .cubeAll(deferredRuneBlock.getRegisteredName() + "_inactive", runeBlockInactive));
         this.simpleBlockItem(deferredRuneBlock.get(), this.models()
                 .getExistingFile(ResourceLocation.parse(deferredRuneBlock.getRegisteredName() + "_inactive")));
-
-        this.registerSimpleBlock(MRBlockInit.MANA_INFUSED_ROCK_BLOCK);
-        this.horizontalBlock(MRBlockInit.RUNE_PEDESTAL_BLOCK.get(), this.models()
-                .getExistingFile(
-                        ResourceLocation.parse(MRBlockInit.RUNE_PEDESTAL_BLOCK.getRegisteredName())));
-        this.simpleBlockItem(MRBlockInit.RUNE_PEDESTAL_BLOCK.get(), this.models()
-                .getExistingFile(
-                        ResourceLocation.parse(MRBlockInit.RUNE_PEDESTAL_BLOCK.getRegisteredName())));
-
-        /*this.simpleBlockWithItem(ManaweaveAndRunesBlockInit.NOVICE_RITUAL_ANCHOR_BLOCK.get(), this.models()
-                .getExistingFile(
-                        ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "block/ritual_anchor")));
-        this.simpleBlockWithItem(ManaweaveAndRunesBlockInit.MASTER_RITUAL_ANCHOR_BLOCK.get(), this.models()
-                .getExistingFile(
-                        ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "block/ritual_anchor")));
-        this.simpleBlockWithItem(ManaweaveAndRunesBlockInit.ASCENDED_RITUAL_ANCHOR_BLOCK.get(), this.models()
-                .getExistingFile(
-                        ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "block/ritual_anchor"))); */
-        this.simpleBlockWithItem(MRBlockInit.MANA_TRANSMITTER_BLOCK.get(), this.models()
-                .getExistingFile(
-                        ResourceLocation.parse(MRBlockInit.MANA_TRANSMITTER_BLOCK.getRegisteredName())));
     }
 }

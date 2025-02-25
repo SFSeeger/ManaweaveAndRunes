@@ -63,7 +63,30 @@ public class MRRecipeProvider extends RecipeProvider {
                 .addInput(Ingredient.of(Blocks.STONE_BRICKS))
                 .addInput(Ingredient.of(Blocks.STONE_BRICKS))
                 .addMana(Manas.AirMana, 15)
-                .setResult(new ItemStack(MRBlockInit.MANA_INFUSED_ROCK_BLOCK.asItem(), 4))
+                .setResult(new ItemStack(MRBlockInit.AIR_MANA_INFUSED_ROCK_BLOCK.asItem(), 4))
                 .save(recipeOutput);
+
+        new ManaConcentratorRecipeBuilder.Builder()
+                .setTier(Tier.NOVICE)
+                .setCraftTime(100)
+                .addInput(Ingredient.of(Items.COAL, Items.CHARCOAL))
+                .addInput(Ingredient.of(Blocks.STONE_BRICKS))
+                .addInput(Ingredient.of(Blocks.STONE_BRICKS))
+                .addInput(Ingredient.of(Blocks.STONE_BRICKS))
+                .addMana(Manas.FireMana, 15)
+                .setResult(new ItemStack(MRBlockInit.FIRE_MANA_INFUSED_ROCK_BLOCK.asItem(), 4))
+                .save(recipeOutput);
+
+        new ManaConcentratorRecipeBuilder.Builder()
+                .setTier(Tier.NOVICE)
+                .setCraftTime(100)
+                .addInput(Ingredient.of(Items.DIRT, Items.COBBLESTONE))
+                .addInput(Ingredient.of(Blocks.STONE_BRICKS))
+                .addInput(Ingredient.of(Blocks.STONE_BRICKS))
+                .addInput(Ingredient.of(Blocks.STONE_BRICKS))
+                //.addMana(Manas.FireMana, 15)
+                .setResult(new ItemStack(MRBlockInit.EARTH_MANA_INFUSED_ROCK_BLOCK.asItem(), 4))
+                .save(recipeOutput);
+
     }
 }

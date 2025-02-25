@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "manaweave_and_runes:network_indicator"
+          "name": "manaweave_and_runes:earth_mana_infused_rock"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "manaweave_and_runes:blocks/network_indicator"
+  "random_sequence": "manaweave_and_runes:blocks/earth_mana_infused_rock"
 }

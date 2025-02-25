@@ -1,19 +1,7 @@
 {
   "variants": {
-    "facing=east": {
-      "model": "manaweave_and_runes:block/rune_pedestal",
-      "y": 90
-    },
-    "facing=north": {
+    "": {
       "model": "manaweave_and_runes:block/rune_pedestal"
-    },
-    "facing=south": {
-      "model": "manaweave_and_runes:block/rune_pedestal",
-      "y": 180
-    },
-    "facing=west": {
-      "model": "manaweave_and_runes:block/rune_pedestal",
-      "y": 270
     }
   }
 }

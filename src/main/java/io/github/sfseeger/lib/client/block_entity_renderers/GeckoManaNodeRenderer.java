@@ -23,7 +23,7 @@ public class GeckoManaNodeRenderer<T extends BlockEntity & GeoAnimatable & IMana
             int packedLight, int packedOverlay, int colour) {
 
         poseStack.pushPose();
-        poseStack.translate(-0.5, -0.5, -0.5);
+        poseStack.translate(-0.5, 0, -0.5);
         renderManaConnections(animatable, animatable.getBlockPos(), poseStack, bufferSource);
         poseStack.popPose();
 

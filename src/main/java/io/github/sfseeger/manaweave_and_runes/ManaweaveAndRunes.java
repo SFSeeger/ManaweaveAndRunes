@@ -51,6 +51,7 @@ public class ManaweaveAndRunes {
 
         SpellNodeInit.SPELL_NODES.register(modEventBus);
 
+        MRLootModifierInit.GLOBAL_LOOT_MODIFIER_SERIALIZERS.register(modEventBus);
 
         NeoForge.EVENT_BUS.register(ManaNetworkHandler.class);
 

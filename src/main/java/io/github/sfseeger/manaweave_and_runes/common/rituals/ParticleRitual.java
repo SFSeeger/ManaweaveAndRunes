@@ -65,7 +65,6 @@ public class ParticleRitual extends Ritual {
     @Override
     public void onRitualInterrupt(Level level, BlockPos pos, BlockState state, RitualContext context,
             RitualOriginType originType) {
-        level.explode(null, pos.getX(), pos.getY(), pos.getZ(), 3, Level.ExplosionInteraction.TNT);
     }
 
     @Override

@@ -48,7 +48,7 @@ public class ManaGeneratorBlockEntity extends BlockEntity implements IManaNetwor
         protected void onContentsChanged(int slot) {
             super.onContentsChanged(slot);
             startCooking(getStackInSlot(0), getStackInSlot(1));
-            markUpdated();
+            ManaGeneratorBlockEntity.this.setChanged();
         }
     };
     private int cookTimeRemaining = 0;

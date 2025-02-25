@@ -9,6 +9,7 @@ import io.github.sfseeger.lib.common.rituals.ritual_data.RitualDataTypes;
 import io.github.sfseeger.lib.common.rituals.ritual_data.builtin.PositionRitualData;
 import io.github.sfseeger.lib.common.spells.SpellUtils;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRItemInit;
+import io.github.sfseeger.manaweave_and_runes.core.util.Utils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -23,7 +24,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.NotNull;
 
 public class ShatteringRiteRitual extends Ritual {
     private static final int MAX_TRIES = 10;
@@ -32,12 +32,6 @@ public class ShatteringRiteRitual extends Ritual {
         super(Tier.NOVICE, -1);
     }
 
-    private static @NotNull BlockPos getRandomBlockPos(BlockPos pos, RandomSource random, Vec3 area) {
-        return pos
-                .offset(random.nextInt((int) area.x()) - (int) area.x() / 2,
-                        random.nextInt((int) area.y()) - ((int) area.y() / 2 + random.nextInt((int) area.y())),
-                        random.nextInt((int) area.z()) - (int) area.z() / 2);
-    }
 
     @Override
     public Vec3 getDimension() {
@@ -64,7 +58,7 @@ public class ShatteringRiteRitual extends Ritual {
         RandomSource random = level.random;
 
         for (int i = 0; i < MAX_TRIES; i++) {
-            BlockPos targetPos = getRandomBlockPos(data.getPos(), random, d);
+            BlockPos targetPos = Utils.getRandomBlockPos(data.getPos(), random, d);
             if (tryBreak(targetPos, level, pos)) {
                 return RitualStepResult.SUCCESS;
             }
@@ -83,7 +77,7 @@ public class ShatteringRiteRitual extends Ritual {
     public void onRitualInterrupt(Level level, BlockPos pos, BlockState state, RitualContext context,
             RitualOriginType originType) {
         returnPositionRune(level, pos);
-        tryBreak(getRandomBlockPos(pos, level.random, getDimension()), level, pos);
+        tryBreak(Utils.getRandomBlockPos(pos, level.random, getDimension()), level, pos);
     }
 
     private void returnPositionRune(Level level, BlockPos pos) {
