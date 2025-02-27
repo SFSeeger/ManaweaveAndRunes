@@ -30,14 +30,42 @@ public class MRBlockStateProvider extends BlockStateProvider {
         this.registerSimpleBlock(MRBlockInit.TANZANITE_ORE);
         this.registerSimpleBlock(MRBlockInit.DEEPSLATE_TANZANITE_ORE);
         this.registerSimpleBlock(MRBlockInit.TANZANITE_BLOCK);
+        this.registerSimpleBlock(MRBlockInit.MANA_STORAGE_BLOCK);
+
         this.registerSimpleBlock(MRBlockInit.FIRE_MANA_INFUSED_ROCK_BLOCK);
         this.registerSimpleBlock(MRBlockInit.AIR_MANA_INFUSED_ROCK_BLOCK);
         this.registerSimpleBlock(MRBlockInit.EARTH_MANA_INFUSED_ROCK_BLOCK);
+        this.registerSimpleBlock(MRBlockInit.WATER_MANA_INFUSED_ROCK_BLOCK);
+        this.registerSimpleBlock(MRBlockInit.ENTROPY_MANA_INFUSED_ROCK_BLOCK);
+        this.registerSimpleBlock(MRBlockInit.ORDER_MANA_INFUSED_ROCK_BLOCK);
+        this.registerSimpleBlock(MRBlockInit.SOUL_MANA_INFUSED_ROCK_BLOCK);
+        this.registerSimpleBlock(MRBlockInit.VOID_MANA_INFUSED_ROCK_BLOCK);
 
         blockWithExistingModel(MRBlockInit.RUNE_PEDESTAL_BLOCK);
         blockWithExistingModel(MRBlockInit.MANA_TRANSMITTER_BLOCK);
         blockWithExistingModel(MRBlockInit.MANA_COLLECTOR_BLOCK);
+        blockWithExistingModel(MRBlockInit.RUNEWROUGHT_BENCH_BLOCK);
+        blockWithExistingModel(MRBlockInit.SPELL_DESIGNER_BLOCK);
 
+        simpleBlockItem(MRBlockInit.NOVICE_RITUAL_ANCHOR_BLOCK.get(), this.models()
+                .getExistingFile(ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID,
+                                                                       "block/ritual_anchor_java_model")));
+        simpleBlockItem(MRBlockInit.MASTER_RITUAL_ANCHOR_BLOCK.get(), this.models()
+                .getExistingFile(ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID,
+                                                                       "block/ritual_anchor_java_model")));
+        simpleBlockItem(MRBlockInit.ASCENDED_RITUAL_ANCHOR_BLOCK.get(), this.models()
+                .getExistingFile(ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID,
+                                                                       "block/ritual_anchor_java_model")));
+
+        simpleBlockItem(MRBlockInit.NOVICE_MANA_CONCENTRATOR_BLOCK.get(), this.models()
+                .getExistingFile(ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID,
+                                                                       "item/mana_concentrator")));
+        simpleBlockItem(MRBlockInit.MASTER_MANA_CONCENTRATOR_BLOCK.get(), this.models()
+                .getExistingFile(ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID,
+                                                                       "item/mana_concentrator")));
+        simpleBlockItem(MRBlockInit.ASCENDED_MANA_CONCENTRATOR_BLOCK.get(), this.models()
+                .getExistingFile(ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID,
+                                                                       "item/mana_concentrator")));
 
 
 

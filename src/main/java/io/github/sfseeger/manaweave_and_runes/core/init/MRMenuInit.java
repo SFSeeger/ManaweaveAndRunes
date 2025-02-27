@@ -20,8 +20,8 @@ public class MRMenuInit {
     public static final Supplier<MenuType<ManaStorageBlockMenu>> MANA_STORAGE_BLOCK_MENU = MENUS.register(
             "mana_storage_menu", () -> IMenuTypeExtension.create(ManaStorageBlockMenu::new));
 
-    public static final Supplier<MenuType<WandModificationTableMenu>> WAND_MODIFICATION_TABLE_MENU = MENUS.register(
-            "wand_modification_table_menu", () -> IMenuTypeExtension.create(WandModificationTableMenu::new));
+    public static final Supplier<MenuType<RunewroughtBenchMenu>> RUNEWROUGHT_BENCH_MENU_TYPE = MENUS.register(
+            "wand_modification_table_menu", () -> IMenuTypeExtension.create(RunewroughtBenchMenu::new));
 
     public static final Supplier<MenuType<SpellDesignerMenu>> SPELL_DESIGNER_MENU = MENUS.register(
             "spell_designer_menu", () -> IMenuTypeExtension.create(SpellDesignerMenu::new));

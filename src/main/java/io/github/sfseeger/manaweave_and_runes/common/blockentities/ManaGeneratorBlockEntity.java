@@ -8,6 +8,7 @@ import io.github.sfseeger.lib.common.mana.network.ManaNetworkNode;
 import io.github.sfseeger.lib.common.mana.network.ManaNetworkNodeType;
 import io.github.sfseeger.manaweave_and_runes.common.blocks.ManaGeneratorBlock;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRBlockEntityInit;
+import io.github.sfseeger.manaweave_and_runes.core.util.IInventoryBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -24,7 +25,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
-public class ManaGeneratorBlockEntity extends BlockEntity implements IManaNetworkSubscriber {
+public class ManaGeneratorBlockEntity extends BlockEntity implements IManaNetworkSubscriber, IInventoryBlockEntity {
     public static final int CAPACITY = 1000;
     private static final int MAX_RECEIVE = 1000;
     private static final int MAX_EXTRACT = 1000;

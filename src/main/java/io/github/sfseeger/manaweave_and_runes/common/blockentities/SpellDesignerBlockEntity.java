@@ -6,7 +6,9 @@ import io.github.sfseeger.lib.common.spells.*;
 import io.github.sfseeger.lib.common.spells.data_components.SpellDataComponent;
 import io.github.sfseeger.manaweave_and_runes.core.payloads.CraftPayload;
 import io.github.sfseeger.manaweave_and_runes.core.payloads.ICraftingPacketHandler;
+import io.github.sfseeger.manaweave_and_runes.core.util.IInventoryBlockEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
@@ -18,6 +20,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.ItemStackHandler;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,12 +32,12 @@ import static io.github.sfseeger.manaweave_and_runes.core.init.MRDataComponentsI
 import static io.github.sfseeger.manaweave_and_runes.core.init.MRDataComponentsInit.SPELL_PART_DATA_COMPONENT;
 import static io.github.sfseeger.manaweave_and_runes.core.init.MRItemInit.*;
 
-public class SpellDesignerBlockEntity extends BlockEntity implements ICraftingPacketHandler {
+public class SpellDesignerBlockEntity extends BlockEntity implements ICraftingPacketHandler, IInventoryBlockEntity {
     public static final int MAIN_SLOT_INDEX = 0;
     public static final int CHISEL_SLOT_INDEX = 5;
     public static final int OUTPUT_SLOT_INDEX = 6;
     private static final String DEFAULT_SPELL_NAME = "Spell";
-    private ItemStackHandler itemHandler = new ItemStackHandler(OUTPUT_SLOT_INDEX + 1);
+    private final ItemStackHandler itemHandler = new ItemStackHandler(OUTPUT_SLOT_INDEX + 1);
     private String spellName = DEFAULT_SPELL_NAME;
 
     public SpellDesignerBlockEntity(BlockPos pos, BlockState blockState) {
@@ -128,7 +131,8 @@ public class SpellDesignerBlockEntity extends BlockEntity implements ICraftingPa
         tag.putString("SpellName", spellName);
     }
 
-    public ItemStackHandler getItemHandler() {
+    @SuppressWarnings("unchecked")
+    public ItemStackHandler getItemHandler(@Nullable Direction side) {
         return itemHandler;
     }
 

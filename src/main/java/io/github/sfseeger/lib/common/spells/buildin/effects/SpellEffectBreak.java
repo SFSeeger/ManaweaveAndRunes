@@ -25,7 +25,7 @@ public class SpellEffectBreak extends AbstractSpellEffect {
     public static final SpellEffectBreak INSTANCE = new SpellEffectBreak();
 
     public SpellEffectBreak() {
-        super(Map.of(Manas.AirMana, 5), 0);
+        super(Map.of(Manas.EarthMana, 5, Manas.EntropyMana, 1), 0);
     }
 
     @Override

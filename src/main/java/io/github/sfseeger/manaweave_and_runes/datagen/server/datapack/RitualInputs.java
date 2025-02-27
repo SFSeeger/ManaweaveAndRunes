@@ -25,7 +25,9 @@ public class RitualInputs {
                 .addInitialItemCost(Ingredient.of(Items.BONE_MEAL))
                 .addInitialItemCost(Ingredient.of(ItemTags.VILLAGER_PLANTABLE_SEEDS))
                 .addInitialItemCost(Ingredient.of(ItemTags.SAPLINGS))
-                .addManaCost(Manas.AirMana, 5)
+                .addManaCost(Manas.OrderMana, 8)
+                .addManaCost(Manas.EarthMana, 10)
+                .addManaCost(Manas.WaterMana, 1)
                 .setManaRate(20)
                 .build()
         );
@@ -33,7 +35,8 @@ public class RitualInputs {
         context.register(SANCTUARY, new RitualInput.Builder()
                 .addInitialItemCost(Ingredient.of(Items.GOLD_INGOT))
                 .addInitialItemCost(Ingredient.of(Items.IRON_SWORD))
-                .addManaCost(Manas.AirMana, 5)
+                .addManaCost(Manas.OrderMana, 10)
+                .addManaCost(Manas.AirMana, 25)
                 .setManaRate(60)
                 .build()
         );
@@ -41,7 +44,9 @@ public class RitualInputs {
                 .addInitialItemCost(Ingredient.of(Items.GOLD_INGOT))
                 .addInitialItemCost(Ingredient.of(Items.IRON_SWORD))
                 .addInitialItemCost(Ingredient.of(Items.GOLDEN_APPLE))
-                .addManaCost(Manas.AirMana, 5)
+                .addManaCost(Manas.OrderMana, 10)
+                .addManaCost(Manas.AirMana, 25)
+                .addManaCost(Manas.SoulMana, 3)
                 .setManaRate(60)
                 .build()
         );
@@ -49,7 +54,8 @@ public class RitualInputs {
                 .addInitialItemCost(Ingredient.of(Items.DIAMOND))
                 .addInitialItemCost(Ingredient.of(Items.DIAMOND_PICKAXE))
                 .addInitialItemCost(Ingredient.of(MRItemInit.POSITION_RUNE_ITEM))
-                .addManaCost(Manas.AirMana, 5)
+                .addManaCost(Manas.EarthMana, 15)
+                .addManaCost(Manas.EntropyMana, 6)
                 .setManaRate(60)
                 .build()
         );

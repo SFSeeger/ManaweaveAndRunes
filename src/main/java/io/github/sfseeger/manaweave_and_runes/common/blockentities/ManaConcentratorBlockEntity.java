@@ -14,6 +14,7 @@ import io.github.sfseeger.manaweave_and_runes.core.init.MRBlockEntityInit;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRBlockInit;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRParticleTypeInit;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRRecipeInit;
+import io.github.sfseeger.manaweave_and_runes.core.util.IInventoryBlockEntity;
 import io.github.sfseeger.manaweave_and_runes.core.util.MultiblockValidator;
 import io.github.sfseeger.manaweave_and_runes.core.util.ParticleUtils;
 import net.minecraft.core.BlockPos;
@@ -41,13 +42,19 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib.animatable.GeoBlockEntity;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animation.*;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.*;
 
 import static io.github.sfseeger.lib.common.LibUtils.encode;
 import static io.github.sfseeger.lib.common.ManaweaveAndRunesCodecs.BLOCK_POS_LIST_CODEC;
 
-public class ManaConcentratorBlockEntity extends BlockEntity {
+public class ManaConcentratorBlockEntity extends BlockEntity implements IInventoryBlockEntity, GeoBlockEntity {
+    protected static final RawAnimation DEPLOY_ANIMATION = RawAnimation.begin().thenLoop("idle");
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private boolean isActive;
     public ItemStackHandler inventory = new ItemStackHandler(10) { // TODO: Replace with config value
         @Override
@@ -400,5 +407,19 @@ public class ManaConcentratorBlockEntity extends BlockEntity {
         CompoundTag tag = super.getUpdateTag(registries);
         saveAdditional(tag, registries);
         return tag;
+    }
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        controllers.add(new AnimationController<>(this, "controller", 0, this::deployAnimController));
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return this.cache;
+    }
+
+    private PlayState deployAnimController(AnimationState<ManaConcentratorBlockEntity> state) {
+        return state.setAndContinue(DEPLOY_ANIMATION);
     }
 }

@@ -1,6 +1,7 @@
 package io.github.sfseeger.lib.common.spells.buildin.effects;
 
 import io.github.sfseeger.lib.common.datamaps.BlockHarmDataMap;
+import io.github.sfseeger.lib.common.mana.Manas;
 import io.github.sfseeger.lib.common.spells.*;
 import io.github.sfseeger.lib.common.spells.buildin.modifiers.SpellModifierDelicate;
 import io.github.sfseeger.lib.common.spells.buildin.modifiers.SpellModifierStrengthen;
@@ -20,7 +21,7 @@ import java.util.Set;
 public class SpellEffectHarm extends AbstractSpellEffect {
     public static final SpellEffectHarm INSTANCE = new SpellEffectHarm();
     public SpellEffectHarm() {
-        super(Map.of(), 4);
+        super(Map.of(Manas.SoulMana, 5, Manas.VoidMana, 1), 4);
     }
 
     @Override

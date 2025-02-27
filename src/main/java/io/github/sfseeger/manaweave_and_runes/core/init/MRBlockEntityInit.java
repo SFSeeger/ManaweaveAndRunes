@@ -60,11 +60,11 @@ public class MRBlockEntityInit {
                                                                          MRBlockInit.ASCENDED_RITUAL_ANCHOR_BLOCK.get())
                                                 .build(null));
 
-    public static final Supplier<BlockEntityType<WandModificationTableBlockEntity>>
-            WAND_MODIFICATION_TABLE_BLOCK_ENTITY =
-            BLOCK_ENTITY_TYPES.register("wand_modification_table_block_entity",
-                                        () -> BlockEntityType.Builder.of(WandModificationTableBlockEntity::new,
-                                                                         MRBlockInit.WAND_MODIFICATION_TABLE_BLOCK.get())
+    public static final Supplier<BlockEntityType<RunewroughtBenchBlockEntity>>
+            RUNEWROUGHT_BENCH_BLOCK_ENTITY =
+            BLOCK_ENTITY_TYPES.register("runewrought_bench_block_entity",
+                                        () -> BlockEntityType.Builder.of(RunewroughtBenchBlockEntity::new,
+                                                                         MRBlockInit.RUNEWROUGHT_BENCH_BLOCK.get())
                                                 .build(null));
 
 }

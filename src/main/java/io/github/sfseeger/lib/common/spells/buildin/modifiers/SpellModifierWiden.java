@@ -11,7 +11,7 @@ public class SpellModifierWiden extends AbstractSpellModifier {
     public static final AbstractSpellModifier INSTANCE = new SpellModifierWiden();
 
     public SpellModifierWiden() {
-        super(Map.of(Manas.AirMana, 5), 1);
+        super(Map.of(Manas.EarthMana, 5), 1);
     }
 
     @Override

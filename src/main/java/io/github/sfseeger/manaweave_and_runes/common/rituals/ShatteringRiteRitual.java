@@ -25,6 +25,8 @@ import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.Optional;
+
 public class ShatteringRiteRitual extends Ritual {
     private static final int MAX_TRIES = 10;
 
@@ -81,7 +83,7 @@ public class ShatteringRiteRitual extends Ritual {
     }
 
     private void returnPositionRune(Level level, BlockPos pos) {
-        level.addFreshEntity(new ItemEntity(level, pos.getX(), pos.getY() + 1, pos.getZ(),
+        level.addFreshEntity(new ItemEntity(level, pos.getX(), pos.getY() + 4, pos.getZ(),
                                             new ItemStack(MRItemInit.POSITION_RUNE_ITEM.get())));
     }
 

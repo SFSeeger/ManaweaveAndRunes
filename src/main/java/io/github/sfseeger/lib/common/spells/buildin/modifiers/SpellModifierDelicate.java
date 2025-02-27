@@ -11,7 +11,7 @@ public class SpellModifierDelicate extends AbstractSpellModifier {
     public static final SpellModifierDelicate INSTANCE = new SpellModifierDelicate();
 
     public SpellModifierDelicate() {
-        super(Map.of(Manas.AirMana, 3), 1);
+        super(Map.of(Manas.OrderMana, 3), 1);
     }
 
     @Override

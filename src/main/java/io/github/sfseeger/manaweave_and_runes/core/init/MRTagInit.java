@@ -11,6 +11,9 @@ import net.minecraft.world.level.block.Block;
 public class MRTagInit {
     public static final TagKey<Item> SPELL_MANA_PROVIDER = ItemTags.create(ResourceLocation.fromNamespaceAndPath(
             ManaweaveAndRunes.MODID, "spell_mana_provider"));
+    public static final TagKey<Item> MAGICAL_LOOT_ITEMS = ItemTags.create(ResourceLocation.fromNamespaceAndPath(
+            ManaweaveAndRunes.MODID, "magical_loot_items"));
+
     public static final TagKey<Block> MANA_INFUSED_BLOCK = BlockTags.create(ResourceLocation.fromNamespaceAndPath(
             ManaweaveAndRunes.MODID, "mana_infused_block"));
 }

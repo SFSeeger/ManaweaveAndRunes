@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_position_rune_template": {
+      "conditions": {
+        "items": [
+          {
+            "items": "manaweave_and_runes:earth_rune_carving_template"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "manaweave_and_runes:soul_container_rune"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe"
+    ],
+    [
+      "has_position_rune_template"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "manaweave_and_runes:soul_container_rune"
+    ]
+  }
+}

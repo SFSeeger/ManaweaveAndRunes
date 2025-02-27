@@ -130,7 +130,8 @@ public class RunePedestalBlock extends ManaNetworkBlock implements EntityBlock {
 
     @Override
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        InventoryUtil.dropContentsOnDestroy(state, newState, level, pos);
+        InventoryUtil.dropContentsOnDestroy(state, newState, level, pos,
+                                            MRBlockEntityInit.RUNE_PEDESTAL_BLOCK_ENTITY.get());
         super.onRemove(state, level, pos, newState, movedByPiston);
     }
 }

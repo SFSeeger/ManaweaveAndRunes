@@ -3,7 +3,8 @@ package io.github.sfseeger.lib.common.mana;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
-import io.github.sfseeger.lib.common.mana.utils.ManaGenerationHelper;
+import io.github.sfseeger.lib.common.mana.generation.AbstractManaGenerationCondition;
+import io.github.sfseeger.lib.common.mana.generation.ManaGenerationHelper;
 import io.github.sfseeger.lib.core.ManaweaveAndRunesRegistries;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -87,7 +88,7 @@ public class Mana {
 
         if (!properties.generationConditions.isEmpty()) {
 
-            for (ManaGenerationHelper.GenerationCondition condition : properties.generationConditions) {
+            for (AbstractManaGenerationCondition condition : properties.generationConditions) {
                 if (properties.modi == ManaGenerationHelper.GenerationConditionModi.AND) {
                     int _potentialGeneration = condition.getManaGenerationPotential(level, pos, state);
                     if (_potentialGeneration == 0) {

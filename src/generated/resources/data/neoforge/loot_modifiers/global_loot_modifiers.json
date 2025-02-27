@@ -1,8 +1,25 @@
 {
   "entries": [
-    "manaweave_and_runes:add_air_carving_template_to_trial_common",
+    "manaweave_and_runes:add_water_rune_carving_template_to_chests_buried_treasure",
+    "manaweave_and_runes:add_fire_rune_carving_template_to_chests_ruined_portal",
     "manaweave_and_runes:add_rune_block_carving_template_to_dessert_pyramid",
-    "manaweave_and_runes:add_fire_carving_template_to_ruined_portal"
+    "manaweave_and_runes:add_water_rune_carving_template_to_chests_underwater_ruin_small",
+    "manaweave_and_runes:add_void_rune_carving_template_to_chests_stronghold_crossing",
+    "manaweave_and_runes:add_void_rune_carving_template_to_chests_stronghold_corridor",
+    "manaweave_and_runes:add_fire_rune_carving_template_to_chests_nether_bridge",
+    "manaweave_and_runes:add_soul_rune_carving_template_to_chests_woodland_mansion",
+    "manaweave_and_runes:add_order_rune_carving_template_to_chests_village_village_temple",
+    "manaweave_and_runes:add_earth_rune_carving_template_to_chests_desert_pyramid",
+    "manaweave_and_runes:add_earth_rune_carving_template_to_chests_jungle_temple",
+    "manaweave_and_runes:add_order_rune_carving_template_to_chests_woodland_mansion",
+    "manaweave_and_runes:add_entropy_rune_carving_template_to_chests_stronghold_library",
+    "manaweave_and_runes:add_soul_rune_carving_template_to_chests_simple_dungeon",
+    "manaweave_and_runes:add_order_rune_carving_template_to_chests_bastion_treasure",
+    "manaweave_and_runes:add_rune_block_carving_template_to_jungle_temple",
+    "manaweave_and_runes:add_air_rune_carving_template_to_chests_jungle_temple",
+    "manaweave_and_runes:add_soul_rune_carving_template_to_chests_ancient_city",
+    "manaweave_and_runes:add_water_rune_carving_template_to_chests_underwater_ruin_big",
+    "manaweave_and_runes:add_void_rune_carving_template_to_chests_ancient_city"
   ],
   "replace": false
 }

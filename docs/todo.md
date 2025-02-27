@@ -2,7 +2,7 @@
 * [ ] Mana system
     * [X] Add mana to items data driven instead of components
     * [ ] Add missing mana
-        * [ ] Add generation methods for Mana
+        * [X] Add generation methods for Mana
     * [X] Render Mana Icons
     * [X] Mana Generator
         * [X] Make generator tick based
@@ -10,7 +10,7 @@
         * [X] Make generator consume fuel
     * [ ] Mana Collector
         * [X] Random ticking instead of normal ticking
-        * [ ] Texture
+      * [X] Texture
         * [ ] UI for creation inspection?
     * [ ] Add Network indicator
         * [ ] Add blockmodel
@@ -38,24 +38,24 @@
     * [X] Add Spell Registry
   * [X] Add spells
     * [X] Add some way to store spells
-    * [ ] Add wand model
+    * [X] Add wand model
     * [ ] (Better spell switching)
   * [ ] (Add HUD)
 * [ ] Rune Carving
     * [X] Add rune smithing template
-        * [ ] Add structures / loottables
-    * [ ] Add Runecarver Block
+        * [X] Add structures / loottables
+    * [X] Add Runecarver Block
         * [X] Add UI
         * [ ] Add texture
-        * [ ] Add template placeholder
+      * [X] Add template placeholder
 * [ ] Add basic tools
     * [ ] Add own type
     * [ ] Add upgradability system
 * [ ] Misc
-    * [ ] Add translations
+    * [X] Add translations
     * [ ] Add missing textures / models
     * [ ] Add crafting recipes and resources
     * [ ] Add Docs / Patchouli Book
     * [ ] Add advancements
-  * [ ] Fix weird disconnection bug in mana network
-  * [ ] Blocks not dropping when destroyed
+        * [X] Fix weird disconnection bug in mana network
+        * [X] Blocks not dropping when destroyed

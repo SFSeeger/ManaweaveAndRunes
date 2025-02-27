@@ -4,7 +4,6 @@ import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
 import io.github.sfseeger.manaweave_and_runes.common.blocks.*;
 import io.github.sfseeger.manaweave_and_runes.common.blocks.mana_concentrator.ManaConcentratorBlock;
 import io.github.sfseeger.manaweave_and_runes.common.blocks.mana_concentrator.ManaConcentratorTypes;
-import io.github.sfseeger.manaweave_and_runes.common.blocks.mana_concentrator.NoviceManaConcentratorBlock;
 import io.github.sfseeger.manaweave_and_runes.common.blocks.ritual_anchor.RitualAnchorBlock;
 import io.github.sfseeger.manaweave_and_runes.common.blocks.ritual_anchor.RitualAnchorTypes;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -54,6 +53,17 @@ public class MRBlockInit {
             registerBlock("air_mana_infused_rock", ManaInfusedRock::new);
     public static final DeferredBlock<Block> EARTH_MANA_INFUSED_ROCK_BLOCK =
             registerBlock("earth_mana_infused_rock", ManaInfusedRock::new);
+    public static final DeferredBlock<Block> WATER_MANA_INFUSED_ROCK_BLOCK =
+            registerBlock("water_mana_infused_rock", ManaInfusedRock::new);
+    public static final DeferredBlock<Block> ENTROPY_MANA_INFUSED_ROCK_BLOCK =
+            registerBlock("entropy_mana_infused_rock", ManaInfusedRock::new);
+    public static final DeferredBlock<Block> ORDER_MANA_INFUSED_ROCK_BLOCK =
+            registerBlock("order_mana_infused_rock", ManaInfusedRock::new);
+    public static final DeferredBlock<Block> SOUL_MANA_INFUSED_ROCK_BLOCK =
+            registerBlock("soul_mana_infused_rock", ManaInfusedRock::new);
+    public static final DeferredBlock<Block> VOID_MANA_INFUSED_ROCK_BLOCK =
+            registerBlock("void_mana_infused_rock", ManaInfusedRock::new);
+
 
 
     public static final DeferredBlock<RunePedestalBlock> RUNE_PEDESTAL_BLOCK =
@@ -70,12 +80,12 @@ public class MRBlockInit {
 
     public static final DeferredBlock<Block> RUNE_CARVER_BLOCK = registerBlock("rune_carver", RuneCarverBlock::new);
 
-    public static final DeferredBlock<NoviceManaConcentratorBlock> NOVICE_MANA_CONCENTRATOR_BLOCK =
-            registerBlock("novice_mana_concentrator", NoviceManaConcentratorBlock::new);
+    public static final DeferredBlock<? extends ManaConcentratorBlock> NOVICE_MANA_CONCENTRATOR_BLOCK =
+            BLOCKS.register("novice_mana_concentrator", () -> new ManaConcentratorBlock(ManaConcentratorTypes.NOVICE));
     public static final DeferredBlock<? extends ManaConcentratorBlock> MASTER_MANA_CONCENTRATOR_BLOCK =
-            registerBlock("master_mana_concentrator", () -> new ManaConcentratorBlock(ManaConcentratorTypes.MASTER));
+            BLOCKS.register("master_mana_concentrator", () -> new ManaConcentratorBlock(ManaConcentratorTypes.MASTER));
     public static final DeferredBlock<? extends ManaConcentratorBlock> ASCENDED_MANA_CONCENTRATOR_BLOCK =
-            registerBlock("ascended_mana_concentrator",
+            BLOCKS.register("ascended_mana_concentrator",
                             () -> new ManaConcentratorBlock(ManaConcentratorTypes.ASCENDED));
 
     public static final DeferredBlock<RitualAnchorBlock> NOVICE_RITUAL_ANCHOR_BLOCK =
@@ -92,8 +102,8 @@ public class MRBlockInit {
             registerBlock("mana_transmitter", ManaTransmitter::new);
 
 
-    public static final DeferredBlock<WandModificationTableBlock> WAND_MODIFICATION_TABLE_BLOCK =
-            registerBlock("wand_modification_table", WandModificationTableBlock::new);
+    public static final DeferredBlock<RunewroughtBenchBlock> RUNEWROUGHT_BENCH_BLOCK =
+            registerBlock("runewrought_bench", RunewroughtBenchBlock::new);
 
     public static final DeferredBlock<SpellDesignerBlock> SPELL_DESIGNER_BLOCK =
             registerBlock("spell_designer", SpellDesignerBlock::new);

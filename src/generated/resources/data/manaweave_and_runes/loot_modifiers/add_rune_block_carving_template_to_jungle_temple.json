@@ -1,0 +1,17 @@
+{
+  "type": "manaweave_and_runes:add_item_modifier",
+  "conditions": [
+    {
+      "condition": "neoforge:loot_table_id",
+      "loot_table_id": "minecraft:chests/jungle_temple"
+    },
+    {
+      "chance": 0.7,
+      "condition": "minecraft:random_chance"
+    }
+  ],
+  "item": {
+    "count": 2,
+    "id": "manaweave_and_runes:rune_block_carving_template"
+  }
+}

@@ -17,28 +17,33 @@ public class MRItemModelProvider extends ItemModelProvider {
     @Override
     protected void registerModels() {
         basicItem(MRItemInit.MANA_DEBUG_STICK_ITEM.get());
-        basicItem(MRItemInit.MANA_CONNECTOR.get());
+        handheldItem(MRItemInit.MANA_CONNECTOR.get());
         basicItem(MRItemInit.TANZANITE.get());
 
         handheldItem(MRItemInit.DIAMOND_CHISEL.get());
+        basicItem(MRItemInit.SPELL_HOLDER_ITEM.get());
 
         basicItem(MRItemInit.AMETHYST_BASE_RUNE.get());
         basicItem(MRItemInit.AMETHYST_FIRE_RUNE_ITEM.get());
         basicItem(MRItemInit.AMETHYST_AIR_RUNE_ITEM.get());
-
-        basicItem(MRItemInit.SPELL_HOLDER_ITEM.get());
+        basicItem(MRItemInit.AMETHYST_WATER_RUNE_ITEM.get());
+        basicItem(MRItemInit.AMETHYST_EARTH_RUNE_ITEM.get());
+        basicItem(MRItemInit.AMETHYST_SOUL_RUNE_ITEM.get());
+        basicItem(MRItemInit.AMETHYST_VOID_RUNE_ITEM.get());
+        basicItem(MRItemInit.AMETHYST_ORDER_RUNE_ITEM.get());
+        basicItem(MRItemInit.AMETHYST_ENTROPY_RUNE_ITEM.get());
 
         basicItem(MRItemInit.AIR_RUNE_CARVING_TEMPLATE.get());
         basicItem(MRItemInit.FIRE_RUNE_CARVING_TEMPLATE.get());
+        basicItem(MRItemInit.WATER_RUNE_CARVING_TEMPLATE.get());
+        basicItem(MRItemInit.EARTH_RUNE_CARVING_TEMPLATE.get());
+        basicItem(MRItemInit.SOUL_RUNE_CARVING_TEMPLATE.get());
+        basicItem(MRItemInit.VOID_RUNE_CARVING_TEMPLATE.get());
+        basicItem(MRItemInit.ORDER_RUNE_CARVING_TEMPLATE.get());
+        basicItem(MRItemInit.ENTROPY_RUNE_CARVING_TEMPLATE.get());
+        basicItem(MRItemInit.RUNE_BLOCK_CARVING_TEMPLATE.get());
 
-        handheldItem(MRItemInit.SOUL_CONTAINER_RUNE_ITEM.get())
-                .texture("layer0", "item/soul_container_rune")
-                .override()
-                .predicate(ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "contains_soul"), 1.0F)
-                .model(this.getBuilder("item/soul_container_rune/filled")
-                               .parent(this.getExistingFile(mcLoc("item/handheld")))
-                               .texture("layer0", "item/soul_container_rune_filled"))
-                .end();
+        handheldItem(MRItemInit.MANA_WEAVER_WAND.get());
 
         handheldItem(MRItemInit.POSITION_RUNE_ITEM.get())
                 .texture("layer0", "item/position_rune")
@@ -48,11 +53,20 @@ public class MRItemModelProvider extends ItemModelProvider {
                                .parent(this.getExistingFile(mcLoc("item/generated")))
                                .texture("layer0", "item/position_rune_active"))
                 .end();
+        handheldItem(MRItemInit.SOUL_CONTAINER_RUNE_ITEM.get())
+                .texture("layer0", "item/soul_container_rune")
+                .override()
+                .predicate(ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "contains_soul"), 1.0F)
+                .model(this.getBuilder("item/soul_container_rune/filled")
+                               .parent(this.getExistingFile(mcLoc("item/handheld")))
+                               .texture("layer0", "item/soul_container_rune_filled"))
+                .end();
+
 
         basicItem(MRItemInit.SPELL_PART.get());
         SpellNodeInit.SPELL_NODES.getEntries().forEach(spellNode -> {
             ResourceLocation spellNodeId = spellNode.getId();
-            if(existingFileHelper.exists(spellNodeId.withPrefix("item/"), TEXTURE)) {
+            if (existingFileHelper.exists(spellNodeId.withPrefix("item/"), TEXTURE)) {
                 basicItem(spellNodeId).texture("layer0", "item/" + spellNodeId.getPath());
             } else {
                 this.getBuilder(spellNodeId.toString())

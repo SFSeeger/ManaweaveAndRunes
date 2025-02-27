@@ -123,7 +123,7 @@ public class SpellDesignerScreen extends AbstractContainerScreen<SpellDesignerMe
 
     private void renderButtons(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         ResourceLocation chiselButtonSprite = isMouseInBounds(leftPos + 181, topPos + 88, 20, 19, mouseX,
-                mouseY) ? CHISEL_BUTTON_ACTIVE : CHISEL_BUTTON;
+                                                              mouseY) && menu.isValidSpell() ? CHISEL_BUTTON_ACTIVE : CHISEL_BUTTON;
         guiGraphics.blitSprite(chiselButtonSprite, leftPos + 181, topPos + 88, 20, 19);
     }
 

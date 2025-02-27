@@ -81,6 +81,8 @@ public class ManaNetworkHandler extends SavedData {
     }
 
     public List<String> getNetworkIds() {
-        return manaNetworks.keySet().stream().map(UUID::toString).toList(); //TODO: Remove empty networks
+        // Only return networks that have nodes
+        return manaNetworks.entrySet().stream().filter(entry -> !entry.getValue().nodes.isEmpty())
+                .map(entry -> entry.getKey().toString()).toList();
     }
 }

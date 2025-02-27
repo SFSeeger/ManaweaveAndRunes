@@ -30,11 +30,16 @@ public class MRBlockTagsProvider extends BlockTagsProvider {
                 .add(MRBlockInit.MASTER_RITUAL_ANCHOR_BLOCK.get())
                 .add(MRBlockInit.ASCENDED_RITUAL_ANCHOR_BLOCK.get())
                 .add(MRBlockInit.MANA_TRANSMITTER_BLOCK.get())
-                .add(MRBlockInit.WAND_MODIFICATION_TABLE_BLOCK.get())
+                .add(MRBlockInit.RUNEWROUGHT_BENCH_BLOCK.get())
                 .add(MRBlockInit.RUNE_BLOCK.get())
                 .add(MRBlockInit.FIRE_MANA_INFUSED_ROCK_BLOCK.get())
                 .add(MRBlockInit.AIR_MANA_INFUSED_ROCK_BLOCK.get())
                 .add(MRBlockInit.EARTH_MANA_INFUSED_ROCK_BLOCK.get())
+                .add(MRBlockInit.WATER_MANA_INFUSED_ROCK_BLOCK.get())
+                .add(MRBlockInit.ENTROPY_MANA_INFUSED_ROCK_BLOCK.get())
+                .add(MRBlockInit.ORDER_MANA_INFUSED_ROCK_BLOCK.get())
+                .add(MRBlockInit.SOUL_MANA_INFUSED_ROCK_BLOCK.get())
+                .add(MRBlockInit.VOID_MANA_INFUSED_ROCK_BLOCK.get())
                 .add(MRBlockInit.RUNE_PEDESTAL_BLOCK.get());
 
         this.tag(BlockTags.NEEDS_STONE_TOOL)
@@ -42,6 +47,11 @@ public class MRBlockTagsProvider extends BlockTagsProvider {
                 .add(MRBlockInit.FIRE_MANA_INFUSED_ROCK_BLOCK.get())
                 .add(MRBlockInit.AIR_MANA_INFUSED_ROCK_BLOCK.get())
                 .add(MRBlockInit.EARTH_MANA_INFUSED_ROCK_BLOCK.get())
+                .add(MRBlockInit.WATER_MANA_INFUSED_ROCK_BLOCK.get())
+                .add(MRBlockInit.ENTROPY_MANA_INFUSED_ROCK_BLOCK.get())
+                .add(MRBlockInit.ORDER_MANA_INFUSED_ROCK_BLOCK.get())
+                .add(MRBlockInit.SOUL_MANA_INFUSED_ROCK_BLOCK.get())
+                .add(MRBlockInit.VOID_MANA_INFUSED_ROCK_BLOCK.get())
                 .add(MRBlockInit.RUNE_PEDESTAL_BLOCK.get());
 
         this.tag(BlockTags.NEEDS_IRON_TOOL)
@@ -54,7 +64,7 @@ public class MRBlockTagsProvider extends BlockTagsProvider {
                 .add(MRBlockInit.MASTER_RITUAL_ANCHOR_BLOCK.get())
                 .add(MRBlockInit.ASCENDED_RITUAL_ANCHOR_BLOCK.get())
                 .add(MRBlockInit.MANA_TRANSMITTER_BLOCK.get())
-                .add(MRBlockInit.WAND_MODIFICATION_TABLE_BLOCK.get());
+                .add(MRBlockInit.RUNEWROUGHT_BENCH_BLOCK.get());
 
         this.tag(BlockTags.NEEDS_DIAMOND_TOOL)
                 .add(MRBlockInit.TANZANITE_ORE.get())
@@ -63,6 +73,11 @@ public class MRBlockTagsProvider extends BlockTagsProvider {
         this.tag(MRTagInit.MANA_INFUSED_BLOCK)
                 .add(MRBlockInit.FIRE_MANA_INFUSED_ROCK_BLOCK.get())
                 .add(MRBlockInit.AIR_MANA_INFUSED_ROCK_BLOCK.get())
-                .add(MRBlockInit.EARTH_MANA_INFUSED_ROCK_BLOCK.get());
+                .add(MRBlockInit.EARTH_MANA_INFUSED_ROCK_BLOCK.get())
+                .add(MRBlockInit.WATER_MANA_INFUSED_ROCK_BLOCK.get())
+                .add(MRBlockInit.ENTROPY_MANA_INFUSED_ROCK_BLOCK.get())
+                .add(MRBlockInit.ORDER_MANA_INFUSED_ROCK_BLOCK.get())
+                .add(MRBlockInit.SOUL_MANA_INFUSED_ROCK_BLOCK.get())
+                .add(MRBlockInit.VOID_MANA_INFUSED_ROCK_BLOCK.get());
     }
 }

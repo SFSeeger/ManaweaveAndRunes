@@ -43,7 +43,7 @@ public class SpellDesignerMenu extends AbstractContainerMenu {
         super(SPELL_DESIGNER_MENU.get(), containerId);
         this.access = access;
         this.blockEntity = blockEntity;
-        this.itemHandler = blockEntity.getItemHandler();
+        this.itemHandler = blockEntity.getItemHandler(null);
 
         addSlot(new SlotItemHandler(itemHandler, 0, 81, 64));
 
@@ -161,6 +161,10 @@ public class SpellDesignerMenu extends AbstractContainerMenu {
 
     public void craft(Player player, String name) {
         PacketDistributor.sendToServer(new CraftPayload(blockEntity.getBlockPos().asLong(), 0, name));
+    }
+
+    public boolean isValidSpell() {
+        return !blockEntity.assembleSpell().isEmpty();
     }
 
     public Map<Mana, Integer> getManaCost() {

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:book"
+    },
+    {
+      "item": "minecraft:amethyst_shard"
+    }
+  ],
+  "result": {
+    "components": {
+      "patchouli:book": "manaweave_and_runes:manaweavers_guide"
+    },
+    "count": 1,
+    "id": "patchouli:guide_book"
+  }
+}

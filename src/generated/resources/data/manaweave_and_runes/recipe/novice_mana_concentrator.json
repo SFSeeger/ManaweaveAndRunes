@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:iron_block"
+    },
+    "A": {
+      "item": "minecraft:amethyst_block"
+    },
+    "G": {
+      "item": "minecraft:glass"
+    },
+    "P": {
+      "tag": "c:stripped_woods"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "G#G",
+    "PPP"
+  ],
+  "result": {
+    "count": 1,
+    "id": "manaweave_and_runes:novice_mana_concentrator"
+  }
+}

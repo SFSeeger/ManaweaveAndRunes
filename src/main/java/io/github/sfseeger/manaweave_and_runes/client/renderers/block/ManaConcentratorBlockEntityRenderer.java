@@ -1,31 +1,46 @@
 package io.github.sfseeger.manaweave_and_runes.client.renderers.block;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import io.github.sfseeger.manaweave_and_runes.common.blockentities.ManaConcentratorBlockEntity;
-import io.github.sfseeger.manaweave_and_runes.common.blocks.mana_concentrator.ManaConcentratorType;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
 import net.neoforged.neoforge.items.IItemHandler;
+import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib.cache.object.BakedGeoModel;
+import software.bernie.geckolib.model.DefaultedBlockGeoModel;
+import software.bernie.geckolib.renderer.GeoBlockRenderer;
 
-public class ManaConcentratorBlockEntityRenderer implements BlockEntityRenderer<ManaConcentratorBlockEntity> {
+public class ManaConcentratorBlockEntityRenderer extends GeoBlockRenderer<ManaConcentratorBlockEntity> {
     private static final float ROTATION_PERIOD = 150f;
     private final BlockEntityRendererProvider.Context context;
 
     public ManaConcentratorBlockEntityRenderer(BlockEntityRendererProvider.Context ctx) {
+        super(new DefaultedBlockGeoModel<>(
+                ResourceLocation.fromNamespaceAndPath("manaweave_and_runes", "mana_concentrator")));
         this.context = ctx;
     }
 
     @Override
-    public void render(ManaConcentratorBlockEntity be, float partialTick, PoseStack poseStack,
+    public void actuallyRender(PoseStack poseStack, ManaConcentratorBlockEntity animatable, BakedGeoModel model,
+            @Nullable RenderType renderType, MultiBufferSource bufferSource, @Nullable VertexConsumer buffer,
+            boolean isReRender, float partialTick, int packedLight, int packedOverlay, int colour) {
+        renderRunes(animatable, partialTick, poseStack, bufferSource, packedLight, packedOverlay);
+        super.actuallyRender(poseStack, animatable, model, renderType, bufferSource, buffer, isReRender, partialTick,
+                             packedLight, packedOverlay, colour);
+    }
+
+    public void renderRunes(ManaConcentratorBlockEntity be, float partialTick, PoseStack poseStack,
             MultiBufferSource multiBufferSource, int packedLight, int packedOverlay) {
         BlockPos pos = be.getBlockPos().offset(-1, 0, 0);
         IItemHandler itemHandler = be.getItemHandler(null);
@@ -39,9 +54,6 @@ public class ManaConcentratorBlockEntityRenderer implements BlockEntityRenderer<
             int fullSlots = fullSlots(itemHandler);
             float rot = (level.getGameTime() % ROTATION_PERIOD) * (360f / ROTATION_PERIOD);
             float rotationPerItem = 360f / fullSlots;
-
-            ManaConcentratorType type = be.getManaConcentratorType();
-
 
             poseStack.pushPose();
             poseStack.translate(0.5, be.getEffectYOffset(), 0.5);

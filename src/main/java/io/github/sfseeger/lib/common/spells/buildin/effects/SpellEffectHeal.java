@@ -22,7 +22,7 @@ public class SpellEffectHeal extends AbstractSpellEffect {
     public static final SpellEffectHeal INSTANCE = new SpellEffectHeal();
 
     public SpellEffectHeal() {
-        super(Map.of(Manas.AirMana, 10), 10);
+        super(Map.of(Manas.SoulMana, 5, Manas.OrderMana, 1), 10);
     }
 
     @Override

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "A": {
+      "item": "minecraft:amethyst_shard"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    " SA",
+    " SS",
+    "S  "
+  ],
+  "result": {
+    "count": 1,
+    "id": "manaweave_and_runes:mana_connector"
+  }
+}

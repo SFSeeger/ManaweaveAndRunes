@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_rune_block_template": {
+      "conditions": {
+        "items": [
+          {
+            "items": "manaweave_and_runes:rune_block_carving_template"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "manaweave_and_runes:rune_block_carving_template"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_rune_block_template"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "manaweave_and_runes:rune_block_carving_template"
+    ]
+  }
+}

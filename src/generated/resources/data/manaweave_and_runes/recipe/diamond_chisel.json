@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "D": {
+      "item": "minecraft:diamond"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "  D",
+    " S ",
+    "S  "
+  ],
+  "result": {
+    "count": 1,
+    "id": "manaweave_and_runes:diamond_chisel"
+  }
+}
