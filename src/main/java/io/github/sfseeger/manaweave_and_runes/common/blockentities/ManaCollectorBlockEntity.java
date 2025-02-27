@@ -11,6 +11,7 @@ import io.github.sfseeger.lib.common.mana.network.ManaNetworkNodeType;
 import io.github.sfseeger.manaweave_and_runes.client.particles.mana_particle.ManaParticleOptions;
 import io.github.sfseeger.manaweave_and_runes.common.blocks.ManaCollectorBlock;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRBlockEntityInit;
+import io.github.sfseeger.manaweave_and_runes.core.util.IInventoryBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -30,7 +31,7 @@ import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 
-public class ManaCollectorBlockEntity extends BlockEntity implements IManaNetworkSubscriber {
+public class ManaCollectorBlockEntity extends BlockEntity implements IManaNetworkSubscriber, IInventoryBlockEntity {
     public static final int CAPACITY = 5000;
     public static final int MANA_PER_SOURCE = 30;
     private static final int MAX_RECEIVE = 5000;
@@ -84,9 +85,11 @@ public class ManaCollectorBlockEntity extends BlockEntity implements IManaNetwor
             }
             blockEntity.getManaNetworkNode().provideMana(potentialMana, mamaType);
             blockEntity.markUpdated();
-            ((ServerLevel) level).sendParticles(
-                    new ManaParticleOptions(Math.min(0.4f, level.getRandom().nextFloat()), 1f, 1f, 1f, 0.1f, 0.5f),
-                    pos.getX() + 0.5f, pos.getY() + 1.2f, pos.getZ() + 0.5f, 15, 0.2, 0, 0.2, 0);
+            if (potentialMana > 0) {
+                ((ServerLevel) level).sendParticles(
+                        new ManaParticleOptions(Math.min(0.4f, level.getRandom().nextFloat()), 1f, 1f, 1f, 0.1f, 0.5f),
+                        pos.getX() + 0.5f, pos.getY() + 1.2f, pos.getZ() + 0.5f, potentialMana * 2, 0.2, 0, 0.2, 0);
+            }
         }
     }
 
@@ -131,10 +134,7 @@ public class ManaCollectorBlockEntity extends BlockEntity implements IManaNetwor
     public ItemStack removeRune() {
         ItemStack stack = inventory.extractItem(0, 1, false);
         setChanged();
-        if (level != null) {
-            level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(),
-                                   ManaCollectorBlock.UPDATE_ALL);
-        }
+        markUpdated();
         return stack;
     }
 

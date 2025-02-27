@@ -2,6 +2,7 @@ package io.github.sfseeger.manaweave_and_runes.common.blocks;
 
 import io.github.sfseeger.lib.common.blocks.ManaNetworkBlock;
 import io.github.sfseeger.manaweave_and_runes.common.blockentities.ManaCollectorBlockEntity;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRBlockEntityInit;
 import io.github.sfseeger.manaweave_and_runes.core.util.InventoryUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -118,7 +119,8 @@ public class ManaCollectorBlock extends ManaNetworkBlock implements EntityBlock 
 
     @Override
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        InventoryUtil.dropContentsOnDestroy(state, newState, level, pos);
+        InventoryUtil.dropContentsOnDestroy(state, newState, level, pos,
+                                            MRBlockEntityInit.MANA_COLLECTOR_BLOCK_ENTITY.get());
         super.onRemove(state, level, pos, newState, movedByPiston);
     }
 
@@ -129,4 +131,6 @@ public class ManaCollectorBlock extends ManaNetworkBlock implements EntityBlock 
 
         }
     }
+
+
 }

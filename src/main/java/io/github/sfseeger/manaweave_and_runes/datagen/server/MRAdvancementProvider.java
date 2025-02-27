@@ -32,6 +32,14 @@ public class MRAdvancementProvider extends AdvancementProvider {
         @Override
         public void generate(HolderLookup.Provider provider, Consumer<AdvancementHolder> consumer,
                 ExistingFileHelper existingFileHelper) {
+            createRitualAdvancements(provider, consumer, existingFileHelper);
+
+
+        }
+
+        private void createRitualAdvancements(HolderLookup.Provider provider, Consumer<AdvancementHolder> consumer,
+                ExistingFileHelper existingFileHelper) {
+
             ResourceLocation id = ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "rituals/");
 
             Item noviceRitualAnchor = BuiltInRegistries.ITEM.get(

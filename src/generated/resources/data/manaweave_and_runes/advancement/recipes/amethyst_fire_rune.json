@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_base_rune": {
+    "has_fire_rune_template": {
       "conditions": {
         "items": [
           {
-            "items": "manaweave_and_runes:amethyst_base_rune"
+            "items": "manaweave_and_runes:fire_rune_carving_template"
           }
         ]
       },
@@ -23,7 +23,7 @@
       "has_the_recipe"
     ],
     [
-      "has_base_rune"
+      "has_fire_rune_template"
     ]
   ],
   "rewards": {

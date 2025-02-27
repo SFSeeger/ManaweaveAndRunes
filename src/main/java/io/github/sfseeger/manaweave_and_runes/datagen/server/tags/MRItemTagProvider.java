@@ -1,6 +1,7 @@
 package io.github.sfseeger.manaweave_and_runes.datagen.server.tags;
 
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRBlockInit;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRItemInit;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRTagInit;
 import net.minecraft.core.HolderLookup;
@@ -24,5 +25,16 @@ public class MRItemTagProvider extends ItemTagsProvider {
                 .add(MRItemInit.AMETHYST_FIRE_RUNE_ITEM.get())
                 .add(MRItemInit.AMETHYST_AIR_RUNE_ITEM.get())
                 .add(MRItemInit.RUNE_BRACELET_ITEM.get());
+
+        this.tag(MRTagInit.MAGICAL_LOOT_ITEMS)
+                .add(MRBlockInit.AIR_MANA_INFUSED_ROCK_BLOCK.asItem())
+                .add(MRBlockInit.EARTH_MANA_INFUSED_ROCK_BLOCK.asItem())
+                .add(MRBlockInit.FIRE_MANA_INFUSED_ROCK_BLOCK.asItem())
+                .add(MRBlockInit.RUNE_BLOCK.asItem())
+                .add(MRBlockInit.ENTROPY_MANA_INFUSED_ROCK_BLOCK.asItem())
+                .add(MRBlockInit.ORDER_MANA_INFUSED_ROCK_BLOCK.asItem())
+                .add(MRBlockInit.SOUL_MANA_INFUSED_ROCK_BLOCK.asItem())
+                .add(MRBlockInit.VOID_MANA_INFUSED_ROCK_BLOCK.asItem())
+        ;
     }
 }

@@ -1,0 +1,17 @@
+{
+  "type": "manaweave_and_runes:add_item_modifier",
+  "conditions": [
+    {
+      "condition": "neoforge:loot_table_id",
+      "loot_table_id": "minecraft:chests/stronghold_corridor"
+    },
+    {
+      "chance": 0.14,
+      "condition": "minecraft:random_chance"
+    }
+  ],
+  "item": {
+    "count": 1,
+    "id": "manaweave_and_runes:void_rune_carving_template"
+  }
+}

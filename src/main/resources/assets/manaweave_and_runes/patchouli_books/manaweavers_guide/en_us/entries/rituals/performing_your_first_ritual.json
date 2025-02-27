@@ -1,0 +1,19 @@
+{
+  "name": "Performing your first Ritual",
+  "icon": "manaweave_and_runes:master_ritual_anchor",
+  "category": "manaweave_and_runes:rituals_category",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Starting a ritual seems to be quite simple. I just placed the correct items around the anchor, supplied mana and activated it using my STARTING ITEM HERE"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Note to self: Make sure to keep the ritual fed. As soon as my storage ran empty the effects of the Ritual got ... volatile. But the anchor seems to work. As soon as I started the ritual I noted down, the air filled with a beautiful glow"
+    },
+    {
+      "type": "manaweave_and_runes:novice_ritual_input",
+      "ritual": "manaweave_and_runes:particle_ritual"
+    }
+  ]
+}

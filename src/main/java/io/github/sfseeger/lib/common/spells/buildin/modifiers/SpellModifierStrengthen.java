@@ -11,7 +11,7 @@ public class SpellModifierStrengthen extends AbstractSpellModifier {
     public static final SpellModifierStrengthen INSTANCE = new SpellModifierStrengthen();
 
     public SpellModifierStrengthen() {
-        super(Map.of(Manas.AirMana, 5), 8);
+        super(Map.of(Manas.OrderMana, 6), 8);
     }
 
     @Override

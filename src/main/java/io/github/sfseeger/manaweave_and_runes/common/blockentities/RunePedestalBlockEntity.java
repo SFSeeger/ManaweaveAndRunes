@@ -10,6 +10,7 @@ import io.github.sfseeger.lib.common.mana.network.ManaNetworkNodeType;
 import io.github.sfseeger.manaweave_and_runes.client.particles.mana_particle.ManaParticleOptions;
 import io.github.sfseeger.manaweave_and_runes.common.blocks.ManaCollectorBlock;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRBlockEntityInit;
+import io.github.sfseeger.manaweave_and_runes.core.util.IInventoryBlockEntity;
 import io.github.sfseeger.manaweave_and_runes.core.util.ParticleUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -29,7 +30,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class RunePedestalBlockEntity extends BlockEntity implements IManaNetworkSubscriber {
+public class RunePedestalBlockEntity extends BlockEntity implements IManaNetworkSubscriber, IInventoryBlockEntity {
     public final ItemStackHandler inventory = new ItemStackHandler(1) {
         @Override
         protected void onContentsChanged(int slot) {

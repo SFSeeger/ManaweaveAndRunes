@@ -17,7 +17,6 @@ import java.util.List;
 public class MRPlacedFeatures {
     public static final ResourceKey<PlacedFeature> CRYSTAL_ORE_PLACED_KEY = registerKey("tanzanite_ore_placed");
 
-
     public static void bootstrap(BootstrapContext<PlacedFeature> context) {
         var configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
 

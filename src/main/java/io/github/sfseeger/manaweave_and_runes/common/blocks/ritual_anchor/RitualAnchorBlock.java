@@ -52,7 +52,7 @@ public class RitualAnchorBlock extends ManaNetworkBlock implements EntityBlock {
     }
 
     @Override
-    protected RenderShape getRenderShape(BlockState state) {
+    public RenderShape getRenderShape(BlockState state) {
         return RenderShape.ENTITYBLOCK_ANIMATED;
     }
 

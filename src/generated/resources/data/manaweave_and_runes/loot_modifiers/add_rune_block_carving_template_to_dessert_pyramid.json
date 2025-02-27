@@ -3,10 +3,10 @@
   "conditions": [
     {
       "condition": "neoforge:loot_table_id",
-      "loot_table_id": "minecraft:chests/desert_pyramid"
+      "loot_table_id": "minecraft:archaeology/desert_pyramid"
     },
     {
-      "chance": 0.9,
+      "chance": 0.8,
       "condition": "minecraft:random_chance"
     }
   ],

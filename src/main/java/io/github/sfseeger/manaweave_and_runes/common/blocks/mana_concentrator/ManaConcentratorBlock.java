@@ -12,11 +12,11 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -33,8 +33,41 @@ public class ManaConcentratorBlock extends Block implements EntityBlock {
         super(Properties.of()
                       .strength(1.5f)
                       .requiresCorrectToolForDrops()
-                      .sound(SoundType.AMETHYST)); //TODO: Add sounds?
+                      .sound(SoundType.GLASS)); //TODO: Add sounds?
         this.type = type;
+    }
+
+    @Override
+    protected @NotNull ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hitResult) {
+        if (!level.isClientSide && !stack.isEmpty()) {
+            BlockEntity blockEntity = level.getBlockEntity(pos);
+            if (blockEntity instanceof ManaConcentratorBlockEntity manaConcentratorBlockEntity) {
+                if (manaConcentratorBlockEntity.isActive()) {
+                    if (stack.is(MRItemInit.MANA_WEAVER_WAND)) {
+                        manaConcentratorBlockEntity.startCrafting();
+                        return ItemInteractionResult.SUCCESS;
+                    }
+                } else if (stack.is(MRItemInit.MANA_DEBUG_STICK_ITEM)) {
+                    MultiblockValidator.MultiBlockValidationData validationData =
+                            manaConcentratorBlockEntity.validateMultiblock();
+                    if (validationData.isValid()) {
+                        player.sendSystemMessage(Component.literal("Multiblock is isValid!"));
+                    } else {
+                        player.sendSystemMessage(Component.literal("Multiblock is invalid!"));
+                        player.sendSystemMessage(Component.literal(
+                                "Wrong Block at: " + validationData.errorLocation() + " Expected: " + validationData.expected() + " Found: " + validationData.currentBlock()));
+                    }
+                    return ItemInteractionResult.SUCCESS;
+                }
+                if (manaConcentratorBlockEntity.placeItem(stack)) {
+                    stack.setCount(0);
+                    return ItemInteractionResult.SUCCESS;
+                }
+            }
+        }
+
+        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
     @Override
@@ -83,36 +116,8 @@ public class ManaConcentratorBlock extends Block implements EntityBlock {
     }
 
     @Override
-    protected @NotNull ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hitResult) {
-        if (!level.isClientSide && !stack.isEmpty()) {
-            BlockEntity blockEntity = level.getBlockEntity(pos);
-            if (blockEntity instanceof ManaConcentratorBlockEntity manaConcentratorBlockEntity) {
-                if (manaConcentratorBlockEntity.isActive()) {
-                    if (stack.is(Items.CARROT_ON_A_STICK)) {// TODO: Replace with crafting start item
-                        manaConcentratorBlockEntity.startCrafting();
-                        return ItemInteractionResult.SUCCESS;
-                    }
-                } else if (stack.is(MRItemInit.MANA_DEBUG_STICK_ITEM)) {
-                    MultiblockValidator.MultiBlockValidationData validationData =
-                            manaConcentratorBlockEntity.validateMultiblock();
-                    if (validationData.isValid()) {
-                        player.sendSystemMessage(Component.literal("Multiblock is isValid!"));
-                    } else {
-                        player.sendSystemMessage(Component.literal("Multiblock is invalid!"));
-                        player.sendSystemMessage(Component.literal(
-                                "Wrong Block at: " + validationData.errorLocation() + " Expected: " + validationData.expected() + " Found: " + validationData.currentBlock()));
-                    }
-                    return ItemInteractionResult.SUCCESS;
-                }
-                if (manaConcentratorBlockEntity.placeItem(stack)) {
-                    stack.setCount(0);
-                    return ItemInteractionResult.SUCCESS;
-                }
-            }
-        }
-
-        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+    public RenderShape getRenderShape(BlockState state) {
+        return RenderShape.ENTITYBLOCK_ANIMATED;
     }
 
     public ManaConcentratorType getType() {
@@ -121,12 +126,8 @@ public class ManaConcentratorBlock extends Block implements EntityBlock {
 
     @Override
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        if (!level.isClientSide) {
-            BlockEntity blockEntity = level.getBlockEntity(pos);
-            if (blockEntity instanceof ManaConcentratorBlockEntity be) {
-                InventoryUtil.dropItemHandlerContents(be.getItemHandler(null), level, pos);
-            }
-        }
+        InventoryUtil.dropContentsOnDestroy(state, newState, level, pos,
+                                            MRBlockEntityInit.MANA_CONCENTRATOR_BLOCK_ENTITY.get());
         super.onRemove(state, level, pos, newState, movedByPiston);
     }
 }

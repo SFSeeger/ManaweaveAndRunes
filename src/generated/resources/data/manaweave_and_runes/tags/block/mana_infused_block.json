@@ -2,6 +2,11 @@
   "values": [
     "manaweave_and_runes:fire_mana_infused_rock",
     "manaweave_and_runes:air_mana_infused_rock",
-    "manaweave_and_runes:earth_mana_infused_rock"
+    "manaweave_and_runes:earth_mana_infused_rock",
+    "manaweave_and_runes:water_mana_infused_rock",
+    "manaweave_and_runes:entropy_mana_infused_rock",
+    "manaweave_and_runes:order_mana_infused_rock",
+    "manaweave_and_runes:soul_mana_infused_rock",
+    "manaweave_and_runes:void_mana_infused_rock"
   ]
 }

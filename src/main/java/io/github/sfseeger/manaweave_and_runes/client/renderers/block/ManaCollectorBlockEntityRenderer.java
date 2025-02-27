@@ -29,7 +29,6 @@ public class ManaCollectorBlockEntityRenderer extends ManaNodeRenderer<ManaColle
 
     @Override
     public void render(ManaCollectorBlockEntity manaCollectorBlockEntity, float partialTick, PoseStack poseStack, MultiBufferSource multiBufferSource, int packedLight, int packedOverlay) {
-        super.render(manaCollectorBlockEntity, partialTick, poseStack, multiBufferSource, packedLight, packedOverlay);
         BlockPos pos = manaCollectorBlockEntity.getBlockPos();
         BlockPos posAbove = pos.above();
         IItemHandler itemHandler = manaCollectorBlockEntity.getItemHandler(null);
@@ -43,11 +42,12 @@ public class ManaCollectorBlockEntityRenderer extends ManaNodeRenderer<ManaColle
 
             poseStack.pushPose();
 
-            poseStack.translate(0.5, 1.1f, 0.5);
+            poseStack.translate(0.5, .9f, 0.5);
             poseStack.mulPose(Axis.YP.rotationDegrees(rot));
             poseStack.scale(0.5f, 0.5f, 0.5f);
             this.context.getItemRenderer().renderStatic(stack, ItemDisplayContext.FIXED, packedLight, OverlayTexture.NO_OVERLAY, poseStack, multiBufferSource, level, 0);
             poseStack.popPose();
         }
+        super.render(manaCollectorBlockEntity, partialTick, poseStack, multiBufferSource, packedLight, packedOverlay);
     }
 }

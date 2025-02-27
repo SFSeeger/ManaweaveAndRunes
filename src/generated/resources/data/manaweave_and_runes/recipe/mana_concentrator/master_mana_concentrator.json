@@ -1,0 +1,30 @@
+{
+  "type": "manaweave_and_runes:mana_concentrator",
+  "craftTime": 500,
+  "inputs": [
+    {
+      "item": "minecraft:gold_block"
+    },
+    {
+      "item": "manaweave_and_runes:tanzanite"
+    },
+    {
+      "item": "manaweave_and_runes:amethyst_base_rune"
+    }
+  ],
+  "manaMap": [
+    {
+      "amount": 80,
+      "manaType": "manaweave_and_runes:fire_mana"
+    },
+    {
+      "amount": 80,
+      "manaType": "manaweave_and_runes:air_mana"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "manaweave_and_runes:master_mana_concentrator"
+  },
+  "tier": "NOVICE"
+}

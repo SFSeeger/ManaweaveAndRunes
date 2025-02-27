@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_soul_template": {
+      "conditions": {
+        "items": [
+          {
+            "items": "manaweave_and_runes:soul_rune_carving_template"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "manaweave_and_runes:amethyst_soul_rune"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe"
+    ],
+    [
+      "has_soul_template"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "manaweave_and_runes:amethyst_soul_rune"
+    ]
+  }
+}

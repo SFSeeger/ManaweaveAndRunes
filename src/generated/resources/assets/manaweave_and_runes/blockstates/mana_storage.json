@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "manaweave_and_runes:block/mana_storage"
+    }
+  }
+}

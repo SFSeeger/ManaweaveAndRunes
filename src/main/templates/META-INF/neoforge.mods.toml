@@ -79,7 +79,14 @@ description='''${mod_description}'''
 [[dependencies.${ mod_id }]]
 modId = "patchouli"
 type = "required"
-versionRange = "[1.21-87-NEOFORGE,)" # I need to fiure out, how to load this from the gradle.properties
+versionRange = "[1.21-87-NEOFORGE,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${ mod_id }]]
+modId = "geckolib"
+type = "required"
+versionRange = "[4.7.3,)"
 ordering = "NONE"
 side = "BOTH"
 

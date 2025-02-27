@@ -4,7 +4,8 @@
         "R": "manaweave_and_runes:rune_block",
         "B": "manaweave_and_runes:rune_pedestal",
         "C": "minecraft:amethyst_block",
-        "S": "minecraft:sea_lantern"
+      "S": "minecraft:sea_lantern",
+      "0": "manaweave_and_runes:ascended_mana_concentrator"
     },
     "structure": [
         [

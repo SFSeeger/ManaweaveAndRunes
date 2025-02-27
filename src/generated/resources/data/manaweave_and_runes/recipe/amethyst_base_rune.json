@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "minecraft:amethyst_shard"
+    },
+    "P": {
+      "item": "minecraft:paper"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "APA",
+    "AAA"
+  ],
+  "result": {
+    "count": 1,
+    "id": "manaweave_and_runes:amethyst_base_rune"
+  }
+}

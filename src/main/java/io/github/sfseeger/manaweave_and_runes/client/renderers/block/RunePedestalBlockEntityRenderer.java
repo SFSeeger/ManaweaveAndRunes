@@ -19,6 +19,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.items.IItemHandler;
@@ -37,7 +38,8 @@ public class RunePedestalBlockEntityRenderer extends ManaNodeRenderer<RunePedest
     @Override
     public void render(RunePedestalBlockEntity blockEntity, float partialTick, PoseStack poseStack,
             MultiBufferSource multiBufferSource, int packedLight, int packedOverlay) {
-        BlockPos pos = blockEntity.getBlockPos().above();
+        Vec3 pos = blockEntity.getBlockPos().getCenter();
+        BlockPos posAbove = blockEntity.getBlockPos().above();
         IItemHandler itemHandler = blockEntity.getItemHandler(null);
         ItemStack stack = itemHandler.getStackInSlot(0);
         Level level = blockEntity.getLevel();
@@ -45,12 +47,10 @@ public class RunePedestalBlockEntityRenderer extends ManaNodeRenderer<RunePedest
 
         if (level != null && !stack.isEmpty()) {
             packedLight = LightTexture.pack(
-                    level.getBrightness(LightLayer.BLOCK, pos),
-                    level.getBrightness(LightLayer.SKY, pos)
+                    level.getBrightness(LightLayer.BLOCK, posAbove),
+                    level.getBrightness(LightLayer.SKY, posAbove)
             );
             boolean isBlock = stack.getItem() instanceof BlockItem;
-            float scalingFactor = isBlock ? 1f : .5f;
-            int itemCount = stack.getCount() > 16 ? 1 : stack.getCount() / 16;
 
 
             poseStack.pushPose();
@@ -68,18 +68,29 @@ public class RunePedestalBlockEntityRenderer extends ManaNodeRenderer<RunePedest
                                   poseStack,
                                   multiBufferSource, level, 0);
             //}
+
+            poseStack.popPose();
+
+            poseStack.pushPose();
             Font font = this.context.getFont();
+            poseStack.translate(0.5f, 1.25f, .5f);
             poseStack.scale(0.05f, -0.05f, 0.05f);
             HitResult result = Minecraft.getInstance().hitResult;
 
+            if (result != null && result.getType() == HitResult.Type.BLOCK && result.getLocation()
+                    .distanceTo(pos) <= 0.8) {
+                poseStack.mulPose(Axis.YP.rotationDegrees(180 - Minecraft.getInstance().getCameraEntity().getYRot()));
+                poseStack.translate(-font.width(stack.getCount() + "") / 2f, -15f,
+                                    -font.width(stack.getCount() + "") / 2f);
+                font.drawInBatch(stack.getCount() + "", 0, 0, 0xECECEC, false, poseStack.last().pose(),
+                                 multiBufferSource,
+                                 Font.DisplayMode.NORMAL, 0xFF0000, packedLight, true);
+            }
 
-            // TODO: Find out how to check if the player is looking at the block & rotate accordingly
-//            poseStack.translate(-font.width(stack.getCount() + "") / 2f, -15f - (isBlock ? 0 : 5), 0);
-//            font.drawInBatch(stack.getCount() + "", 0, 0, 0xECECEC, false, poseStack.last().pose(),
-//                             multiBufferSource,
-//                             Font.DisplayMode.NORMAL, 0xFF0000, packedLight, true);
             poseStack.popPose();
-            super.render(blockEntity, partialTick, poseStack, multiBufferSource, packedLight, packedOverlay);
+
+
         }
+        super.render(blockEntity, partialTick, poseStack, multiBufferSource, packedLight, packedOverlay);
     }
 }

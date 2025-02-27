@@ -17,6 +17,7 @@ import io.github.sfseeger.manaweave_and_runes.common.blocks.ritual_anchor.Ritual
 import io.github.sfseeger.manaweave_and_runes.common.blocks.ritual_anchor.RitualAnchorTypes;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRBlockEntityInit;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRBlockInit;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRItemInit;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRParticleTypeInit;
 import io.github.sfseeger.manaweave_and_runes.core.util.Utils;
 import net.minecraft.advancements.AdvancementHolder;
@@ -32,7 +33,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -314,7 +314,7 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
 
     public boolean checkAndStartRitual(Level level, Player player, ItemStack stack) {
         //TODO: Check if all required extra data is provided
-        if (getState() != RitualState.IDLE || !stack.is(Items.CARROT_ON_A_STICK)) {
+        if (getState() != RitualState.IDLE || !stack.is(MRItemInit.MANA_WEAVER_WAND)) {
             return false;
         }
 

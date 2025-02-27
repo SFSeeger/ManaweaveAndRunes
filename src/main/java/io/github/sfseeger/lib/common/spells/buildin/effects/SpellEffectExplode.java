@@ -17,7 +17,7 @@ public class SpellEffectExplode extends AbstractSpellEffect {
     public static final SpellEffectExplode INSTANCE = new SpellEffectExplode();
 
     public SpellEffectExplode() {
-        super(Map.of(Manas.FireMana, 10), 10);
+        super(Map.of(Manas.FireMana, 4, Manas.EntropyMana, 10), 10);
     }
 
     @Override

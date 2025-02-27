@@ -1,0 +1,16 @@
+{
+  "type": "manaweave_and_runes:rune_carver",
+  "chisel": {
+    "item": "manaweave_and_runes:diamond_chisel"
+  },
+  "result": {
+    "count": 1,
+    "id": "manaweave_and_runes:amethyst_soul_rune"
+  },
+  "rune_base": {
+    "item": "manaweave_and_runes:amethyst_base_rune"
+  },
+  "rune_template": {
+    "item": "manaweave_and_runes:soul_rune_carving_template"
+  }
+}

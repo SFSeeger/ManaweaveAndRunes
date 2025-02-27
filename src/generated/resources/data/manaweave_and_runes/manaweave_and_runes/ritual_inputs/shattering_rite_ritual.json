@@ -12,8 +12,12 @@
   ],
   "manaCost": [
     {
-      "amount": 5,
-      "manaType": "manaweave_and_runes:air_mana"
+      "amount": 6,
+      "manaType": "manaweave_and_runes:entropy_mana"
+    },
+    {
+      "amount": 15,
+      "manaType": "manaweave_and_runes:earth_mana"
     }
   ],
   "manaRate": 60,

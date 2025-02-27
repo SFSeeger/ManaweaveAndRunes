@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "manaweave_and_runes:amethyst_void_rune"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_void_template": {
+      "conditions": {
+        "items": [
+          {
+            "items": "manaweave_and_runes:void_rune_carving_template"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe"
+    ],
+    [
+      "has_void_template"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "manaweave_and_runes:amethyst_void_rune"
+    ]
+  }
+}

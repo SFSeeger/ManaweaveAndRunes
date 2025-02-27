@@ -21,18 +21,21 @@ import java.util.List;
 public class MRConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> OVERWORLD_TANZANITE_ORE_KEY = registerKey("tanzanite_ore");
 
-    public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
-        RuleTest stoneReplaceables = new TagMatchTest(BlockTags.STONE_ORE_REPLACEABLES);
-        RuleTest deepslateReplaceables = new TagMatchTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES);
-        RuleTest netherrackReplaceables = new BlockMatchTest(Blocks.NETHERRACK);
-        RuleTest endstoneReplaceables = new BlockMatchTest(Blocks.END_STONE);
+    private static final RuleTest stoneReplaceables = new TagMatchTest(BlockTags.STONE_ORE_REPLACEABLES);
+    private static final RuleTest deepslateReplaceables = new TagMatchTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES);
+    private static final RuleTest netherrackReplaceables = new BlockMatchTest(Blocks.NETHERRACK);
+    private static final RuleTest endstoneReplaceables = new BlockMatchTest(Blocks.END_STONE);
 
+
+
+    public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
         List<OreConfiguration.TargetBlockState> overworldCrystalOres = List.of(
                 OreConfiguration.target(stoneReplaceables,
                                         MRBlockInit.TANZANITE_ORE.get().defaultBlockState()),
                 OreConfiguration.target(deepslateReplaceables,
                                         MRBlockInit.DEEPSLATE_TANZANITE_ORE.get().defaultBlockState())
         );
+
         register(context, OVERWORLD_TANZANITE_ORE_KEY, Feature.ORE,
                  new OreConfiguration(overworldCrystalOres, 4, 0.2f));
     }

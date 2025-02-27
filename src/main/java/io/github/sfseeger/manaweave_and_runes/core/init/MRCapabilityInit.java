@@ -66,7 +66,13 @@ public class MRCapabilityInit {
                             allowedMana);
                 },
                 MRItemInit.AMETHYST_FIRE_RUNE_ITEM.get(),
-                MRItemInit.AMETHYST_AIR_RUNE_ITEM.get()
+                MRItemInit.AMETHYST_AIR_RUNE_ITEM.get(),
+                MRItemInit.AMETHYST_WATER_RUNE_ITEM.get(),
+                MRItemInit.AMETHYST_EARTH_RUNE_ITEM.get(),
+                MRItemInit.AMETHYST_VOID_RUNE_ITEM.get(),
+                MRItemInit.AMETHYST_ORDER_RUNE_ITEM.get(),
+                MRItemInit.AMETHYST_ENTROPY_RUNE_ITEM.get(),
+                MRItemInit.AMETHYST_SOUL_RUNE_ITEM.get()
         );
 
         event.registerItem(
@@ -94,8 +100,8 @@ public class MRCapabilityInit {
         );
         event.registerBlockEntity(
                 Capabilities.ItemHandler.BLOCK,
-                MRBlockEntityInit.WAND_MODIFICATION_TABLE_BLOCK_ENTITY.get(),
-                WandModificationTableBlockEntity::getItemHandler
+                MRBlockEntityInit.RUNEWROUGHT_BENCH_BLOCK_ENTITY.get(),
+                RunewroughtBenchBlockEntity::getItemHandler
         );
         event.registerBlockEntity(
                 Capabilities.ItemHandler.BLOCK,

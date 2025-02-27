@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "minecraft:amethyst_block"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    }
+  },
+  "pattern": [
+    " G ",
+    " A ",
+    " G "
+  ],
+  "result": {
+    "count": 2,
+    "id": "manaweave_and_runes:mana_transmitter"
+  }
+}

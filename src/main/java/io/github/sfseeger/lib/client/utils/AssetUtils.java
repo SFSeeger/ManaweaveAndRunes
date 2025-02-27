@@ -31,8 +31,9 @@ public class AssetUtils {
 
         int lightmap = LightTexture.pack(MAX_LIGHT_X, MAX_LIGHT_Y);
 
-        VertexConsumer builder = buffer.getBuffer(RenderTypes.MANA_THREAD);
         matrixStack.pushPose();
+
+        VertexConsumer builder = buffer.getBuffer(RenderTypes.MANA_THREAD);
         matrixStack.translate(0.5f, 0.5f, 0.5f);
         matrixStack.translate(offX, offY, offZ);
 

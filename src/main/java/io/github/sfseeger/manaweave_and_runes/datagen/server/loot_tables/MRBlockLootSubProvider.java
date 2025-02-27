@@ -26,6 +26,11 @@ public class MRBlockLootSubProvider extends BlockLootSubProvider {
         this.dropSelf(MRBlockInit.FIRE_MANA_INFUSED_ROCK_BLOCK.get());
         this.dropSelf(MRBlockInit.AIR_MANA_INFUSED_ROCK_BLOCK.get());
         this.dropSelf(MRBlockInit.EARTH_MANA_INFUSED_ROCK_BLOCK.get());
+        this.dropSelf(MRBlockInit.WATER_MANA_INFUSED_ROCK_BLOCK.get());
+        this.dropSelf(MRBlockInit.ENTROPY_MANA_INFUSED_ROCK_BLOCK.get());
+        this.dropSelf(MRBlockInit.ORDER_MANA_INFUSED_ROCK_BLOCK.get());
+        this.dropSelf(MRBlockInit.SOUL_MANA_INFUSED_ROCK_BLOCK.get());
+        this.dropSelf(MRBlockInit.VOID_MANA_INFUSED_ROCK_BLOCK.get());
 
         this.dropSelf(MRBlockInit.MANA_GENERATOR_BLOCK.get());
         this.dropSelf(MRBlockInit.MANA_COLLECTOR_BLOCK.get());
@@ -39,7 +44,7 @@ public class MRBlockLootSubProvider extends BlockLootSubProvider {
         this.dropSelf(MRBlockInit.MASTER_RITUAL_ANCHOR_BLOCK.get());
         this.dropSelf(MRBlockInit.ASCENDED_RITUAL_ANCHOR_BLOCK.get());
         this.dropSelf(MRBlockInit.MANA_TRANSMITTER_BLOCK.get());
-        this.dropSelf(MRBlockInit.WAND_MODIFICATION_TABLE_BLOCK.get());
+        this.dropSelf(MRBlockInit.RUNEWROUGHT_BENCH_BLOCK.get());
         this.dropSelf(MRBlockInit.SPELL_DESIGNER_BLOCK.get());
 
     }

@@ -12,7 +12,7 @@ public class SpellModifierElongate extends AbstractSpellModifier {
     public static final AbstractSpellNode INSTANCE = new SpellModifierElongate();
 
     public SpellModifierElongate() {
-        super(Map.of(Manas.AirMana, 5), 1);
+        super(Map.of(Manas.EarthMana, 5), 1);
     }
 
     @Override

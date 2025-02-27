@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 1694767081,
+    "separation": 6,
+    "spacing": 10
+  },
+  "structures": [
+    {
+      "structure": "manaweave_and_runes:entropy_structure",
+      "weight": 1
+    }
+  ]
+}

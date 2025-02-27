@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.function.Supplier;
 
-public abstract class AbstractRuneItem extends Item implements IManaItem {
+public class AbstractRuneItem extends Item implements IManaItem {
     protected Supplier<Mana> manatype;
     public static final int MANA_CAPACITY = 5000;
     public static final int MAX_EXTRACT = 200;
@@ -21,6 +21,10 @@ public abstract class AbstractRuneItem extends Item implements IManaItem {
     public AbstractRuneItem(Properties properties, Supplier<Mana> manatype) {
         super(properties.stacksTo(1));
         this.manatype = manatype;
+    }
+
+    public AbstractRuneItem(Supplier<Mana> manatype) {
+        this(new Item.Properties().stacksTo(1), manatype);
     }
 
     public Mana getManaType() {

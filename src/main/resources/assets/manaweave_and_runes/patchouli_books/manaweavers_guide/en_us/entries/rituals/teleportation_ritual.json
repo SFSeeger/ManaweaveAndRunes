@@ -1,0 +1,21 @@
+{
+  "name": "A huge breakthrough",
+  "icon": "minecraft:ender_pearl",
+  "category": "manaweave_and_runes:rituals_category",
+  "advancement": "manaweave_and_runes:rituals/teleport_ritual",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "I was able to channel the power of the mighty ender man. Using a tiny fragment of a Humans Soul I can pull them close to the Ritual Anchor"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "manaweave_and_runes:soul_container_rune",
+      "text": "A #manaweave_and_runes:soul_container_rune->iname# can be used to steal a tiny fragment of the soul of a player. It's best to stay undetected"
+    },
+    {
+      "type": "manaweave_and_runes:novice_ritual_input",
+      "ritual": "manaweave_and_runes:teleport_ritual"
+    }
+  ]
+}
