@@ -38,7 +38,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Objects;
 
 public class ManaGeneratorBlock extends ManaNetworkBlock implements EntityBlock {
-    public static final EnumProperty<Direction> FACING = BlockStateProperties.FACING;
+    public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
     public ManaGeneratorBlock() {
         super(BlockBehaviour.Properties.of()

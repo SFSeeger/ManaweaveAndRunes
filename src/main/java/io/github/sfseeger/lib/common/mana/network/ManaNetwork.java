@@ -104,8 +104,6 @@ public class ManaNetwork {
                     }
                 }
             }
-            manaRequests.clear();
-            manaOffers.clear();
 
             if (diff == 0) {
                 resultsLastTick.add(new DistributionResult(DistributionResult.DistributionTickState.EVEN, 0, mana));
@@ -117,6 +115,8 @@ public class ManaNetwork {
                         new DistributionResult(DistributionResult.DistributionTickState.UNDERFLOW, -diff, mana));
             }
         }
+        manaRequests.clear();
+        manaOffers.clear();
     }
 
     public void addNode(ManaNetworkNode node) {

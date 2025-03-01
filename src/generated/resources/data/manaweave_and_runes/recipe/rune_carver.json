@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "X": {
+      "item": "minecraft:stone_bricks"
+    }
+  },
+  "pattern": [
+    "II",
+    "XX",
+    "XX"
+  ],
+  "result": {
+    "count": 1,
+    "id": "manaweave_and_runes:rune_carver"
+  }
+}

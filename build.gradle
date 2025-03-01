@@ -4,6 +4,9 @@ plugins {
     id 'net.neoforged.moddev' version '1.0.21'
 }
 
+import groovy.json.JsonOutput
+import groovy.json.JsonSlurper
+
 tasks.named('wrapper', Wrapper).configure {
     // Define wrapper values here so as to not have to always do so when updating gradlew.properties.
     // Switching this to Wrapper.DistributionType.ALL will download the full gradle sources that comes with
@@ -199,3 +202,54 @@ idea {
         downloadJavadoc = true
     }
 }
+
+def jsonFile = file("$projectDir/metadata/version_info.json")
+def changelogFile = file("$projectDir/CHANGELOG.md")
+def homepage = project.findProperty("mod_homepage") ?: "https://github.com/SFSeeger/ManaweaveAndRunes/releases"
+def minecraft_version = project.findProperty("minecraft_version") ?: "unknown"
+def mod_version = project.findProperty("mod_version") ?: "unknown"
+
+def getLatestChangelog = {
+    if (!changelogFile.exists()) {
+        println "WARNING: CHANGELOG.md not found. Using default changelog."
+        return "No changelog available."
+    }
+
+    def changelogText = changelogFile.text
+    def pattern = /##\s*\Q${mod_version}\E\s*\n((?:.+(?:\r?\n|$))*)/
+    def matcher = changelogText =~ pattern
+
+    if (matcher.find()) {
+        return matcher.group(1).trim().replaceAll("\r?\n", "\\\n")
+    } else {
+        println "WARNING: No changelog found for version $mod_version. Using default message."
+        return "Changelog entry missing for version $mod_version."
+    }
+}
+
+
+tasks.register('updateJson') {
+    doLast {
+        if (!jsonFile.parentFile.exists()) {
+            jsonFile.parentFile.mkdirs()
+        }
+
+        if (!jsonFile.exists()) {
+            jsonFile.text = JsonOutput.prettyPrint(JsonOutput.toJson([:]))
+        }
+
+        def json = new JsonSlurper().parse(jsonFile)
+
+        json.homepage = homepage
+        json[minecraft_version] = json.get(minecraft_version, [:])
+        json[minecraft_version][mod_version] = getLatestChangelog()
+
+        json.promos = json.get("promos", [:])
+        json.promos["${minecraft_version}-latest"] = mod_version
+        json.promos["${minecraft_version}-recommended"] = mod_version
+
+        jsonFile.text = JsonOutput.prettyPrint(JsonOutput.toJson(json))
+        println "Updated metadata/version_info.json with version: $mod_version"
+    }
+}
+build.finalizedBy(tasks.updateJson)

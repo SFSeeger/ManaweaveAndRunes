@@ -10,12 +10,12 @@ public class RenderTypes extends RenderType {
             create("manaweave_and_runes:mana_beam", DefaultVertexFormat.POSITION_COLOR_LIGHTMAP,
                    VertexFormat.Mode.QUADS, 256, false, true,
                    RenderType.CompositeState.builder()
-                           .setTransparencyState(RenderStateShard.ADDITIVE_TRANSPARENCY)
+                           .setTransparencyState(ADDITIVE_TRANSPARENCY)
                            .setTextureState(BLOCK_SHEET)
                            .setOutputState(MAIN_TARGET)
                            .setLightmapState(RenderStateShard.LIGHTMAP)
                            .setCullState(RenderStateShard.NO_CULL)
-                           .setShaderState(RenderStateShard.POSITION_COLOR_TEX_LIGHTMAP_SHADER)
+                           .setShaderState(RenderStateShard.POSITION_COLOR_SHADER)
                            .createCompositeState(true));
 
     public RenderTypes(String name, VertexFormat format,

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_tanzanite": {
+      "conditions": {
+        "items": [
+          {
+            "items": "manaweave_and_runes:tanzanite"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "manaweave_and_runes:tanzanite_block"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_tanzanite"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "manaweave_and_runes:tanzanite_block"
+    ]
+  }
+}

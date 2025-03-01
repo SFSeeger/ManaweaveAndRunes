@@ -8,6 +8,10 @@ import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.renderer.texture.TextureAtlas;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix4f;
@@ -42,6 +46,14 @@ public class AssetUtils {
 
         Matrix4f matrix = matrixStack.last().pose();
 
+        TextureAtlasSprite sprite = Minecraft.getInstance()
+                .getTextureAtlas(TextureAtlas.LOCATION_BLOCKS)
+                .apply(ResourceLocation.withDefaultNamespace("white"));
+        float minU = sprite.getU0();
+        float maxU = sprite.getU1();
+        float minV = sprite.getV0();
+        float maxV = sprite.getV1();
+
         // Get the camera position and direction
         Camera camera = Minecraft.getInstance().gameRenderer.getMainCamera();
         Vec3 cameraDir = new Vec3(camera.getLookVector());
@@ -64,18 +76,37 @@ public class AssetUtils {
                 Vec3 normal = particle2.subtract(particle1).cross(cameraDir).normalize();
                 float size = 0.02f;
 
-                builder.addVertex(matrix, (float) (particle1.x - size * normal.x()),
-                                  (float) (particle1.y - size * normal.y()), (float) (particle1.z - size * normal.z()))
-                        .setColor(baseR, baseG, baseB, a).setLight(lightmap);
-                builder.addVertex(matrix, (float) (particle1.x + size * normal.x()),
-                                  (float) (particle1.y + size * normal.y()), (float) (particle1.z + size * normal.z()))
-                        .setColor(baseR, baseG, baseB, a).setLight(lightmap);
-                builder.addVertex(matrix, (float) (particle2.x + size * normal.x()),
-                                  (float) (particle2.y + size * normal.y()), (float) (particle2.z + size * normal.z()))
-                        .setColor(baseR, baseG, baseB, a).setLight(lightmap);
-                builder.addVertex(matrix, (float) (particle2.x - size * normal.x()),
-                                  (float) (particle2.y - size * normal.y()), (float) (particle2.z - size * normal.z()))
-                        .setColor(baseR, baseG, baseB, a).setLight(lightmap);
+                builder.addVertex(matrix, (float) (particle1.x - size),
+                                  (float) (particle1.y - size), (float) (particle1.z - size))
+                        .setColor(baseR, baseG, baseB, a)
+                        .setLight(lightmap)
+                        .setOverlay(OverlayTexture.NO_OVERLAY)
+                        .setNormal((float) normal.x, (float) normal.y, (float) normal.z)
+                        .setUv(minU, minV);
+
+                builder.addVertex(matrix, (float) (particle1.x + size),
+                                  (float) (particle1.y + size), (float) (particle1.z + size))
+                        .setColor(baseR, baseG, baseB, a)
+                        .setLight(lightmap)
+                        .setOverlay(OverlayTexture.NO_OVERLAY)
+                        .setNormal((float) normal.x, (float) normal.y, (float) normal.z)
+                        .setUv(minU, maxV);
+
+                builder.addVertex(matrix, (float) (particle2.x + size),
+                                  (float) (particle2.y + size), (float) (particle2.z + size))
+                        .setColor(baseR, baseG, baseB, a)
+                        .setLight(lightmap)
+                        .setOverlay(OverlayTexture.NO_OVERLAY)
+                        .setNormal((float) normal.x, (float) normal.y, (float) normal.z)
+                        .setUv(maxU, minU);
+
+                builder.addVertex(matrix, (float) (particle2.x - size),
+                                  (float) (particle2.y - size), (float) (particle2.z - size))
+                        .setColor(baseR, baseG, baseB, a)
+                        .setLight(lightmap)
+                        .setOverlay(OverlayTexture.NO_OVERLAY)
+                        .setNormal((float) normal.x, (float) normal.y, (float) normal.z)
+                        .setUv(maxU, maxV);
             }
         }
         matrixStack.popPose();

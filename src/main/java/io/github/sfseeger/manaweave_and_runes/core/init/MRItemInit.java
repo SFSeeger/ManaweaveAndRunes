@@ -25,8 +25,8 @@ public class MRItemInit {
                                                                            () -> new Item(
                                                                                    new Item.Properties().durability(
                                                                                            1561).stacksTo(1)));
-    public static final DeferredItem<Item> MANA_WEAVER_WAND = ITEMS.register("mana_weaver_wand",
-                                                                             () -> new Item(
+    public static final DeferredItem<Item> MANA_WEAVER_WAND_ITEM = ITEMS.register("mana_weaver_wand",
+                                                                                  () -> new Item(
                                                                                      new Item.Properties().stacksTo(
                                                                                              1)));
 

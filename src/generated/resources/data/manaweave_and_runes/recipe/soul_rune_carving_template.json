@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "minecraft:amethyst_shard"
+    },
+    "P": {
+      "tag": "c:foods/raw_meat"
+    },
+    "S": {
+      "item": "minecraft:soul_sand"
+    },
+    "T": {
+      "item": "manaweave_and_runes:soul_rune_carving_template"
+    }
+  },
+  "pattern": [
+    "STS",
+    "SAS",
+    "SPS"
+  ],
+  "result": {
+    "count": 2,
+    "id": "manaweave_and_runes:soul_rune_carving_template"
+  }
+}

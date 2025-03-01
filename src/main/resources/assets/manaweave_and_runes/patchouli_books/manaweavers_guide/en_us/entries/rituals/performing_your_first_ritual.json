@@ -1,11 +1,11 @@
 {
-  "name": "Performing your first Ritual",
+  "name": "Performing a Ritual",
   "icon": "manaweave_and_runes:master_ritual_anchor",
   "category": "manaweave_and_runes:rituals_category",
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "Starting a ritual seems to be quite simple. I just placed the correct items around the anchor, supplied mana and activated it using my STARTING ITEM HERE"
+      "text": "Starting a ritual seems to be quite simple. I just placed the correct items around the anchor, supplied mana and activated it using my $(l:manaweave_and_runes:mana_weavers_wand)"
     },
     {
       "type": "patchouli:text",

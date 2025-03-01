@@ -12,12 +12,12 @@
   ],
   "manaCost": [
     {
-      "amount": 10,
-      "manaType": "manaweave_and_runes:order_mana"
-    },
-    {
       "amount": 3,
       "manaType": "manaweave_and_runes:soul_mana"
+    },
+    {
+      "amount": 10,
+      "manaType": "manaweave_and_runes:order_mana"
     },
     {
       "amount": 25,

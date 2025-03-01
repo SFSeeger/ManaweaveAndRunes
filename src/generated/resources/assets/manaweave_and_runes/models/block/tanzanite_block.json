@@ -1,6 +1,8 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "minecraft:block/cube_bottom_top",
   "textures": {
-    "all": "manaweave_and_runes:block/tanzanite_block"
+    "bottom": "manaweave_and_runes:block/tanzanite_block_bottom",
+    "side": "manaweave_and_runes:block/tanzanite_block_side",
+    "top": "manaweave_and_runes:block/tanzanite_block_top"
   }
 }

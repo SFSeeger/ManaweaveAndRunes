@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "minecraft:amethyst_shard"
+    },
+    "P": {
+      "item": "minecraft:redstone"
+    },
+    "S": {
+      "item": "minecraft:tuff"
+    },
+    "T": {
+      "item": "manaweave_and_runes:order_rune_carving_template"
+    }
+  },
+  "pattern": [
+    "STS",
+    "SAS",
+    "SPS"
+  ],
+  "result": {
+    "count": 2,
+    "id": "manaweave_and_runes:order_rune_carving_template"
+  }
+}

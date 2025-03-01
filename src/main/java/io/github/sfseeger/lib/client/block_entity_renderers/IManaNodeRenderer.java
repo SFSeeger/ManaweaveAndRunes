@@ -23,7 +23,7 @@ public interface IManaNodeRenderer {
                 AssetUtils.renderManaThreads(poseStack, multiBufferSource,
                                              new Vec3(offsetStart.getX(), offsetStart.getY(), offsetStart.getZ()),
                                              new Vec3(offsetEnd.getX(), offsetEnd.getY(), offsetEnd.getZ()), 120,
-                                             0xFFFFFF, 1, 0.05f); //0.2f
+                                             0xFFFFFF, 0.2f, 0.05f); //0.2f
                 poseStack.popPose();
             }
         }

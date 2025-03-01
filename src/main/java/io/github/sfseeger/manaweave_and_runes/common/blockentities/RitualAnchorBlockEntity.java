@@ -314,7 +314,7 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
 
     public boolean checkAndStartRitual(Level level, Player player, ItemStack stack) {
         //TODO: Check if all required extra data is provided
-        if (getState() != RitualState.IDLE || !stack.is(MRItemInit.MANA_WEAVER_WAND)) {
+        if (getState() != RitualState.IDLE || !stack.is(MRItemInit.MANA_WEAVER_WAND_ITEM)) {
             return false;
         }
 
@@ -373,7 +373,8 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
         if (getRitual() != null) {
             Map<Mana, Integer> requiredMana = getRitual().getManaCost(level);
             for (Map.Entry<Mana, Integer> entry : requiredMana.entrySet()) {
-                manaNetworkNode.requestMana(entry.getValue(), entry.getKey());
+                Integer manaStored = manaHandler.getManaStored(entry.getKey());
+                manaNetworkNode.requestMana(entry.getValue() - manaStored, entry.getKey());
             }
         }
     }

@@ -12,6 +12,7 @@ import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.ItemLike;
 
 import java.util.*;
 
@@ -50,7 +51,19 @@ public class ManaConcentratorRecipeBuilder extends SimpleRecipeBuilder {
         private List<Ingredient> inputs = new ArrayList<>();
         private Map<Mana, Integer> manaMap = new HashMap<>();
         private int craftTime;
-        private ItemStack result;
+        private final ItemStack result;
+
+        public Builder(ItemLike result, int count) {
+            this.result = new ItemStack(result, count);
+        }
+
+        public Builder(ItemLike result) {
+            this.result = new ItemStack(result);
+        }
+
+        public Builder(ItemStack result) {
+            this.result = result;
+        }
 
         public Builder setTier(Tier tier) {
             this.tier = tier;
@@ -79,11 +92,6 @@ public class ManaConcentratorRecipeBuilder extends SimpleRecipeBuilder {
 
         public Builder setCraftTime(int craftTime) {
             this.craftTime = craftTime;
-            return this;
-        }
-
-        public Builder setResult(ItemStack result) {
-            this.result = result;
             return this;
         }
 
