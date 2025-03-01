@@ -1,5 +1,6 @@
 package io.github.sfseeger.lib.client.patchouli;
 
+import io.github.sfseeger.lib.common.mana.Mana;
 import io.github.sfseeger.lib.common.rituals.Ritual;
 import io.github.sfseeger.lib.common.rituals.RitualInput;
 import io.github.sfseeger.lib.core.ManaweaveAndRunesRegistries;
@@ -61,8 +62,17 @@ public class RitualComponentProcessor implements IComponentProcessor {
             return IVariable.wrap(stack.getItemHolder().getRegisteredName(), level.registryAccess());
         }
 
-        if(key.startsWith("mana")){
-            int index = Integer.parseInt(key.substring("mana".length()));
+        if (key.startsWith("mana_type")) {
+            int index = Integer.parseInt(key.substring("mana_type".length())) - 1;
+            if (index >= ritualInput.getManaCost().size()) return null;
+            return IVariable.wrap(
+                    ((Mana) ritualInput.getManaCost().keySet().toArray()[index]).getRegistryName().toString());
+        }
+        if (key.startsWith("mana_amount")) {
+            int index = Integer.parseInt(key.substring("mana_amount".length())) - 1;
+            if (index >= ritualInput.getManaCost().size()) return null;
+            Mana mana = (Mana) ritualInput.getManaCost().keySet().toArray()[index];
+            return IVariable.wrap(ritualInput.getManaCost().get(mana), level.registryAccess());
         }
         if (key.equals("ritual_name")) return IVariable.from(ritual_name, level.registryAccess());
 

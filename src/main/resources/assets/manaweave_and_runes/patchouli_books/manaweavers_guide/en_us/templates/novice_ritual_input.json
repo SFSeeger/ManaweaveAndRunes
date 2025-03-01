@@ -80,6 +80,42 @@
       "x": 25,
       "y": 75,
       "guard": "#start_item4->exists"
+    },
+    {
+      "type": "patchouli:custom",
+      "class": "io.github.sfseeger.lib.client.patchouli.ManaDisplayComponent",
+      "mana": "#mana_type1",
+      "amount": "#mana_amount1",
+      "guard": "#mana_type1->exists",
+      "x": 10,
+      "y": 110
+    },
+    {
+      "type": "patchouli:custom",
+      "class": "io.github.sfseeger.lib.client.patchouli.ManaDisplayComponent",
+      "mana": "#mana_type2",
+      "amount": "#mana_amount2",
+      "guard": "#mana_type2->exists",
+      "x": 40,
+      "y": 110
+    },
+    {
+      "type": "patchouli:custom",
+      "class": "io.github.sfseeger.lib.client.patchouli.ManaDisplayComponent",
+      "mana": "#mana_type3",
+      "amount": "#mana_amount3",
+      "guard": "#mana_type3->exists",
+      "x": 70,
+      "y": 110
+    },
+    {
+      "type": "patchouli:custom",
+      "class": "io.github.sfseeger.lib.client.patchouli.ManaDisplayComponent",
+      "mana": "#mana_type4",
+      "amount": "#mana_amount4",
+      "guard": "#mana_type4->exists",
+      "x": 10,
+      "y": 130
     }
   ]
 }

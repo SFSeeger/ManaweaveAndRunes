@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "front": "manaweave_and_runes:block/rune_carver_front",
+    "side": "manaweave_and_runes:block/rune_carver_side",
+    "top": "manaweave_and_runes:block/rune_carver_top"
+  }
+}

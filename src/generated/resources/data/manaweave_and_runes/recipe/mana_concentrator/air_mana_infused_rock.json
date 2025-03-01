@@ -2,9 +2,14 @@
   "type": "manaweave_and_runes:mana_concentrator",
   "craftTime": 100,
   "inputs": [
-    {
-      "item": "minecraft:feather"
-    },
+    [
+      {
+        "item": "minecraft:feather"
+      },
+      {
+        "item": "minecraft:blue_dye"
+      }
+    ],
     {
       "item": "minecraft:stone_bricks"
     },

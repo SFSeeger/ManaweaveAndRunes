@@ -43,7 +43,7 @@ public class MRItemModelProvider extends ItemModelProvider {
         basicItem(MRItemInit.ENTROPY_RUNE_CARVING_TEMPLATE.get());
         basicItem(MRItemInit.RUNE_BLOCK_CARVING_TEMPLATE.get());
 
-        handheldItem(MRItemInit.MANA_WEAVER_WAND.get());
+        handheldItem(MRItemInit.MANA_WEAVER_WAND_ITEM.get());
 
         handheldItem(MRItemInit.POSITION_RUNE_ITEM.get())
                 .texture("layer0", "item/position_rune")

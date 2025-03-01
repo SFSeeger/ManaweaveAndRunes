@@ -20,7 +20,12 @@
       "item": "minecraft:stone_bricks"
     }
   ],
-  "manaMap": [],
+  "manaMap": [
+    {
+      "amount": 15,
+      "manaType": "manaweave_and_runes:earth_mana"
+    }
+  ],
   "result": {
     "count": 4,
     "id": "manaweave_and_runes:earth_mana_infused_rock"

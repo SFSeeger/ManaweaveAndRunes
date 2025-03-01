@@ -40,8 +40,8 @@ public class MRLootModifierProvider extends GlobalLootModifierProvider {
         addTemplate(MRItemInit.VOID_RUNE_CARVING_TEMPLATE, 0.3f, ResourceLocation.parse("chests/stronghold_crossing"));
         addTemplate(MRItemInit.VOID_RUNE_CARVING_TEMPLATE, 0.4f, ResourceLocation.parse("chests/ancient_city"));
 
-        addTemplate(MRItemInit.SOUL_RUNE_CARVING_TEMPLATE, 0.5f, ResourceLocation.parse("chests/woodland_mansion"));
-        addTemplate(MRItemInit.SOUL_RUNE_CARVING_TEMPLATE, 0.5f, ResourceLocation.parse("chests/ancient_city"));
+        addTemplate(MRItemInit.SOUL_RUNE_CARVING_TEMPLATE, 0.8f, ResourceLocation.parse("chests/woodland_mansion"));
+        addTemplate(MRItemInit.SOUL_RUNE_CARVING_TEMPLATE, 0.7f, ResourceLocation.parse("chests/ancient_city"));
         addTemplate(MRItemInit.SOUL_RUNE_CARVING_TEMPLATE, 0.5f, ResourceLocation.parse("chests/simple_dungeon"));
 
         addTemplate(MRItemInit.ORDER_RUNE_CARVING_TEMPLATE, 0.15f,
@@ -54,7 +54,7 @@ public class MRLootModifierProvider extends GlobalLootModifierProvider {
 
 
         add("add_rune_block_carving_template_to_dessert_pyramid", new AddItemGLM(new LootItemCondition[]{
-                LootTableIdCondition.builder(ResourceLocation.parse("archaeology/desert_pyramid")).build(),
+                LootTableIdCondition.builder(ResourceLocation.parse("chests/desert_pyramid")).build(),
                 LootItemRandomChanceCondition.randomChance(0.8f).build()
         }, new ItemStack(MRItemInit.RUNE_BLOCK_CARVING_TEMPLATE.get(), 4)));
         add("add_rune_block_carving_template_to_jungle_temple", new AddItemGLM(new LootItemCondition[]{

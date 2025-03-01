@@ -1,0 +1,29 @@
+{
+  "type": "manaweave_and_runes:mana_concentrator",
+  "craftTime": 100,
+  "inputs": [
+    {
+      "item": "minecraft:bucket"
+    },
+    {
+      "item": "minecraft:stone_bricks"
+    },
+    {
+      "item": "minecraft:stone_bricks"
+    },
+    {
+      "item": "minecraft:stone_bricks"
+    }
+  ],
+  "manaMap": [
+    {
+      "amount": 15,
+      "manaType": "manaweave_and_runes:void_mana"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "id": "manaweave_and_runes:void_mana_infused_rock"
+  },
+  "tier": "NOVICE"
+}

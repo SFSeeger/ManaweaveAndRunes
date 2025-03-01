@@ -10,6 +10,7 @@ import io.github.sfseeger.manaweave_and_runes.datagen.server.MRRecipeProvider;
 import io.github.sfseeger.manaweave_and_runes.datagen.server.datapack.MRDataPackProvider;
 import io.github.sfseeger.manaweave_and_runes.datagen.server.loot.MRLootModifierProvider;
 import io.github.sfseeger.manaweave_and_runes.datagen.server.loot_tables.MRLootTableProvider;
+import io.github.sfseeger.manaweave_and_runes.datagen.server.tags.MRBiomeTagProvider;
 import io.github.sfseeger.manaweave_and_runes.datagen.server.tags.MRBlockTagsProvider;
 import io.github.sfseeger.manaweave_and_runes.datagen.server.tags.MRItemTagProvider;
 import net.minecraft.core.HolderLookup;
@@ -51,6 +52,8 @@ public class ManaweaveAndRunesDatagenHandler {
         generator.addProvider(event.includeServer(),
                               new MRItemTagProvider(output, lookupProvider, blockTagsProvider.contentsGetter(),
                                                     existingFileHelper));
+        generator.addProvider(event.includeServer(),
+                              new MRBiomeTagProvider(output, lookupProvider, existingFileHelper));
 
         generator.addProvider(event.includeServer(),
                               new MRAdvancementProvider(output, lookupProvider, existingFileHelper));

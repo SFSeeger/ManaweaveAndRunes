@@ -44,7 +44,7 @@ public class ManaConcentratorBlock extends Block implements EntityBlock {
             BlockEntity blockEntity = level.getBlockEntity(pos);
             if (blockEntity instanceof ManaConcentratorBlockEntity manaConcentratorBlockEntity) {
                 if (manaConcentratorBlockEntity.isActive()) {
-                    if (stack.is(MRItemInit.MANA_WEAVER_WAND)) {
+                    if (stack.is(MRItemInit.MANA_WEAVER_WAND_ITEM)) {
                         manaConcentratorBlockEntity.startCrafting();
                         return ItemInteractionResult.SUCCESS;
                     }
