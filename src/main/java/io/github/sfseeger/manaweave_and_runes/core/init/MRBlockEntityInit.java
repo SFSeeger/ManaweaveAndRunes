@@ -31,7 +31,7 @@ public class MRBlockEntityInit {
     public static final Supplier<BlockEntityType<ManaCollectorBlockEntity>> MANA_COLLECTOR_BLOCK_ENTITY =
             BLOCK_ENTITY_TYPES.register("mana_collector_block_entity",
                                         () -> BlockEntityType.Builder.of(ManaCollectorBlockEntity::new,
-                                                                         MRBlockInit.MANA_COLLECTOR_BLOCK.get())
+                                                                         MRBlockInit.NOVICE_MANA_COLLECTOR.get())
                                                 .build(null));
     public static final Supplier<BlockEntityType<ManaStorageBlockEntity>> MANA_STORAGE_BLOCK_ENTITY =
             BLOCK_ENTITY_TYPES.register("mana_storage_block_entity",

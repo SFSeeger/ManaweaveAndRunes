@@ -1,0 +1,31 @@
+{
+  "initialItemCost": [
+    {
+      "item": "minecraft:ender_pearl"
+    },
+    {
+      "item": "minecraft:ender_eye"
+    },
+    {
+      "item": "manaweave_and_runes:soul_container_rune"
+    },
+    {
+      "item": "minecraft:blaze_powder"
+    },
+    {
+      "item": "minecraft:blaze_rod"
+    }
+  ],
+  "manaCost": [
+    {
+      "amount": 5,
+      "manaType": "manaweave_and_runes:order_mana"
+    },
+    {
+      "amount": 10,
+      "manaType": "manaweave_and_runes:air_mana"
+    }
+  ],
+  "manaRate": 10,
+  "tickItemCost": []
+}

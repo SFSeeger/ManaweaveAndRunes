@@ -33,8 +33,64 @@ public class ManaConcentratorBlock extends Block implements EntityBlock {
         super(Properties.of()
                       .strength(1.5f)
                       .requiresCorrectToolForDrops()
-                      .sound(SoundType.GLASS)); //TODO: Add sounds?
+                      .sound(SoundType.GLASS).noOcclusion()); //TODO: Add sounds?
         this.type = type;
+    }
+
+    @Override
+    public int getLightEmission(BlockState state, BlockGetter level, BlockPos pos) {
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        if (blockEntity instanceof ManaConcentratorBlockEntity manaConcentratorBlockEntity) {
+            return manaConcentratorBlockEntity.isActive() ? 15 : 0;
+        }
+        return 0;
+    }
+
+    @Override
+    public @Nullable BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+        ManaConcentratorBlockEntity blockEntity = new ManaConcentratorBlockEntity(blockPos, blockState);
+        return blockEntity;
+    }
+
+    @Override
+    public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state,
+            BlockEntityType<T> blockEntityType) {
+        if (blockEntityType == MRBlockEntityInit.MANA_CONCENTRATOR_BLOCK_ENTITY.get()) {
+            if (!level.isClientSide) {
+                return (level1, blockPos, blockState, blockEntity) -> ManaConcentratorBlockEntity.serverTick(level1,
+                                                                                                             blockPos,
+                                                                                                             blockState,
+                                                                                                             (ManaConcentratorBlockEntity) blockEntity);
+            }
+            return (level1, blockPos, blockState, blockEntity) -> ManaConcentratorBlockEntity.clientTick(level1,
+                                                                                                         blockPos,
+                                                                                                         blockState,
+                                                                                                         (ManaConcentratorBlockEntity) blockEntity);
+        }
+        return null;
+    }
+
+    public ManaConcentratorType getType() {
+        return type;
+    }
+
+    @Override
+    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
+        InventoryUtil.dropContentsOnDestroy(state, newState, level, pos,
+                                            MRBlockEntityInit.MANA_CONCENTRATOR_BLOCK_ENTITY.get());
+        super.onRemove(state, level, pos, newState, movedByPiston);
+    }
+
+    @Override
+    protected @NotNull InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player,
+            BlockHitResult hitResult) {
+        if (!level.isClientSide) {
+            BlockEntity blockEntity = level.getBlockEntity(pos);
+            if (blockEntity instanceof ManaConcentratorBlockEntity manaConcentratorBlockEntity) {
+                player.addItem(manaConcentratorBlockEntity.removeItem());
+            }
+        }
+        return InteractionResult.SUCCESS;
     }
 
     @Override
@@ -71,63 +127,7 @@ public class ManaConcentratorBlock extends Block implements EntityBlock {
     }
 
     @Override
-    public int getLightEmission(BlockState state, BlockGetter level, BlockPos pos) {
-        BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (blockEntity instanceof ManaConcentratorBlockEntity manaConcentratorBlockEntity) {
-            return manaConcentratorBlockEntity.isActive() ? 15 : 0;
-        }
-        return 0;
-    }
-
-    @Override
-    public @Nullable BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        ManaConcentratorBlockEntity blockEntity = new ManaConcentratorBlockEntity(blockPos, blockState);
-        return blockEntity;
-    }
-
-    @Override
-    public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state,
-            BlockEntityType<T> blockEntityType) {
-        if (blockEntityType == MRBlockEntityInit.MANA_CONCENTRATOR_BLOCK_ENTITY.get()) {
-            if (!level.isClientSide) {
-                return (level1, blockPos, blockState, blockEntity) -> ManaConcentratorBlockEntity.serverTick(level1,
-                                                                                                             blockPos,
-                                                                                                             blockState,
-                                                                                                             (ManaConcentratorBlockEntity) blockEntity);
-            }
-            return (level1, blockPos, blockState, blockEntity) -> ManaConcentratorBlockEntity.clientTick(level1,
-                                                                                                         blockPos,
-                                                                                                         blockState,
-                                                                                                         (ManaConcentratorBlockEntity) blockEntity);
-        }
-        return null;
-    }
-
-    @Override
-    protected @NotNull InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player,
-            BlockHitResult hitResult) {
-        if (!level.isClientSide) {
-            BlockEntity blockEntity = level.getBlockEntity(pos);
-            if (blockEntity instanceof ManaConcentratorBlockEntity manaConcentratorBlockEntity) {
-                player.addItem(manaConcentratorBlockEntity.removeItem());
-            }
-        }
-        return InteractionResult.SUCCESS;
-    }
-
-    @Override
     public RenderShape getRenderShape(BlockState state) {
         return RenderShape.ENTITYBLOCK_ANIMATED;
-    }
-
-    public ManaConcentratorType getType() {
-        return type;
-    }
-
-    @Override
-    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        InventoryUtil.dropContentsOnDestroy(state, newState, level, pos,
-                                            MRBlockEntityInit.MANA_CONCENTRATOR_BLOCK_ENTITY.get());
-        super.onRemove(state, level, pos, newState, movedByPiston);
     }
 }

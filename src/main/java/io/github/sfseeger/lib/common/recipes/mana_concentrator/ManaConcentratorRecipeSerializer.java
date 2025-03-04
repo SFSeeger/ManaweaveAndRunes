@@ -18,7 +18,11 @@ import java.util.HashMap;
 public class ManaConcentratorRecipeSerializer implements RecipeSerializer<ManaConcentratorRecipe> {
     public static final MapCodec<ManaConcentratorRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
                                                                                                      Tier.CODEC.fieldOf("tier").forGetter(ManaConcentratorRecipe::tier),
-                                                                                                     Codec.list(Ingredient.CODEC).fieldOf("inputs").forGetter(ManaConcentratorRecipe::inputs),
+                                                                                                     Ingredient.CODEC.listOf()
+                                                                                                             .fieldOf(
+                                                                                                                     "inputs")
+                                                                                                             .forGetter(
+                                                                                                                     ManaConcentratorRecipe::inputs),
                                                                                                      Mana.MANAS_WITH_AMOUNT_CODEC.fieldOf("manaMap").forGetter(ManaConcentratorRecipe::manaMapAsList),
                                                                                                      Codec.INT.fieldOf("craftTime").forGetter(ManaConcentratorRecipe::craftTime),
                                                                                                      ItemStack.CODEC.fieldOf("result").forGetter(ManaConcentratorRecipe::result)
@@ -28,7 +32,7 @@ public class ManaConcentratorRecipeSerializer implements RecipeSerializer<ManaCo
             StreamCodec.composite(
                     Tier.STREAM_CODEC, ManaConcentratorRecipe::tier,
                     Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()),
-                    ManaConcentratorRecipe::getIngredients,
+                    ManaConcentratorRecipe::inputs,
                     ByteBufCodecs.map(
                             HashMap::new,
                             ByteBufCodecs.registry(ManaweaveAndRunesRegistries.MANA_REGISTRY_KEY),

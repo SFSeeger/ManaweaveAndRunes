@@ -1,0 +1,24 @@
+{
+  "parent": "manaweave_and_runes:rituals/root",
+  "criteria": {
+    "has_enchanted_golden_apple": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:enchanted_golden_apple"
+          },
+          {
+            "items": "manaweave_and_runes:ascended_ritual_anchor"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_enchanted_golden_apple"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

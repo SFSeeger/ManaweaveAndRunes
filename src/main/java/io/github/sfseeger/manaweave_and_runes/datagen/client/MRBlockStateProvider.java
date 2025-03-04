@@ -42,9 +42,11 @@ public class MRBlockStateProvider extends BlockStateProvider {
 
         blockWithExistingModel(MRBlockInit.RUNE_PEDESTAL_BLOCK);
         blockWithExistingModel(MRBlockInit.MANA_TRANSMITTER_BLOCK);
-        blockWithExistingModel(MRBlockInit.MANA_COLLECTOR_BLOCK);
         blockWithExistingModel(MRBlockInit.RUNEWROUGHT_BENCH_BLOCK);
         blockWithExistingModel(MRBlockInit.SPELL_DESIGNER_BLOCK);
+
+        simpleBlockWithItem(MRBlockInit.NOVICE_MANA_COLLECTOR.get(), this.models()
+                .getExistingFile(modLoc("block/mana_collector")));
 
         simpleBlockItem(MRBlockInit.NOVICE_RITUAL_ANCHOR_BLOCK.get(), this.models()
                 .getExistingFile(modLoc("block/ritual_anchor_java_model")));
@@ -61,7 +63,6 @@ public class MRBlockStateProvider extends BlockStateProvider {
                 .getExistingFile(modLoc("item/mana_concentrator")));
 
 
-
         DeferredBlock<RuneBlock> deferredRuneBlock = MRBlockInit.RUNE_BLOCK;
         ResourceLocation runeBlockBase = this.blockTexture(deferredRuneBlock.get());
         ResourceLocation runeBlockActive = runeBlockBase.withSuffix("_active");
@@ -74,10 +75,12 @@ public class MRBlockStateProvider extends BlockStateProvider {
         this.simpleBlockItem(deferredRuneBlock.get(), this.models()
                 .getExistingFile(ResourceLocation.parse(deferredRuneBlock.getRegisteredName() + "_inactive")));
 
-        this.horizontalBlock(MRBlockInit.RUNE_CARVER_BLOCK.get(), modLoc("block/rune_carver_side"),
-                             modLoc("block/rune_carver_front"), modLoc("block/rune_carver_top"));
-        this.simpleBlockItem(MRBlockInit.RUNE_CARVER_BLOCK.get(),
-                             this.models().getExistingFile(modLoc("block/rune_carver")));
+        this.simpleBlockWithItem(MRBlockInit.RUNE_CARVER_BLOCK.get(), this.models()
+                .cubeBottomTop(MRBlockInit.RUNE_CARVER_BLOCK.getRegisteredName(),
+                               modLoc("block/rune_carver_side"),
+                               modLoc("block/rune_carver_bottom"),
+                               modLoc("block/rune_carver_top")));
+
         this.simpleBlockWithItem(MRBlockInit.TANZANITE_BLOCK.get(),
                                  this.models().cubeBottomTop(MRBlockInit.TANZANITE_BLOCK.getRegisteredName(),
                                                              modLoc("block/tanzanite_block_side"),

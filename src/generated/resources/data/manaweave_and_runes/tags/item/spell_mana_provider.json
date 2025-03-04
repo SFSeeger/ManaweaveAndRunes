@@ -2,6 +2,12 @@
   "values": [
     "manaweave_and_runes:amethyst_fire_rune",
     "manaweave_and_runes:amethyst_air_rune",
+    "manaweave_and_runes:amethyst_earth_rune",
+    "manaweave_and_runes:amethyst_water_rune",
+    "manaweave_and_runes:amethyst_void_rune",
+    "manaweave_and_runes:amethyst_soul_rune",
+    "manaweave_and_runes:amethyst_order_rune",
+    "manaweave_and_runes:amethyst_entropy_rune",
     "manaweave_and_runes:rune_bracelet"
   ]
 }

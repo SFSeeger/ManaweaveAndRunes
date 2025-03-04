@@ -1,0 +1,30 @@
+{
+  "type": "manaweave_and_runes:mana_concentrator",
+  "craftTime": 250,
+  "inputs": [
+    {
+      "item": "minecraft:firework_rocket"
+    },
+    {
+      "item": "minecraft:arrow"
+    },
+    {
+      "item": "minecraft:bow"
+    }
+  ],
+  "manaMap": [
+    {
+      "amount": 300,
+      "manaType": "manaweave_and_runes:entropy_mana"
+    },
+    {
+      "amount": 300,
+      "manaType": "manaweave_and_runes:air_mana"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "manaweave_and_runes:spell_type.projectile"
+  },
+  "tier": "NOVICE"
+}

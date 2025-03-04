@@ -1,0 +1,16 @@
+{
+  "name": "Shattering Rite",
+  "icon": "minecraft:diamond_pickaxe",
+  "category": "manaweave_and_runes:rituals_category",
+  "advancement": "manaweave_and_runes:rituals/shattering_rite_ritual",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Breaks blocks in an area around the position supplied and drops them over the ritual anchor."
+    },
+    {
+      "type": "manaweave_and_runes:ritual_input",
+      "ritual": "manaweave_and_runes:shattering_rite_ritual"
+    }
+  ]
+}

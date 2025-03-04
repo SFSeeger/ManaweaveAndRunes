@@ -1,0 +1,15 @@
+{
+  "name": "Spell Effect: Harm",
+  "icon": "manaweave_and_runes:spell_effect.harm",
+  "category": "manaweave_and_runes:spell_casting_category",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "This spell effect will deal damage to the target. The amount of damage dealt is determined by the spell's power"
+    },
+    {
+      "type": "manaweave_and_runes:mana_concentration",
+      "recipe": "manaweave_and_runes:mana_concentrator/spell_effect.harm"
+    }
+  ]
+}

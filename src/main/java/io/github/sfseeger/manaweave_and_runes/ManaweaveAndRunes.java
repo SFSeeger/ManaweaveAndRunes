@@ -44,6 +44,8 @@ public class ManaweaveAndRunes {
 
         MRRecipeInit.RECIPE_TYPES.register(modEventBus);
         MRRecipeInit.RECIPE_SERIALIZERS.register(modEventBus);
+        MRIngredientInit.INGREDIENT_TYPES.register(modEventBus);
+
         MRMenuInit.MENUS.register(modEventBus);
 
         RitualDataTypesInit.register(modEventBus);

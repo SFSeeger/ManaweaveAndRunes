@@ -1,0 +1,15 @@
+{
+  "name": "Mana Weaver's Staff",
+  "icon": "manaweave_and_runes:mana_weavers_staff",
+  "category": "manaweave_and_runes:spell_casting_category",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The Mana Weaver's Staff is a powerful tool for any mage. It can be used to cast spells, when supplied with the correct types of mana. Most mana weavers use a rune bracelet to manage the different storage runes. "
+    },
+    {
+      "type": "manaweave_and_runes:mana_concentration",
+      "recipe": "manaweave_and_runes:mana_concentrator/mana_weavers_staff"
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "criteria": {
+    "has_amethyst_shard": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:amethyst_shard"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "background": "manaweave_and_runes:textures/gui/advancements/backgrounds/main.png",
+    "description": {
+      "translate": "advancements.manaweave_and_runes.root.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "minecraft:amethyst_shard"
+    },
+    "title": {
+      "translate": "advancements.manaweave_and_runes.root.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_amethyst_shard"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

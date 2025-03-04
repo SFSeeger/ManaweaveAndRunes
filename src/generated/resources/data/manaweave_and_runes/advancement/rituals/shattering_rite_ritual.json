@@ -1,0 +1,21 @@
+{
+  "parent": "manaweave_and_runes:rituals/root",
+  "criteria": {
+    "has_break_spell": {
+      "conditions": {
+        "items": [
+          {
+            "items": "manaweave_and_runes:spell_effect.break"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_break_spell"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

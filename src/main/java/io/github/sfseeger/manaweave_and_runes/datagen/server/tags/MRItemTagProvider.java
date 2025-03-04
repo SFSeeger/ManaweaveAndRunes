@@ -24,6 +24,12 @@ public class MRItemTagProvider extends ItemTagsProvider {
         this.tag(MRTagInit.SPELL_MANA_PROVIDER)
                 .add(MRItemInit.AMETHYST_FIRE_RUNE_ITEM.get())
                 .add(MRItemInit.AMETHYST_AIR_RUNE_ITEM.get())
+                .add(MRItemInit.AMETHYST_EARTH_RUNE_ITEM.get())
+                .add(MRItemInit.AMETHYST_WATER_RUNE_ITEM.get())
+                .add(MRItemInit.AMETHYST_VOID_RUNE_ITEM.get())
+                .add(MRItemInit.AMETHYST_SOUL_RUNE_ITEM.get())
+                .add(MRItemInit.AMETHYST_ORDER_RUNE_ITEM.get())
+                .add(MRItemInit.AMETHYST_ENTROPY_RUNE_ITEM.get())
                 .add(MRItemInit.RUNE_BRACELET_ITEM.get());
 
         this.tag(MRTagInit.MAGICAL_LOOT_ITEMS)

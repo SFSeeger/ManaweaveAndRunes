@@ -6,6 +6,7 @@ import io.github.sfseeger.lib.common.mana.Mana;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRRecipeInit;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
@@ -70,5 +71,10 @@ public record ManaConcentratorRecipe(Tier tier, List<Ingredient> inputs, Map<Man
         return this.manaMap.entrySet().stream()
                 .map(entry -> Pair.of(entry.getKey().registryHolder(), entry.getValue()))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public NonNullList<Ingredient> getIngredients() {
+        return inputs.stream().collect(Collectors.toCollection(NonNullList::create));
     }
 }

@@ -1,0 +1,15 @@
+{
+  "name": "The Spell Designer",
+  "icon": "manaweave_and_runes:spell_designer",
+  "category": "manaweave_and_runes:spell_casting_category",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A spell designer can be used to create spells by placing spell parts in a spell circle. A spell consists of at least one effect and a spell type (e.g. touch or projectile). An effect or type can be upgraded by placing the effect in the center and modifiers around it. Spells are read from the center outward and should follow the pattern type > effect/modifier > modifier"
+    },
+    {
+      "type": "manaweave_and_runes:mana_concentration",
+      "recipe": "manaweave_and_runes:mana_concentrator/spell_designer"
+    }
+  ]
+}

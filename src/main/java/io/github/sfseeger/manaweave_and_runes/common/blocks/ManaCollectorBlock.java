@@ -1,5 +1,6 @@
 package io.github.sfseeger.manaweave_and_runes.common.blocks;
 
+import io.github.sfseeger.lib.common.Tier;
 import io.github.sfseeger.lib.common.blocks.ManaNetworkBlock;
 import io.github.sfseeger.manaweave_and_runes.common.blockentities.ManaCollectorBlockEntity;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRBlockEntityInit;
@@ -66,6 +67,10 @@ public class ManaCollectorBlock extends ManaNetworkBlock implements EntityBlock 
     @Override
     public @Nullable BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
         return new ManaCollectorBlockEntity(blockPos, blockState);
+    }
+
+    public Tier getTier() {
+        return Tier.NOVICE;
     }
 
     @Override

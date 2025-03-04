@@ -1,10 +1,16 @@
 {
   "initialItemCost": [
     {
-      "item": "minecraft:gold_ingot"
+      "item": "minecraft:golden_apple"
     },
     {
       "item": "minecraft:iron_sword"
+    },
+    {
+      "item": "minecraft:wind_charge"
+    },
+    {
+      "item": "minecraft:gold_ingot"
     }
   ],
   "manaCost": [

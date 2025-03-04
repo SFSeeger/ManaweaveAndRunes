@@ -1,0 +1,24 @@
+{
+  "processor": "io.github.sfseeger.lib.client.patchouli.RitualComponentProcessor",
+  "components": [
+    {
+      "type": "patchouli:header",
+      "text": "#ritual_name",
+      "x": -1,
+      "y": -1
+    },
+    {
+      "type": "patchouli:separator",
+      "x": -1,
+      "y": -1
+    },
+    {
+      "type": "patchouli:custom",
+      "class": "io.github.sfseeger.lib.client.patchouli.RitualDisplayComponents",
+      "ritual": "#ritual",
+      "guard": "#mana_type1->exists",
+      "x": 50,
+      "y": 55
+    }
+  ]
+}

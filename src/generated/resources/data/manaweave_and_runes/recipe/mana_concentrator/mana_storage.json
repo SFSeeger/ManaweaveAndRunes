@@ -1,0 +1,41 @@
+{
+  "type": "manaweave_and_runes:mana_concentrator",
+  "craftTime": 100,
+  "inputs": [
+    {
+      "item": "minecraft:gold_block"
+    },
+    {
+      "item": "minecraft:amethyst_block"
+    },
+    {
+      "tag": "manaweave_and_runes:spell_mana_provider"
+    },
+    {
+      "tag": "manaweave_and_runes:spell_mana_provider"
+    }
+  ],
+  "manaMap": [
+    {
+      "amount": 500,
+      "manaType": "manaweave_and_runes:fire_mana"
+    },
+    {
+      "amount": 500,
+      "manaType": "manaweave_and_runes:earth_mana"
+    },
+    {
+      "amount": 500,
+      "manaType": "manaweave_and_runes:air_mana"
+    },
+    {
+      "amount": 500,
+      "manaType": "manaweave_and_runes:water_mana"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "manaweave_and_runes:mana_storage"
+  },
+  "tier": "NOVICE"
+}

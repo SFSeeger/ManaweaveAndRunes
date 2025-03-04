@@ -1,0 +1,24 @@
+{
+  "type": "manaweave_and_runes:mana_concentrator",
+  "craftTime": 100,
+  "inputs": [
+    {
+      "tag": "minecraft:wool"
+    },
+    {
+      "item": "minecraft:crafting_table"
+    },
+    {
+      "item": "minecraft:amethyst_shard"
+    },
+    {
+      "item": "minecraft:stone_bricks"
+    }
+  ],
+  "manaMap": [],
+  "result": {
+    "count": 1,
+    "id": "manaweave_and_runes:runewrought_bench"
+  },
+  "tier": "NOVICE"
+}

@@ -9,10 +9,13 @@ import io.github.sfseeger.lib.datagen.recipes.RuneCarverRecipeBuilder;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRBlockInit;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRItemInit;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRTagInit;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -90,6 +93,139 @@ public class MRRecipeProvider extends RecipeProvider {
                 .addMana(Manas.FireMana, 80)
                 .addMana(Manas.AirMana, 80)
                 .save(recipeOutput);
+
+        new ManaConcentratorRecipeBuilder.Builder(MRBlockInit.SPELL_DESIGNER_BLOCK)
+                .setTier(Tier.NOVICE)
+                .setCraftTime(100)
+                .addInput(Ingredient.of(Items.GOLD_INGOT))
+                .addInput(Ingredient.of(Blocks.ENCHANTING_TABLE))
+                .addInput(Ingredient.of(Items.DIAMOND))
+                .addInput(Ingredient.of(Blocks.STONE_BRICKS))
+                .addMana(Manas.OrderMana, 50)
+                .addMana(Manas.SoulMana, 50)
+                .addMana(Manas.VoidMana, 50)
+                .save(recipeOutput);
+
+        new ManaConcentratorRecipeBuilder.Builder(MRBlockInit.RUNEWROUGHT_BENCH_BLOCK.get())
+                .setTier(Tier.NOVICE)
+                .setCraftTime(100)
+                .addInput(Ingredient.of(ItemTags.WOOL))
+                .addInput(Ingredient.of(Blocks.CRAFTING_TABLE))
+                .addInput(Ingredient.of(Items.AMETHYST_SHARD))
+                .addInput(Ingredient.of(Blocks.STONE_BRICKS))
+                .save(recipeOutput);
+
+        new ManaConcentratorRecipeBuilder.Builder(MRBlockInit.MANA_STORAGE_BLOCK)
+                .setTier(Tier.NOVICE)
+                .setCraftTime(100)
+                .addInput(Ingredient.of(Items.GOLD_BLOCK))
+                .addInput(Ingredient.of(Items.AMETHYST_BLOCK))
+                .addInput(Ingredient.of(MRTagInit.SPELL_MANA_PROVIDER))
+                .addInput(Ingredient.of(MRTagInit.SPELL_MANA_PROVIDER))
+                .addMana(Manas.FireMana, 500)
+                .addMana(Manas.AirMana, 500)
+                .addMana(Manas.EarthMana, 500)
+                .addMana(Manas.WaterMana, 500)
+                .save(recipeOutput);
+
+        new ManaConcentratorRecipeBuilder.Builder(BuiltInRegistries.ITEM.get(
+                ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "spell_type.self")))
+                .setTier(Tier.NOVICE)
+                .setCraftTime(250)
+                .addInput(Ingredient.of(MRItemInit.SOUL_CONTAINER_RUNE_ITEM))
+                .addInput(Ingredient.of(Items.PAPER))
+                .addMana(Manas.SoulMana, 100)
+                .addMana(Manas.OrderMana, 100)
+                .save(recipeOutput);
+        new ManaConcentratorRecipeBuilder.Builder(BuiltInRegistries.ITEM.get(
+                ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "spell_type.touch")))
+                .setTier(Tier.NOVICE)
+                .setCraftTime(250)
+                .addInput(Ingredient.of(MRItemInit.POSITION_RUNE_ITEM))
+                .addInput(Ingredient.of(Items.FIRE_CHARGE))
+                .addMana(Manas.EarthMana, 300)
+                .addMana(Manas.VoidMana, 300)
+                .save(recipeOutput);
+        new ManaConcentratorRecipeBuilder.Builder(BuiltInRegistries.ITEM.get(
+                ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "spell_type.projectile")))
+                .setTier(Tier.NOVICE)
+                .setCraftTime(250)
+                .addInput(Ingredient.of(Items.FIREWORK_ROCKET))
+                .addInput(Ingredient.of(Items.ARROW))
+                .addInput(Ingredient.of(Items.BOW))
+                .addMana(Manas.AirMana, 300)
+                .addMana(Manas.EntropyMana, 300)
+                .save(recipeOutput);
+        new ManaConcentratorRecipeBuilder.Builder(BuiltInRegistries.ITEM.get(
+                ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "spell_effect.burn")))
+                .setTier(Tier.NOVICE)
+                .setCraftTime(250)
+                .addInput(Ingredient.of(MRItemInit.POSITION_RUNE_ITEM))
+                .addInput(Ingredient.of(Items.FIRE_CHARGE))
+                .addMana(Manas.FireMana, 300)
+                .addMana(Manas.OrderMana, 300)
+                .save(recipeOutput);
+
+        new ManaConcentratorRecipeBuilder.Builder(BuiltInRegistries.ITEM.get(
+                ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "spell_effect.heal")))
+                .setTier(Tier.MASTER)
+                .setCraftTime(300)
+                //.addInput(new PotionIngredient(PotionIngredient.PotionType.NORMAL, List.of(Potions.STRONG_HEALING)).toVanilla())
+                .addInput(Ingredient.of(Items.GOLDEN_APPLE))
+                .addInput(Ingredient.of(Items.DIAMOND))
+                .addInput(Ingredient.of(MRItemInit.TANZANITE))
+                .addMana(Manas.SoulMana, 300)
+                .addMana(Manas.OrderMana, 300)
+                .save(recipeOutput);
+
+        new ManaConcentratorRecipeBuilder.Builder(BuiltInRegistries.ITEM.get(
+                ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "spell_effect.harm")))
+                .setTier(Tier.MASTER)
+                .setCraftTime(300)
+                //.addInput(new PotionIngredient(PotionIngredient.PotionType.NORMAL, List.of(Potions.STRONG_HARMING)).toVanilla())
+                .addInput(Ingredient.of(Items.DIAMOND_SWORD))
+                .addInput(Ingredient.of(Items.REDSTONE))
+                .addInput(Ingredient.of(MRItemInit.TANZANITE))
+                .addMana(Manas.SoulMana, 300)
+                .addMana(Manas.VoidMana, 300)
+                .save(recipeOutput);
+
+        new ManaConcentratorRecipeBuilder.Builder(BuiltInRegistries.ITEM.get(
+                ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "spell_effect.break")))
+                .setTier(Tier.MASTER)
+                .setCraftTime(300)
+                .addInput(Ingredient.of(Items.DIAMOND_PICKAXE))
+                .addInput(Ingredient.of(Items.DIAMOND_SHOVEL))
+                .addInput(Ingredient.of(Items.DIAMOND_AXE))
+                .addInput(Ingredient.of(MRItemInit.TANZANITE))
+                .addInput(Ingredient.of(MRItemInit.AMETHYST_BASE_RUNE))
+                .addMana(Manas.EarthMana, 300)
+                .addMana(Manas.VoidMana, 300)
+                .save(recipeOutput);
+
+        new ManaConcentratorRecipeBuilder.Builder(BuiltInRegistries.ITEM.get(
+                ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "spell_modifier.widen")))
+                .setTier(Tier.MASTER)
+                .setCraftTime(300)
+                .addInput(Ingredient.of(Items.PISTON))
+                .addInput(Ingredient.of(Items.PISTON))
+                .addInput(Ingredient.of(Items.LEVER))
+                .addInput(Ingredient.of(MRItemInit.TANZANITE))
+                .addMana(Manas.OrderMana, 300)
+                .addMana(Manas.WaterMana, 300)
+                .save(recipeOutput);
+
+        new ManaConcentratorRecipeBuilder.Builder(BuiltInRegistries.ITEM.get(
+                ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "spell_modifier.elongate")))
+                .setTier(Tier.MASTER)
+                .setCraftTime(300)
+                .addInput(Ingredient.of(Items.PISTON))
+                .addInput(Ingredient.of(Items.PISTON))
+                .addInput(Ingredient.of(Items.WIND_CHARGE))
+                .addInput(Ingredient.of(MRItemInit.TANZANITE))
+                .addMana(Manas.OrderMana, 300)
+                .addMana(Manas.WaterMana, 300)
+                .save(recipeOutput);
     }
 
     private void makeManaInfusedRockRecipe(RecipeOutput recipeOutput, DeferredBlock<Block> block, Ingredient ingredient,
@@ -109,20 +245,21 @@ public class MRRecipeProvider extends RecipeProvider {
         new RuneCarverRecipeBuilder(itemStackFromRegistry(MRItemInit.AMETHYST_FIRE_RUNE_ITEM),
                                     Ingredient.of(MRItemInit.DIAMOND_CHISEL.asItem()),
                                     Ingredient.of(MRItemInit.AMETHYST_BASE_RUNE.asItem()),
-                                    Ingredient.of(MRItemInit.AIR_RUNE_CARVING_TEMPLATE))
+                                    Ingredient.of(MRItemInit.FIRE_RUNE_CARVING_TEMPLATE))
                 .unlockedBy("has_fire_rune_template", has(MRItemInit.FIRE_RUNE_CARVING_TEMPLATE.asItem()))
                 .save(recipeOutput);
         new RuneCarverRecipeBuilder(itemStackFromRegistry(MRItemInit.AMETHYST_AIR_RUNE_ITEM),
                                     Ingredient.of(MRItemInit.DIAMOND_CHISEL.asItem()),
                                     Ingredient.of(MRItemInit.AMETHYST_BASE_RUNE.asItem()),
-                                    Ingredient.of(MRItemInit.FIRE_RUNE_CARVING_TEMPLATE))
+                                    Ingredient.of(MRItemInit.AIR_RUNE_CARVING_TEMPLATE))
                 .unlockedBy("has_air_rune_template", has(MRItemInit.AIR_RUNE_CARVING_TEMPLATE.asItem()))
                 .save(recipeOutput);
         new RuneCarverRecipeBuilder(itemStackFromRegistry(MRItemInit.AMETHYST_EARTH_RUNE_ITEM),
                                     Ingredient.of(MRItemInit.DIAMOND_CHISEL.asItem()),
                                     Ingredient.of(MRItemInit.AMETHYST_BASE_RUNE.asItem()),
                                     Ingredient.of(MRItemInit.EARTH_RUNE_CARVING_TEMPLATE))
-                .unlockedBy("has_earth_template", has(MRItemInit.EARTH_RUNE_CARVING_TEMPLATE.asItem()));
+                .unlockedBy("has_earth_template", has(MRItemInit.EARTH_RUNE_CARVING_TEMPLATE.asItem()))
+                .save(recipeOutput);
         new RuneCarverRecipeBuilder(itemStackFromRegistry(MRItemInit.AMETHYST_WATER_RUNE_ITEM),
                                     Ingredient.of(MRItemInit.DIAMOND_CHISEL.asItem()),
                                     Ingredient.of(MRItemInit.AMETHYST_BASE_RUNE.asItem()),
@@ -279,12 +416,24 @@ public class MRRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_tanzanite", has(MRItemInit.TANZANITE))
                 .save(recipeOutput);
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, MRBlockInit.NOVICE_MANA_COLLECTOR)
+                .pattern("GGG")
+                .pattern("W W")
+                .pattern("SAS")
+                .define('G', Items.GOLD_INGOT)
+                .define('W', ItemTags.PLANKS)
+                .define('S', Items.STONE_BRICKS)
+                .define('A', Items.AMETHYST_BLOCK)
+                .unlockedBy("has_gold", has(Items.GOLD_INGOT))
+                .save(recipeOutput);
+
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, PatchouliAPI.get()
                         .getBookStack(ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "manaweavers_guide")))
                 .requires(Items.BOOK)
                 .requires(Items.AMETHYST_SHARD)
                 .unlockedBy("has_amethyst", has(Items.AMETHYST_SHARD))
                 .save(recipeOutput);
+
     }
 
     private void makeTemplateRecipe(RecipeOutput recipeOutput, DeferredItem<RuneCarvingTemplate> template,

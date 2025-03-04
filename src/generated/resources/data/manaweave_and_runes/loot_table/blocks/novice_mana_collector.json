@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "manaweave_and_runes:mana_collector"
+          "name": "manaweave_and_runes:novice_mana_collector"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "manaweave_and_runes:blocks/mana_collector"
+  "random_sequence": "manaweave_and_runes:blocks/novice_mana_collector"
 }

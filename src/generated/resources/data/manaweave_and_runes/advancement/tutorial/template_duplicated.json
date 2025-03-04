@@ -1,0 +1,78 @@
+{
+  "parent": "manaweave_and_runes:tutorial/template_found",
+  "criteria": {
+    "made_air_template": {
+      "conditions": {
+        "recipe_id": "manaweave_and_runes:air_rune_carving_template"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    },
+    "made_earth_template": {
+      "conditions": {
+        "recipe_id": "manaweave_and_runes:earth_rune_carving_template"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    },
+    "made_entropy_template": {
+      "conditions": {
+        "recipe_id": "manaweave_and_runes:entropy_rune_carving_template"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    },
+    "made_fire_template": {
+      "conditions": {
+        "recipe_id": "manaweave_and_runes:fire_rune_carving_template"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    },
+    "made_order_template": {
+      "conditions": {
+        "recipe_id": "manaweave_and_runes:order_rune_carving_template"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    },
+    "made_soul_template": {
+      "conditions": {
+        "recipe_id": "manaweave_and_runes:soul_rune_carving_template"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    },
+    "made_void_template": {
+      "conditions": {
+        "recipe_id": "manaweave_and_runes:void_rune_carving_template"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    },
+    "made_water_template": {
+      "conditions": {
+        "recipe_id": "manaweave_and_runes:water_rune_carving_template"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.manaweave_and_runes.tutorial.template_duplicated.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "manaweave_and_runes:fire_rune_carving_template"
+    },
+    "title": {
+      "translate": "advancements.manaweave_and_runes.tutorial.template_duplicated.title"
+    }
+  },
+  "requirements": [
+    [
+      "made_fire_template",
+      "made_air_template",
+      "made_earth_template",
+      "made_water_template",
+      "made_void_template",
+      "made_soul_template",
+      "made_order_template",
+      "made_entropy_template"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

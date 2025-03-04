@@ -21,7 +21,7 @@ public class MRBlockTagsProvider extends BlockTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider provider) {
         this.tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                .add(MRBlockInit.MANA_COLLECTOR_BLOCK.get())
+                .add(MRBlockInit.NOVICE_MANA_COLLECTOR.get())
                 .add(MRBlockInit.MANA_STORAGE_BLOCK.get())
                 .add(MRBlockInit.NOVICE_MANA_CONCENTRATOR_BLOCK.get())
                 .add(MRBlockInit.MASTER_MANA_CONCENTRATOR_BLOCK.get())
@@ -55,7 +55,7 @@ public class MRBlockTagsProvider extends BlockTagsProvider {
                 .add(MRBlockInit.RUNE_PEDESTAL_BLOCK.get());
 
         this.tag(BlockTags.NEEDS_IRON_TOOL)
-                .add(MRBlockInit.MANA_COLLECTOR_BLOCK.get())
+                .add(MRBlockInit.NOVICE_MANA_COLLECTOR.get())
                 .add(MRBlockInit.MANA_STORAGE_BLOCK.get())
                 .add(MRBlockInit.NOVICE_MANA_CONCENTRATOR_BLOCK.get())
                 .add(MRBlockInit.MASTER_MANA_CONCENTRATOR_BLOCK.get())

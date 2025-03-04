@@ -1,0 +1,27 @@
+{
+  "type": "manaweave_and_runes:mana_concentrator",
+  "craftTime": 250,
+  "inputs": [
+    {
+      "item": "manaweave_and_runes:soul_container_rune"
+    },
+    {
+      "item": "minecraft:paper"
+    }
+  ],
+  "manaMap": [
+    {
+      "amount": 100,
+      "manaType": "manaweave_and_runes:soul_mana"
+    },
+    {
+      "amount": 100,
+      "manaType": "manaweave_and_runes:order_mana"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "manaweave_and_runes:spell_type.self"
+  },
+  "tier": "NOVICE"
+}

@@ -1,0 +1,110 @@
+{
+  "parent": "manaweave_and_runes:tutorial/manaweavers_guide",
+  "criteria": {
+    "has_air_template": {
+      "conditions": {
+        "items": [
+          {
+            "items": "manaweave_and_runes:air_rune_carving_template"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_earth_template": {
+      "conditions": {
+        "items": [
+          {
+            "items": "manaweave_and_runes:earth_rune_carving_template"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_entropy_template": {
+      "conditions": {
+        "items": [
+          {
+            "items": "manaweave_and_runes:entropy_rune_carving_template"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_fire_template": {
+      "conditions": {
+        "items": [
+          {
+            "items": "manaweave_and_runes:fire_rune_carving_template"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_order_template": {
+      "conditions": {
+        "items": [
+          {
+            "items": "manaweave_and_runes:order_rune_carving_template"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_soul_template": {
+      "conditions": {
+        "items": [
+          {
+            "items": "manaweave_and_runes:soul_rune_carving_template"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_void_template": {
+      "conditions": {
+        "items": [
+          {
+            "items": "manaweave_and_runes:void_rune_carving_template"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_water_template": {
+      "conditions": {
+        "items": [
+          {
+            "items": "manaweave_and_runes:water_rune_carving_template"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.manaweave_and_runes.tutorial.template_found.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "manaweave_and_runes:rune_block_carving_template"
+    },
+    "title": {
+      "translate": "advancements.manaweave_and_runes.tutorial.template_found.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_fire_template",
+      "has_air_template",
+      "has_earth_template",
+      "has_water_template",
+      "has_void_template",
+      "has_soul_template",
+      "has_order_template",
+      "has_entropy_template"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -72,8 +72,8 @@ public class MRBlockInit {
     public static final DeferredBlock<Block> MANA_GENERATOR_BLOCK =
             registerBlock("mana_generator", ManaGeneratorBlock::new);
 
-    public static final DeferredBlock<Block> MANA_COLLECTOR_BLOCK =
-            registerBlock("mana_collector", ManaCollectorBlock::new);
+    public static final DeferredBlock<Block> NOVICE_MANA_COLLECTOR =
+            registerBlock("novice_mana_collector", ManaCollectorBlock::new);
 
     public static final DeferredBlock<Block> MANA_STORAGE_BLOCK =
             registerBlock("mana_storage", ManaStorageBlock::new);

@@ -1,0 +1,34 @@
+{
+  "initialItemCost": [
+    {
+      "item": "minecraft:lightning_rod"
+    },
+    {
+      "item": "minecraft:blaze_rod"
+    },
+    {
+      "item": "manaweave_and_runes:position_rune"
+    }
+  ],
+  "itemRate": 20,
+  "manaCost": [
+    {
+      "amount": 10,
+      "manaType": "manaweave_and_runes:earth_mana"
+    },
+    {
+      "amount": 8,
+      "manaType": "manaweave_and_runes:order_mana"
+    },
+    {
+      "amount": 1,
+      "manaType": "manaweave_and_runes:water_mana"
+    }
+  ],
+  "manaRate": 20,
+  "tickItemCost": [
+    {
+      "item": "minecraft:blaze_powder"
+    }
+  ]
+}

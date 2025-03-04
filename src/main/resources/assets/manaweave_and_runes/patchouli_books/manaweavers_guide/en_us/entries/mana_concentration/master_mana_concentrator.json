@@ -5,7 +5,15 @@
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "Some recipes require larger and more powerful concentration. For that, an upgrade is needed"
+      "text": "A grand refinement of its predecessor, the Master Mana Concentrator allows for the infusion of greater magical constructs, channeling vast streams of mana into raw materials. Unlike the simpler concentrator, this device requires a more elaborate structure to stabilize the flow of energy, ensuring the infusion process remains controlled and efficient. $(2br)Operation remains familiar—items must be placed upon designated pedestals, while storage runes are fed directly into the core. With a command from the Mana Weaver’s Wand, the concentrator draws in mana, weaving it through the materials over time until they dissolve, their essence reforged into a powerful creation. The completed artifact is then expelled atop the device, infused with deeper arcane potential than before. "
+    },
+    {
+      "type": "patchouli:text",
+      "text": "With its expanded capacity, the Master Mana Concentrator is essential for crafting advanced magical components, constructs, and tools. Mastery of its workings opens the door to crafting that surpasses conventional enchantments, laying the foundation for true arcane innovation."
+    },
+    {
+      "type": "manaweave_and_runes:mana_concentration",
+      "recipe": "manaweave_and_runes:mana_concentrator/master_mana_concentrator"
     },
     {
       "type": "patchouli:multiblock",

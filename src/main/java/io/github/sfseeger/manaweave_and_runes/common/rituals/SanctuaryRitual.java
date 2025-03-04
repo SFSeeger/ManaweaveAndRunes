@@ -3,6 +3,7 @@ package io.github.sfseeger.manaweave_and_runes.common.rituals;
 import io.github.sfseeger.lib.common.Tier;
 import io.github.sfseeger.lib.common.rituals.Ritual;
 import io.github.sfseeger.lib.common.rituals.RitualStepResult;
+import io.github.sfseeger.lib.common.rituals.RitualUtils;
 import io.github.sfseeger.lib.common.rituals.ritual_data.RitualContext;
 import io.github.sfseeger.manaweave_and_runes.client.particles.mana_particle.ManaParticleOptions;
 import io.github.sfseeger.manaweave_and_runes.core.util.ParticleUtils;
@@ -22,6 +23,8 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
+
+import static io.github.sfseeger.manaweave_and_runes.common.MRDamageTypes.createRitualFailure;
 
 public class SanctuaryRitual extends Ritual {
     public SanctuaryRitual() {
@@ -84,7 +87,14 @@ public class SanctuaryRitual extends Ritual {
     @Override
     public void onRitualInterrupt(Level level, BlockPos pos, BlockState state, RitualContext context,
             RitualOriginType originType) {
-
+        RitualUtils.getStartingPlayer(level, context).ifPresent(player -> {
+            player.removeEffect(MobEffects.ABSORPTION);
+            player.removeEffect(MobEffects.DAMAGE_RESISTANCE);
+            player.addEffect(new MobEffectInstance(MobEffects.WITHER, 100, 2, false, true));
+            player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 200, 1, false, true));
+            player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 200, 1, false, true));
+            player.hurt(createRitualFailure(level, pos), 4);
+        });
     }
 
     protected void addEffectToPlayer(Player player) {

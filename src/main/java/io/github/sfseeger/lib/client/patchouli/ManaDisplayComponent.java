@@ -16,11 +16,11 @@ import java.util.function.UnaryOperator;
 
 public class ManaDisplayComponent implements ICustomComponent {
     private transient int x, y;
-    private String mana;
-    private String amount;
-
     private transient Mana manaType;
     private transient Number manaAmount;
+
+    private String mana;
+    private String amount;
 
     @Override
     public void build(int componentX, int componentY, int pageNum) {

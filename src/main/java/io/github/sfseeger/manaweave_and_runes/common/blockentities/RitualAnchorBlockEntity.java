@@ -314,8 +314,12 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
 
     public boolean checkAndStartRitual(Level level, Player player, ItemStack stack) {
         //TODO: Check if all required extra data is provided
-        if (getState() != RitualState.IDLE || !stack.is(MRItemInit.MANA_WEAVER_WAND_ITEM)) {
+        if (!stack.is(MRItemInit.MANA_WEAVER_WAND_ITEM)) {
             return false;
+        }
+        if (getState() != RitualState.IDLE) {
+            transition(RitualStepResult.END);
+            return true;
         }
 
         List<ItemStack> items = new ArrayList<>();

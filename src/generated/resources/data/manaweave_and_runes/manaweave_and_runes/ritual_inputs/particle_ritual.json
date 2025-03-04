@@ -7,11 +7,13 @@
       "item": "minecraft:feather"
     }
   ],
-  "tickItemCost": [],
+  "itemRate": 20,
   "manaCost": [
     {
       "amount": 10,
       "manaType": "manaweave_and_runes:air_mana"
     }
-  ]
+  ],
+  "manaRate": 20,
+  "tickItemCost": []
 }

@@ -24,21 +24,31 @@ public class MRLootModifierProvider extends GlobalLootModifierProvider {
     @Override
     protected void start() {
         addTemplate(MRItemInit.FIRE_RUNE_CARVING_TEMPLATE, 0.35f, ResourceLocation.parse("chests/ruined_portal"));
-        addTemplate(MRItemInit.FIRE_RUNE_CARVING_TEMPLATE, 0.2f, ResourceLocation.parse("chests/nether_bridge"));
+        addTemplate(MRItemInit.FIRE_RUNE_CARVING_TEMPLATE, 0.5f, ResourceLocation.parse("chests/nether_bridge"));
 
         addTemplate(MRItemInit.AIR_RUNE_CARVING_TEMPLATE, 0.15f, ResourceLocation.parse("chests/jungle_temple"));
+        addTemplate(MRItemInit.AIR_RUNE_CARVING_TEMPLATE, 0.7f,
+                    ResourceLocation.parse("chests/trial_chambers/corridor"));
+        addTemplate(MRItemInit.AIR_RUNE_CARVING_TEMPLATE, 0.4f,
+                    ResourceLocation.parse("chests/trial_chambers/entrance"));
+        addTemplate(MRItemInit.AIR_RUNE_CARVING_TEMPLATE, 0.7f,
+                    ResourceLocation.parse("chests/trial_chambers/corridor"));
+        addTemplate(MRItemInit.AIR_RUNE_CARVING_TEMPLATE, 0.6f, ResourceLocation.parse("chests/trial_chambers/reward"));
 
         addTemplate(MRItemInit.EARTH_RUNE_CARVING_TEMPLATE, 0.2f, ResourceLocation.parse("chests/desert_pyramid"));
         addTemplate(MRItemInit.EARTH_RUNE_CARVING_TEMPLATE, 0.6f, ResourceLocation.parse("chests/jungle_temple"));
+        addTemplate(MRItemInit.EARTH_RUNE_CARVING_TEMPLATE, 0.35f, ResourceLocation.parse("chests/buried_treasure"));
+        addTemplate(MRItemInit.EARTH_RUNE_CARVING_TEMPLATE, 0.6f, ResourceLocation.parse("chests/woodland_mansion"));
+
 
         addTemplate(MRItemInit.WATER_RUNE_CARVING_TEMPLATE, 0.7f, ResourceLocation.parse("chests/buried_treasure"));
         addTemplate(MRItemInit.WATER_RUNE_CARVING_TEMPLATE, 0.7f, ResourceLocation.parse("chests/underwater_ruin_big"));
-        addTemplate(MRItemInit.WATER_RUNE_CARVING_TEMPLATE, 0.3f,
+        addTemplate(MRItemInit.WATER_RUNE_CARVING_TEMPLATE, 0.4f,
                     ResourceLocation.parse("chests/underwater_ruin_small"));
 
         addTemplate(MRItemInit.VOID_RUNE_CARVING_TEMPLATE, 0.14f, ResourceLocation.parse("chests/stronghold_corridor"));
-        addTemplate(MRItemInit.VOID_RUNE_CARVING_TEMPLATE, 0.3f, ResourceLocation.parse("chests/stronghold_crossing"));
-        addTemplate(MRItemInit.VOID_RUNE_CARVING_TEMPLATE, 0.4f, ResourceLocation.parse("chests/ancient_city"));
+        addTemplate(MRItemInit.VOID_RUNE_CARVING_TEMPLATE, 0.6f, ResourceLocation.parse("chests/stronghold_crossing"));
+        addTemplate(MRItemInit.VOID_RUNE_CARVING_TEMPLATE, 0.5f, ResourceLocation.parse("chests/ancient_city"));
 
         addTemplate(MRItemInit.SOUL_RUNE_CARVING_TEMPLATE, 0.8f, ResourceLocation.parse("chests/woodland_mansion"));
         addTemplate(MRItemInit.SOUL_RUNE_CARVING_TEMPLATE, 0.7f, ResourceLocation.parse("chests/ancient_city"));
