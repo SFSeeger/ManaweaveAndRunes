@@ -1,0 +1,30 @@
+{
+  "type": "manaweave_and_runes:mana_concentrator",
+  "craftTime": 300,
+  "inputs": [
+    {
+      "item": "minecraft:golden_apple"
+    },
+    {
+      "item": "minecraft:diamond"
+    },
+    {
+      "item": "manaweave_and_runes:tanzanite"
+    }
+  ],
+  "manaMap": [
+    {
+      "amount": 300,
+      "manaType": "manaweave_and_runes:soul_mana"
+    },
+    {
+      "amount": 300,
+      "manaType": "manaweave_and_runes:order_mana"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "manaweave_and_runes:spell_effect.heal"
+  },
+  "tier": "MASTER"
+}

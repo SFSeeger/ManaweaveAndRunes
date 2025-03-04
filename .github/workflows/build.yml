@@ -20,8 +20,16 @@ jobs:
 
       - name: Check version numbers
         run: |
+          TAG_REF=${GITHUB_REF#refs/tags/}
+          echo "TAG_REF=$TAG_REF" >> "$GITHUB_ENV"
           chmod +x $GITHUB_WORKSPACE/version-check.sh
-          bash -c $GITHUB_WORKSPACE/version-check.sh
+          $GITHUB_WORKSPACE/version-check.sh $TAG_REF
+          {
+            echo "CHANGELOG<<EOF"
+            echo "## What is new in ${TAG_REF}"
+            sed -n "/^##.*${TAG_REF}/,/^##/ { /^##.*${TAG_REF}/d; /^##/!p; }" $GITHUB_WORKSPACE/CHANGELOG.md
+            echo EOF
+          } >> "$GITHUB_ENV"
 
       - name: Setup JDK 17
         uses: actions/setup-java@v4
@@ -39,8 +47,24 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
-            build/libs/*.jar
+            build/libs/manaweave_and_runes-${{ env.TAG_REF }}.jar
             LICENSE.txt
-          body_path: CHANGELOG.md
+          body: ${{ env.CHANGELOG }}
           make_latest: true
           fail_on_unmatched_files: true
+
+      - name: Setup Json Payload
+        run: |
+          echo 'JSON_PAYLOAD={"project_id":"${{ vars.modrinth_project_id }}","loaders":["neoforge"],"game_versions":["1.21.1"],"version_title":"Manaweave and Runes ${{ env.TAG_REF }}","version_number":"${{ env.TAG_REF }}","file_parts":["jar"],"primary_file":"jar","changelog":${{ toJson(env.CHANGELOG) }},"dependencies":[{"project_id":"8BmcQJ2H","dependency_type":"required"},{"project_id":"nU0bVIaL","dependency_type":"required"}],"version_type":"release","featured":true,"status":"listed"}' >> "$GITHUB_ENV"
+
+
+      - name: Upload artifact to modrinth
+        uses: fjogeleit/http-request-action@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          url: 'https://api.modrinth.com/v2/version'
+          method: 'POST'
+          customHeaders: '{"Authorization": "${{ secrets.MODRINTH_API_KEY }}"}'
+          contentType: 'multipart/form-data'
+          data: '{"data": ${{ toJson(env.JSON_PAYLOAD) }}}'
+          files: '{"jar": "${{ github.workspace }}/build/libs/manaweave_and_runes-${{ env.TAG_REF }}.jar"}'

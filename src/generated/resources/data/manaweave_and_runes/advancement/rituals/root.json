@@ -1,4 +1,5 @@
 {
+  "parent": "manaweave_and_runes:root",
   "criteria": {
     "pickup_novice_ritual_anchor": {
       "conditions": {
@@ -12,7 +13,6 @@
     }
   },
   "display": {
-    "background": "manaweave_and_runes:textures/blocks/rune_block_inactive",
     "description": {
       "translate": "advancements.manaweave_and_runes.ritual_anchor.description"
     },

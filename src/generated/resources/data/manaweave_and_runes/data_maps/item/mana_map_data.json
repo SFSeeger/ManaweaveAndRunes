@@ -3,12 +3,12 @@
     "#minecraft:terracotta": {
       "mana": [
         {
-          "amount": 4,
-          "manaType": "manaweave_and_runes:fire_mana"
-        },
-        {
           "amount": 2,
           "manaType": "manaweave_and_runes:air_mana"
+        },
+        {
+          "amount": 4,
+          "manaType": "manaweave_and_runes:fire_mana"
         }
       ]
     },
@@ -143,12 +143,12 @@
     "minecraft:flint_and_steel": {
       "mana": [
         {
-          "amount": 35,
-          "manaType": "manaweave_and_runes:fire_mana"
-        },
-        {
           "amount": 12,
           "manaType": "manaweave_and_runes:entropy_mana"
+        },
+        {
+          "amount": 35,
+          "manaType": "manaweave_and_runes:fire_mana"
         }
       ]
     },
@@ -191,12 +191,12 @@
     "minecraft:grass_block": {
       "mana": [
         {
-          "amount": 5,
-          "manaType": "manaweave_and_runes:earth_mana"
-        },
-        {
           "amount": 3,
           "manaType": "manaweave_and_runes:water_mana"
+        },
+        {
+          "amount": 5,
+          "manaType": "manaweave_and_runes:earth_mana"
         }
       ]
     },
@@ -255,12 +255,12 @@
     "minecraft:magma_cream": {
       "mana": [
         {
-          "amount": 30,
-          "manaType": "manaweave_and_runes:fire_mana"
-        },
-        {
           "amount": 15,
           "manaType": "manaweave_and_runes:water_mana"
+        },
+        {
+          "amount": 30,
+          "manaType": "manaweave_and_runes:fire_mana"
         }
       ]
     },
@@ -287,12 +287,12 @@
     "minecraft:netherite_ingot": {
       "mana": [
         {
-          "amount": 200,
-          "manaType": "manaweave_and_runes:entropy_mana"
-        },
-        {
           "amount": 80,
           "manaType": "manaweave_and_runes:fire_mana"
+        },
+        {
+          "amount": 200,
+          "manaType": "manaweave_and_runes:entropy_mana"
         }
       ]
     },
@@ -356,11 +356,11 @@
       "mana": [
         {
           "amount": 3,
-          "manaType": "manaweave_and_runes:water_mana"
+          "manaType": "manaweave_and_runes:air_mana"
         },
         {
           "amount": 3,
-          "manaType": "manaweave_and_runes:air_mana"
+          "manaType": "manaweave_and_runes:water_mana"
         }
       ]
     },

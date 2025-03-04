@@ -53,7 +53,11 @@ import static io.github.sfseeger.lib.common.LibUtils.encode;
 import static io.github.sfseeger.lib.common.ManaweaveAndRunesCodecs.BLOCK_POS_LIST_CODEC;
 
 public class ManaConcentratorBlockEntity extends BlockEntity implements IInventoryBlockEntity, GeoBlockEntity {
-    protected static final RawAnimation DEPLOY_ANIMATION = RawAnimation.begin().thenLoop("idle");
+    protected static final RawAnimation DEPLOY_ANIMATION = RawAnimation.begin().thenLoop("idle_inactive");
+    protected static final RawAnimation ACTIVATION_ANIMATION =
+            RawAnimation.begin().thenPlay("activate").thenLoop("idle");
+    private static final RawAnimation IDLE_ACTIVE = RawAnimation.begin().thenLoop("idle");
+    private static final RawAnimation DEACTIVATION_ANIMATION = RawAnimation.begin().thenLoop("idle_inactive");
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private boolean isActive;
     public ItemStackHandler inventory = new ItemStackHandler(10) { // TODO: Replace with config value
@@ -86,9 +90,19 @@ public class ManaConcentratorBlockEntity extends BlockEntity implements IInvento
     public static void serverTick(Level level, BlockPos pos, BlockState state,
             ManaConcentratorBlockEntity blockEntity) {
         if (level.getGameTime() % 20 == 0) {
+            boolean oldState = blockEntity.isActive();
             boolean isActive = blockEntity.validateMultiblock().isValid();
-            if (!isActive && blockEntity.isCrafting) blockEntity.abortCrafting();
             blockEntity.setActive(isActive);
+            if (oldState != blockEntity.isActive()) {
+                if (blockEntity.isActive()) {
+                    blockEntity.triggerAnim("controller", "activate");
+                } else {
+                    blockEntity.triggerAnim("controller", "deactivate");
+                }
+            }
+            if (!isActive && blockEntity.isCrafting) {
+                blockEntity.stopCrafting();
+            }
             blockEntity.markUpdated();
         }
 
@@ -251,8 +265,6 @@ public class ManaConcentratorBlockEntity extends BlockEntity implements IInvento
                     continue;
                 }
 
-                // TODO: Allow for mana from storage blocks
-                // after that, abort with side effect
                 Mana manaType = manaItem.getManaType();
                 int manaAmount = this.currentRecipe.manaMap().getOrDefault(manaType, 0);
                 if (manaAmount != 0) {
@@ -411,7 +423,17 @@ public class ManaConcentratorBlockEntity extends BlockEntity implements IInvento
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController<>(this, "controller", 0, this::deployAnimController));
+        controllers.add(new AnimationController<>(this, "controller", 0, this::deployAnimController)
+                                .triggerableAnim("activate", ACTIVATION_ANIMATION)
+                                .triggerableAnim("idle_active", IDLE_ACTIVE)
+                                .triggerableAnim("deactivate", DEACTIVATION_ANIMATION)
+        );
+    }
+
+    @Override
+    public void onLoad() {
+        super.onLoad();
+        if (isActive()) triggerAnim("controller", "activate");
     }
 
     @Override

@@ -1,0 +1,21 @@
+{
+  "parent": "manaweave_and_runes:rituals/root",
+  "criteria": {
+    "has_golden_apple": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:golden_apple"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_golden_apple"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

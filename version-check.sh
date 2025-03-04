@@ -1,8 +1,6 @@
 #!/bin/bash
 
-# Extract the tag from GITHUB_REF
-tag_ref=${GITHUB_REF#refs/tags/}
-
+tag_ref=$1
 echo "Checking tag: $tag_ref"
 
 # Check if the tag is present in metadata/version_info.json

@@ -1,11 +1,11 @@
 {
   "name": "Ascended Ritual Anchor",
   "icon": "manaweave_and_runes:ascended_ritual_anchor",
-  "category": "manaweave_and_runes:rituals_category",
+  "category": "manaweave_and_runes:ritual_anchors_category",
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "I need more power... This should allow me to finally perform the greatest of rituals"
+      "text": "The pinnacle of ritual craftsmanship, the Ascended Ritual Anchor stands as the ultimate conduit for mana weaving. Unlike its predecessors, it does not merely channel power—it orchestrates true arcane symphonies, weaving mana into reality itself. Its structure is vast, a grand nexus where ley energies converge, allowing for rituals of unparalleled potency and permanence. $(br) Bound to the strongest mana networks, it grants access to reality-altering rites which even allow touching upon the very fabric of existence. The precision required is absolute, yet to those who have mastered its intricacies, it offers a level of spellcraft beyond mortal limitations. This is not just a tool; it is the key to the highest echelons of magic."
     },
     {
       "type": "patchouli:text",

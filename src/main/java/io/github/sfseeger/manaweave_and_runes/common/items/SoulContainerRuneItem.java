@@ -19,7 +19,6 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
 import static io.github.sfseeger.manaweave_and_runes.core.init.MRDataComponentsInit.PLAYER_DATA_COMPONENT;
@@ -87,13 +86,19 @@ public class SoulContainerRuneItem extends Item implements IRitualDataCapable {
             TooltipFlag tooltipFlag) {
         PlayerDataComponent component = stack.get(PLAYER_DATA_COMPONENT);
         if (component != null) {
-            // TODO: Save name in component so the name stays, even if people log off
             try (Level level = context.level()) {
                 Player player = level.getPlayerByUUID(UUID.fromString(component.playerUUID()));
-                tooltipComponents.add(Component.literal("Player: ")
-                                              .append(player != null ? Objects.requireNonNull(
-                                                      player.getDisplayName()) : Component.literal(
-                                                      "Unknown"))); // TODO: Add translation
+
+                Component name = Component.translatable("item.manaweave_and_runes.soul_container_rune.unknown_player");
+
+                if (player != null) {
+                    name = player.getDisplayName();
+                }
+                if ((player == null || name == null) && !component.lastPlayerName().isEmpty()) {
+                    name = Component.literal(component.lastPlayerName());
+                }
+
+                tooltipComponents.add(Component.literal("Player: ").append(name));
             } catch (Exception e) {
                 tooltipComponents.add(Component.literal("Player: Unknown"));
             }

@@ -1,0 +1,17 @@
+{
+  "type": "manaweave_and_runes:add_item_modifier",
+  "conditions": [
+    {
+      "condition": "neoforge:loot_table_id",
+      "loot_table_id": "minecraft:chests/trial_chambers/corridor"
+    },
+    {
+      "chance": 0.7,
+      "condition": "minecraft:random_chance"
+    }
+  ],
+  "item": {
+    "count": 1,
+    "id": "manaweave_and_runes:air_rune_carving_template"
+  }
+}

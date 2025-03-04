@@ -1,0 +1,33 @@
+{
+  "type": "manaweave_and_runes:mana_concentrator",
+  "craftTime": 300,
+  "inputs": [
+    {
+      "item": "minecraft:piston"
+    },
+    {
+      "item": "minecraft:piston"
+    },
+    {
+      "item": "minecraft:wind_charge"
+    },
+    {
+      "item": "manaweave_and_runes:tanzanite"
+    }
+  ],
+  "manaMap": [
+    {
+      "amount": 300,
+      "manaType": "manaweave_and_runes:order_mana"
+    },
+    {
+      "amount": 300,
+      "manaType": "manaweave_and_runes:water_mana"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "manaweave_and_runes:spell_modifier.elongate"
+  },
+  "tier": "MASTER"
+}

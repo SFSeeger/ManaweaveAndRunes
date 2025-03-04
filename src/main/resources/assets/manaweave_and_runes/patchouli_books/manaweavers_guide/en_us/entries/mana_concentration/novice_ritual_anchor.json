@@ -5,7 +5,11 @@
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "Often it is required to infuse mana into a new construction. For that the Mana Concentrator was developed. It allows to weave mana into the crafting process by placing runes around the concentrator and placing the correct ingredients on the pedestals surrounding it."
+      "text": "A foundational tool in the art of arcane crafting, the Novice Mana Concentrator serves as the bridge between mundane materials and true magical constructs. By harnessing ambient mana, it infuses chosen items with arcane properties, allowing the creation of enchanted artifacts and components. $(2br)To operate it, one must carefully arrange the required items on the surrounding pedestals, then feed the concentrator with storage runes by right-clicking them into its core. A final touch of the Mana Weaver’s Wand initiates the infusion process, drawing in energy as the materials gradually dissolve, their essence woven into a new form. Upon completion, the crafted item is expelled atop the concentrator, imbued with the power it was designed to hold."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "This device is forgiving—failure to provide the correct items or mana simply halts the process rather than invoking chaos. While limited in complexity, it remains an essential stepping stone in a weaver’s journey, granting access to tools and materials necessary for greater magical endeavors."
     },
     {
       "type": "patchouli:crafting",

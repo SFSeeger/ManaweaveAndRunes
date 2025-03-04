@@ -38,9 +38,6 @@ public class RitualComponentProcessor implements IComponentProcessor {
 
     @Override
     public IVariable process(Level level, String key) {
-        //Optional<IVariable> startItem = getIngredient("start_item", key, level);
-        //if(startItem.isPresent()) return startItem.get();
-
         if(key.startsWith("start_item")){
             int index = Integer.parseInt(key.substring("start_item".length())) - 1;
             if (index >= ritualInput.getInitialItemCost().size()) {

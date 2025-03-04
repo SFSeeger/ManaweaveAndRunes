@@ -25,7 +25,7 @@ import java.util.Objects;
 
 public class SpellDesignerBlock extends Block implements EntityBlock {
     public SpellDesignerBlock() {
-        super(Properties.of().requiresCorrectToolForDrops().strength(1).sound(SoundType.STONE));
+        super(Properties.of().requiresCorrectToolForDrops().strength(1).sound(SoundType.STONE).noOcclusion());
     }
 
     @Override

@@ -1,11 +1,11 @@
 {
-  "name": "Getting an upgrade",
-  "icon": "minecraft:writable_book",
-  "category": "manaweave_and_runes:rituals_category",
+  "name": "The Master Ritual Anchor",
+  "icon": "manaweave_and_runes:master_ritual_anchor",
+  "category": "manaweave_and_runes:ritual_anchors_category",
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "After some experiments I noticed that my ritual anchor seems to fail when performing larger and more powerful rituals. This new Master Ritual Anchor should do the trick"
+      "text": "A refinement of its lesser counterpart, the Master Ritual Anchor is a feat of advanced mana weaving, capable of orchestrating grander and more intricate rituals. Unlike the novice variant, this anchor demands a larger and carefully constructed ritual structure, ensuring stability as it channels immense arcane forces. When linked to a robust mana network, it weaves complex spell matrices with precision, provided the correct reagents are meticulously placed on their designated pedestals. A single command from the Mana Weaver’s Wand breathes life into the ritual, allowing for powerful transmutations, long-lasting effects, or formidable elemental invocations."
     },
     {
       "type": "patchouli:text",

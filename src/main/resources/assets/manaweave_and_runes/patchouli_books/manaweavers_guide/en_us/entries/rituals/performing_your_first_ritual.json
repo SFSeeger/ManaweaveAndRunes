@@ -5,14 +5,10 @@
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "Starting a ritual seems to be quite simple. I just placed the correct items around the anchor, supplied mana and activated it using my $(l:manaweave_and_runes:mana_weavers_wand)"
+      "text": "This ritual is one many beginners can perform. It creates a small particle effect around the Ritual Anchor. $(2br)The rate of mana and tick-item (marked with a clock icon) consumption varies from ritual to ritual. Refer to the ritual for these details."
     },
     {
-      "type": "patchouli:text",
-      "text": "Note to self: Make sure to keep the ritual fed. As soon as my storage ran empty the effects of the Ritual got ... volatile. But the anchor seems to work. As soon as I started the ritual I noted down, the air filled with a beautiful glow"
-    },
-    {
-      "type": "manaweave_and_runes:novice_ritual_input",
+      "type": "manaweave_and_runes:ritual_input",
       "ritual": "manaweave_and_runes:particle_ritual"
     }
   ]

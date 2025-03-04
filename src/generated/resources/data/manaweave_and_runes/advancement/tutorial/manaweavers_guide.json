@@ -1,0 +1,32 @@
+{
+  "parent": "manaweave_and_runes:root",
+  "criteria": {
+    "has_patchouli_book": {
+      "conditions": {
+        "recipe_id": "patchouli:guide_book"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.manaweave_and_runes.tutorial.manaweavers_guide.description"
+    },
+    "icon": {
+      "components": {
+        "patchouli:book": "manaweave_and_runes:manaweavers_guide"
+      },
+      "count": 1,
+      "id": "patchouli:guide_book"
+    },
+    "title": {
+      "translate": "advancements.manaweave_and_runes.tutorial.manaweavers_guide.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_patchouli_book"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

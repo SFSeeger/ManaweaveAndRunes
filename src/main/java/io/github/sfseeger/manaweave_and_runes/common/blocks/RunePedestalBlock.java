@@ -90,7 +90,7 @@ public class RunePedestalBlock extends ManaNetworkBlock implements EntityBlock {
         if (!level.isClientSide) {
             BlockEntity blockEntity = level.getBlockEntity(pos);
             if (blockEntity instanceof RunePedestalBlockEntity runePedestal) {
-                if (stack.is(MRItemInit.MANA_CONNECTOR)) {
+                if (stack.is(MRItemInit.MANA_WEAVER_WAND_ITEM)) {
                     if (runePedestal.toggleState()) {
                         player.displayClientMessage(Component.literal("New mode: " + runePedestal.node.getNodeType()), false);
                         return ItemInteractionResult.SUCCESS;

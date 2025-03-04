@@ -13,6 +13,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 
 public class RitualInputs {
+    public static final ResourceKey<RitualInput> THUNDER_RITUAL = registerKey(RitualInit.THUNDER_RITUAL.get());
+    public static final ResourceKey<RitualInput> TELEPORT_RITUAL = registerKey(RitualInit.TELEPORT_RITUAL.get());
     public static final ResourceKey<RitualInput> GROWTH_RITUAL = registerKey(RitualInit.GROWTH_RITUAL.get());
     public static final ResourceKey<RitualInput> SANCTUARY = registerKey(RitualInit.SANCTUARY_RITUAL.get());
     public static final ResourceKey<RitualInput> ASCENDED_SANCTUARY =
@@ -21,6 +23,28 @@ public class RitualInputs {
 
 
     public static void bootsrap(BootstrapContext<RitualInput> context) {
+        context.register(registerKey(RitualInit.PARTICLE_RITUAL.get()), new RitualInput.Builder()
+                .addInitialItemCost(Ingredient.of(Items.GLOW_INK_SAC))
+                .addInitialItemCost(Ingredient.of(Items.FEATHER))
+                .addManaCost(Manas.AirMana, 10)
+                .setManaRate(20)
+                .setItemRate(20)
+                .build()
+        );
+
+        context.register(THUNDER_RITUAL, new RitualInput.Builder()
+                .addInitialItemCost(Ingredient.of(Items.LIGHTNING_ROD))
+                .addInitialItemCost(Ingredient.of(Items.BLAZE_ROD))
+                .addInitialItemCost(Ingredient.of(MRItemInit.POSITION_RUNE_ITEM))
+                .addTickItemCost(Ingredient.of(Items.BLAZE_POWDER))
+                .addManaCost(Manas.OrderMana, 8)
+                .addManaCost(Manas.EarthMana, 10)
+                .addManaCost(Manas.WaterMana, 1)
+                .setManaRate(20)
+                .setItemRate(20)
+                .build()
+        );
+
         context.register(GROWTH_RITUAL, new RitualInput.Builder()
                 .addInitialItemCost(Ingredient.of(Items.BONE_MEAL))
                 .addInitialItemCost(Ingredient.of(ItemTags.VILLAGER_PLANTABLE_SEEDS))
@@ -33,8 +57,10 @@ public class RitualInputs {
         );
 
         context.register(SANCTUARY, new RitualInput.Builder()
-                .addInitialItemCost(Ingredient.of(Items.GOLD_INGOT))
+                .addInitialItemCost(Ingredient.of(Items.GOLDEN_APPLE))
                 .addInitialItemCost(Ingredient.of(Items.IRON_SWORD))
+                .addInitialItemCost(Ingredient.of(Items.WIND_CHARGE))
+                .addInitialItemCost(Ingredient.of(Items.GOLD_INGOT))
                 .addManaCost(Manas.OrderMana, 10)
                 .addManaCost(Manas.AirMana, 25)
                 .setManaRate(60)
@@ -43,7 +69,8 @@ public class RitualInputs {
         context.register(ASCENDED_SANCTUARY, new RitualInput.Builder()
                 .addInitialItemCost(Ingredient.of(Items.GOLD_INGOT))
                 .addInitialItemCost(Ingredient.of(Items.IRON_SWORD))
-                .addInitialItemCost(Ingredient.of(Items.GOLDEN_APPLE))
+                .addInitialItemCost(Ingredient.of(Items.ENCHANTED_GOLDEN_APPLE))
+                .addInitialItemCost(Ingredient.of(Items.WIND_CHARGE))
                 .addManaCost(Manas.OrderMana, 10)
                 .addManaCost(Manas.AirMana, 25)
                 .addManaCost(Manas.SoulMana, 3)
@@ -57,6 +84,17 @@ public class RitualInputs {
                 .addManaCost(Manas.EarthMana, 15)
                 .addManaCost(Manas.EntropyMana, 6)
                 .setManaRate(60)
+                .build()
+        );
+        context.register(TELEPORT_RITUAL, new RitualInput.Builder()
+                .addInitialItemCost(Ingredient.of(Items.ENDER_PEARL))
+                .addInitialItemCost(Ingredient.of(Items.ENDER_EYE))
+                .addInitialItemCost(Ingredient.of(MRItemInit.SOUL_CONTAINER_RUNE_ITEM))
+                .addInitialItemCost(Ingredient.of(Items.BLAZE_POWDER))
+                .addInitialItemCost(Ingredient.of(Items.BLAZE_ROD))
+                .addManaCost(Manas.OrderMana, 5)
+                .addManaCost(Manas.AirMana, 10)
+                .setManaRate(10)
                 .build()
         );
     }

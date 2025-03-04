@@ -1,7 +1,7 @@
 {
-  "parent": "minecraft:block/orientable",
+  "parent": "minecraft:block/cube_bottom_top",
   "textures": {
-    "front": "manaweave_and_runes:block/rune_carver_front",
+    "bottom": "manaweave_and_runes:block/rune_carver_bottom",
     "side": "manaweave_and_runes:block/rune_carver_side",
     "top": "manaweave_and_runes:block/rune_carver_top"
   }

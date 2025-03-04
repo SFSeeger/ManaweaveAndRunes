@@ -1,15 +1,19 @@
 {
   "name": "The Ritual Anchor",
   "icon": "manaweave_and_runes:novice_ritual_anchor",
-  "category": "manaweave_and_runes:rituals_category",
+  "category": "manaweave_and_runes:ritual_anchors_category",
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "Rituals are a powerful way to harness the energy of the world around you. They can be used to perform a variety of tasks, from simple enchantments to complex magical constructions. To perform a ritual, you will need a ritual anchor, which is a multiblock structure that acts as a focus for the ritual's energy. The most basic ritual anchor is the novice ritual anchor, which is used to perform simple rituals that require only a small amount of mana."
+      "text": "The Novice Ritual Anchor serves as the foundation for simple yet potent rituals, acting as a conduit for structured spellcraft. When tethered to a functioning mana network, it channels arcane forces into pre-defined patterns, provided the correct reagents are placed upon the surrounding pedestals. A simple tap of the Mana Weaver Wand ignites the process, unleashing the intended effect — be it enhancement, transmutation, or minor elemental manipulation."
     },
     {
       "type": "patchouli:text",
-      "text": "The novice ritual anchor can be crafted in the mana concentrator using the following ingredients: "
+      "text": "However, precision is paramount. Incorrect offerings or an insufficient flow of mana lead to unpredictable disruptions — surges of wild magic, unstable anomalies, or worse. Many times, a careless weaver has found themselves at the mercy of chaotic forces when attempting rituals beyond their expertise. Before use, ensure the mana streams are steady and the components are correctly attuned, lest one learns firsthand the cost of reckless invocation."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Mana concentrating recipe tbd"
     },
     {
       "type": "patchouli:multiblock",

@@ -1,5 +1,6 @@
 package io.github.sfseeger.manaweave_and_runes.common.blockentities;
 
+import io.github.sfseeger.lib.common.Tier;
 import io.github.sfseeger.lib.common.items.AbstractRuneItem;
 import io.github.sfseeger.lib.common.mana.IManaNetworkSubscriber;
 import io.github.sfseeger.lib.common.mana.Mana;
@@ -33,9 +34,9 @@ import org.jetbrains.annotations.Nullable;
 
 public class ManaCollectorBlockEntity extends BlockEntity implements IManaNetworkSubscriber, IInventoryBlockEntity {
     public static final int CAPACITY = 5000;
-    public static final int MANA_PER_SOURCE = 30;
     private static final int MAX_RECEIVE = 5000;
     private static final int MAX_EXTRACT = 5000;
+    private Tier tier = Tier.NOVICE;
     private final ItemStackHandler inventory = new ItemStackHandler(1) {
         @Override
         public int getSlotLimit(int slot) {
@@ -67,6 +68,8 @@ public class ManaCollectorBlockEntity extends BlockEntity implements IManaNetwor
                 markUpdated();
             }
         };
+
+        this.tier = ((ManaCollectorBlock) blockState.getBlock()).getTier();
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state,
@@ -77,7 +80,8 @@ public class ManaCollectorBlockEntity extends BlockEntity implements IManaNetwor
         if (!stack.isEmpty() && item instanceof AbstractRuneItem runeItem) {
             Mana mamaType = runeItem.getManaType();
             int potentialMana =
-                    mamaType.canGenerateMana(level, pos, state) * MANA_PER_SOURCE * mamaType.getGenerationMultiplier();
+                    mamaType.canGenerateMana(level, pos,
+                                             state) * blockEntity.getManaPerSource() * mamaType.getGenerationMultiplier();
             blockEntity.setCollecting(potentialMana > 0);
             IManaHandler stackManaHandler = stack.getCapability(ManaweaveAndRunesCapabilities.MANA_HANDLER_ITEM);
             if (stackManaHandler != null) {
@@ -91,6 +95,10 @@ public class ManaCollectorBlockEntity extends BlockEntity implements IManaNetwor
                         pos.getX() + 0.5f, pos.getY() + 1.2f, pos.getZ() + 0.5f, potentialMana * 2, 0.2, 0, 0.2, 0);
             }
         }
+    }
+
+    public int getManaPerSource() {
+        return this.tier.ordinal() * 8;
     }
 
     public IItemHandler getItemHandler(@Nullable Direction side) {

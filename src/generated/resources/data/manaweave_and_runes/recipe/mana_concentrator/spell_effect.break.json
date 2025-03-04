@@ -1,0 +1,36 @@
+{
+  "type": "manaweave_and_runes:mana_concentrator",
+  "craftTime": 300,
+  "inputs": [
+    {
+      "item": "minecraft:diamond_pickaxe"
+    },
+    {
+      "item": "minecraft:diamond_shovel"
+    },
+    {
+      "item": "minecraft:diamond_axe"
+    },
+    {
+      "item": "manaweave_and_runes:tanzanite"
+    },
+    {
+      "item": "manaweave_and_runes:amethyst_base_rune"
+    }
+  ],
+  "manaMap": [
+    {
+      "amount": 300,
+      "manaType": "manaweave_and_runes:earth_mana"
+    },
+    {
+      "amount": 300,
+      "manaType": "manaweave_and_runes:void_mana"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "manaweave_and_runes:spell_effect.break"
+  },
+  "tier": "MASTER"
+}

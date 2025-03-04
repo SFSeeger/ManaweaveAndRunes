@@ -46,7 +46,7 @@ public class RunewroughtBenchBlock extends Block implements EntityBlock {
     ).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).get();
 
     public RunewroughtBenchBlock() {
-        super(Properties.of().sound(SoundType.STONE).requiresCorrectToolForDrops());
+        super(Properties.of().sound(SoundType.STONE).requiresCorrectToolForDrops().noOcclusion());
         registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
 

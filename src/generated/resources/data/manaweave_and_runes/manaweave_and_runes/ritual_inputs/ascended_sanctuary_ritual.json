@@ -7,14 +7,13 @@
       "item": "minecraft:iron_sword"
     },
     {
-      "item": "minecraft:golden_apple"
+      "item": "minecraft:enchanted_golden_apple"
+    },
+    {
+      "item": "minecraft:wind_charge"
     }
   ],
   "manaCost": [
-    {
-      "amount": 3,
-      "manaType": "manaweave_and_runes:soul_mana"
-    },
     {
       "amount": 10,
       "manaType": "manaweave_and_runes:order_mana"
@@ -22,6 +21,10 @@
     {
       "amount": 25,
       "manaType": "manaweave_and_runes:air_mana"
+    },
+    {
+      "amount": 3,
+      "manaType": "manaweave_and_runes:soul_mana"
     }
   ],
   "manaRate": 60,

@@ -10,7 +10,7 @@ import net.minecraft.world.damagesource.DeathMessageType;
 public class MRDamageTypeProvider {
     public static void bootstrap(BootstrapContext<DamageType> context) {
         context.register(MRDamageTypes.RITUAL_FAILURE,
-                         new DamageType(MRDamageTypes.RITUAL_FAILURE.location().toLanguageKey("death"),
+                         new DamageType(MRDamageTypes.RITUAL_FAILURE.location().toLanguageKey(),
                                         DamageScaling.ALWAYS,
                                         0.1f,
                                         DamageEffects.HURT,

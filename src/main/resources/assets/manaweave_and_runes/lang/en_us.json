@@ -70,7 +70,7 @@
   "item.manaweave_and_runes.void_rune_carving_template": "Void Rune Template",
   "item.manaweave_and_runes.rune_block_carving_template": "Rune Block Template",
   "item.manaweave_and_runes.mana_debug_stick": "Mana Debug Stick",
-  "item.manaweave_and_runes.mana_weaver_wand": "Mana weaver wand",
+  "item.manaweave_and_runes.mana_weaver_wand": "Mana Weaver Wand",
 
   "item.manaweave_and_runes.soul_container_rune.stole_soul_fragment": "Someone tried to steal a soul fragment from you",
   "item.manaweave_and_runes.soul_container_rune.detected": "You got noticed trying to steal a soul fragment",
@@ -123,5 +123,21 @@
   "container.manaweave_and_runes.mana_generator": "Mana Generator",
   "item.manaweave_and_runes.spell_part_holder": "Spell Part",
   "ritual.shattering_rite.invalid_position": "This position is too far from the ritual anchor",
-  "death.manaweave_and_runes.ritual_failure": "%1$s ritual backfired"
+  "death.attack.manaweave_and_runes.ritual_failure": "%1$s's ritual backfired",
+  "patchouli.manaweave_and_runes.mana_concentration.time": "Craft Time",
+  "patchouli.manaweave_and_runes.ritual.ritual_duration": "Ritual Duration",
+  "patchouli.manaweave_and_runes.ritual.item_consumption_rate": "Item Rate",
+  "patchouli.manaweave_and_runes.ritual.mana_consumption_rate": "Mana Rate",
+  "patchouli.manaweave_and_runes.ritual.ritual_duration_infinite": "Infinite",
+  "advancements.manaweave_and_runes.root.title": "Manaweave and Runes",
+  "advancements.manaweave_and_runes.root.description": "Unlock the secrets of the arcane",
+  "advancements.manaweave_and_runes.tutorial.manaweavers_guide.title": "Booksmarts",
+  "advancements.manaweave_and_runes.tutorial.manaweavers_guide.description": "Build the Manaweaver's Guide using a book and an amethyt shard",
+  "advancements.manaweave_and_runes.tutorial.template_found.title": "Learning from the old masters",
+  "advancements.manaweave_and_runes.tutorial.template_found.description": "Find a Rune Carving Template",
+  "advancements.manaweave_and_runes.tutorial.template_duplicated.title": "Now there are two of them!",
+  "advancements.manaweave_and_runes.tutorial.template_duplicated.description": "Duplicate a Rune Carving Template",
+  "advancements.manaweave_and_runes.tutorial.tanzanite_found.description": "Mine some Tanzanite Ore using a Diamond Pickaxe",
+  "advancements.manaweave_and_runes.tutorial.tanzanite_found.title": "Glimmering Gemstone Hunter",
+  "item.manaweave_and_runes.soul_container_rune.unknown_player": "Unknown"
 }

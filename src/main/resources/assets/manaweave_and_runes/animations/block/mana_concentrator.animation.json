@@ -59,6 +59,57 @@
           }
         }
       }
+    },
+    "idle_inactive": {
+      "loop": true,
+      "animation_length": 4,
+      "bones": {
+        "bone": {
+          "scale": {
+            "0.0": {
+              "vector": [
+                0,
+                0,
+                0
+              ]
+            },
+            "4.0": {
+              "vector": [
+                0,
+                0,
+                0
+              ]
+            }
+          }
+        }
+      }
+    },
+    "activate": {
+      "animation_length": 2,
+      "bones": {
+        "bone": {
+          "scale": {
+            "0.0": {
+              "vector": [
+                0,
+                0,
+                0
+              ]
+            },
+            "2.0": {
+              "vector": [
+                1,
+                1,
+                1
+              ],
+              "easing": "easeInOutElastic",
+              "easingArgs": [
+                3
+              ]
+            }
+          }
+        }
+      }
     }
   },
   "geckolib_format_version": 2
