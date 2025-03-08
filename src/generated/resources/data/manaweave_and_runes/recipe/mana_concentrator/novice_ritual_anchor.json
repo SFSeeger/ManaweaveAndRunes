@@ -1,18 +1,18 @@
 {
   "type": "manaweave_and_runes:mana_concentrator",
-  "craftTime": 100,
+  "craftTime": 350,
   "inputs": [
-    {
-      "item": "minecraft:gold_block"
-    },
     {
       "item": "minecraft:amethyst_block"
     },
     {
-      "tag": "manaweave_and_runes:spell_mana_provider"
+      "item": "minecraft:crafting_table"
     },
     {
-      "tag": "manaweave_and_runes:spell_mana_provider"
+      "item": "minecraft:heart_of_the_sea"
+    },
+    {
+      "item": "minecraft:redstone_block"
     }
   ],
   "manaMap": [
@@ -35,7 +35,7 @@
   ],
   "result": {
     "count": 1,
-    "id": "manaweave_and_runes:mana_storage"
+    "id": "manaweave_and_runes:novice_ritual_anchor"
   },
   "tier": "NOVICE"
 }

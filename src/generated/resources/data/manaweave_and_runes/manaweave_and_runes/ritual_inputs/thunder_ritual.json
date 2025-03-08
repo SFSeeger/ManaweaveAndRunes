@@ -13,16 +13,16 @@
   "itemRate": 20,
   "manaCost": [
     {
-      "amount": 10,
-      "manaType": "manaweave_and_runes:earth_mana"
+      "amount": 1,
+      "manaType": "manaweave_and_runes:water_mana"
     },
     {
       "amount": 8,
       "manaType": "manaweave_and_runes:order_mana"
     },
     {
-      "amount": 1,
-      "manaType": "manaweave_and_runes:water_mana"
+      "amount": 10,
+      "manaType": "manaweave_and_runes:earth_mana"
     }
   ],
   "manaRate": 20,

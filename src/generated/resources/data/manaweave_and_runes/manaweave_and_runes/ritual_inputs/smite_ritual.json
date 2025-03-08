@@ -1,0 +1,22 @@
+{
+  "initialItemCost": [
+    {
+      "item": "minecraft:lightning_rod"
+    },
+    {
+      "item": "manaweave_and_runes:soul_container_rune"
+    }
+  ],
+  "manaCost": [
+    {
+      "amount": 4,
+      "manaType": "manaweave_and_runes:fire_mana"
+    },
+    {
+      "amount": 10,
+      "manaType": "manaweave_and_runes:air_mana"
+    }
+  ],
+  "manaRate": 20,
+  "tickItemCost": []
+}

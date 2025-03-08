@@ -1,0 +1,33 @@
+{
+  "parent": "manaweave_and_runes:tutorial/manaweavers_guide",
+  "criteria": {
+    "has_tanzanite": {
+      "conditions": {
+        "items": [
+          {
+            "items": "manaweave_and_runes:tanzanite"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.manaweave_and_runes.tutorial.tanzanite_found.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "manaweave_and_runes:tanzanite"
+    },
+    "title": {
+      "translate": "advancements.manaweave_and_runes.tutorial.tanzanite_found.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_tanzanite"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

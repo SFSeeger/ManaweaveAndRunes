@@ -32,4 +32,5 @@ public class RitualInit {
     public static final Supplier<ShatteringRiteRitual> SHATTERING_RITE_RITUAL =
             RITUALS.register("shattering_rite_ritual", ShatteringRiteRitual::new);
 
+    public static final Supplier<SmiteRitual> SMITE_RITUAL = RITUALS.register("smite_ritual", SmiteRitual::new);
 }

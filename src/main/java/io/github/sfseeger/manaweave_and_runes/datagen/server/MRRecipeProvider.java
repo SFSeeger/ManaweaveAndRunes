@@ -84,14 +84,33 @@ public class MRRecipeProvider extends RecipeProvider {
                 .addMana(Manas.VoidMana, 50)
                 .save(recipeOutput);
 
+        new ManaConcentratorRecipeBuilder.Builder(MRBlockInit.NOVICE_RITUAL_ANCHOR_BLOCK)
+                .setTier(Tier.NOVICE)
+                .setCraftTime(350)
+                .addInput(Ingredient.of(Items.AMETHYST_BLOCK))
+                .addInput(Ingredient.of(Items.CRAFTING_TABLE))
+                .addInput(Ingredient.of(Items.HEART_OF_THE_SEA))
+                .addInput(Ingredient.of(Items.REDSTONE_BLOCK))
+                .addMana(Manas.FireMana, 500)
+                .addMana(Manas.AirMana, 500)
+                .addMana(Manas.EarthMana, 500)
+                .addMana(Manas.WaterMana, 500)
+                .save(recipeOutput);
+
         new ManaConcentratorRecipeBuilder.Builder(MRBlockInit.MASTER_MANA_CONCENTRATOR_BLOCK.get())
                 .setTier(Tier.NOVICE)
                 .setCraftTime(500)
                 .addInput(Ingredient.of(Items.GOLD_BLOCK))
                 .addInput(Ingredient.of(MRItemInit.TANZANITE))
                 .addInput(Ingredient.of(MRItemInit.AMETHYST_BASE_RUNE))
-                .addMana(Manas.FireMana, 80)
-                .addMana(Manas.AirMana, 80)
+                .addMana(Manas.FireMana, 1000)
+                .addMana(Manas.AirMana, 1000)
+                .addMana(Manas.EarthMana, 1000)
+                .addMana(Manas.WaterMana, 1000)
+                .addMana(Manas.EntropyMana, 500)
+                .addMana(Manas.OrderMana, 500)
+                .addMana(Manas.SoulMana, 500)
+                .addMana(Manas.VoidMana, 500)
                 .save(recipeOutput);
 
         new ManaConcentratorRecipeBuilder.Builder(MRBlockInit.SPELL_DESIGNER_BLOCK)
@@ -351,24 +370,49 @@ public class MRRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_amethyst", has(Items.AMETHYST_SHARD))
                 .save(recipeOutput);
 
-        makeTemplateRecipe(recipeOutput, MRItemInit.RUNE_BLOCK_CARVING_TEMPLATE, Ingredient.of(Items.PAPER),
+        makeTemplateRecipe(recipeOutput,
+                           MRItemInit.RUNE_BLOCK_CARVING_TEMPLATE,
+                           Ingredient.of(Items.PAPER),
                            Ingredient.of(Tags.Items.STONES));
-        makeTemplateRecipe(recipeOutput, MRItemInit.AIR_RUNE_CARVING_TEMPLATE, Ingredient.of(Items.FEATHER),
+        makeTemplateRecipe(recipeOutput,
+                           MRItemInit.AIR_RUNE_CARVING_TEMPLATE,
+                           Ingredient.of(Items.DIAMOND),
+                           Ingredient.of(Items.FEATHER),
                            Ingredient.of(Tags.Items.STONES));
-        makeTemplateRecipe(recipeOutput, MRItemInit.FIRE_RUNE_CARVING_TEMPLATE,
-                           Ingredient.of(Items.COAL, Items.CHARCOAL), Ingredient.of(Tags.Items.STONES));
-        makeTemplateRecipe(recipeOutput, MRItemInit.WATER_RUNE_CARVING_TEMPLATE, Ingredient.of(Items.SAND),
+        makeTemplateRecipe(recipeOutput,
+                           MRItemInit.FIRE_RUNE_CARVING_TEMPLATE,
+                           Ingredient.of(Items.DIAMOND),
+                           Ingredient.of(Items.COAL, Items.CHARCOAL),
                            Ingredient.of(Tags.Items.STONES));
-        makeTemplateRecipe(recipeOutput, MRItemInit.EARTH_RUNE_CARVING_TEMPLATE,
-                           Ingredient.of(Items.DIRT, Items.COBBLESTONE), Ingredient.of(Tags.Items.STONES));
-
-        makeTemplateRecipe(recipeOutput, MRItemInit.ENTROPY_RUNE_CARVING_TEMPLATE, Ingredient.of(Items.TNT),
+        makeTemplateRecipe(recipeOutput,
+                           MRItemInit.WATER_RUNE_CARVING_TEMPLATE,
+                           Ingredient.of(Items.DIAMOND),
+                           Ingredient.of(Items.SAND),
                            Ingredient.of(Tags.Items.STONES));
-        makeTemplateRecipe(recipeOutput, MRItemInit.ORDER_RUNE_CARVING_TEMPLATE, Ingredient.of(Items.REDSTONE),
+        makeTemplateRecipe(recipeOutput,
+                           MRItemInit.EARTH_RUNE_CARVING_TEMPLATE,
+                           Ingredient.of(Items.DIAMOND),
+                           Ingredient.of(Items.DIRT, Items.COBBLESTONE),
+                           Ingredient.of(Tags.Items.STONES));
+        makeTemplateRecipe(recipeOutput,
+                           MRItemInit.ENTROPY_RUNE_CARVING_TEMPLATE,
+                           Ingredient.of(MRItemInit.TANZANITE),
+                           Ingredient.of(Items.TNT),
+                           Ingredient.of(Tags.Items.STONES));
+        makeTemplateRecipe(recipeOutput,
+                           MRItemInit.ORDER_RUNE_CARVING_TEMPLATE,
+                           Ingredient.of(MRItemInit.TANZANITE),
+                           Ingredient.of(Items.REDSTONE),
                            Ingredient.of(Blocks.TUFF));
-        makeTemplateRecipe(recipeOutput, MRItemInit.SOUL_RUNE_CARVING_TEMPLATE,
-                           Ingredient.of(Tags.Items.FOODS_RAW_MEAT), Ingredient.of(Blocks.SOUL_SAND));
-        makeTemplateRecipe(recipeOutput, MRItemInit.VOID_RUNE_CARVING_TEMPLATE, Ingredient.of(Items.BUCKET),
+        makeTemplateRecipe(recipeOutput,
+                           MRItemInit.SOUL_RUNE_CARVING_TEMPLATE,
+                           Ingredient.of(MRItemInit.TANZANITE),
+                           Ingredient.of(Tags.Items.FOODS_RAW_MEAT),
+                           Ingredient.of(Blocks.SOUL_SAND));
+        makeTemplateRecipe(recipeOutput,
+                           MRItemInit.VOID_RUNE_CARVING_TEMPLATE,
+                           Ingredient.of(MRItemInit.TANZANITE),
+                           Ingredient.of(Items.BUCKET),
                            Ingredient.of(Tags.Items.STONES));
 
 
@@ -438,13 +482,20 @@ public class MRRecipeProvider extends RecipeProvider {
 
     private void makeTemplateRecipe(RecipeOutput recipeOutput, DeferredItem<RuneCarvingTemplate> template,
             Ingredient specificIngredient, Ingredient runeIngredient) {
+        makeTemplateRecipe(recipeOutput, template, Ingredient.of(Items.AMETHYST_SHARD), specificIngredient,
+                           runeIngredient);
+    }
+
+    private void makeTemplateRecipe(RecipeOutput recipeOutput, DeferredItem<RuneCarvingTemplate> template,
+            Ingredient channelIngredient,
+            Ingredient specificIngredient, Ingredient runeIngredient) {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, template.get(), 2)
                 .pattern("STS")
                 .pattern("SAS")
                 .pattern("SPS")
                 .define('T', template)
                 .define('S', runeIngredient)
-                .define('A', Items.AMETHYST_SHARD)
+                .define('A', channelIngredient)
                 .define('P', specificIngredient)
                 .unlockedBy("has_rune_block_template", has(template.get()))
                 .save(recipeOutput);

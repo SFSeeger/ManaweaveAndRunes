@@ -2,10 +2,11 @@
     "homepage": "https://github.com/SFSeeger/ManaweaveAndRunes/releases",
     "1.21.1": {
         "1.21.1-0.1.0": "- Initial release",
-        "1.21.1-0.1.1": "- Updated Runecarver Texture\n- Added some patchouli documentation\n- Added missing mana textures\n- Bugfixes"
+        "1.21.1-0.1.1": "- Updated Runecarver Texture\n- Added some patchouli documentation\n- Added missing mana textures\n- Bugfixes",
+        "1.21.1-0.1.2": "- Add smite ritual\n- Fix Tanzanite Ore not dropping when mined\n- Make template duplication more expensive"
     },
     "promos": {
-        "1.21.1-latest": "1.21.1-0.1.1",
-        "1.21.1-recommended": "1.21.1-0.1.1"
+        "1.21.1-latest": "1.21.1-0.1.2",
+        "1.21.1-recommended": "1.21.1-0.1.2"
     }
 }

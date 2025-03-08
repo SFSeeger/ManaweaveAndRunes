@@ -13,6 +13,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 
 public class RitualInputs {
+    public static final ResourceKey<RitualInput> SMITE_RITUAL = registerKey(RitualInit.SMITE_RITUAL.get());
     public static final ResourceKey<RitualInput> THUNDER_RITUAL = registerKey(RitualInit.THUNDER_RITUAL.get());
     public static final ResourceKey<RitualInput> TELEPORT_RITUAL = registerKey(RitualInit.TELEPORT_RITUAL.get());
     public static final ResourceKey<RitualInput> GROWTH_RITUAL = registerKey(RitualInit.GROWTH_RITUAL.get());
@@ -29,6 +30,15 @@ public class RitualInputs {
                 .addManaCost(Manas.AirMana, 10)
                 .setManaRate(20)
                 .setItemRate(20)
+                .build()
+        );
+
+        context.register(SMITE_RITUAL, new RitualInput.Builder()
+                .addInitialItemCost(Ingredient.of(Items.LIGHTNING_ROD))
+                .addInitialItemCost(Ingredient.of(MRItemInit.SOUL_CONTAINER_RUNE_ITEM))
+                .addManaCost(Manas.AirMana, 10)
+                .addManaCost(Manas.FireMana, 4)
+                .setManaRate(20)
                 .build()
         );
 
