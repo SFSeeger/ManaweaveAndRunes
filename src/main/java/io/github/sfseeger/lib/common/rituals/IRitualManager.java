@@ -60,7 +60,8 @@ public interface IRitualManager {
     );
 
     default Optional<Ritual> getMatchingRitual(List<ItemStack> items, Tier tier, Ritual.RitualOriginType originType,
-            Level level) {
+                                               Level level
+    ) {
         return ManaweaveAndRunesRegistries.RITUAL_REGISTRY.entrySet().stream()
                 .map(Map.Entry::getValue)
                 .filter(ritual -> ritual.matches(items, tier, originType, level))
@@ -85,26 +86,31 @@ public interface IRitualManager {
     }
 
     RitualStepResult consumeInitialItem(Level level, BlockPos pos, BlockState blockState, int ticksPassed,
-            RitualContext context,
-            Ritual.RitualOriginType originType);
+                                        RitualContext context,
+                                        Ritual.RitualOriginType originType
+    );
 
     RitualStepResult consumeTickItem(Level level, BlockPos pos, BlockState blockState, int ticksPassed,
-            RitualContext context,
-            Ritual.RitualOriginType originType);
+                                     RitualContext context,
+                                     Ritual.RitualOriginType originType
+    );
 
     RitualStepResult consumeMana(Level level, BlockPos pos, BlockState blockState, int ticksPassed,
-            RitualContext context,
-            Ritual.RitualOriginType originType);
+                                 RitualContext context,
+                                 Ritual.RitualOriginType originType
+    );
 
     default RitualStepResult executeStep(Level level, BlockPos pos, BlockState blockState, int ticksPassed,
-            RitualContext context,
-            Ritual.RitualOriginType originType) {
+                                         RitualContext context,
+                                         Ritual.RitualOriginType originType
+    ) {
         return getState().step(this, level, pos, blockState, ticksPassed, context, originType);
     }
 
     default RitualState executeStepAndTransition(Level level, BlockPos pos, BlockState blockState, int ticksPassed,
-            RitualContext context,
-            Ritual.RitualOriginType originType) {
+                                                 RitualContext context,
+                                                 Ritual.RitualOriginType originType
+    ) {
         RitualStepResult result = executeStep(level, pos, blockState, ticksPassed, context, originType);
         return transition(result);
     }
@@ -139,11 +145,13 @@ public interface IRitualManager {
     void setState(RitualState state);
 
     default void cleanUp(Level level, BlockPos pos, BlockState blockState, RitualContext context,
-            Ritual.RitualOriginType originType) {
+                         Ritual.RitualOriginType originType
+    ) {
     }
 
     RitualStepResult afterRitualTick(Level level, BlockPos pos, BlockState blockState, int ticksPassed,
-            RitualContext context, Ritual.RitualOriginType originType);
+                                     RitualContext context, Ritual.RitualOriginType originType
+    );
 
 
     enum RitualState {
@@ -185,8 +193,9 @@ public interface IRitualManager {
         }
 
         public RitualStepResult step(IRitualManager manager, Level level, BlockPos pos, BlockState blockState,
-                int ticksPassed, RitualContext context,
-                Ritual.RitualOriginType originType) {
+                                     int ticksPassed, RitualContext context,
+                                     Ritual.RitualOriginType originType
+        ) {
             return stepFunction.step(manager, level, pos, blockState, ticksPassed, context, originType);
         }
 
@@ -194,7 +203,8 @@ public interface IRitualManager {
         @FunctionalInterface
         private interface RitualStep {
             RitualStepResult step(IRitualManager manager, Level level, BlockPos pos, BlockState blockState,
-                    int ticksPassed, RitualContext context, Ritual.RitualOriginType originType);
+                                  int ticksPassed, RitualContext context, Ritual.RitualOriginType originType
+            );
         }
     }
 }

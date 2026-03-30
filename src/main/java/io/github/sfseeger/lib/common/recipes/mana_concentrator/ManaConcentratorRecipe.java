@@ -21,7 +21,8 @@ import java.util.stream.Collectors;
 public record ManaConcentratorRecipe(Tier tier, List<Ingredient> inputs, Map<Mana, Integer> manaMap, int craftTime,
                                      ItemStack result) implements Recipe<ManaConcentratorInput> {
     public ManaConcentratorRecipe(Tier tier, List<Ingredient> inputs, Map<Mana, Integer> manaMap, int craftTime,
-            ItemStack result) {
+                                  ItemStack result
+    ) {
         this.tier = tier;
         this.inputs = inputs;
         this.manaMap = manaMap;
@@ -30,8 +31,9 @@ public record ManaConcentratorRecipe(Tier tier, List<Ingredient> inputs, Map<Man
     }
 
     public ManaConcentratorRecipe(Tier tier, List<Ingredient> inputs, List<Pair<Holder<Mana>, Integer>> manaList,
-            int craftTime,
-            ItemStack result) {
+                                  int craftTime,
+                                  ItemStack result
+    ) {
         this(tier, inputs,
              manaList.stream().collect(Collectors.toMap(pair -> (pair.getFirst().value()), Pair::getSecond)), craftTime,
              result);

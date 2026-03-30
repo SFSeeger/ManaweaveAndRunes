@@ -10,18 +10,18 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 
 public class RuneCarverRecipeSerializer implements RecipeSerializer<RuneCarverRecipe> {
     public static final MapCodec<RuneCarverRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-            Ingredient.CODEC.fieldOf("chisel").forGetter(RuneCarverRecipe::getChisel),
-            Ingredient.CODEC.fieldOf("rune_base").forGetter(RuneCarverRecipe::getRuneBase),
-            Ingredient.CODEC.fieldOf("rune_template").forGetter(RuneCarverRecipe::getRuneTemplate),
-            ItemStack.CODEC.fieldOf("result").forGetter(RuneCarverRecipe::getResult)
+            Ingredient.CODEC.fieldOf("chisel").forGetter(RuneCarverRecipe::chisel),
+            Ingredient.CODEC.fieldOf("rune_base").forGetter(RuneCarverRecipe::runeBase),
+            Ingredient.CODEC.fieldOf("rune_template").forGetter(RuneCarverRecipe::runeTemplate),
+            ItemStack.CODEC.fieldOf("result").forGetter(RuneCarverRecipe::result)
     ).apply(instance, RuneCarverRecipe::new));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, RuneCarverRecipe> STREAM_CODEC =
             StreamCodec.composite(
-                    Ingredient.CONTENTS_STREAM_CODEC, RuneCarverRecipe::getChisel,
-                    Ingredient.CONTENTS_STREAM_CODEC, RuneCarverRecipe::getRuneBase,
-                    Ingredient.CONTENTS_STREAM_CODEC, RuneCarverRecipe::getRuneTemplate,
-                    ItemStack.STREAM_CODEC, RuneCarverRecipe::getResult,
+                    Ingredient.CONTENTS_STREAM_CODEC, RuneCarverRecipe::chisel,
+                    Ingredient.CONTENTS_STREAM_CODEC, RuneCarverRecipe::runeBase,
+                    Ingredient.CONTENTS_STREAM_CODEC, RuneCarverRecipe::runeTemplate,
+                    ItemStack.STREAM_CODEC, RuneCarverRecipe::result,
                     RuneCarverRecipe::new
             );
 

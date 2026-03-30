@@ -35,8 +35,8 @@ public class RuneCarvingComponentProcessor implements IComponentProcessor {
             int index = Integer.parseInt(key.substring("chisel".length())) - 1;
             ItemStack[] stacks;
             switch (index) {
-                case 0 -> stacks = recipe.getChisel().getItems();
-                case 1 -> stacks = recipe2 == null ? new ItemStack[0] : recipe2.getChisel().getItems();
+                case 0 -> stacks = recipe.chisel().getItems();
+                case 1 -> stacks = recipe2 == null ? new ItemStack[0] : recipe2.chisel().getItems();
                 default -> stacks = new ItemStack[0];
             }
 
@@ -46,8 +46,8 @@ public class RuneCarvingComponentProcessor implements IComponentProcessor {
             int index = Integer.parseInt(key.substring("template".length())) - 1;
             ItemStack[] stacks;
             switch (index) {
-                case 0 -> stacks = recipe.getRuneTemplate().getItems();
-                case 1 -> stacks = recipe2 == null ? new ItemStack[0] : recipe2.getRuneTemplate().getItems();
+                case 0 -> stacks = recipe.runeTemplate().getItems();
+                case 1 -> stacks = recipe2 == null ? new ItemStack[0] : recipe2.runeTemplate().getItems();
                 default -> stacks = new ItemStack[0];
             }
             return IVariable.from(stacks.length == 0 ? ItemStack.EMPTY : stacks[0], level.registryAccess());
@@ -57,8 +57,8 @@ public class RuneCarvingComponentProcessor implements IComponentProcessor {
 
             ItemStack[] stacks;
             switch (index) {
-                case 0 -> stacks = recipe.getRuneBase().getItems();
-                case 1 -> stacks = recipe2 == null ? new ItemStack[0] : recipe2.getRuneBase().getItems();
+                case 0 -> stacks = recipe.runeBase().getItems();
+                case 1 -> stacks = recipe2 == null ? new ItemStack[0] : recipe2.runeBase().getItems();
                 default -> stacks = new ItemStack[0];
             }
             return IVariable.from(stacks.length == 0 ? ItemStack.EMPTY : stacks[0], level.registryAccess());

@@ -15,7 +15,7 @@ public enum Tier implements StringRepresentable {
 
     public static final Codec<Tier> CODEC = StringRepresentable.fromEnum(Tier::values);
     public static final StreamCodec<FriendlyByteBuf, Tier> STREAM_CODEC = NeoForgeStreamCodecs.enumCodec(Tier.class);
-    private Integer value;
+    private final Integer value;
 
 
     Tier(int value) {

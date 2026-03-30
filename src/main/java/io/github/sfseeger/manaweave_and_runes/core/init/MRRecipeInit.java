@@ -7,11 +7,13 @@ import io.github.sfseeger.lib.common.recipes.rune_carver.RuneCarverRecipeSeriali
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
+import java.util.List;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public class MRRecipeInit {
     public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES =
@@ -42,4 +44,12 @@ public class MRRecipeInit {
             RECIPE_SERIALIZERS.register(
                     "mana_concentrator",
                     ManaConcentratorRecipeSerializer::new);
+
+    public static <C extends RecipeInput, T extends Recipe<C>> List<T> getRecipes(Level world, RecipeType<T> type) {
+        return world.getRecipeManager()
+                .getAllRecipesFor(type)
+                .stream()
+                .map(RecipeHolder::value)
+                .collect(Collectors.toList());
+    }
 }

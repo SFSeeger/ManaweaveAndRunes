@@ -170,6 +170,8 @@ public class ManaNetwork {
                 BFSResult result = checkValidity(node);
                 if (result.visitedNodes().size() == 1 && node.getConnectedNodes().isEmpty()) {
                     node.setManaNetworkNoEval(null);
+                    visited.add(node);
+                    node.setChanged();
                 } else {
                     ManaNetwork newNetwork = handler.createNetwork();
                     for (ManaNetworkNode connectedNode : result.visitedNodes()) {
@@ -203,7 +205,7 @@ public class ManaNetwork {
         target.manaOffers.addAll(source.manaOffers);
 
         for (ManaNetworkNode node : source.nodes) {
-            node.setManaNetwork(this);
+            node.setManaNetworkNoEval(target);
         }
         ManaNetworkHandler.getInstance(level.getDataStorage()).removeNetwork(source);
     }

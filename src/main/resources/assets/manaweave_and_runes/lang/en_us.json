@@ -139,5 +139,7 @@
   "advancements.manaweave_and_runes.tutorial.template_duplicated.description": "Duplicate a Rune Carving Template",
   "advancements.manaweave_and_runes.tutorial.tanzanite_found.description": "Mine some Tanzanite Ore using a Diamond Pickaxe",
   "advancements.manaweave_and_runes.tutorial.tanzanite_found.title": "Glimmering Gemstone Hunter",
-  "item.manaweave_and_runes.soul_container_rune.unknown_player": "Unknown"
+  "item.manaweave_and_runes.soul_container_rune.unknown_player": "Unknown",
+  "jei.manaweave_and_runes.rune_carver": "Rune Carving",
+  "jei.manaweave_and_runes.mana_concentrator": "Mana Concentrating"
 }
