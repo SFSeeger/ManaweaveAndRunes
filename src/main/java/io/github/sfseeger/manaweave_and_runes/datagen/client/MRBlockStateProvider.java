@@ -1,6 +1,7 @@
 package io.github.sfseeger.manaweave_and_runes.datagen.client;
 
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
+import io.github.sfseeger.manaweave_and_runes.common.blocks.ManaTransmitter;
 import io.github.sfseeger.manaweave_and_runes.common.blocks.RuneBlock;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRBlockInit;
 import net.minecraft.data.PackOutput;
@@ -41,9 +42,18 @@ public class MRBlockStateProvider extends BlockStateProvider {
         this.registerSimpleBlock(MRBlockInit.VOID_MANA_INFUSED_ROCK_BLOCK);
 
         blockWithExistingModel(MRBlockInit.RUNE_PEDESTAL_BLOCK);
-        blockWithExistingModel(MRBlockInit.MANA_TRANSMITTER_BLOCK);
         blockWithExistingModel(MRBlockInit.RUNEWROUGHT_BENCH_BLOCK);
         blockWithExistingModel(MRBlockInit.SPELL_DESIGNER_BLOCK);
+
+        DeferredBlock<ManaTransmitter> manaTransmitterBlock = MRBlockInit.MANA_TRANSMITTER_BLOCK;
+
+        this.directionalBlock(manaTransmitterBlock.get(),
+                                 blockState -> this.models()
+                                         .getExistingFile(
+                                                 ResourceLocation.parse(manaTransmitterBlock.getRegisteredName())));
+        this.simpleBlockItem(manaTransmitterBlock.get(), this.models()
+                .getExistingFile(ResourceLocation.parse(manaTransmitterBlock.getRegisteredName())));
+
 
         simpleBlockWithItem(MRBlockInit.NOVICE_MANA_COLLECTOR.get(), this.models()
                 .getExistingFile(modLoc("block/mana_collector")));

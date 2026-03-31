@@ -1,10 +1,14 @@
 package io.github.sfseeger.manaweave_and_runes.core.util;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.BooleanOp;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -40,4 +44,22 @@ public class Utils {
                         random.nextInt((int) area.y()) - ((int) area.y() / 2 + random.nextInt((int) area.y())),
                         random.nextInt((int) area.z()) - (int) area.z() / 2);
     }
+
+    public static VoxelShape rotateShape(Direction to, VoxelShape shape) {
+        final VoxelShape[] shapeBuffer = {Shapes.empty()};
+        shape.forAllBoxes((minX, minY, minZ, maxX, maxY, maxZ) -> {
+            VoxelShape newShape = Shapes.empty();
+            switch (to) {
+                case UP -> newShape = Shapes.create(minX, minY, minZ, maxX, maxY, maxZ);
+                case DOWN -> newShape = Shapes.create(minX, 1 - maxY, 1 - maxZ, maxX, 1 - minY, 1 - minZ);
+                case NORTH -> newShape = Shapes.create(1 - maxX, minZ, 1 - maxY, 1 - minX, maxZ, 1 - minY);
+                case SOUTH -> newShape = Shapes.create(minX, minZ, minY, maxX, maxZ, maxY);
+                case EAST -> newShape = Shapes.create(1 - maxY, minZ, minX, 1 - minY, maxZ, maxX);
+                case WEST -> newShape = Shapes.create(minY, minZ, minX, maxY, maxZ, maxX);
+            }
+            shapeBuffer[0] = Shapes.join(shapeBuffer[0], newShape, BooleanOp.OR);
+        });
+        return shapeBuffer[0];
+    }
+
 }

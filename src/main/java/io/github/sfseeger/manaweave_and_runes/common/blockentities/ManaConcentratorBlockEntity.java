@@ -54,12 +54,12 @@ import static io.github.sfseeger.lib.common.ManaweaveAndRunesCodecs.BLOCK_POS_LI
 
 public class ManaConcentratorBlockEntity extends BlockEntity implements IInventoryBlockEntity, GeoBlockEntity {
     protected static final RawAnimation DEPLOY_ANIMATION = RawAnimation.begin().thenLoop("idle_inactive");
-    protected static final RawAnimation ACTIVATION_ANIMATION =
-            RawAnimation.begin().thenPlay("activate").thenLoop("idle");
+    protected static final RawAnimation ACTIVATION_ANIMATION = RawAnimation.begin()
+            .thenPlay("activate")
+            .thenLoop("idle");
     private static final RawAnimation IDLE_ACTIVE = RawAnimation.begin().thenLoop("idle");
     private static final RawAnimation DEACTIVATION_ANIMATION = RawAnimation.begin().thenLoop("idle_inactive");
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
-    private boolean isActive;
     public ItemStackHandler inventory = new ItemStackHandler(10) { // TODO: Replace with config value
         @Override
         public boolean isItemValid(int slot, ItemStack stack) {
@@ -72,23 +72,19 @@ public class ManaConcentratorBlockEntity extends BlockEntity implements IInvento
             markUpdated();
         }
     };
+    private boolean isActive;
     private int craftTime;
     private int craftTimePassed;
     private boolean isCrafting;
     private Stack<Integer> slotStack = new Stack<>();
     private ManaConcentratorRecipe currentRecipe;
-
-    public IItemHandler getItemHandler(@Nullable Direction side) {
-        return inventory;
-    }
+    private List<BlockPos> pedestalPositions;
 
     public ManaConcentratorBlockEntity(BlockPos pos, BlockState state) {
         super(MRBlockEntityInit.MANA_CONCENTRATOR_BLOCK_ENTITY.get(), pos, state);
     }
-    private List<BlockPos> pedestalPositions;
 
-    public static void serverTick(Level level, BlockPos pos, BlockState state,
-            ManaConcentratorBlockEntity blockEntity) {
+    public static void serverTick(Level level, BlockPos pos, BlockState state, ManaConcentratorBlockEntity blockEntity) {
         if (level.getGameTime() % 20 == 0) {
             boolean oldState = blockEntity.isActive();
             boolean isActive = blockEntity.validateMultiblock().isValid();
@@ -115,15 +111,15 @@ public class ManaConcentratorBlockEntity extends BlockEntity implements IInvento
                         level.setBlockAndUpdate(pos, block.defaultBlockState());
                     } else {
                         level.addFreshEntity(
-                                new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, result));
+                                new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, result, 0, 0, 0));
                     }
 
                     level.playSound(null, pos, SoundEvents.AMETHYST_BLOCK_RESONATE, SoundSource.BLOCKS, 1.0F, 1.0F);
 
                     float yOffset = blockEntity.getEffectYOffset();
                     ((ServerLevel) level).sendParticles(MRParticleTypeInit.MANA_CONCENTRATED.get(), pos.getX() + .5,
-                                                        pos.getY() + yOffset, pos.getZ() + 0.5,
-                                                        1, 0, 0, 0, yOffset < 1.5 ? 1 : 0);
+                                                        pos.getY() + yOffset, pos.getZ() + 0.5, 1, 0, 0, 0,
+                                                        yOffset < 1.5 ? 1 : 0);
                     blockEntity.stopCrafting();
                 }
                 blockEntity.stopCrafting();
@@ -140,6 +136,41 @@ public class ManaConcentratorBlockEntity extends BlockEntity implements IInvento
         }
     }
 
+    public static void clientTick(Level level, BlockPos pos, BlockState state, ManaConcentratorBlockEntity blockEntity) {
+        RandomSource randomsource = level.getRandom();
+
+
+        if (randomsource.nextFloat() <= 0.5F && blockEntity.isActive()) {
+            Vec3 vec3 = ParticleUtils.randomPosInsideBox(pos, randomsource, -0.25, 0.25, -0.25, 1.25, 0.75, 1.25);
+            level.addParticle(ParticleTypes.GLOW, vec3.x(), vec3.y(), vec3.z(), 0.0, 0.0, 0.0);
+        }
+
+        if (blockEntity.isCrafting) {
+            Vec3 vec3 = ParticleUtils.randomPosInsideBox(pos, randomsource, -0.25, 0.25, -0.25, 1.25, 0.75, 1.25);
+            level.addParticle(ParticleTypes.END_ROD, vec3.x(), vec3.y(), vec3.z(), 0.0, 0.0, 0.0);
+
+            List<BlockPos> filteredPedestalPositions = blockEntity.pedestalPositions.stream()
+                    .filter(pedestalPos -> level.getBlockEntity(
+                            pos.offset(pedestalPos)) instanceof RunePedestalBlockEntity re && !re.getItem().isEmpty())
+                    .toList();
+
+            for (BlockPos pedestalPos : filteredPedestalPositions.stream().map(pos::offset).toList()) {
+                Vec3 pedestalVec = new Vec3(pedestalPos.getX(), pedestalPos.getY(), pedestalPos.getZ());
+                Vec3 vecToConcentrator = new Vec3(pos.getX(), pos.getY(), pos.getZ()).vectorTo(pedestalVec);
+                for (int i = 0; i < 4; i++) {
+                    Vec3 randomPedestalVec = vecToConcentrator.offsetRandom(randomsource, .5f);
+                    level.addParticle(MRParticleTypeInit.MANA_TRAVEL_PARTICLE.get(), pos.getX() + 0.5f,
+                                      pos.getY() + 1.5f, pos.getZ() + 0.5f, randomPedestalVec.x(),
+                                      randomPedestalVec.y(), randomPedestalVec.z());
+                }
+            }
+        }
+    }
+
+    public IItemHandler getItemHandler(@Nullable Direction side) {
+        return inventory;
+    }
+
     private void stopCrafting() {
         isCrafting = false;
         craftTime = 0;
@@ -149,7 +180,8 @@ public class ManaConcentratorBlockEntity extends BlockEntity implements IInvento
             BlockPos blockPos = getBlockPos().offset(pos);
             BlockState state = level.getBlockState(blockPos);
             try {
-                level.setBlockAndUpdate(blockPos, state.setValue(RuneBlock.ACTIVE, false));
+                level.setBlockAndUpdate(blockPos, state.setValue(RuneBlock.RITUAL_ACTIVE, false)
+                        .setValue(RuneBlock.ACTIVE, false));
             } catch (IllegalArgumentException e) {
                 // Ignore
             }
@@ -167,9 +199,8 @@ public class ManaConcentratorBlockEntity extends BlockEntity implements IInvento
         if (level == null) {
             return new MultiblockValidator.MultiBlockValidationData(false, null, null, null);
         }
-        ManaConcentratorType type = level.getBlockState(getBlockPos()).getBlock() instanceof ManaConcentratorBlock block
-                ? block.getType()
-                : null;
+        ManaConcentratorType type = level.getBlockState(getBlockPos())
+                .getBlock() instanceof ManaConcentratorBlock block ? block.getType() : null;
         if (type == null || type.getShapeValidator((ServerLevel) level) == null) {
             return new MultiblockValidator.MultiBlockValidationData(false, null, null, null);
         }
@@ -196,7 +227,8 @@ public class ManaConcentratorBlockEntity extends BlockEntity implements IInvento
             getManaConcentratorType().findBlocks(level, MRBlockInit.RUNE_BLOCK.get()).forEach(pos -> {
                 BlockPos blockPos = getBlockPos().offset(pos);
                 BlockState state = level.getBlockState(blockPos);
-                level.setBlockAndUpdate(blockPos, state.setValue(RuneBlock.ACTIVE, true));
+                level.setBlockAndUpdate(blockPos,
+                                        state.setValue(RuneBlock.RITUAL_ACTIVE, true).setValue(RuneBlock.ACTIVE, true));
             });
             markUpdated();
             return true;
@@ -216,46 +248,12 @@ public class ManaConcentratorBlockEntity extends BlockEntity implements IInvento
         return optional.map(RecipeHolder::value).orElse(null);
     }
 
-    public static void clientTick(Level level, BlockPos pos, BlockState state,
-            ManaConcentratorBlockEntity blockEntity) {
-        RandomSource randomsource = level.getRandom();
-
-
-        if (randomsource.nextFloat() <= 0.5F && blockEntity.isActive()) {
-            Vec3 vec3 = ParticleUtils.randomPosInsideBox(pos, randomsource, -0.25, 0.25, -0.25, 1.25, 0.75, 1.25);
-            level.addParticle(ParticleTypes.GLOW, vec3.x(), vec3.y(), vec3.z(), 0.0, 0.0, 0.0);
-        }
-
-        if (blockEntity.isCrafting) {
-            Vec3 vec3 = ParticleUtils.randomPosInsideBox(pos, randomsource, -0.25, 0.25, -0.25, 1.25, 0.75, 1.25);
-            level.addParticle(ParticleTypes.END_ROD, vec3.x(), vec3.y(), vec3.z(), 0.0, 0.0, 0.0);
-
-            List<BlockPos> filteredPedestalPositions = blockEntity.pedestalPositions.stream()
-                    .filter(pedestalPos -> level.getBlockEntity(
-                            pos.offset(pedestalPos)) instanceof RunePedestalBlockEntity re && !re.getItem().isEmpty())
-                    .toList();
-
-            for (BlockPos pedestalPos : filteredPedestalPositions.stream().map(pos::offset).toList()) {
-                Vec3 pedestalVec =
-                        new Vec3(pedestalPos.getX(), pedestalPos.getY(), pedestalPos.getZ());
-                Vec3 vecToConcentrator = new Vec3(pos.getX(), pos.getY(), pos.getZ()).vectorTo(pedestalVec);
-                for (int i = 0; i < 4; i++) {
-                    Vec3 randomPedestalVec = vecToConcentrator.offsetRandom(randomsource, .5f);
-                    level.addParticle(MRParticleTypeInit.MANA_TRAVEL_PARTICLE.get(),
-                                      pos.getX() + 0.5f, pos.getY() + 1.5f, pos.getZ() + 0.5f,
-                                      randomPedestalVec.x(), randomPedestalVec.y(), randomPedestalVec.z());
-                }
-            }
-        }
-    }
-
     public ItemStack craft() {
         if (!isActive || level == null) {
             return ItemStack.EMPTY;
         }
         ManaConcentratorType type = getManaConcentratorType();
-        List<BlockPos> relativePedestalPositions =
-                type.findBlocks(level, MRBlockInit.RUNE_PEDESTAL_BLOCK.get());
+        List<BlockPos> relativePedestalPositions = type.findBlocks(level, MRBlockInit.RUNE_PEDESTAL_BLOCK.get());
 
         if (this.currentRecipe != null) {
             Map<Mana, Integer> extractedMana = new HashMap<>();
@@ -302,9 +300,8 @@ public class ManaConcentratorBlockEntity extends BlockEntity implements IInvento
     }
 
     public ManaConcentratorType getManaConcentratorType() {
-        return level.getBlockState(getBlockPos()).getBlock() instanceof ManaConcentratorBlock block
-                ? block.getType()
-                : null;
+        return level.getBlockState(getBlockPos())
+                .getBlock() instanceof ManaConcentratorBlock block ? block.getType() : null;
     }
 
 
@@ -349,16 +346,14 @@ public class ManaConcentratorBlockEntity extends BlockEntity implements IInvento
     }
 
     public ManaConcentratorInput getInput(ManaConcentratorType type) {
-        List<BlockPos> relativePedestalPositions =
-                type.findBlocks(level, MRBlockInit.RUNE_PEDESTAL_BLOCK.get());
+        List<BlockPos> relativePedestalPositions = type.findBlocks(level, MRBlockInit.RUNE_PEDESTAL_BLOCK.get());
         // We can set this here to save on updates
         pedestalPositions = relativePedestalPositions;
         List<ItemStack> inputItems = new ArrayList<>();
         for (BlockPos pos : relativePedestalPositions) {
             BlockEntity blockEntity = level.getBlockEntity(getBlockPos().offset(pos));
             ItemStack item;
-            if (blockEntity instanceof RunePedestalBlockEntity runePedestalBlockEntity && !(item =
-                    runePedestalBlockEntity.getItem()).isEmpty()) {
+            if (blockEntity instanceof RunePedestalBlockEntity runePedestalBlockEntity && !(item = runePedestalBlockEntity.getItem()).isEmpty()) {
                 inputItems.add(item);
             }
         }
@@ -423,11 +418,14 @@ public class ManaConcentratorBlockEntity extends BlockEntity implements IInvento
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController<>(this, "controller", 0, this::deployAnimController)
-                                .triggerableAnim("activate", ACTIVATION_ANIMATION)
-                                .triggerableAnim("idle_active", IDLE_ACTIVE)
-                                .triggerableAnim("deactivate", DEACTIVATION_ANIMATION)
-        );
+        controllers.add(
+                new AnimationController<>(this,
+                                          "controller",
+                                          0,
+                                          this::deployAnimController)
+                        .triggerableAnim("activate", ACTIVATION_ANIMATION)
+                        .triggerableAnim("idle_active", IDLE_ACTIVE)
+                        .triggerableAnim("deactivate", DEACTIVATION_ANIMATION));
     }
 
     @Override

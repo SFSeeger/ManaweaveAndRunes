@@ -93,7 +93,7 @@ public class SpellDesignerBlockEntity extends BlockEntity implements ICraftingPa
                 List<AbstractSpellModifier> modifiers = new ArrayList<>();
                 if (!part.getModifiers().isEmpty()) {
                     modifiers = part.getModifiers();
-                    if (modifiers.size() > 16) return ItemStack.EMPTY;
+                    if (modifiers.size() >= 16) return ItemStack.EMPTY;
                 }
                 SpellPart part1 = new SpellPart(part.getCore(), modifiers); //Replace with modifiers from parts?
                 for(SpellPart p : parts){

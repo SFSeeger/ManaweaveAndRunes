@@ -7,10 +7,13 @@ import io.github.sfseeger.lib.common.mana.Manas;
 import io.github.sfseeger.lib.datagen.recipes.ManaConcentratorRecipeBuilder;
 import io.github.sfseeger.lib.datagen.recipes.RuneCarverRecipeBuilder;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
+import io.github.sfseeger.manaweave_and_runes.common.recipes.ingredients.PotionIngredient;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRBlockInit;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRItemInit;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRTagInit;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponentPatch;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
@@ -19,6 +22,8 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.PotionContents;
+import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -27,6 +32,7 @@ import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
 import vazkii.patchouli.api.PatchouliAPI;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 
@@ -189,7 +195,6 @@ public class MRRecipeProvider extends RecipeProvider {
                 ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "spell_effect.heal")))
                 .setTier(Tier.MASTER)
                 .setCraftTime(300)
-                //.addInput(new PotionIngredient(PotionIngredient.PotionType.NORMAL, List.of(Potions.STRONG_HEALING)).toVanilla())
                 .addInput(Ingredient.of(Items.GOLDEN_APPLE))
                 .addInput(Ingredient.of(Items.DIAMOND))
                 .addInput(Ingredient.of(MRItemInit.TANZANITE))

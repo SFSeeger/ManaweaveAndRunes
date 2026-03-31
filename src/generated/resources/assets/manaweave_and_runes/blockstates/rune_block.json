@@ -1,32 +1,62 @@
 {
   "variants": {
-    "active=false,facing=east": {
+    "active=false,facing=east,ritual_active=false": {
       "model": "manaweave_and_runes:block/rune_block_inactive",
       "y": 90
     },
-    "active=false,facing=north": {
+    "active=false,facing=east,ritual_active=true": {
+      "model": "manaweave_and_runes:block/rune_block_inactive",
+      "y": 90
+    },
+    "active=false,facing=north,ritual_active=false": {
       "model": "manaweave_and_runes:block/rune_block_inactive"
     },
-    "active=false,facing=south": {
+    "active=false,facing=north,ritual_active=true": {
+      "model": "manaweave_and_runes:block/rune_block_inactive"
+    },
+    "active=false,facing=south,ritual_active=false": {
       "model": "manaweave_and_runes:block/rune_block_inactive",
       "y": 180
     },
-    "active=false,facing=west": {
+    "active=false,facing=south,ritual_active=true": {
+      "model": "manaweave_and_runes:block/rune_block_inactive",
+      "y": 180
+    },
+    "active=false,facing=west,ritual_active=false": {
       "model": "manaweave_and_runes:block/rune_block_inactive",
       "y": 270
     },
-    "active=true,facing=east": {
+    "active=false,facing=west,ritual_active=true": {
+      "model": "manaweave_and_runes:block/rune_block_inactive",
+      "y": 270
+    },
+    "active=true,facing=east,ritual_active=false": {
       "model": "manaweave_and_runes:block/rune_block_active",
       "y": 90
     },
-    "active=true,facing=north": {
+    "active=true,facing=east,ritual_active=true": {
+      "model": "manaweave_and_runes:block/rune_block_active",
+      "y": 90
+    },
+    "active=true,facing=north,ritual_active=false": {
       "model": "manaweave_and_runes:block/rune_block_active"
     },
-    "active=true,facing=south": {
+    "active=true,facing=north,ritual_active=true": {
+      "model": "manaweave_and_runes:block/rune_block_active"
+    },
+    "active=true,facing=south,ritual_active=false": {
       "model": "manaweave_and_runes:block/rune_block_active",
       "y": 180
     },
-    "active=true,facing=west": {
+    "active=true,facing=south,ritual_active=true": {
+      "model": "manaweave_and_runes:block/rune_block_active",
+      "y": 180
+    },
+    "active=true,facing=west,ritual_active=false": {
+      "model": "manaweave_and_runes:block/rune_block_active",
+      "y": 270
+    },
+    "active=true,facing=west,ritual_active=true": {
       "model": "manaweave_and_runes:block/rune_block_active",
       "y": 270
     }

@@ -1,7 +1,30 @@
 {
   "variants": {
-    "": {
+    "facing=down": {
+      "model": "manaweave_and_runes:block/mana_transmitter",
+      "x": 180
+    },
+    "facing=east": {
+      "model": "manaweave_and_runes:block/mana_transmitter",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north": {
+      "model": "manaweave_and_runes:block/mana_transmitter",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "manaweave_and_runes:block/mana_transmitter",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up": {
       "model": "manaweave_and_runes:block/mana_transmitter"
+    },
+    "facing=west": {
+      "model": "manaweave_and_runes:block/mana_transmitter",
+      "x": 90,
+      "y": 270
     }
   }
 }

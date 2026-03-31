@@ -15,23 +15,7 @@
   "manaMap": [
     {
       "amount": 50,
-      "manaType": "manaweave_and_runes:water_mana"
-    },
-    {
-      "amount": 50,
       "manaType": "manaweave_and_runes:earth_mana"
-    },
-    {
-      "amount": 50,
-      "manaType": "manaweave_and_runes:order_mana"
-    },
-    {
-      "amount": 50,
-      "manaType": "manaweave_and_runes:fire_mana"
-    },
-    {
-      "amount": 50,
-      "manaType": "manaweave_and_runes:soul_mana"
     },
     {
       "amount": 50,
@@ -39,11 +23,27 @@
     },
     {
       "amount": 50,
+      "manaType": "manaweave_and_runes:void_mana"
+    },
+    {
+      "amount": 50,
+      "manaType": "manaweave_and_runes:order_mana"
+    },
+    {
+      "amount": 50,
+      "manaType": "manaweave_and_runes:water_mana"
+    },
+    {
+      "amount": 50,
       "manaType": "manaweave_and_runes:entropy_mana"
     },
     {
       "amount": 50,
-      "manaType": "manaweave_and_runes:void_mana"
+      "manaType": "manaweave_and_runes:soul_mana"
+    },
+    {
+      "amount": 50,
+      "manaType": "manaweave_and_runes:fire_mana"
     }
   ],
   "result": {
