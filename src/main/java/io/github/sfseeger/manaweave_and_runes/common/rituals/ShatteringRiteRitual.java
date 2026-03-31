@@ -2,7 +2,8 @@ package io.github.sfseeger.manaweave_and_runes.common.rituals;
 
 import io.github.sfseeger.lib.common.Tier;
 import io.github.sfseeger.lib.common.rituals.Ritual;
-import io.github.sfseeger.lib.common.rituals.RitualStepResult;
+import io.github.sfseeger.lib.common.rituals.state_machine.RitualStateMachineContext;
+import io.github.sfseeger.lib.common.rituals.state_machine.RitualStepResult;
 import io.github.sfseeger.lib.common.rituals.RitualUtils;
 import io.github.sfseeger.lib.common.rituals.ritual_data.RitualContext;
 import io.github.sfseeger.lib.common.rituals.ritual_data.RitualDataTypes;
@@ -25,8 +26,6 @@ import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
 
-import java.util.Optional;
-
 public class ShatteringRiteRitual extends Ritual {
     private static final int MAX_TRIES = 10;
 
@@ -41,27 +40,26 @@ public class ShatteringRiteRitual extends Ritual {
     }
 
     @Override
-    public RitualStepResult onRitualServerTick(ServerLevel level, BlockPos pos, BlockState state, int ticksPassed,
-            RitualContext context, RitualOriginType originType) {
+    public RitualStepResult onRitualServerTick(RitualStateMachineContext ctx) {
 
-        PositionRitualData data = context.getData(RitualDataTypes.POSITION_TYPE);
+        PositionRitualData data = ctx.ritualContext().getData(RitualDataTypes.POSITION_TYPE);
 
-        if (data == null || data.getPos().distManhattan(pos) >= 64) {
+        if (data == null || data.getPos().distManhattan(ctx.pos()) >= 64) {
             RitualUtils.displayMessageToStartingPlayer(
-                    Component.translatable("ritual.shattering_rite.invalid_position"), level, context);
-            return RitualStepResult.ABORT;
+                    Component.translatable("ritual.shattering_rite.invalid_position"), ctx.level(), ctx.ritualContext());
+            return RitualStepResult.FAIL;
         }
-        if (level.random.nextInt(100) < 50) {
+        if (ctx.level().random.nextInt(100) < 50) {
             return RitualStepResult.SKIP;
         }
 
         Vec3 d = getDimension();
 
-        RandomSource random = level.random;
+        RandomSource random = ctx.level().random;
 
         for (int i = 0; i < MAX_TRIES; i++) {
             BlockPos targetPos = Utils.getRandomBlockPos(data.getPos(), random, d);
-            if (tryBreak(targetPos, level, pos)) {
+            if (tryBreak(targetPos, ctx.level(), ctx.pos())) {
                 return RitualStepResult.SUCCESS;
             }
         }
@@ -70,14 +68,13 @@ public class ShatteringRiteRitual extends Ritual {
     }
 
     @Override
-    public void onRitualEnd(Level level, BlockPos pos, BlockState state, RitualContext context,
-            RitualOriginType originType) {
-        returnPositionRune(level, pos);
+    public void onRitualEnd(RitualStateMachineContext ctx) {
+        returnPositionRune(ctx.level(), ctx.pos());
     }
 
     @Override
-    public void onRitualInterrupt(Level level, BlockPos pos, BlockState state, RitualContext context,
-            RitualOriginType originType) {
+    public void onRitualAbort(Level level, BlockPos pos, BlockState state, RitualContext context,
+                              RitualOriginType originType) {
         returnPositionRune(level, pos);
         tryBreak(Utils.getRandomBlockPos(pos, level.random, getDimension()), level, pos);
     }

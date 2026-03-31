@@ -2,7 +2,8 @@ package io.github.sfseeger.manaweave_and_runes.common.rituals;
 
 import io.github.sfseeger.lib.common.Tier;
 import io.github.sfseeger.lib.common.rituals.Ritual;
-import io.github.sfseeger.lib.common.rituals.RitualStepResult;
+import io.github.sfseeger.lib.common.rituals.state_machine.RitualStateMachineContext;
+import io.github.sfseeger.lib.common.rituals.state_machine.RitualStepResult;
 import io.github.sfseeger.lib.common.rituals.ritual_data.RitualContext;
 import io.github.sfseeger.lib.common.rituals.ritual_data.builtin.PlayerRitualData;
 import io.github.sfseeger.manaweave_and_runes.common.MRDamageTypes;
@@ -37,25 +38,24 @@ public class TeleportRitual extends Ritual {
     }
 
     @Override
-    public RitualStepResult onRitualServerTick(ServerLevel level, BlockPos pos, BlockState state, int ticksPassed,
-            RitualContext context, RitualOriginType originType) {
+    public RitualStepResult onRitualServerTick(RitualStateMachineContext ctx) {
         //TODO: This seems very expensive, consider refactoring
-        if (ticksPassed % 10 == 0) {
-            Tier tier = ((RitualAnchorBlock) state.getBlock()).ritualAnchorType.getTier();
+        if (ctx.ticksPassed() % 10 == 0) {
+            Tier tier = ((RitualAnchorBlock) ctx.state().getBlock()).ritualAnchorType.getTier();
             Player target;
             if (tier.greaterThanEqual(Tier.ASCENDED)) {
-                PlayerRitualData playerRitualData = context.getData(PLAYER_TYPE);
+                PlayerRitualData playerRitualData = ctx.ritualContext().getData(PLAYER_TYPE);
                 if (playerRitualData == null) {
-                    return RitualStepResult.ABORT;
+                    return RitualStepResult.FAIL;
                 }
-                target = level.getServer().getPlayerList().getPlayer(playerRitualData.getPlayerUUID());
+                target = ctx.level().getServer().getPlayerList().getPlayer(playerRitualData.getPlayerUUID());
             } else {
-                target = getPlayer(level, context);
+                target = getPlayer(ctx.level(), ctx.ritualContext());
             }
-            if (target == null) return RitualStepResult.ABORT;
+            if (target == null) return RitualStepResult.FAIL;
             ServerLevel targetLevel = (ServerLevel) target.level();
             Vec3 vec =
-                    ParticleUtils.randomPosInsideBox(BlockPos.containing(target.position()), level.getRandom(), -.25, 0,
+                    ParticleUtils.randomPosInsideBox(BlockPos.containing(target.position()), ctx.level().getRandom(), -.25, 0,
                                                      -.25, 1.25, 1.25, 1.25);
             targetLevel.sendParticles(ParticleTypes.PORTAL, vec.x, vec.y, vec.z, 15, .5, 0, .5, 1);
         }
@@ -72,26 +72,25 @@ public class TeleportRitual extends Ritual {
     }
 
     @Override
-    public void onRitualEnd(Level level, BlockPos pos, BlockState state, RitualContext context,
-            RitualOriginType originType) {
-        Tier tier = ((RitualAnchorBlock) state.getBlock()).ritualAnchorType.getTier();
-        RandomSource random = level.getRandom();
+    public void onRitualEnd(RitualStateMachineContext ctx) {
+        Tier tier = ((RitualAnchorBlock) ctx.state().getBlock()).ritualAnchorType.getTier();
+        RandomSource random = ctx.level().getRandom();
         Player target;
         if (tier.greaterThanEqual(Tier.ASCENDED)) {
-            target = level.getServer().getPlayerList().getPlayer(context.getData(PLAYER_TYPE).getPlayerUUID());
+            target = ctx.level().getServer().getPlayerList().getPlayer(ctx.ritualContext().getData(PLAYER_TYPE).getPlayerUUID());
         } else {
-            target = getPlayer(level, context);
+            target = getPlayer(ctx.level(), ctx.ritualContext());
         }
         if (target != null) {
-            target.teleportTo((ServerLevel) level, pos.getX() + random.nextInt(3) - 1, pos.getY(),
-                              pos.getZ() + random.nextInt(3) - 1, Set.of(), 0, 0);
+            target.teleportTo((ServerLevel) ctx.level(), ctx.pos().getX() + random.nextInt(3) - 1, ctx.pos().getY(),
+                              ctx.pos().getZ() + random.nextInt(3) - 1, Set.of(), 0, 0);
         }
-        returnRune(level, pos);
+        returnRune(ctx.level(), ctx.pos());
     }
 
     @Override
-    public void onRitualInterrupt(Level level, BlockPos pos, BlockState state, RitualContext context,
-            RitualOriginType originType) {
+    public void onRitualAbort(Level level, BlockPos pos, BlockState state, RitualContext context,
+                              RitualOriginType originType) {
         returnRune(level, pos);
         Player p = level.getServer()
                 .getPlayerList()

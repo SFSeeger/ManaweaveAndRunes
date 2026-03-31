@@ -5,6 +5,8 @@ import com.mojang.serialization.Codec;
 import io.github.sfseeger.lib.common.Tier;
 import io.github.sfseeger.lib.common.mana.Mana;
 import io.github.sfseeger.lib.common.rituals.ritual_data.RitualContext;
+import io.github.sfseeger.lib.common.rituals.state_machine.RitualStateMachineContext;
+import io.github.sfseeger.lib.common.rituals.state_machine.RitualStepResult;
 import io.github.sfseeger.lib.core.ManaweaveAndRunesRegistries;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
@@ -14,7 +16,6 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
@@ -76,24 +77,30 @@ public abstract class Ritual {
         return input != null ? input.getTickItemCost() : List.of();
     }
 
-    public abstract RitualStepResult onRitualServerTick(ServerLevel level, BlockPos pos, BlockState state,
-            int ticksPassed, RitualContext context,
-            RitualOriginType originType);
+    public abstract RitualStepResult onRitualServerTick(RitualStateMachineContext ctx);
 
     public void onRitualClientTick(Level level, BlockPos pos, BlockState state, int ticksPassed, RitualContext context,
-            RitualOriginType originType) {
+                                   RitualOriginType originType
+    ) {
     }
 
     public RitualStepResult onRitualStart(Level level, BlockPos pos, BlockState state, RitualContext context,
-            RitualOriginType originType) {
+                                          RitualOriginType originType
+    ) {
         return RitualStepResult.SUCCESS;
     }
 
-    public abstract void onRitualEnd(Level level, BlockPos pos, BlockState state, RitualContext context,
-            RitualOriginType originType);
+    public abstract void onRitualEnd(RitualStateMachineContext ctx);
 
-    public abstract void onRitualInterrupt(Level level, BlockPos pos, BlockState state, RitualContext context,
-            RitualOriginType originType);
+    @Deprecated
+    public void onRitualAbort(Level level, BlockPos pos, BlockState state, RitualContext context,
+                              RitualOriginType originType
+    ) {
+    }
+
+    public void onRitualAbort(RitualStateMachineContext ctx) {
+        onRitualAbort(ctx.level(), ctx.pos(), ctx.state(), ctx.ritualContext(), ctx.originType());
+    }
 
     public int getDuration() {
         return duration;
@@ -167,13 +174,13 @@ public abstract class Ritual {
         return "Ritual{" + getRegistryName() + "}";
     }
 
+    public <T> Codec<T> getExtraDataCodec() {
+        return null;
+    }
+
     public enum RitualOriginType {
         CIRCLE,
         ANCHOR
-    }
-
-    public <T> Codec<T> getExtraDataCodec() {
-        return null;
     }
 
     ;

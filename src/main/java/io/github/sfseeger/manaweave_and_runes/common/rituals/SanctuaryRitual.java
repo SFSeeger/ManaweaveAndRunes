@@ -2,13 +2,13 @@ package io.github.sfseeger.manaweave_and_runes.common.rituals;
 
 import io.github.sfseeger.lib.common.Tier;
 import io.github.sfseeger.lib.common.rituals.Ritual;
-import io.github.sfseeger.lib.common.rituals.RitualStepResult;
 import io.github.sfseeger.lib.common.rituals.RitualUtils;
 import io.github.sfseeger.lib.common.rituals.ritual_data.RitualContext;
+import io.github.sfseeger.lib.common.rituals.state_machine.RitualStateMachineContext;
+import io.github.sfseeger.lib.common.rituals.state_machine.RitualStepResult;
 import io.github.sfseeger.manaweave_and_runes.client.particles.mana_particle.ManaParticleOptions;
 import io.github.sfseeger.manaweave_and_runes.core.util.ParticleUtils;
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -45,13 +45,12 @@ public class SanctuaryRitual extends Ritual {
     }
 
     @Override
-    public RitualStepResult onRitualServerTick(ServerLevel level, BlockPos pos, BlockState state, int ticksPassed,
-            RitualContext context, RitualOriginType originType) {
-        if (ticksPassed % 15 != 0) return RitualStepResult.SKIP;
-        AABB boundingBox = new AABB(pos).inflate(getDimension().length() / 2);
-        Vec3 ritualCenter = new Vec3(pos.getX(), pos.getY(), pos.getZ());
+    public RitualStepResult onRitualServerTick(RitualStateMachineContext ctx) {
+        if (ctx.ticksPassed() % 15 != 0) return RitualStepResult.SKIP;
+        AABB boundingBox = new AABB(ctx.pos()).inflate(getDimension().length() / 2);
+        Vec3 ritualCenter = new Vec3(ctx.pos().getX(), ctx.pos().getY(), ctx.pos().getZ());
 
-        List<Mob> mobs = level.getEntitiesOfClass(Mob.class, boundingBox, SanctuaryRitual::isMonster);
+        List<Mob> mobs = ctx.level().getEntitiesOfClass(Mob.class, boundingBox, SanctuaryRitual::isMonster);
         mobs.forEach(mob -> {
             Vec3 mobPos = mob.position();
             Vec3 direction = mobPos.subtract(ritualCenter).normalize().scale(2f);
@@ -59,7 +58,7 @@ public class SanctuaryRitual extends Ritual {
             mob.hurtMarked = true;
         });
 
-        level.getNearbyPlayers(TargetingConditions.forNonCombat().ignoreLineOfSight(), null, boundingBox)
+        ctx.level().getNearbyPlayers(TargetingConditions.forNonCombat().ignoreLineOfSight(), null, boundingBox)
                 .forEach(this::addEffectToPlayer);
 
         return RitualStepResult.SUCCESS;
@@ -67,7 +66,8 @@ public class SanctuaryRitual extends Ritual {
 
     @Override
     public void onRitualClientTick(Level level, BlockPos pos, BlockState state, int ticksPassed, RitualContext context,
-            RitualOriginType originType) {
+                                   RitualOriginType originType
+    ) {
         Vec3 d = getDimension();
         RandomSource random = level.getRandom();
 
@@ -79,14 +79,14 @@ public class SanctuaryRitual extends Ritual {
     }
 
     @Override
-    public void onRitualEnd(Level level, BlockPos pos, BlockState state, RitualContext context,
-            RitualOriginType originType) {
+    public void onRitualEnd(RitualStateMachineContext ctx) {
 
     }
 
     @Override
-    public void onRitualInterrupt(Level level, BlockPos pos, BlockState state, RitualContext context,
-            RitualOriginType originType) {
+    public void onRitualAbort(Level level, BlockPos pos, BlockState state, RitualContext context,
+                              RitualOriginType originType
+    ) {
         RitualUtils.getStartingPlayer(level, context).ifPresent(player -> {
             player.removeEffect(MobEffects.ABSORPTION);
             player.removeEffect(MobEffects.DAMAGE_RESISTANCE);

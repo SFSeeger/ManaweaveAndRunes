@@ -2,10 +2,11 @@ package io.github.sfseeger.manaweave_and_runes.common.rituals;
 
 import io.github.sfseeger.lib.common.Tier;
 import io.github.sfseeger.lib.common.rituals.Ritual;
-import io.github.sfseeger.lib.common.rituals.RitualStepResult;
 import io.github.sfseeger.lib.common.rituals.RitualUtils;
 import io.github.sfseeger.lib.common.rituals.ritual_data.RitualContext;
 import io.github.sfseeger.lib.common.rituals.ritual_data.RitualDataTypes;
+import io.github.sfseeger.lib.common.rituals.state_machine.RitualStateMachineContext;
+import io.github.sfseeger.lib.common.rituals.state_machine.RitualStepResult;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRItemInit;
 import io.github.sfseeger.manaweave_and_runes.core.util.ParticleUtils;
 import net.minecraft.core.BlockPos;
@@ -34,35 +35,38 @@ public class SmiteRitual extends Ritual {
     }
 
     @Override
-    public RitualStepResult onRitualServerTick(ServerLevel level, BlockPos pos, BlockState state, int ticksPassed,
-            RitualContext context, RitualOriginType originType) {
-        UUID playerUUID = context.getData(RitualDataTypes.PLAYER_TYPE).getPlayerUUID();
-        Player player = level.getPlayerByUUID(playerUUID);
-        if (player != null && player.isAlive() && pos.distManhattan(player.blockPosition()) <= getDimension().x() / 2) {
+    public RitualStepResult onRitualServerTick(RitualStateMachineContext ctx) {
+        UUID playerUUID = ctx.ritualContext().getData(RitualDataTypes.PLAYER_TYPE).getPlayerUUID();
+        Player player = ctx.level().getPlayerByUUID(playerUUID);
+        if (player != null && player.isAlive() && ctx.pos()
+                .distManhattan(player.blockPosition()) <= getDimension().x() / 2) {
             Vec3 randomPos =
-                    ParticleUtils.randomPosInsideBox(player.getOnPos(), level.random, 0, 0, 0, 1.25, 2.25, 1.25);
-            level.sendParticles(ParticleTypes.ELECTRIC_SPARK, randomPos.x, randomPos.y, randomPos.z, 5, .25, 0.25, .25,
-                                0);
+                    ParticleUtils.randomPosInsideBox(player.getOnPos(), ctx.level().random, 0, 0, 0, 1.25, 2.25, 1.25);
+            ((ServerLevel) ctx.level())
+                    .sendParticles(ParticleTypes.ELECTRIC_SPARK, randomPos.x, randomPos.y, randomPos.z, 5, .25, 0.25,
+                                   .25,
+                                   0);
         }
 
         return RitualStepResult.SUCCESS;
     }
 
     @Override
-    public void onRitualEnd(Level level, BlockPos pos, BlockState state, RitualContext context,
-            RitualOriginType originType) {
-        returnRune(level, pos);
-        UUID playerUUID = context.getData(RitualDataTypes.PLAYER_TYPE).getPlayerUUID();
-        Player player = level.getPlayerByUUID(playerUUID);
-        if (player != null && player.isAlive() && pos.distManhattan(player.blockPosition()) <= getDimension().x() / 2) {
-            EntityType.LIGHTNING_BOLT.spawn((ServerLevel) level, player.getOnPos(), MobSpawnType.TRIGGERED);
-            EntityType.LIGHTNING_BOLT.spawn((ServerLevel) level, player.getOnPos(), MobSpawnType.TRIGGERED);
+    public void onRitualEnd(RitualStateMachineContext ctx) {
+        returnRune(ctx.level(), ctx.pos());
+        UUID playerUUID = ctx.ritualContext().getData(RitualDataTypes.PLAYER_TYPE).getPlayerUUID();
+        Player player = ctx.level().getPlayerByUUID(playerUUID);
+        if (player != null && player.isAlive() && ctx.pos()
+                .distManhattan(player.blockPosition()) <= getDimension().x() / 2) {
+            EntityType.LIGHTNING_BOLT.spawn((ServerLevel) ctx.level(), player.getOnPos(), MobSpawnType.TRIGGERED);
+            EntityType.LIGHTNING_BOLT.spawn((ServerLevel) ctx.level(), player.getOnPos(), MobSpawnType.TRIGGERED);
         }
     }
 
     @Override
-    public void onRitualInterrupt(Level level, BlockPos pos, BlockState state, RitualContext context,
-            RitualOriginType originType) {
+    public void onRitualAbort(Level level, BlockPos pos, BlockState state, RitualContext context,
+                              RitualOriginType originType
+    ) {
         returnRune(level, pos);
         RitualUtils.getStartingPlayer(level, context).ifPresent(player -> {
             if (player.isAlive() && pos.distManhattan(player.blockPosition()) <= getDimension().x() / 2) {

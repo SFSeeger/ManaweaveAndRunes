@@ -2,7 +2,8 @@ package io.github.sfseeger.manaweave_and_runes.common.rituals;
 
 import io.github.sfseeger.lib.common.Tier;
 import io.github.sfseeger.lib.common.rituals.Ritual;
-import io.github.sfseeger.lib.common.rituals.RitualStepResult;
+import io.github.sfseeger.lib.common.rituals.state_machine.RitualStateMachineContext;
+import io.github.sfseeger.lib.common.rituals.state_machine.RitualStepResult;
 import io.github.sfseeger.lib.common.rituals.ritual_data.RitualContext;
 import io.github.sfseeger.lib.common.rituals.ritual_data.builtin.PlayerListRitualData;
 import net.minecraft.core.BlockPos;
@@ -14,6 +15,7 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
@@ -30,38 +32,36 @@ public class FlightRitual extends Ritual {
     }
 
     @Override
-    public RitualStepResult onRitualServerTick(ServerLevel level, BlockPos pos, BlockState state, int ticksPassed,
-            RitualContext context, RitualOriginType originType) {
-        if (ticksPassed % 20 == 0) {
+    public RitualStepResult onRitualServerTick(RitualStateMachineContext ctx) {
+        if (ctx.ticksPassed() % 20 == 0) {
             Set<UUID> playerUUIDsInArea = new HashSet<>();
-            level.getPlayers(p -> p.position().distanceTo(new Vec3(pos.getX(), pos.getY(), pos.getZ())) <= 30)
+            ((ServerLevel) ctx.level()).getPlayers(p -> p.position().distanceTo(new Vec3(ctx.pos().getX(), ctx.pos().getY(), ctx.pos().getZ())) <= 30)
                     .forEach(player -> {
                         if (player.isAlive()) {
                             player.getAbilities().mayfly = true;
                             player.onUpdateAbilities();
-                            PlayerListRitualData data = context.getData("affected_players", PLAYER_LIST_TYPE);
+                            PlayerListRitualData data = ctx.ritualContext().getData("affected_players", PLAYER_LIST_TYPE);
                             if (data == null) {
                                 data = PlayerListRitualData.fromPlayerList(Set.of());
-                                context.putData("affected_players", data);
+                                ctx.ritualContext().putData("affected_players", data);
                             }
                             data.addPlayer(player);
                             playerUUIDsInArea.add(player.getUUID());
                         }
                     });
-            removeFlightFromPlayers(level, context, playerUUIDsInArea);
+            removeFlightFromPlayers(ctx.level(), ctx.ritualContext(), playerUUIDsInArea);
         }
         return RitualStepResult.SUCCESS;
     }
 
     @Override
-    public void onRitualEnd(Level level, BlockPos pos, BlockState state, RitualContext context,
-            RitualOriginType originType) {
-        removeFlightFromPlayers(level, context, null);
+    public void onRitualEnd(RitualStateMachineContext ctx) {
+        removeFlightFromPlayers(ctx.level(), ctx.ritualContext(), null);
     }
 
     @Override
-    public void onRitualInterrupt(Level level, BlockPos pos, BlockState state, RitualContext context,
-            RitualOriginType originType) {
+    public void onRitualAbort(Level level, BlockPos pos, BlockState state, RitualContext context,
+                              RitualOriginType originType) {
         removeFlightFromPlayers(level, context, null);
     }
 
@@ -72,7 +72,7 @@ public class FlightRitual extends Ritual {
                     .stream()
                     .filter(p -> unaffectedPlayers == null || !unaffectedPlayers.contains(p))
                     .forEach(player -> {
-                        Player p = level.getServer().getPlayerList().getPlayer(player);
+                        Player p = Objects.requireNonNull(level.getServer()).getPlayerList().getPlayer(player);
                         if (p != null) {
                             if (!p.isCreative() && !p.isSpectator()) {
                                 p.getAbilities().mayfly = false;
