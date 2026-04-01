@@ -1,0 +1,16 @@
+{
+  "initialItemCost": [
+    {
+      "item": "minecraft:obsidian"
+    },
+    {
+      "item": "minecraft:nether_wart"
+    },
+    {
+      "item": "manaweave_and_runes:soul_container_rune"
+    }
+  ],
+  "manaCost": [],
+  "manaRate": 20,
+  "tickItemCost": []
+}

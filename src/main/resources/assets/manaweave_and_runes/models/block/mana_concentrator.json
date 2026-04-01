@@ -97,6 +97,6 @@
     }
   },
   "textures": {
-    "particle": "manaweave_and_runes:item/mana_concentrator"
+    "particle": "manaweave_and_runes:block/mana_concentrator"
   }
 }

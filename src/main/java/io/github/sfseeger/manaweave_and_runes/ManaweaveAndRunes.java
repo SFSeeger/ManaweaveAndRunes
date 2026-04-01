@@ -33,6 +33,7 @@ public class ManaweaveAndRunes {
 
         ManaInit.MANA_TYPES.register(modEventBus);
         MRDataComponentsInit.DATA_COMPONENTS.register(modEventBus);
+        MRDataAttachmentInit.ATTACHMENT_TYPES.register(modEventBus);
 
         MRBlockInit.BLOCKS.register(modEventBus);
         MRBlockEntityInit.BLOCK_ENTITY_TYPES.register(modEventBus);
@@ -51,6 +52,7 @@ public class ManaweaveAndRunes {
 
         RitualDataTypesInit.register(modEventBus);
         RitualInit.RITUALS.register(modEventBus);
+        MarkInit.MARKS.register(modEventBus);
 
         SpellNodeInit.SPELL_NODES.register(modEventBus);
 

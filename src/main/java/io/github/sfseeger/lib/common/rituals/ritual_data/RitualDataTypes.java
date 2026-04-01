@@ -1,5 +1,6 @@
 package io.github.sfseeger.lib.common.rituals.ritual_data;
 
+import io.github.sfseeger.lib.common.rituals.ritual_data.builtin.BooleanRitualData;
 import io.github.sfseeger.lib.common.rituals.ritual_data.builtin.PlayerListRitualData;
 import io.github.sfseeger.lib.common.rituals.ritual_data.builtin.PlayerRitualData;
 import io.github.sfseeger.lib.common.rituals.ritual_data.builtin.PositionRitualData;
@@ -30,11 +31,16 @@ public class RitualDataTypes {
                             .collect(
                                     Collectors.toSet())));
 
+    public static final RitualDataType<BooleanRitualData> BOOLEAN_TYPE =
+            new RitualDataType<>(tag -> new BooleanRitualData(
+                    tag.getBoolean("Value")));
+
 
     public static void register(DeferredRegister<RitualDataType<?>> registry) {
         registry.register("default", () -> DEFAULT_TYPE);
         registry.register("position", () -> POSITION_TYPE);
         registry.register("player", () -> PLAYER_TYPE);
         registry.register("player_list", () -> PLAYER_LIST_TYPE);
+        registry.register("boolean", () -> BOOLEAN_TYPE);
     }
 }

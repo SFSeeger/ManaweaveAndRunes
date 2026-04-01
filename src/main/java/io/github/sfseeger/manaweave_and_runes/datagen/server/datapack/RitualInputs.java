@@ -20,7 +20,13 @@ public class RitualInputs {
     public static final ResourceKey<RitualInput> SANCTUARY = registerKey(RitualInit.SANCTUARY_RITUAL.get());
     public static final ResourceKey<RitualInput> ASCENDED_SANCTUARY =
             registerKey(RitualInit.ASCENDED_SANCTUARY_RITUAL.get());
+    public static final ResourceKey<RitualInput> FLIGHT_RITUAL = registerKey(RitualInit.FLIGHT_RITUAL.get());
     public static final ResourceKey<RitualInput> SHATTERING_RITE = registerKey(RitualInit.SHATTERING_RITE_RITUAL.get());
+    public static final ResourceKey<RitualInput> MARK_OF_OVERHEATING =
+            registerKey(RitualInit.MARK_OF_OVERHEATING_RITUAL.get());
+    public static final ResourceKey<RitualInput> CURSE_REMOVAL_RITUAL =
+            registerKey(RitualInit.CURSE_REMOVAL_RITUAL.get());
+
 
 
     public static void bootsrap(BootstrapContext<RitualInput> context) {
@@ -87,6 +93,14 @@ public class RitualInputs {
                 .setManaRate(60)
                 .build()
         );
+        context.register(FLIGHT_RITUAL, new RitualInput.Builder()
+                .addInitialItemCost(Ingredient.of(Items.FEATHER))
+                .addInitialItemCost(Ingredient.of(Items.FEATHER))
+                .addManaCost(Manas.AirMana, 20)
+                .addManaCost(Manas.SoulMana, 5)
+                .setManaRate(40)
+                .build()
+        );
         context.register(SHATTERING_RITE, new RitualInput.Builder()
                 .addInitialItemCost(Ingredient.of(Items.DIAMOND))
                 .addInitialItemCost(Ingredient.of(Items.DIAMOND_PICKAXE))
@@ -105,6 +119,33 @@ public class RitualInputs {
                 .addManaCost(Manas.OrderMana, 5)
                 .addManaCost(Manas.AirMana, 10)
                 .setManaRate(10)
+                .build()
+        );
+
+        context.register(MARK_OF_OVERHEATING, new RitualInput.Builder()
+                .addInitialItemCost(Ingredient.of(Items.BLAZE_POWDER))
+                .addInitialItemCost(Ingredient.of(Items.BLAZE_ROD))
+                .addInitialItemCost(Ingredient.of(MRItemInit.SOUL_CONTAINER_RUNE_ITEM))
+                .addManaCost(Manas.FireMana, 15)
+                .addManaCost(Manas.EntropyMana, 5)
+                .setManaRate(20)
+                .build()
+        );
+        context.register(registerKey(RitualInit.MARK_OF_SINKING_RITUAL.get()), new RitualInput.Builder()
+                .addInitialItemCost(Ingredient.of(Items.OBSIDIAN))
+                .addInitialItemCost(Ingredient.of(Items.NETHER_WART))
+                .addInitialItemCost(Ingredient.of(MRItemInit.SOUL_CONTAINER_RUNE_ITEM))
+                .setManaRate(20)
+                .build()
+        );
+
+        context.register(CURSE_REMOVAL_RITUAL, new RitualInput.Builder()
+                .addInitialItemCost(Ingredient.of(Items.BLUE_ORCHID))
+                .addInitialItemCost(Ingredient.of(Items.GLOW_INK_SAC))
+                .addInitialItemCost(Ingredient.of(MRItemInit.SOUL_CONTAINER_RUNE_ITEM))
+                .addManaCost(Manas.FireMana, 15)
+                .addManaCost(Manas.EntropyMana, 5)
+                .setManaRate(20)
                 .build()
         );
     }

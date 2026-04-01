@@ -29,7 +29,6 @@ public class RitualStateMachine {
                 setStepId(RitualStepId.PRE_TICK_LOOP);
             }
             case PRE_TICK_LOOP -> {
-                System.out.println("Inside Pre Tick Loop");
                 for (RitualStep step : machineDefinition.initialSteps()) {
                     RitualStepResult result = step.execute(ctx);
                     switch (result) {
@@ -38,9 +37,9 @@ public class RitualStateMachine {
                         case FAIL -> setStepId(RitualStepId.ABORT);
                     }
                 }
+                break;
             }
             case TICK_LOOP -> {
-                System.out.println("Inside Tick Loop");
                 for (RitualStep step : machineDefinition.tickSteps()) {
                     RitualStepResult result = step.execute(ctx);
                     switch (result) {
@@ -51,6 +50,7 @@ public class RitualStateMachine {
                         }
                     }
                 }
+                break;
             }
             case ABORT -> {
                 machineDefinition.abortStep().execute(ctx);

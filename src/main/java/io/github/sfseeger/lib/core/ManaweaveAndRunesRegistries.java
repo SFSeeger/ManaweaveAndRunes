@@ -1,6 +1,7 @@
 package io.github.sfseeger.lib.core;
 
 import io.github.sfseeger.lib.common.mana.Mana;
+import io.github.sfseeger.lib.common.rituals.marks.Mark;
 import io.github.sfseeger.lib.common.rituals.Ritual;
 import io.github.sfseeger.lib.common.rituals.RitualInput;
 import io.github.sfseeger.lib.common.rituals.ritual_data.RitualDataType;
@@ -27,6 +28,15 @@ public class ManaweaveAndRunesRegistries {
             .sync(true)
             .defaultKey(ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID,
                                                               "default_ritual")) //TODO: Change this to the actual default key
+            .maxId(256)
+            .create();
+
+    public static ResourceKey<Registry<Mark>> MARK_REGISTRY_KEY =
+            ResourceKey.createRegistryKey(ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "mark"));
+
+    public static Registry<Mark> MARK_REGISTRY = new RegistryBuilder<>(MARK_REGISTRY_KEY)
+            .sync(true)
+            .defaultKey(ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "empty_mark")) //TODO: Change this to the actual default key
             .maxId(256)
             .create();
 

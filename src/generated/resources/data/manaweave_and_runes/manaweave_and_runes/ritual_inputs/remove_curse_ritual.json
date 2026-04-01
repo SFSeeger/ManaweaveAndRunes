@@ -1,0 +1,25 @@
+{
+  "initialItemCost": [
+    {
+      "item": "minecraft:blue_orchid"
+    },
+    {
+      "item": "minecraft:glow_ink_sac"
+    },
+    {
+      "item": "manaweave_and_runes:soul_container_rune"
+    }
+  ],
+  "manaCost": [
+    {
+      "amount": 5,
+      "manaType": "manaweave_and_runes:entropy_mana"
+    },
+    {
+      "amount": 15,
+      "manaType": "manaweave_and_runes:fire_mana"
+    }
+  ],
+  "manaRate": 20,
+  "tickItemCost": []
+}

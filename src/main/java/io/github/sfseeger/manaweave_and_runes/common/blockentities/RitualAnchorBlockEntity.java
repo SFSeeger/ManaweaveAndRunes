@@ -84,8 +84,8 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
         super(MRBlockEntityInit.RITUAL_ANCHOR_BLOCK_ENTITY.get(), pos, blockState);
         stateMachine = new RitualStateMachine.Builder()
                 .withPreTickStep("Consume Initial Items", this::consumeInitialItem)
-                .withTickStep("Consume Mana Tick", this::consumeMana)
                 .withTickStep("Consume Tick Items", this::consumeTickItem)
+                .withTickStep("Consume Mana Tick", this::consumeMana)
                 .withTickStep("Execute Ritual Tick", ctx -> {
                     if (getRitual() == null) return RitualStepResult.END;
                     return this.getRitual().onRitualServerTick(ctx);
@@ -217,7 +217,7 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
         List<Ingredient> requiredItems = getRitual().getTickItemCost(level);
 
         // To ensure that mana rate can be != to item rate
-        if (ctx.ticksPassed() % getRitual().getManaRate(level) == 0) {
+        if (ctx.ticksPassed() % getRitual().getManaRate( level) == 0) {
             requestRequiredMana();
         }
 
@@ -302,7 +302,9 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
         this.requiredItems = List.of();
         this.consumedItems.clear();
         this.ritualContext = new RitualContext();
+        this.setRitual(null);
         this.triggerAnim("controller", "idle_active");
+        markUpdated();
     }
 
     public RitualStepResult afterRitualTick(RitualStateMachineContext ctx) {

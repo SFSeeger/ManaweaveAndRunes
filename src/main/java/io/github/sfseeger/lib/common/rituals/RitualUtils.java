@@ -2,6 +2,7 @@ package io.github.sfseeger.lib.common.rituals;
 
 import io.github.sfseeger.lib.common.rituals.ritual_data.RitualContext;
 import io.github.sfseeger.lib.common.rituals.ritual_data.builtin.PlayerRitualData;
+import io.github.sfseeger.lib.common.rituals.state_machine.RitualStateMachineContext;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -15,10 +16,18 @@ public class RitualUtils {
         getStartingPlayer(level, context).ifPresent(player -> player.displayClientMessage(message, false));
     }
 
+    public static void displayMessageToStartingPlayer(Component message, RitualStateMachineContext ctx) {
+        displayMessageToStartingPlayer(message, ctx.level(), ctx.ritualContext());
+    }
+
     public static Optional<Player> getStartingPlayer(Level level, RitualContext context) {
         PlayerRitualData starting_player = context.getData("starting_player", PLAYER_TYPE);
         if (starting_player != null)
             return Optional.ofNullable(level.getPlayerByUUID(starting_player.getPlayerUUID()));
         return Optional.empty();
+    }
+
+    public static Optional<Player> getStartingPlayer(RitualStateMachineContext ctx) {
+        return getStartingPlayer(ctx.level(), ctx.ritualContext());
     }
 }

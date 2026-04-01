@@ -9,10 +9,8 @@ import io.github.sfseeger.manaweave_and_runes.client.ClientPayloadHandler;
 import io.github.sfseeger.manaweave_and_runes.common.ServerPayloadHandler;
 import io.github.sfseeger.manaweave_and_runes.core.payloads.CraftPayload;
 import io.github.sfseeger.manaweave_and_runes.core.payloads.SwitchSpellPayload;
-import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.handling.DirectionalPayloadHandler;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
@@ -27,6 +25,7 @@ public class CommonModEventHandler {
         event.register(ManaweaveAndRunesRegistries.RITUAL_REGISTRY);
         event.register(ManaweaveAndRunesRegistries.RITUAL_DATA_TYPE_REGISTRY);
         event.register(ManaweaveAndRunesRegistries.SPELL_NODE_REGISTRY);
+        event.register(ManaweaveAndRunesRegistries.MARK_REGISTRY);
     }
 
     @SubscribeEvent

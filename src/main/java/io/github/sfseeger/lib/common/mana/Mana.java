@@ -25,8 +25,6 @@ import java.util.stream.Collectors;
 
 public class Mana {
 
-    String descriptionId;
-    ManaProperties properties;
     public static final Codec<Holder<Mana>> CODEC;
     public static final Codec<List<Pair<Holder<Mana>, Integer>>> MANAS_WITH_AMOUNT_CODEC;
     public static final StreamCodec<RegistryFriendlyByteBuf, Map<Mana, Integer>> MANA_MAP_STREAM_CODEC =
@@ -60,6 +58,13 @@ public class Mana {
                         Codec.INT.fieldOf("amount").codec()
                 )
         );
+    }
+
+    String descriptionId;
+    ManaProperties properties;
+
+    public Mana(ManaProperties properties) {
+        this.properties = properties;
     }
 
     public static Map<Mana, Integer> manaMapFromList(List<Pair<Holder<Mana>, Integer>> list) {
@@ -139,10 +144,6 @@ public class Mana {
 
     public String toString() {
         return "Mana{" + ManaweaveAndRunesRegistries.MANA_REGISTRY.getKey(this) + "}";
-    }
-
-    public Mana(ManaProperties properties) {
-        this.properties = properties;
     }
 
     private ManaProperties getProperties() {

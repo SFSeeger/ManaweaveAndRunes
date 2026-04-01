@@ -123,6 +123,6 @@
     }
   },
   "textures": {
-    "particle": "item/ritual_anchor"
+    "particle": "manaweave_and_runes:block/ritual_anchor"
   }
 }

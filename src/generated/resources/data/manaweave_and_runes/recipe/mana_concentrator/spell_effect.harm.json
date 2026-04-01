@@ -15,11 +15,11 @@
   "manaMap": [
     {
       "amount": 300,
-      "manaType": "manaweave_and_runes:void_mana"
+      "manaType": "manaweave_and_runes:soul_mana"
     },
     {
       "amount": 300,
-      "manaType": "manaweave_and_runes:soul_mana"
+      "manaType": "manaweave_and_runes:void_mana"
     }
   ],
   "result": {
