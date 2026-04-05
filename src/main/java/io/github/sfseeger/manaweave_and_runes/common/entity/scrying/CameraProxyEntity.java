@@ -1,11 +1,14 @@
-package io.github.sfseeger.manaweave_and_runes.common.entity;
+package io.github.sfseeger.manaweave_and_runes.common.entity.scrying;
 
 import io.github.sfseeger.manaweave_and_runes.core.payloads.CameraSetPayload;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.game.ClientboundSetCameraPacket;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ChunkTrackingView;
+import net.minecraft.server.level.ServerEntity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
@@ -24,9 +27,10 @@ import java.util.UUID;
 public class CameraProxyEntity extends Entity {
     public static final EntityType<CameraProxyEntity> TYPE =
             EntityType.Builder.<CameraProxyEntity>of(CameraProxyEntity::new, MobCategory.MISC)
-                    .sized(0.0F, 0.0F)
-                    .updateInterval(20)
-                    .clientTrackingRange(4)
+                    .sized(0.0001F, 0.0001F)
+                    .setTrackingRange(256)
+                    .setUpdateInterval(20)
+                    .setShouldReceiveVelocityUpdates(true)
                     .build("camera_proxy");
 
     private UUID playerToFollowUUID;
@@ -75,7 +79,7 @@ public class CameraProxyEntity extends Entity {
     public void stopViewing(ServerPlayer player) {
         if(!level().isClientSide()) {
             player.setCamera(player);
-            PacketDistributor.sendToPlayer(player, new CameraSetPayload(player.getUUID()));
+            PacketDistributor.sendToPlayer(player, new CameraSetPayload(player.getId()));
         }
     }
 
@@ -110,5 +114,10 @@ public class CameraProxyEntity extends Entity {
     @Override
     protected void addAdditionalSaveData(CompoundTag compoundTag) {
 
+    }
+
+    @Override
+    public Packet<ClientGamePacketListener> getAddEntityPacket(ServerEntity entity) {
+        return new ClientboundAddEntityPacket(this, entity);
     }
 }

@@ -1,0 +1,18 @@
+{
+  "required": true,
+  "package": "io.github.sfseeger.manaweave_and_runes.core.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "refmap": "manaweave_and_runes.mixins.refmap.json",
+  "client": [
+    "scrying.ClientChunkCacheMixin",
+    "scrying.ChunkMapMixin",
+    "scrying.LocalPlayerMixin",
+    "scrying.MinecraftMixin"
+  ],
+  "mixins": [
+    "scrying.ChunkMapMixin",
+    "scrying.PlayerListMixin",
+    "scrying.ServerPlayerMixin",
+    "scrying.TrackedEntityMixin"
+  ]
+}

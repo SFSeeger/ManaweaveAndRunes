@@ -8,7 +8,9 @@ import io.github.sfseeger.manaweave_and_runes.client.particles.ManaConcentratedP
 import io.github.sfseeger.manaweave_and_runes.client.particles.ManaTravelParticle;
 import io.github.sfseeger.manaweave_and_runes.client.particles.mana_particle.ManaParticleType;
 import io.github.sfseeger.manaweave_and_runes.client.renderers.block.*;
+import io.github.sfseeger.manaweave_and_runes.client.renderers.entity.CameraProxyEntityRenderer;
 import io.github.sfseeger.manaweave_and_runes.client.screens.*;
+import io.github.sfseeger.manaweave_and_runes.common.entity.scrying.CameraProxyEntity;
 import io.github.sfseeger.manaweave_and_runes.core.init.EntityTypeInit;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRBlockEntityInit;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRMenuInit;
@@ -52,6 +54,7 @@ public class ClientEventHandler {
     @SubscribeEvent
     public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(EntityTypeInit.SPELL_PROJECTILE.get(), SpellProjectileRenderer::new);
+        event.registerEntityRenderer(CameraProxyEntity.TYPE, CameraProxyEntityRenderer::new);
     }
 
     @SubscribeEvent

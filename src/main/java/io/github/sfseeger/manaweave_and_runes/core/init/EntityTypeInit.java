@@ -3,6 +3,7 @@ package io.github.sfseeger.manaweave_and_runes.core.init;
 import io.github.sfseeger.lib.common.entities.ManaWeaveAndRuneEntityTypes;
 import io.github.sfseeger.lib.common.entities.projectiles.SpellProjectileEntity;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
+import io.github.sfseeger.manaweave_and_runes.common.entity.scrying.CameraProxyEntity;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.EntityType;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -15,4 +16,7 @@ public class EntityTypeInit {
 
     public static final Supplier<EntityType<SpellProjectileEntity>> SPELL_PROJECTILE =
             ENTITY_TYPES.register("spell_projectile", () -> ManaWeaveAndRuneEntityTypes.SPELL_PROJECTILE);
+
+    public static final Supplier<EntityType<CameraProxyEntity>> CAMERA_PROXY =
+            ENTITY_TYPES.register("camera_proxy", () -> CameraProxyEntity.TYPE);
 }

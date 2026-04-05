@@ -1,4 +1,4 @@
-package io.github.sfseeger.manaweave_and_runes.client.renderers.entity;
+package io.github.sfseeger.manaweave_and_runes.client.models.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -11,15 +11,13 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 
-public class CameraProxyEntityRenderer extends EntityModel<CameraProxyEntity> {
+public class CameraProxyEntityModel extends EntityModel<CameraProxyEntity> {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
 	public static final ModelLayerLocation
 			LAYER_LOCATION = new ModelLayerLocation(ManaweaveAndRunes.asResource("camera_proxy_entity"), "main");
-	private final ModelPart root;
 
 
-	public CameraProxyEntityRenderer(ModelPart root) {
-		this.root = root.getChild("main");
+	public CameraProxyEntityModel(ModelPart root) {
 	}
 
 	public static LayerDefinition createBodyLayer() {

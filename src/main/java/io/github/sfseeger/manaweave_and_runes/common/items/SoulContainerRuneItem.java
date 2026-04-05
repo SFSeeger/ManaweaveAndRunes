@@ -2,8 +2,16 @@ package io.github.sfseeger.manaweave_and_runes.common.items;
 
 import io.github.sfseeger.lib.common.rituals.ritual_data.IRitualDataCapable;
 import io.github.sfseeger.lib.common.rituals.ritual_data.builtin.PlayerRitualData;
+import io.github.sfseeger.manaweave_and_runes.common.blocks.ScryingPool;
 import io.github.sfseeger.manaweave_and_runes.common.data_components.PlayerDataComponent;
+import io.github.sfseeger.manaweave_and_runes.common.entity.scrying.CameraProxyEntity;
+import io.github.sfseeger.manaweave_and_runes.core.payloads.CameraSetPayload;
+import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.game.ClientboundSetCameraPacket;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -14,15 +22,19 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.network.PacketDistributor;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
-import java.util.UUID;
 
 import static io.github.sfseeger.manaweave_and_runes.core.init.MRDataComponentsInit.PLAYER_DATA_COMPONENT;
 
+@ParametersAreNonnullByDefault
+@MethodsReturnNonnullByDefault
 public class SoulContainerRuneItem extends Item implements IRitualDataCapable {
     public SoulContainerRuneItem() {
         super(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON));
@@ -54,6 +66,43 @@ public class SoulContainerRuneItem extends Item implements IRitualDataCapable {
     }
 
     @Override
+    public int getUseDuration(ItemStack stack, LivingEntity entity) {
+        return 1200;
+    }
+
+    @Override
+    public void onUseTick(Level level, LivingEntity livingEntity, ItemStack stack, int remainingUseDuration) {
+        int elapsedTicks = this.getUseDuration(stack, livingEntity) - remainingUseDuration;
+        if (!level.isClientSide()) {
+            if (elapsedTicks % 20 == 0) {
+                PlayerDataComponent playerDataComponent = stack.get(PLAYER_DATA_COMPONENT);
+                if (livingEntity instanceof Player player && playerDataComponent != null) {
+                    Player playerToView = level.getPlayerByUUID(playerDataComponent.playerUUID());
+                    ServerPlayer serverPlayer = (ServerPlayer) player ;
+                    ServerLevel serverLevel = (ServerLevel) level;
+                    if (playerToView != null && !playerToView.is(player)) {
+                        if (elapsedTicks == 0) {
+                            int viewDistance = Mth.clamp(serverPlayer.requestedViewDistance(), 2, serverPlayer.server.getPlayerList().getViewDistance());
+                            CameraProxyEntity proxyEntity = new CameraProxyEntity(level, playerDataComponent.playerUUID());
+                            proxyEntity.setChunkLoadingDistance(viewDistance);
+                            serverLevel.addFreshEntity(proxyEntity);
+                            PacketDistributor.sendToPlayer(serverPlayer, new CameraSetPayload(playerToView.getId()));
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public void releaseUsing(ItemStack stack, Level level, LivingEntity entity, int timeCharged) {
+        if (entity instanceof Player player && !level.isClientSide() && ((ServerPlayer) player).getCamera() instanceof CameraProxyEntity cameraProxyEntity) {
+            cameraProxyEntity.stopViewing((ServerPlayer) player);
+        }
+        super.releaseUsing(stack, level, entity, timeCharged);
+    }
+
+    @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand) {
         if (player.isCrouching()) {
             player.getItemInHand(usedHand).remove(PLAYER_DATA_COMPONENT);
@@ -64,32 +113,50 @@ public class SoulContainerRuneItem extends Item implements IRitualDataCapable {
     }
 
     @Override
-    public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity interactionTarget,
-            InteractionHand usedHand) {
-        if (player.getMainHandItem() == stack && interactionTarget instanceof Player p) {
+    public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity
+            interactionTarget, InteractionHand usedHand
+    ) {
+        if (player.getMainHandItem().is(stack.getItem()) && interactionTarget instanceof Player p) {
             if (player.isCrouching() && !isPlayerLookingAtPlayer(p, player, 5.0D)) {
                 ItemStack s = player.getMainHandItem();
                 setPlayerComponent(s, p);
+                player.displayClientMessage(
+                        Component.translatable("item.manaweave_and_runes.soul_container_rune.stole_soul",
+                                               p.getDisplayName()), true
+                );
                 return InteractionResult.SUCCESS;
             }
             p.displayClientMessage(
-                    Component.translatable("item.manaweave_and_runes.soul_container_rune.stole_soul_fragment"), true);
-            player.displayClientMessage(Component.translatable("item.manaweave_and_runes.soul_container_rune.detected"),
-                                        true);
+                    Component.translatable("item.manaweave_and_runes.soul_container_rune.stole_soul_fragment"),
+                    true);
+            player.displayClientMessage(
+                    Component.translatable("item.manaweave_and_runes.soul_container_rune.detected"),
+                    true);
             return InteractionResult.FAIL;
         }
         return InteractionResult.PASS;
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents,
-            TooltipFlag tooltipFlag) {
+    public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {
+        if (context.getLevel().getBlockState(context.getClickedPos()).getBlock() instanceof ScryingPool) {
+            context.getPlayer().startUsingItem(context.getHand());
+            return InteractionResult.SUCCESS;
+        }
+        return super.onItemUseFirst(stack, context);
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, TooltipContext
+            context, List<Component> tooltipComponents, TooltipFlag tooltipFlag
+    ) {
         PlayerDataComponent component = stack.get(PLAYER_DATA_COMPONENT);
         if (component != null) {
             try (Level level = context.level()) {
-                Player player = level.getPlayerByUUID(UUID.fromString(component.playerUUID()));
+                Player player = level.getPlayerByUUID(component.playerUUID());
 
-                Component name = Component.translatable("item.manaweave_and_runes.soul_container_rune.unknown_player");
+                Component name =
+                        Component.translatable("item.manaweave_and_runes.soul_container_rune.unknown_player");
 
                 if (player != null) {
                     name = player.getDisplayName();
