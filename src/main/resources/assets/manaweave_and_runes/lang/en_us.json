@@ -40,6 +40,7 @@
   "block.manaweave_and_runes.entropy_mana_infused_rock": "Entropy Mana Infused Rock",
   "block.manaweave_and_runes.soul_mana_infused_rock": "Soul Mana Infused Rock",
   "block.manaweave_and_runes.void_mana_infused_rock": "Void Mana Infused Rock",
+  "block.manaweave_and_runes.scrying_pool": "Scrying Pool",
 
 
   "lore.manaweave_and_runes.mana_stored": "%d / %d",
@@ -74,6 +75,7 @@
 
   "item.manaweave_and_runes.soul_container_rune.stole_soul_fragment": "Someone tried to steal a soul fragment from you",
   "item.manaweave_and_runes.soul_container_rune.detected": "You got noticed trying to steal a soul fragment",
+  "item.manaweave_and_runes.soul_container_rune.stole_soul": "Stole a soul fragment from %s sucessfully",
   "item.manaweave_and_runes.mana_connector.linking_ended": "Ended connecting",
   "item.manaweave_and_runes.mana_connector.invalid_target": "Invalid target!",
   "item.manaweave_and_runes.mana_connector.linked": "Linked successfully",

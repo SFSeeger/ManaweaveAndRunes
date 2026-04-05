@@ -43,6 +43,7 @@ public class MRBlockTagsProvider extends BlockTagsProvider {
                 .add(MRBlockInit.SOUL_MANA_INFUSED_ROCK_BLOCK.get())
                 .add(MRBlockInit.VOID_MANA_INFUSED_ROCK_BLOCK.get())
                 .add(MRBlockInit.RUNE_PEDESTAL_BLOCK.get())
+                .add(MRBlockInit.SCRYING_POOL_BLOCK.get())
         ;
 
         this.tag(BlockTags.NEEDS_STONE_TOOL)
@@ -56,6 +57,7 @@ public class MRBlockTagsProvider extends BlockTagsProvider {
                 .add(MRBlockInit.SOUL_MANA_INFUSED_ROCK_BLOCK.get())
                 .add(MRBlockInit.VOID_MANA_INFUSED_ROCK_BLOCK.get())
                 .add(MRBlockInit.RUNE_PEDESTAL_BLOCK.get())
+                .add(MRBlockInit.SCRYING_POOL_BLOCK.get())
         ;
 
         this.tag(BlockTags.NEEDS_IRON_TOOL)

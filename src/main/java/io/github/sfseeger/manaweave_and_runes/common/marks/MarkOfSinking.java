@@ -1,4 +1,4 @@
-package io.github.sfseeger.manaweave_and_runes.marks;
+package io.github.sfseeger.manaweave_and_runes.common.marks;
 
 import io.github.sfseeger.lib.common.rituals.marks.Mark;
 import io.github.sfseeger.lib.common.rituals.marks.MarkInstance;
