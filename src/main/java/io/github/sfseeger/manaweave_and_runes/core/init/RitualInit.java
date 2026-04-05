@@ -32,6 +32,13 @@ public class RitualInit {
             RITUALS.register("mark_of_overheating_ritual", MarkOfOverheatingRitual::new);
     public static final Supplier<MarkOfSinkingRitual> MARK_OF_SINKING_RITUAL =
             RITUALS.register("mark_of_sinking_ritual", MarkOfSinkingRitual::new);
+    public static final Supplier<MarkOfGrowthRitual> MARK_OF_GROWTH_RITUAL =
+            RITUALS.register("mark_of_growth_ritual", MarkOfGrowthRitual::new);
+    public static final Supplier<MarkOfShrinkingRitual> MARK_OF_SHRINKING_RITUAL =
+            RITUALS.register("mark_of_shrinking_ritual", MarkOfShrinkingRitual::new);
+    public static final Supplier<MarkOfFlightRitual> MARK_OF_FLYING_RITUAL =
+            RITUALS.register("mark_of_flight_ritual", MarkOfFlightRitual::new);
+
 
     public static final Supplier<CurseRemovalRitual> CURSE_REMOVAL_RITUAL =
             RITUALS.register("remove_curse_ritual", CurseRemovalRitual::new);

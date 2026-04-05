@@ -19,6 +19,7 @@ public class MRItemModelProvider extends ItemModelProvider {
         basicItem(MRItemInit.MANA_DEBUG_STICK_ITEM.get());
         handheldItem(MRItemInit.MANA_CONNECTOR.get());
         basicItem(MRItemInit.TANZANITE.get());
+        basicItem(MRItemInit.MARK_CONTAINER_ITEM.get());
 
         handheldItem(MRItemInit.DIAMOND_CHISEL.get());
         basicItem(MRItemInit.SPELL_HOLDER_ITEM.get());

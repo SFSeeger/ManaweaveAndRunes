@@ -65,7 +65,9 @@ public class CurseRemovalRitual extends Ritual {
             }
             return RitualStepResult.SUCCESS;
         }
-        playerMarks.remove(playerCurses.get(level.getRandom().nextInt(playerCurses.size())));
+        MarkInstance curseToRemove = playerCurses.get(level.getRandom().nextInt(playerCurses.size()));
+        curseToRemove.onMarkRemove(player);
+        playerMarks.remove(curseToRemove);
         player.setData(MRDataAttachmentInit.MARKS_DATA_ATTACHMENT_TYPE, marks);
         ctx.ritualContext().putData("curse_removed", new BooleanRitualData(true));
 

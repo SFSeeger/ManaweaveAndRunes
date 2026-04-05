@@ -4,6 +4,7 @@ import io.github.sfseeger.lib.common.mana.Manas;
 import io.github.sfseeger.lib.common.rituals.Ritual;
 import io.github.sfseeger.lib.common.rituals.RitualInput;
 import io.github.sfseeger.lib.core.ManaweaveAndRunesRegistries;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRBlockInit;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRItemInit;
 import io.github.sfseeger.manaweave_and_runes.core.init.RitualInit;
 import net.minecraft.data.worldgen.BootstrapContext;
@@ -125,6 +126,7 @@ public class RitualInputs {
         context.register(MARK_OF_OVERHEATING, new RitualInput.Builder()
                 .addInitialItemCost(Ingredient.of(Items.BLAZE_POWDER))
                 .addInitialItemCost(Ingredient.of(Items.BLAZE_ROD))
+                .addInitialItemCost(Ingredient.of(MRItemInit.MARK_CONTAINER_ITEM))
                 .addInitialItemCost(Ingredient.of(MRItemInit.SOUL_CONTAINER_RUNE_ITEM))
                 .addManaCost(Manas.FireMana, 15)
                 .addManaCost(Manas.EntropyMana, 5)
@@ -134,10 +136,38 @@ public class RitualInputs {
         context.register(registerKey(RitualInit.MARK_OF_SINKING_RITUAL.get()), new RitualInput.Builder()
                 .addInitialItemCost(Ingredient.of(Items.OBSIDIAN))
                 .addInitialItemCost(Ingredient.of(Items.NETHER_WART))
+                .addInitialItemCost(Ingredient.of(MRItemInit.MARK_CONTAINER_ITEM))
                 .addInitialItemCost(Ingredient.of(MRItemInit.SOUL_CONTAINER_RUNE_ITEM))
                 .setManaRate(20)
                 .build()
         );
+        context.register(registerKey(RitualInit.MARK_OF_GROWTH_RITUAL.get()), new RitualInput.Builder()
+                .addInitialItemCost(Ingredient.of(Items.BONE_MEAL))
+                .addInitialItemCost(Ingredient.of(Items.NETHER_WART))
+                .addInitialItemCost(Ingredient.of(MRItemInit.MARK_CONTAINER_ITEM))
+                .addInitialItemCost(Ingredient.of(MRItemInit.SOUL_CONTAINER_RUNE_ITEM))
+                .setManaRate(20)
+                .build()
+        );
+
+        context.register(registerKey(RitualInit.MARK_OF_SHRINKING_RITUAL.get()), new RitualInput.Builder()
+                .addInitialItemCost(Ingredient.of(Items.CLAY_BALL))
+                .addInitialItemCost(Ingredient.of(Items.NETHER_WART))
+                .addInitialItemCost(Ingredient.of(MRItemInit.MARK_CONTAINER_ITEM))
+                .addInitialItemCost(Ingredient.of(MRItemInit.SOUL_CONTAINER_RUNE_ITEM))
+                .setManaRate(20)
+                .build()
+        );
+        context.register(registerKey(RitualInit.MARK_OF_FLYING_RITUAL.get()), new RitualInput.Builder()
+                .addInitialItemCost(Ingredient.of(Items.ELYTRA))
+                .addInitialItemCost(Ingredient.of(MRBlockInit.TANZANITE_BLOCK))
+                .addInitialItemCost(Ingredient.of(Items.NETHER_STAR))
+                .addInitialItemCost(Ingredient.of(MRItemInit.MARK_CONTAINER_ITEM))
+                .addInitialItemCost(Ingredient.of(MRItemInit.SOUL_CONTAINER_RUNE_ITEM))
+                .setManaRate(20)
+                .build()
+        );
+
 
         context.register(CURSE_REMOVAL_RITUAL, new RitualInput.Builder()
                 .addInitialItemCost(Ingredient.of(Items.BLUE_ORCHID))

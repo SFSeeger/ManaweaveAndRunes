@@ -1,10 +1,13 @@
 {
   "initialItemCost": [
     {
-      "item": "minecraft:obsidian"
+      "item": "minecraft:elytra"
     },
     {
-      "item": "minecraft:nether_wart"
+      "item": "manaweave_and_runes:tanzanite_block"
+    },
+    {
+      "item": "minecraft:nether_star"
     },
     {
       "item": "manaweave_and_runes:mark_container"

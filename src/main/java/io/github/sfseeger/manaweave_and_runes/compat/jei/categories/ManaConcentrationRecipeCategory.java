@@ -47,7 +47,6 @@ public class ManaConcentrationRecipeCategory extends AbstractMRRecipeCategory<Ma
         int y = getHeight() / 2 - 8;
 
         int i = 0;
-        /*
         while (i < pedestalsToRender) {
             int squareIndex = i / 4;
             int cornerIndex = i % 4;
@@ -57,7 +56,7 @@ public class ManaConcentrationRecipeCategory extends AbstractMRRecipeCategory<Ma
                     (cornerIndex == 0 || cornerIndex == 1) ? -squareSizes[squareIndex] : squareSizes[squareIndex];
             addPedestal(guiGraphics, x + offsetX + 4, y + offsetY);
             i++;
-        }*/
+        }
 
         for (Map.Entry<Mana, Integer> entry : recipe.manaMap().entrySet()) {
             addMana(guiGraphics, i % 4 * 43, getHeight() - 30 + i / 4 * 15, mouseX, mouseY,

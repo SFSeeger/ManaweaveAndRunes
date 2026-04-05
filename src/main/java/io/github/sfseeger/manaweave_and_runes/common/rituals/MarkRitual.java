@@ -8,7 +8,6 @@ import io.github.sfseeger.lib.common.rituals.ritual_data.builtin.PlayerRitualDat
 import io.github.sfseeger.lib.common.rituals.state_machine.RitualStateMachineContext;
 import io.github.sfseeger.lib.common.rituals.state_machine.RitualStepResult;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRDataAttachmentInit;
-import io.github.sfseeger.manaweave_and_runes.core.init.MarkInit;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -18,8 +17,8 @@ import net.minecraft.world.phys.Vec3;
 
 import static io.github.sfseeger.lib.common.rituals.ritual_data.RitualDataTypes.PLAYER_TYPE;
 
-public abstract class CurseRitual extends Ritual {
-    public CurseRitual(Tier tier, int duration) {
+public abstract class MarkRitual extends Ritual {
+    public MarkRitual(Tier tier, int duration) {
         super(tier, duration);
     }
 
@@ -43,8 +42,10 @@ public abstract class CurseRitual extends Ritual {
             return RitualStepResult.FAIL;
         }
         MarkDataAttachment marks = target.getData(MRDataAttachmentInit.MARKS_DATA_ATTACHMENT_TYPE);
-        marks.addMark(createMark(ctx));
+        MarkInstance mark = createMark(ctx);
+        marks.addMark(mark);
         target.setData(MRDataAttachmentInit.MARKS_DATA_ATTACHMENT_TYPE, marks);
+        mark.onMarkAdd(target);
         return RitualStepResult.SUCCESS;
     }
 

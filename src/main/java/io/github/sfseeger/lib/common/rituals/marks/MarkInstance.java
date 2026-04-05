@@ -3,6 +3,7 @@ package io.github.sfseeger.lib.common.rituals.marks;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.github.sfseeger.lib.core.ManaweaveAndRunesRegistries;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.player.Player;
 
 public class MarkInstance {
@@ -33,11 +34,21 @@ public class MarkInstance {
         mark.applyClientEffect(this, player);
     }
 
+    public void onMarkAdd(Player player) {
+        mark.onMarkAdd(this, player);
+    }
+    public void onMarkRemove(Player player) {
+        mark.onMarkRemove(this, player);
+    }
+
     public int getStrength() {
         return strength;
     }
     public void setStrength(int strength) {
         this.strength = strength;
+    }
+    public MutableComponent getName() {
+        return mark.getName();
     }
 
     public MarkType getMarkType() {

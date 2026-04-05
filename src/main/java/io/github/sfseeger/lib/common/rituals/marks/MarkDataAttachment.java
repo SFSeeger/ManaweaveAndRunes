@@ -20,6 +20,13 @@ public class MarkDataAttachment implements INBTSerializable<CompoundTag> {
     public List<MarkInstance> getMarks() {
         return MARK_INSTANCES;
     }
+    public List<MarkInstance> getCurses() {
+        return MARK_INSTANCES.stream().filter(instance -> instance.getMarkType() == MarkType.CURSE).toList();
+    }
+    public List<MarkInstance> getBoons() {
+        return MARK_INSTANCES.stream().filter(instance -> instance.getMarkType() == MarkType.BOON).toList();
+    }
+
 
     public void addMark(MarkInstance markInstance) {
         MARK_INSTANCES.add(markInstance);

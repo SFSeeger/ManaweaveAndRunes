@@ -1,6 +1,5 @@
 {
   "itemGroup.manaweave_and_runes": "Manaweave and Runes Tab",
-
   "mana.manaweave_and_runes.fire_mana": "Fire Mana",
   "mana.manaweave_and_runes.air_mana": "Air Mana",
   "mana.manaweave_and_runes.water_mana": "Water Mana",
@@ -9,7 +8,6 @@
   "mana.manaweave_and_runes.entropy_mana": "Entropy Mana",
   "mana.manaweave_and_runes.soul_mana": "Soul Mana",
   "mana.manaweave_and_runes.void_mana": "Void Mana",
-
   "block.manaweave_and_runes.rune_carver_block": "Rune Carver",
   "block.manaweave_and_runes.mana_storage_block": "Mana Storage",
   "block.manaweave_and_runes.novice_ritual_anchor": "Novice Ritual Anchor",
@@ -41,8 +39,6 @@
   "block.manaweave_and_runes.soul_mana_infused_rock": "Soul Mana Infused Rock",
   "block.manaweave_and_runes.void_mana_infused_rock": "Void Mana Infused Rock",
   "block.manaweave_and_runes.scrying_pool": "Scrying Pool",
-
-
   "lore.manaweave_and_runes.mana_stored": "%d / %d",
   "item.manaweave_and_runes.tanzanite": "Tanzanite",
   "item.manaweave_and_runes.diamond_chisel": "Diamond Chisel",
@@ -72,7 +68,7 @@
   "item.manaweave_and_runes.rune_block_carving_template": "Rune Block Template",
   "item.manaweave_and_runes.mana_debug_stick": "Mana Debug Stick",
   "item.manaweave_and_runes.mana_weaver_wand": "Mana Weaver Wand",
-
+  "item.manaweave_and_runes.mark_container": "Mark Container",
   "item.manaweave_and_runes.soul_container_rune.stole_soul_fragment": "Someone tried to steal a soul fragment from you",
   "item.manaweave_and_runes.soul_container_rune.detected": "You got noticed trying to steal a soul fragment",
   "item.manaweave_and_runes.soul_container_rune.stole_soul": "Stole a soul fragment from %s sucessfully",
@@ -83,12 +79,10 @@
   "item.manaweave_and_runes.mana_connector.unlinking_all": "Unlinking all",
   "item.manaweave_and_runes.mana_connector.linking_started": "Selected block",
   "item.manaweave_and_runes.mana_connector.target": "Target",
-
   "advancements.manaweave_and_runes.ritual_anchor.title": "Anchored in Arcana",
   "advancements.manaweave_and_runes.ritual_anchor.description": "Build a Ritual Anchor. Who knows what power lies within?",
   "advancements.manaweave_and_runes.master_anchor.title": "Advanced Arcana",
   "advancements.manaweave_and_runes.master_anchor.description": "Upgrade a ritual anchor to master",
-
   "ritual.manaweave_and_runes.mana_insufficient": "It seems like there was not enough mana to supply the ritual",
   "ritual.manaweave_and_runes.item_insufficient": "The ritual could not consume an item it needed",
   "ritual.manaweave_and_runes.unknown_ritual": "You don't know if this ritual exists",
@@ -100,23 +94,19 @@
   "ritual.manaweave_and_runes.sanctuary_ritual": "Sanctuary",
   "ritual.manaweave_and_runes.ascended_sanctuary_ritual": "Ascended Sanctuary",
   "ritual.manaweave_and_runes.shattering_rite_ritual": "Shattering Rite",
-
   "spell.manaweave_and_runes.spell_type.self": "Self",
   "spell.manaweave_and_runes.spell_type.touch": "Touch",
   "spell.manaweave_and_runes.spell_type.projectile": "Ranged",
-
   "spell.manaweave_and_runes.spell_effect.burn": "Burn",
   "spell.manaweave_and_runes.spell_effect.break": "Break",
   "spell.manaweave_and_runes.spell_effect.harm": "Harm",
   "spell.manaweave_and_runes.spell_effect.heal": "Heal",
   "spell.manaweave_and_runes.spell_effect.explode": "Explode",
   "spell.manaweave_and_runes.spell_effect.push": "Push",
-
   "spell.manaweave_and_runes.spell_modifier.strengthen": "Strengthen",
   "spell.manaweave_and_runes.spell_modifier.widen": "Widen",
   "spell.manaweave_and_runes.spell_modifier.elongate": "Elongate",
   "spell.manaweave_and_runes.spell_modifier.delicate": "Delicate",
-
   "key.manaweave_and_runes.toggle_spell": "Toggle Spell",
   "container.manaweave_and_runes.rune_carver_block": "Rune Carver",
   "container.manaweave_and_runes.mana_storage_block": "Mana Storage",
@@ -143,5 +133,14 @@
   "advancements.manaweave_and_runes.tutorial.tanzanite_found.title": "Glimmering Gemstone Hunter",
   "item.manaweave_and_runes.soul_container_rune.unknown_player": "Unknown",
   "jei.manaweave_and_runes.rune_carver": "Rune Carving",
-  "jei.manaweave_and_runes.mana_concentrator": "Mana Concentrating"
+  "jei.manaweave_and_runes.mana_concentrator": "Mana Concentrating",
+  "message.manaweave_and_runes.scrying_pool.no_marks": "You seem to bear no marks",
+  "message.manaweave_and_runes.scrying_pool.intro": "You peer into the scrying pool:",
+  "message.manaweave_and_runes.scrying_pool.curse_entry": "You bear the cursed %s",
+  "message.manaweave_and_runes.scrying_pool.boon_entry": "You bear the boon %s",
+  "mark.manaweave_and_runes.mark_of_shrinking": "Mark of Shrinking",
+  "mark.manaweave_and_runes.mark_of_growing": "Mark of Growing",
+  "mark.manaweave_and_runes.mark_of_overheating": "Mark of Overheating",
+  "mark.manaweave_and_runes.mark_of_sinking": "Mark of Sinking",
+  "mark.manaweave_and_runes.mark_of_flight": "Mark of Flight"
 }

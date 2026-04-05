@@ -8,22 +8,20 @@ import io.github.sfseeger.manaweave_and_runes.core.init.MarkInit;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 
-public class MarkOfSinkingRitual extends MarkRitual {
-
-    public MarkOfSinkingRitual() {
+public class MarkOfGrowthRitual extends MarkRitual {
+    public MarkOfGrowthRitual() {
         super(Tier.MASTER, 1);
     }
 
     @Override
     public void onRitualAbort(RitualStateMachineContext ctx) {
         RitualUtils.getStartingPlayer(ctx).ifPresent(player -> {
-            player.setDeltaMovement(player.getDeltaMovement().add(0, 10.0, 0));
-            player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 30));
+            player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 2));
         });
     }
 
     @Override
     public MarkInstance createMark(RitualStateMachineContext ctx) {
-        return new MarkInstance(MarkInit.MARK_OF_SINKING.get(), 2);
+        return new MarkInstance(MarkInit.MARK_OF_GROWTH.get(), 1);
     }
 }
