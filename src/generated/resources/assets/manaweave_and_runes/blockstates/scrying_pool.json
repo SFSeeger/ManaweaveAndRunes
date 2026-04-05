@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "filled=false": {
+      "model": "manaweave_and_runes:block/scrying_pool_empty"
+    },
+    "filled=true": {
+      "model": "manaweave_and_runes:block/scrying_pool_filled"
+    }
+  }
+}

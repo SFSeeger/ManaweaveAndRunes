@@ -46,6 +46,7 @@ public class MRBlockLootSubProvider extends BlockLootSubProvider {
         this.dropSelf(MRBlockInit.MANA_TRANSMITTER_BLOCK.get());
         this.dropSelf(MRBlockInit.RUNEWROUGHT_BENCH_BLOCK.get());
         this.dropSelf(MRBlockInit.SPELL_DESIGNER_BLOCK.get());
+        this.dropSelf(MRBlockInit.SCRYING_POOL_BLOCK.get());
 
     }
 

@@ -3,11 +3,14 @@ package io.github.sfseeger.manaweave_and_runes.datagen.client;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
 import io.github.sfseeger.manaweave_and_runes.common.blocks.ManaTransmitter;
 import io.github.sfseeger.manaweave_and_runes.common.blocks.RuneBlock;
+import io.github.sfseeger.manaweave_and_runes.common.blocks.ScryingPool;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRBlockInit;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.properties.Property;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
+import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DeferredBlock;
 
@@ -48,9 +51,9 @@ public class MRBlockStateProvider extends BlockStateProvider {
         DeferredBlock<ManaTransmitter> manaTransmitterBlock = MRBlockInit.MANA_TRANSMITTER_BLOCK;
 
         this.directionalBlock(manaTransmitterBlock.get(),
-                                 blockState -> this.models()
-                                         .getExistingFile(
-                                                 ResourceLocation.parse(manaTransmitterBlock.getRegisteredName())));
+                              blockState -> this.models()
+                                      .getExistingFile(
+                                              ResourceLocation.parse(manaTransmitterBlock.getRegisteredName())));
         this.simpleBlockItem(manaTransmitterBlock.get(), this.models()
                 .getExistingFile(ResourceLocation.parse(manaTransmitterBlock.getRegisteredName())));
 
@@ -84,6 +87,17 @@ public class MRBlockStateProvider extends BlockStateProvider {
                                      .cubeAll(deferredRuneBlock.getRegisteredName() + "_inactive", runeBlockInactive));
         this.simpleBlockItem(deferredRuneBlock.get(), this.models()
                 .getExistingFile(ResourceLocation.parse(deferredRuneBlock.getRegisteredName() + "_inactive")));
+
+        DeferredBlock<ScryingPool> deferredScryingPool = MRBlockInit.SCRYING_POOL_BLOCK;
+        this.getVariantBuilder(deferredScryingPool.get()).forAllStates(blockState -> {
+            boolean filled = blockState.getValue(ScryingPool.FILLED);
+            return ConfiguredModel.builder()
+                    .modelFile(this.models().getExistingFile(
+                            ResourceLocation.parse(
+                                    deferredScryingPool.getRegisteredName() + (filled ? "_filled" : "_empty"))))
+                    .build();
+        });
+        simpleBlockItem(deferredScryingPool.get(), this.models() .getExistingFile(ResourceLocation.parse(deferredScryingPool.getRegisteredName() + "_empty")));
 
         this.simpleBlockWithItem(MRBlockInit.RUNE_CARVER_BLOCK.get(), this.models()
                 .cubeBottomTop(MRBlockInit.RUNE_CARVER_BLOCK.getRegisteredName(),

@@ -19,6 +19,9 @@ public class PlayerRitualData implements IRitualData {
     public PlayerRitualData(String playerUUID) {
         this.playerUUID = playerUUID;
     }
+    public PlayerRitualData(UUID playerUUID) {
+        this.playerUUID = playerUUID.toString();
+    }
 
     public UUID getPlayerUUID() {
         return UUID.fromString(playerUUID);

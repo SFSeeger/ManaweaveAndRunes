@@ -3,6 +3,7 @@ package io.github.sfseeger.manaweave_and_runes.common.items;
 import io.github.sfseeger.lib.common.rituals.ritual_data.IRitualDataCapable;
 import io.github.sfseeger.lib.common.rituals.ritual_data.builtin.PlayerRitualData;
 import io.github.sfseeger.manaweave_and_runes.common.data_components.PlayerDataComponent;
+import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -18,11 +19,14 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 import java.util.UUID;
 
 import static io.github.sfseeger.manaweave_and_runes.core.init.MRDataComponentsInit.PLAYER_DATA_COMPONENT;
 
+@ParametersAreNonnullByDefault
+@MethodsReturnNonnullByDefault
 public class SoulContainerRuneItem extends Item implements IRitualDataCapable {
     public SoulContainerRuneItem() {
         super(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON));
@@ -65,8 +69,9 @@ public class SoulContainerRuneItem extends Item implements IRitualDataCapable {
 
     @Override
     public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity interactionTarget,
-            InteractionHand usedHand) {
-        if (player.getMainHandItem() == stack && interactionTarget instanceof Player p) {
+                                                  InteractionHand usedHand
+    ) {
+        if (player.getMainHandItem().is(stack.getItem()) && interactionTarget instanceof Player p) {
             if (player.isCrouching() && !isPlayerLookingAtPlayer(p, player, 5.0D)) {
                 ItemStack s = player.getMainHandItem();
                 setPlayerComponent(s, p);
@@ -83,18 +88,19 @@ public class SoulContainerRuneItem extends Item implements IRitualDataCapable {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents,
-            TooltipFlag tooltipFlag) {
+                                TooltipFlag tooltipFlag
+    ) {
         PlayerDataComponent component = stack.get(PLAYER_DATA_COMPONENT);
         if (component != null) {
             try (Level level = context.level()) {
-                Player player = level.getPlayerByUUID(UUID.fromString(component.playerUUID()));
+                Player player = level.getPlayerByUUID(component.playerUUID());
 
                 Component name = Component.translatable("item.manaweave_and_runes.soul_container_rune.unknown_player");
 
                 if (player != null) {
                     name = player.getDisplayName();
                 }
-                if ((player == null || name == null) && !component.lastPlayerName().isEmpty()) {
+                if (player == null && !component.lastPlayerName().isEmpty()) {
                     name = Component.literal(component.lastPlayerName());
                 }
 

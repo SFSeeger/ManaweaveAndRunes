@@ -3,8 +3,8 @@ package io.github.sfseeger.manaweave_and_runes.core.init;
 import io.github.sfseeger.lib.common.rituals.marks.Mark;
 import io.github.sfseeger.lib.core.ManaweaveAndRunesRegistries;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
-import io.github.sfseeger.manaweave_and_runes.marks.MarkOfOverheating;
-import io.github.sfseeger.manaweave_and_runes.marks.MarkOfSinking;
+import io.github.sfseeger.manaweave_and_runes.common.marks.MarkOfOverheating;
+import io.github.sfseeger.manaweave_and_runes.common.marks.MarkOfSinking;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;

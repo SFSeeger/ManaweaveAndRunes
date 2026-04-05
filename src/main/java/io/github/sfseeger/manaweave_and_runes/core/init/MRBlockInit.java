@@ -108,6 +108,9 @@ public class MRBlockInit {
     public static final DeferredBlock<SpellDesignerBlock> SPELL_DESIGNER_BLOCK =
             registerBlock("spell_designer", SpellDesignerBlock::new);
 
+    public static final DeferredBlock<ScryingPool> SCRYING_POOL_BLOCK =
+            registerBlock("scrying_pool", ScryingPool::new);
+
 
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block) {
         DeferredBlock<T> deferredBlock = BLOCKS.register(name, block);
