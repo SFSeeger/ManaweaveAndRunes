@@ -3,10 +3,14 @@ package io.github.sfseeger.manaweave_and_runes.datagen.client;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRItemInit;
 import io.github.sfseeger.manaweave_and_runes.core.init.SpellNodeInit;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemDisplayContext;
+import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
+import net.neoforged.neoforge.client.model.generators.loaders.SeparateTransformsModelBuilder;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 public class MRItemModelProvider extends ItemModelProvider {
@@ -45,6 +49,21 @@ public class MRItemModelProvider extends ItemModelProvider {
         basicItem(MRItemInit.RUNE_BLOCK_CARVING_TEMPLATE.get());
 
         handheldItem(MRItemInit.MANA_WEAVER_WAND_ITEM.get());
+
+
+        ItemModelBuilder runeBraceletModelBuilder = this.getBuilder("item/rune_bracelet_gui")
+                .parent(this.getExistingFile(mcLoc("item/generated")))
+                .texture("layer0", "item/rune_bracelet");
+
+        this.getBuilder(BuiltInRegistries.ITEM.getKey(MRItemInit.RUNE_BRACELET_ITEM.get()).toString())
+                .customLoader(SeparateTransformsModelBuilder::begin)
+                .base(this.getBuilder("item/rune_bracelet_in_hand")
+                              .parent(this.getExistingFile(
+                                      ManaweaveAndRunes.asResource("item/rune_bracelet_in_hand_model"))))
+                .perspective(ItemDisplayContext.GUI, runeBraceletModelBuilder)
+                .perspective(ItemDisplayContext.GROUND, runeBraceletModelBuilder)
+                .end();
+
 
         handheldItem(MRItemInit.POSITION_RUNE_ITEM.get())
                 .texture("layer0", "item/position_rune")

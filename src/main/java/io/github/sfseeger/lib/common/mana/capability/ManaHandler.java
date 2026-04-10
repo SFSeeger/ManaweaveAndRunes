@@ -94,7 +94,7 @@ public class ManaHandler implements IManaHandler, INBTSerializable {
 
     @Override
     public boolean canExtract(Mana manatype) {
-        if (!allowedManaContains(manatype) || (slots > 0 && manaStored.size() >= slots)) {
+        if (!allowedManaContains(manatype) || !manaStored.containsKey(manatype)) {
             return false;
         }
         return maxManaExtract > 0;

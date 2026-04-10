@@ -98,4 +98,5 @@ public class RuneBraceletItem extends Item implements IItemHandlerItem, IUpgrada
             tooltipComponents.add(component);
         }
     }
+
 }

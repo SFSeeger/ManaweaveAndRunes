@@ -1,0 +1,20 @@
+{
+  "base": {
+    "parent": "manaweave_and_runes:item/rune_bracelet_in_hand_model"
+  },
+  "loader": "neoforge:separate_transforms",
+  "perspectives": {
+    "ground": {
+      "parent": "minecraft:item/generated",
+      "textures": {
+        "layer0": "manaweave_and_runes:item/rune_bracelet"
+      }
+    },
+    "gui": {
+      "parent": "minecraft:item/generated",
+      "textures": {
+        "layer0": "manaweave_and_runes:item/rune_bracelet"
+      }
+    }
+  }
+}

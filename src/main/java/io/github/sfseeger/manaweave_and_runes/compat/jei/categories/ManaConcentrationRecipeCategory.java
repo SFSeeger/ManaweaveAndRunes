@@ -59,11 +59,11 @@ public class ManaConcentrationRecipeCategory extends AbstractMRRecipeCategory<Ma
         }
 
         for (Map.Entry<Mana, Integer> entry : recipe.manaMap().entrySet()) {
-            addMana(guiGraphics, i % 4 * 43, getHeight() - 30 + i / 4 * 15, mouseX, mouseY,
+            addMana(guiGraphics, i % 4 * 43, getHeight() - 50 + i / 4 * 12, mouseX, mouseY,
                     entry.getKey(), entry.getValue());
             i++;
         }
-        recipeArrow.draw(guiGraphics, x + 20, y);
+        recipeArrow.draw(guiGraphics, x + 20, y + 12);
     }
 
     @Override
@@ -90,10 +90,10 @@ public class ManaConcentrationRecipeCategory extends AbstractMRRecipeCategory<Ma
             case ASCENDED -> catalyst = MRBlockInit.ASCENDED_MANA_CONCENTRATOR_BLOCK;
         }
 
-        builder.addSlot(RecipeIngredientRole.CATALYST, x, y)
+        builder.addSlot(RecipeIngredientRole.CATALYST, x, y + 12)
                 .addItemLike(catalyst);
 
-        builder.addOutputSlot(x + 45, y).addItemStack(recipe.result());
+        builder.addOutputSlot(x + 45, y + 12).addItemStack(recipe.result());
 
         recipeArrow = guiHelper.createAnimatedRecipeArrow(recipe.craftTime());
     }

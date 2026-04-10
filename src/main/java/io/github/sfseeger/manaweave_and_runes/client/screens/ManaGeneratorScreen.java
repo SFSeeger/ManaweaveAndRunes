@@ -18,6 +18,8 @@ public class ManaGeneratorScreen extends AbstractContainerScreen<ManaGeneratorMe
                                                   "textures/gui/container/mana_generator.png");
     private static final ResourceLocation FLAME =
             ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "container/mana_generator/flame");
+    private static final ResourceLocation PROGRESS =
+            ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "container/mana_generator/progress");
 
 
     public ManaGeneratorScreen(ManaGeneratorMenu menu, Inventory playerInventory,
@@ -51,8 +53,7 @@ public class ManaGeneratorScreen extends AbstractContainerScreen<ManaGeneratorMe
         }
         if (menu.getCookProgress() > 0) {
             int cookTimeHeight = (int) (this.menu.getCookProgress() * 52f);
-            guiGraphics.fill(this.leftPos + 11, this.topPos + 17 + (52 - cookTimeHeight), this.leftPos + 11 + 10,
-                             this.topPos + 17 + 52, 0xFF8D6ACC);
+            guiGraphics.blitSprite(PROGRESS, 0, 52, 10, 52 - cookTimeHeight, this.leftPos + 21, this.topPos + 17 + 52, 10, cookTimeHeight);
         }
     }
 }

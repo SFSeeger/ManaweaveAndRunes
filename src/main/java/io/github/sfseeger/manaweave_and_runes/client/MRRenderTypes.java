@@ -1,0 +1,10 @@
+package io.github.sfseeger.manaweave_and_runes.client;
+
+import com.mojang.blaze3d.vertex.VertexFormat;
+import net.minecraft.client.renderer.RenderType;
+
+public class MRRenderTypes extends RenderType {
+    public MRRenderTypes(String name, VertexFormat format, VertexFormat.Mode mode, int bufferSize, boolean affectsCrumbling, boolean sortOnUpload, Runnable setupState, Runnable clearState) {
+        super(name, format, mode, bufferSize, affectsCrumbling, sortOnUpload, setupState, clearState);
+    }
+}

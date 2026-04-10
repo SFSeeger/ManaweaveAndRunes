@@ -5,6 +5,7 @@ import io.github.sfseeger.manaweave_and_runes.common.blockentities.ManaGenerator
 import io.github.sfseeger.manaweave_and_runes.common.menus.ManaGeneratorMenu;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRBlockEntityInit;
 import io.github.sfseeger.manaweave_and_runes.core.util.InventoryUtil;
+import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -13,11 +14,10 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.SimpleMenuProvider;
+import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -35,8 +35,11 @@ import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Objects;
 
+@ParametersAreNonnullByDefault
+@MethodsReturnNonnullByDefault
 public class ManaGeneratorBlock extends ManaNetworkBlock implements EntityBlock {
     public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty LIT = BlockStateProperties.LIT;

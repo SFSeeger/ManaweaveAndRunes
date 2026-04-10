@@ -16,8 +16,7 @@ public class ManaweaveAndRunesItemGroupInit {
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> MANAWEAVE_AND_RUNES =
             CREATIVE_MODE_TABS.register("manaweave_and_runes_tab", () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.manaweave_and_runes"))
-                    .withTabsBefore(CreativeModeTabs.COMBAT)
-                    .icon(() -> new ItemStack(MRItemInit.AMETHYST_BASE_RUNE.get()))// TODO: change item
+                    .icon(() -> new ItemStack(MRItemInit.AMETHYST_AIR_RUNE_ITEM.get()))// TODO: change item
                     .displayItems((parameters, output) -> {
                         MRItemInit.ITEMS.getEntries().forEach(item -> output.accept(item.get()));
 //                        output.accept(ManaweaveAndRunesItemInit.CRYSTAL_ORE_ITEM.get());

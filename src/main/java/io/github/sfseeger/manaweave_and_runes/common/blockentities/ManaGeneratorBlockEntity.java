@@ -9,6 +9,7 @@ import io.github.sfseeger.lib.common.mana.network.ManaNetworkNodeType;
 import io.github.sfseeger.manaweave_and_runes.common.blocks.ManaGeneratorBlock;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRBlockEntityInit;
 import io.github.sfseeger.manaweave_and_runes.core.util.IInventoryBlockEntity;
+import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -16,6 +17,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.WorldlyContainer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -23,18 +26,23 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
 
-public class ManaGeneratorBlockEntity extends BlockEntity implements IManaNetworkSubscriber, IInventoryBlockEntity {
+@ParametersAreNonnullByDefault
+@MethodsReturnNonnullByDefault
+public class ManaGeneratorBlockEntity extends BlockEntity implements IManaNetworkSubscriber, IInventoryBlockEntity, WorldlyContainer {
     public static final int CAPACITY = 1000;
+    public static final int[] INPUTS = {0};
+    public static final int[] FUEL = {1};
     private static final int MAX_RECEIVE = 1000;
     private static final int MAX_EXTRACT = 1000;
-
     private final ManaHandler manaHandler;
     private final int maxCookTime = 30;
     private ManaNetworkNode manaNetworkNode = new ManaNetworkNode(this, ManaNetworkNodeType.PROVIDER);
     private int maxBurnTime = 0;
     private int burnTimeRemaining = 0;
+    private int cookTimeRemaining = 0;
     private final ItemStackHandler itemStackHandler = new ItemStackHandler(2) {
         @Override
         public boolean isItemValid(int slot, ItemStack stack) {
@@ -52,7 +60,6 @@ public class ManaGeneratorBlockEntity extends BlockEntity implements IManaNetwor
             ManaGeneratorBlockEntity.this.setChanged();
         }
     };
-    private int cookTimeRemaining = 0;
 
     public ManaGeneratorBlockEntity(BlockPos pos, BlockState blockState) {
         super(MRBlockEntityInit.MANA_GENERATOR_BLOCK_ENTITY.get(), pos, blockState);
@@ -65,18 +72,18 @@ public class ManaGeneratorBlockEntity extends BlockEntity implements IManaNetwor
                 };
     }
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public IManaHandler getManaHandler(@Nullable Direction side) {
-        return this.manaHandler;
-    }
-
     public static void serverTick(Level level, BlockPos pos, BlockState state, ManaGeneratorBlockEntity blockEntity) {
         blockEntity.burn(level, pos, state);
     }
 
     public static Optional<ManaMapData> getManaMapData(ItemStack stack) {
         return Optional.ofNullable(stack.getItemHolder().getData(ManaMapData.MANA_MAP_DATA));
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public IManaHandler getManaHandler(@Nullable Direction side) {
+        return this.manaHandler;
     }
 
     public ItemStackHandler getItemHandler(@Nullable Direction side) {
@@ -159,7 +166,6 @@ public class ManaGeneratorBlockEntity extends BlockEntity implements IManaNetwor
         }
     }
 
-
     @Override
     public ManaNetworkNode getManaNetworkNode() {
         return manaNetworkNode;
@@ -228,6 +234,73 @@ public class ManaGeneratorBlockEntity extends BlockEntity implements IManaNetwor
         if (manaNetworkNode != null) {
             manaNetworkNode.updateNetwork();
             manaNetworkNode.connectPendingNodes();
+        }
+    }
+
+    @Override
+    public int[] getSlotsForFace(Direction direction) {
+        return direction == Direction.UP ? INPUTS : FUEL;
+    }
+
+    @Override
+    public boolean canPlaceItemThroughFace(int index, ItemStack itemStack, @Nullable Direction direction) {
+        if (index == 0 && direction == Direction.UP) {
+            return ManaGeneratorBlockEntity.getManaMapData(itemStack).isPresent();
+        } else if (index == 1 && direction != null) {
+            return itemStack.getBurnTime(null) > 0;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean canTakeItemThroughFace(int i, ItemStack itemStack, Direction direction) {
+        return false;
+    }
+
+    @Override
+    public int getContainerSize() {
+        return itemStackHandler.getSlots();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        for (int i = 0; i < itemStackHandler.getSlots(); i++) {
+            if (!itemStackHandler.getStackInSlot(i).isEmpty()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public ItemStack getItem(int slot) {
+        return itemStackHandler.getStackInSlot(slot);
+    }
+
+    @Override
+    public ItemStack removeItem(int slot, int amount) {
+        return itemStackHandler.extractItem(slot, amount, false);
+    }
+
+    @Override
+    public ItemStack removeItemNoUpdate(int slot) {
+        return itemStackHandler.extractItem(slot, itemStackHandler.getStackInSlot(slot).getCount(), false);
+    }
+
+    @Override
+    public void setItem(int slot, ItemStack itemStack) {
+        itemStackHandler.insertItem(slot, itemStack, false);
+    }
+
+    @Override
+    public boolean stillValid(Player player) {
+        return true;
+    }
+
+    @Override
+    public void clearContent() {
+        for (int i = 0; i < itemStackHandler.getSlots(); i++) {
+            itemStackHandler.setStackInSlot(i, ItemStack.EMPTY);
         }
     }
 }

@@ -47,7 +47,7 @@ public abstract class AbstractMRRecipeCategory<T> implements IRecipeCategory<T> 
         slotDrawable = guiHelper.getSlotDrawable();
         arrowDrawable = guiHelper.getRecipeArrow();
         arrowFilledDrawable = guiHelper.getRecipeArrowFilled();
-        pedestalIconDrawable = guiHelper.drawableBuilder(PEDESTAL_ICON, 0, 0, 16, 16)
+        pedestalIconDrawable = guiHelper.drawableBuilder(PEDESTAL_ICON, 0, 0, 32, 32)
                 .setTextureSize(32, 32)
                 .build();
     }
@@ -90,19 +90,25 @@ public abstract class AbstractMRRecipeCategory<T> implements IRecipeCategory<T> 
     }
 
     protected void addPedestal(GuiGraphics guiGraphics, int x, int y) {
-        pedestalIconDrawable.draw(guiGraphics, x, y);
+        guiGraphics.pose().pushPose();
+        guiGraphics.pose().translate(x - 5, y + 12, 0);
+        guiGraphics.pose().scale(0.6f, 0.6f, 1);
+        pedestalIconDrawable.draw(guiGraphics, 0, 0);
+        guiGraphics.pose().popPose();
     }
 
     protected void addMana(GuiGraphics guiGraphics, int x, int y, double mouseX, double mouseY, Mana mana, int amount) {
         guiGraphics.pose().pushPose();
-        guiGraphics.blitSprite(mana.properties().getIcon().orElse(ResourceLocation.parse("")), x, y, 16, 16);
+        guiGraphics.pose().translate(x, y, 0);
+        guiGraphics.pose().scale(0.7f, 0.7f, 1);
+        guiGraphics.blitSprite(mana.properties().getIcon().orElse(ResourceLocation.parse("")), 0, 0, 16, 16);
 
         Component ammountComponent = Component.literal(Integer.toString(amount));
 
-        guiGraphics.drawString(Minecraft.getInstance().font, ammountComponent, x + 18, y + 4, 0xFFFFFF);
+        guiGraphics.drawString(Minecraft.getInstance().font, ammountComponent,  18, 4, 0xFFFFFF);
         if (ScreenUtil.isMouseInBounds(x, y, 16 + 18 + Integer.toString(amount).length() * 2, 14, mouseX, mouseY)) {
-            guiGraphics.renderComponentTooltip(Minecraft.getInstance().font, List.of(mana.getName()), (int) mouseX,
-                                               (int) mouseY);
+            guiGraphics.renderComponentTooltip(Minecraft.getInstance().font, List.of(mana.getName()), (int) (mouseX - x),
+                                               (int) (mouseY - y));
         }
         guiGraphics.pose().popPose();
     }

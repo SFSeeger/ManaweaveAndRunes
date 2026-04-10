@@ -109,7 +109,7 @@ public class ManaWeaversStaffItem extends Item implements IItemHandlerItem, ISpe
             return result.returnForResult(itemstack);
         }
 
-        return InteractionResultHolder.pass(itemstack);
+        return super.use(level, player, hand);
     }
 
     @Override

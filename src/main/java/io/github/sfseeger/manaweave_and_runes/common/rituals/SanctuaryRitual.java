@@ -17,6 +17,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
@@ -46,20 +47,21 @@ public class SanctuaryRitual extends Ritual {
 
     @Override
     public RitualStepResult onRitualServerTick(RitualStateMachineContext ctx) {
-        if (ctx.ticksPassed() % 15 != 0) return RitualStepResult.SKIP;
         AABB boundingBox = new AABB(ctx.pos()).inflate(getDimension().length() / 2);
         Vec3 ritualCenter = new Vec3(ctx.pos().getX(), ctx.pos().getY(), ctx.pos().getZ());
 
-        List<Mob> mobs = ctx.level().getEntitiesOfClass(Mob.class, boundingBox, SanctuaryRitual::isMonster);
-        mobs.forEach(mob -> {
-            Vec3 mobPos = mob.position();
-            Vec3 direction = mobPos.subtract(ritualCenter).normalize().scale(2f);
-            mob.setDeltaMovement(direction);
-            mob.hurtMarked = true;
-        });
+        if (ctx.ticksPassed() % 2 == 0) {
+            List<Projectile> projectiles = ctx.level().getEntitiesOfClass(Projectile.class, boundingBox);
+            projectiles.forEach(projectile -> pushEntity(projectile, ritualCenter, 2f));
+        }
 
-        ctx.level().getNearbyPlayers(TargetingConditions.forNonCombat().ignoreLineOfSight(), null, boundingBox)
-                .forEach(this::addEffectToPlayer);
+        if (ctx.ticksPassed() % 15 == 0) {
+            List<Mob> mobs = ctx.level().getEntitiesOfClass(Mob.class, boundingBox, SanctuaryRitual::isMonster);
+            mobs.forEach(mob -> pushEntity(mob, ritualCenter, 2f));
+
+            ctx.level().getNearbyPlayers(TargetingConditions.forNonCombat().ignoreLineOfSight(), null, boundingBox)
+                    .forEach(this::addEffectToPlayer);
+        }
 
         return RitualStepResult.SUCCESS;
     }
@@ -100,5 +102,12 @@ public class SanctuaryRitual extends Ritual {
     protected void addEffectToPlayer(Player player) {
         player.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 100, 3, true, false));
         player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 100, 1, true, false));
+    }
+
+    protected void pushEntity(Entity entity, Vec3 ritualCenter, float scale) {
+        Vec3 entityPos = entity.position();
+        Vec3 direction = entityPos.subtract(ritualCenter).normalize().scale(scale);
+        entity.setDeltaMovement(direction);
+        entity.hurtMarked = true;
     }
 }
