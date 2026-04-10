@@ -7,15 +7,27 @@ import io.github.sfseeger.lib.core.ManaweaveAndRunesRegistries;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
 import io.github.sfseeger.manaweave_and_runes.client.ClientPayloadHandler;
 import io.github.sfseeger.manaweave_and_runes.common.ServerPayloadHandler;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRItemInit;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRVillagers;
 import io.github.sfseeger.manaweave_and_runes.core.payloads.CraftPayload;
 import io.github.sfseeger.manaweave_and_runes.core.payloads.SwitchSpellPayload;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import net.minecraft.world.entity.npc.VillagerTrades;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.trading.ItemCost;
+import net.minecraft.world.item.trading.MerchantOffer;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.village.VillagerTradesEvent;
+import net.neoforged.neoforge.event.village.WandererTradesEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.handling.DirectionalPayloadHandler;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import net.neoforged.neoforge.registries.NewRegistryEvent;
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent;
+
+import java.util.List;
 
 @EventBusSubscriber(modid = ManaweaveAndRunes.MODID, bus = EventBusSubscriber.Bus.MOD)
 public class CommonModEventHandler {

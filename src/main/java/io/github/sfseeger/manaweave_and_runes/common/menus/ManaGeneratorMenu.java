@@ -39,7 +39,7 @@ public class ManaGeneratorMenu extends AbstractContainerMenu {
         super(MANA_GENERATOR_MENU.get(), containerId);
         this.access = access;
         this.blockEntity = blockEntity;
-        this.itemHandler = blockEntity.getItemHandler(null);
+        this.itemHandler = (ItemStackHandler) blockEntity.getItemHandler(null);
 
         addSlot(new SlotItemHandler(itemHandler, 0, 80, 17));
         addSlot(new SlotItemHandler(itemHandler, 1, 80, 53));

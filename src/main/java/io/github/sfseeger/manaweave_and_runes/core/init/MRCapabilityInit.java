@@ -63,7 +63,7 @@ public class MRCapabilityInit {
                         allowedMana = List.of(manaItem::getManaType);
                     }
                     return new ItemStackManaHandler(itemstack, capacity, maxExtract, maxInsert,
-                            allowedMana);
+                                                    allowedMana);
                 },
                 MRItemInit.AMETHYST_FIRE_RUNE_ITEM.get(),
                 MRItemInit.AMETHYST_AIR_RUNE_ITEM.get(),

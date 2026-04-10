@@ -131,16 +131,22 @@
   "advancements.manaweave_and_runes.tutorial.template_duplicated.description": "Duplicate a Rune Carving Template",
   "advancements.manaweave_and_runes.tutorial.tanzanite_found.description": "Mine some Tanzanite Ore using a Diamond Pickaxe",
   "advancements.manaweave_and_runes.tutorial.tanzanite_found.title": "Glimmering Gemstone Hunter",
+
   "item.manaweave_and_runes.soul_container_rune.unknown_player": "Unknown",
+
   "jei.manaweave_and_runes.rune_carver": "Rune Carving",
   "jei.manaweave_and_runes.mana_concentrator": "Mana Concentrating",
+
   "message.manaweave_and_runes.scrying_pool.no_marks": "You seem to bear no marks",
   "message.manaweave_and_runes.scrying_pool.intro": "You peer into the scrying pool:",
   "message.manaweave_and_runes.scrying_pool.curse_entry": "You bear the cursed %s",
   "message.manaweave_and_runes.scrying_pool.boon_entry": "You bear the boon %s",
+
   "mark.manaweave_and_runes.mark_of_shrinking": "Mark of Shrinking",
   "mark.manaweave_and_runes.mark_of_growing": "Mark of Growing",
   "mark.manaweave_and_runes.mark_of_overheating": "Mark of Overheating",
   "mark.manaweave_and_runes.mark_of_sinking": "Mark of Sinking",
-  "mark.manaweave_and_runes.mark_of_flight": "Mark of Flight"
+  "mark.manaweave_and_runes.mark_of_flight": "Mark of Flight",
+
+  "entity.minecraft.villager.manaweave_and_runes.rune_smith": "Rune Smith"
 }

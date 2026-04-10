@@ -128,7 +128,7 @@ public class ManaweaversStaffGui {
             gui.pose().popPose();
 
             gui.pose().pushPose();
-            gui.renderItem(MRItemInit.SPELL_HOLDER_ITEM.toStack(), 55, 56);
+            gui.renderItem(MRItemInit.SPELL_HOLDER_ITEM.toStack(), 56, 56);
             gui.pose().popPose();
 
             gui.pose().popPose();

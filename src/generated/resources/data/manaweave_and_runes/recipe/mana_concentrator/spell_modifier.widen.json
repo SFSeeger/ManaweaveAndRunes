@@ -18,11 +18,11 @@
   "manaMap": [
     {
       "amount": 300,
-      "manaType": "manaweave_and_runes:order_mana"
+      "manaType": "manaweave_and_runes:water_mana"
     },
     {
       "amount": 300,
-      "manaType": "manaweave_and_runes:water_mana"
+      "manaType": "manaweave_and_runes:order_mana"
     }
   ],
   "result": {

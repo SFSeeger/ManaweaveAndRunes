@@ -13,6 +13,7 @@ import io.github.sfseeger.manaweave_and_runes.datagen.server.loot_tables.MRLootT
 import io.github.sfseeger.manaweave_and_runes.datagen.server.tags.MRBiomeTagProvider;
 import io.github.sfseeger.manaweave_and_runes.datagen.server.tags.MRBlockTagsProvider;
 import io.github.sfseeger.manaweave_and_runes.datagen.server.tags.MRItemTagProvider;
+import io.github.sfseeger.manaweave_and_runes.datagen.server.tags.MRPoiTagProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
@@ -34,12 +35,9 @@ public class ManaweaveAndRunesDatagenHandler {
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
-        generator.addProvider(event.includeClient(),
-                              new MRBlockStateProvider(output, existingFileHelper));
-        generator.addProvider(event.includeClient(),
-                              new MRItemModelProvider(output, existingFileHelper));
-        generator.addProvider(event.includeClient(),
-                              new MRParticleDescriptionProvider(output, existingFileHelper));
+        generator.addProvider(event.includeClient(), new MRBlockStateProvider(output, existingFileHelper));
+        generator.addProvider(event.includeClient(), new MRItemModelProvider(output, existingFileHelper));
+        generator.addProvider(event.includeClient(), new MRParticleDescriptionProvider(output, existingFileHelper));
 
 
         // Server
@@ -54,6 +52,7 @@ public class ManaweaveAndRunesDatagenHandler {
                                                     existingFileHelper));
         generator.addProvider(event.includeServer(),
                               new MRBiomeTagProvider(output, lookupProvider, existingFileHelper));
+        generator.addProvider(event.includeServer(), new MRPoiTagProvider(output, lookupProvider, existingFileHelper));
 
         generator.addProvider(event.includeServer(),
                               new MRAdvancementProvider(output, lookupProvider, existingFileHelper));

@@ -15,12 +15,12 @@
   ],
   "manaCost": [
     {
-      "amount": 25,
-      "manaType": "manaweave_and_runes:air_mana"
-    },
-    {
       "amount": 10,
       "manaType": "manaweave_and_runes:order_mana"
+    },
+    {
+      "amount": 25,
+      "manaType": "manaweave_and_runes:air_mana"
     },
     {
       "amount": 3,

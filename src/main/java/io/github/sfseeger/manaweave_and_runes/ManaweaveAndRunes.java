@@ -4,10 +4,7 @@ import com.mojang.logging.LogUtils;
 import io.github.sfseeger.lib.common.mana.network.ManaNetworkHandler;
 import io.github.sfseeger.manaweave_and_runes.client.event.KeyManager;
 import io.github.sfseeger.manaweave_and_runes.core.init.*;
-import net.minecraft.client.Minecraft;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.Blocks;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -56,6 +53,7 @@ public class ManaweaveAndRunes {
 
         SpellNodeInit.SPELL_NODES.register(modEventBus);
 
+        MRVillagers.register(modEventBus);
         MRLootModifierInit.GLOBAL_LOOT_MODIFIER_SERIALIZERS.register(modEventBus);
         MRStructureTypes.STRUCTURES.register(modEventBus);
 
@@ -79,25 +77,16 @@ public class ManaweaveAndRunes {
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
-        // Some common setup code
-        LOGGER.info("HELLO FROM COMMON SETUP");
-
-        if (Config.logDirtBlock)
-            LOGGER.info("DIRT BLOCK >> {}", BuiltInRegistries.BLOCK.getKey(Blocks.DIRT));
     }
 
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
-        LOGGER.info("HELLO from server starting");
     }
 
     @EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
-            // Some client setup code
-            LOGGER.info("HELLO FROM CLIENT SETUP");
-            LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
         }
     }
 }

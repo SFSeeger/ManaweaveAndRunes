@@ -3,12 +3,12 @@
     "#minecraft:terracotta": {
       "mana": [
         {
-          "amount": 4,
-          "manaType": "manaweave_and_runes:fire_mana"
-        },
-        {
           "amount": 2,
           "manaType": "manaweave_and_runes:air_mana"
+        },
+        {
+          "amount": 4,
+          "manaType": "manaweave_and_runes:fire_mana"
         }
       ]
     },
@@ -51,12 +51,12 @@
     "minecraft:cactus": {
       "mana": [
         {
-          "amount": 4,
-          "manaType": "manaweave_and_runes:entropy_mana"
-        },
-        {
           "amount": 8,
           "manaType": "manaweave_and_runes:water_mana"
+        },
+        {
+          "amount": 4,
+          "manaType": "manaweave_and_runes:entropy_mana"
         }
       ]
     },
@@ -143,12 +143,12 @@
     "minecraft:flint_and_steel": {
       "mana": [
         {
-          "amount": 35,
-          "manaType": "manaweave_and_runes:fire_mana"
-        },
-        {
           "amount": 12,
           "manaType": "manaweave_and_runes:entropy_mana"
+        },
+        {
+          "amount": 35,
+          "manaType": "manaweave_and_runes:fire_mana"
         }
       ]
     },
@@ -167,24 +167,24 @@
     "minecraft:glowstone_dust": {
       "mana": [
         {
-          "amount": 20,
-          "manaType": "manaweave_and_runes:fire_mana"
-        },
-        {
           "amount": 10,
           "manaType": "manaweave_and_runes:order_mana"
+        },
+        {
+          "amount": 20,
+          "manaType": "manaweave_and_runes:fire_mana"
         }
       ]
     },
     "minecraft:golden_apple": {
       "mana": [
         {
-          "amount": 70,
-          "manaType": "manaweave_and_runes:soul_mana"
-        },
-        {
           "amount": 100,
           "manaType": "manaweave_and_runes:order_mana"
+        },
+        {
+          "amount": 70,
+          "manaType": "manaweave_and_runes:soul_mana"
         }
       ]
     },
@@ -255,12 +255,12 @@
     "minecraft:magma_cream": {
       "mana": [
         {
-          "amount": 30,
-          "manaType": "manaweave_and_runes:fire_mana"
-        },
-        {
           "amount": 15,
           "manaType": "manaweave_and_runes:water_mana"
+        },
+        {
+          "amount": 30,
+          "manaType": "manaweave_and_runes:fire_mana"
         }
       ]
     },
@@ -343,12 +343,12 @@
     "minecraft:slime_ball": {
       "mana": [
         {
-          "amount": 5,
-          "manaType": "manaweave_and_runes:earth_mana"
-        },
-        {
           "amount": 15,
           "manaType": "manaweave_and_runes:water_mana"
+        },
+        {
+          "amount": 5,
+          "manaType": "manaweave_and_runes:earth_mana"
         }
       ]
     },
@@ -415,12 +415,12 @@
     "minecraft:turtle_scute": {
       "mana": [
         {
-          "amount": 20,
-          "manaType": "manaweave_and_runes:earth_mana"
-        },
-        {
           "amount": 30,
           "manaType": "manaweave_and_runes:water_mana"
+        },
+        {
+          "amount": 20,
+          "manaType": "manaweave_and_runes:earth_mana"
         }
       ]
     },

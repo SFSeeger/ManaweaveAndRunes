@@ -23,7 +23,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.wrapper.RangedWrapper;
 import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -86,8 +88,15 @@ public class ManaGeneratorBlockEntity extends BlockEntity implements IManaNetwor
         return this.manaHandler;
     }
 
-    public ItemStackHandler getItemHandler(@Nullable Direction side) {
-        return itemStackHandler;
+    @SuppressWarnings("unchecked")
+    @Override
+    public IItemHandler getItemHandler(@Nullable Direction side) {
+        if (side == null) return itemStackHandler;
+        return switch (side) {
+            case UP -> new RangedWrapper(itemStackHandler, 0, 1);
+            case DOWN, NORTH, SOUTH, EAST, WEST -> new RangedWrapper(itemStackHandler, 1, 2);
+            default -> itemStackHandler;
+        };
     }
 
     public void burn(Level level, BlockPos pos, BlockState state) {

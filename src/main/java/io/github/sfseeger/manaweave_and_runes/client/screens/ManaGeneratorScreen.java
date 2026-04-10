@@ -53,7 +53,8 @@ public class ManaGeneratorScreen extends AbstractContainerScreen<ManaGeneratorMe
         }
         if (menu.getCookProgress() > 0) {
             int cookTimeHeight = (int) (this.menu.getCookProgress() * 52f);
-            guiGraphics.blitSprite(PROGRESS, 0, 52, 10, 52 - cookTimeHeight, this.leftPos + 21, this.topPos + 17 + 52, 10, cookTimeHeight);
+//            guiGraphics.blitSprite(PROGRESS, this.leftPos + 11, this.topPos + 17, 10, 52);
+            guiGraphics.blitSprite(PROGRESS, 10, 52, 0,  52 - cookTimeHeight, this.leftPos + 11, this.topPos + 17 + 52 - cookTimeHeight, 10, cookTimeHeight);
         }
     }
 }
