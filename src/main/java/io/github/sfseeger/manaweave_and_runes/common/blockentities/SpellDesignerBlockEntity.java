@@ -1,18 +1,19 @@
 package io.github.sfseeger.manaweave_and_runes.common.blockentities;
 
+import com.mojang.datafixers.util.Either;
 import io.github.sfseeger.lib.common.items.SpellPartHolderItem;
 import io.github.sfseeger.lib.common.mana.Mana;
-import io.github.sfseeger.lib.common.spells.*;
-import io.github.sfseeger.lib.common.spells.data_components.SpellDataComponent;
+import io.github.sfseeger.lib.common.spells.Spell;
+import io.github.sfseeger.lib.common.spells.SpellNodeType;
+import io.github.sfseeger.lib.common.spells.SpellPart;
+import io.github.sfseeger.manaweave_and_runes.common.spells.SpellAssembler;
 import io.github.sfseeger.manaweave_and_runes.core.payloads.CraftPayload;
 import io.github.sfseeger.manaweave_and_runes.core.payloads.ICraftingPacketHandler;
 import io.github.sfseeger.manaweave_and_runes.core.util.IInventoryBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -28,9 +29,9 @@ import java.util.List;
 import java.util.Map;
 
 import static io.github.sfseeger.manaweave_and_runes.core.init.MRBlockEntityInit.SPELL_DESIGNER_BLOCK_ENTITY;
-import static io.github.sfseeger.manaweave_and_runes.core.init.MRDataComponentsInit.SPELL_DATA_COMPONENT;
 import static io.github.sfseeger.manaweave_and_runes.core.init.MRDataComponentsInit.SPELL_PART_DATA_COMPONENT;
-import static io.github.sfseeger.manaweave_and_runes.core.init.MRItemInit.*;
+import static io.github.sfseeger.manaweave_and_runes.core.init.MRItemInit.DIAMOND_CHISEL;
+
 
 public class SpellDesignerBlockEntity extends BlockEntity implements ICraftingPacketHandler, IInventoryBlockEntity {
     public static final int MAIN_SLOT_INDEX = 0;
@@ -44,75 +45,53 @@ public class SpellDesignerBlockEntity extends BlockEntity implements ICraftingPa
         super(SPELL_DESIGNER_BLOCK_ENTITY.get(), pos, blockState);
     }
 
-    public ItemStack assembleSpell() {
+    public @Nullable Either<Spell, SpellPart> getCurrentResult() {
         ItemStack stack = itemHandler.getStackInSlot(MAIN_SLOT_INDEX);
 
         if (stack.isEmpty()) {
-            return ItemStack.EMPTY;
+            return null;
         }
-        if (stack.getItem() instanceof SpellPartHolderItem) {
-            if (!stack.has(SPELL_PART_DATA_COMPONENT)) {
-                return ItemStack.EMPTY;
-            }
+        if (!(stack.getItem() instanceof SpellPartHolderItem) || !stack.has(SPELL_PART_DATA_COMPONENT))
+            return null;
 
-            boolean hasEffects = false;
-            SpellPart[] parts = new SpellPart[4];
-            for (int i = 0; i < 4; i++) {
-                SpellPart p = itemHandler.getStackInSlot(i + 1).get(SPELL_PART_DATA_COMPONENT);
-                if(p == null){
-                    continue;
-                }
-                if(p.getCore().value() instanceof AbstractSpellEffect){
-                    hasEffects = true;
-                }
-                parts[i] = p;
-            }
+        SpellPart coreSpellPart = stack.get(SPELL_PART_DATA_COMPONENT);
 
-            SpellPart part = stack.get(SPELL_PART_DATA_COMPONENT);
-            Spell spell = new Spell();
-            spell.setName(spellName);
-            if(hasEffects && part.getCore().value() instanceof AbstractSpellType spellType) {
-                //Spell creation logic
-                spell.setSpellType(spellType);
-                if (!part.getModifiers().isEmpty())
-                    spell.getModifiers().computeIfAbsent(spellType, k -> new ArrayList<>()).addAll(part.getModifiers());
-                for(SpellPart p : parts){
-                    if (p != null && p.getCore().value() instanceof AbstractSpellEffect effect) {
-                        spell.getEffects().add(effect);
-                        if (!p.getModifiers().isEmpty()) spell.getModifiers()
-                                .computeIfAbsent(effect, k -> new ArrayList<>())
-                                .addAll(p.getModifiers());
-                    }
-                }
-                if(spell.isValid()){
-                    ItemStack stack1 = new ItemStack(SPELL_HOLDER_ITEM.get(), 1);
-                    stack1.set(SPELL_DATA_COMPONENT, new SpellDataComponent(spell));
-                    return stack1;
-                }
-            } else if(!hasEffects){
-                List<AbstractSpellModifier> modifiers = new ArrayList<>();
-                if (!part.getModifiers().isEmpty()) {
-                    modifiers = part.getModifiers();
-                    if (modifiers.size() >= 16) return ItemStack.EMPTY;
-                }
-                SpellPart part1 = new SpellPart(part.getCore(), modifiers); //Replace with modifiers from parts?
-                for(SpellPart p : parts){
-                    if (p != null && p.getCore().value() instanceof AbstractSpellModifier) {
-                        part1.getModifiers().add((AbstractSpellModifier) (p.getCore().value()));
-                    }
-                }
-                ItemStack stack1 = new ItemStack(SPELL_PART.get(), 1);
-                stack1.set(SPELL_PART_DATA_COMPONENT, part1);
-                stack1.set(DataComponents.CUSTOM_NAME, Component.literal(spellName));
-                return stack1;
+        boolean hasEffects = false;
+        List<SpellPart> parts = new ArrayList<>(4);
+        for (int i = 0; i < 4; i++) {
+            SpellPart p = itemHandler.getStackInSlot(i + 1).get(SPELL_PART_DATA_COMPONENT);
+            if (p == null) {
+                continue;
             }
+            if (p.getSpellNodeType() == SpellNodeType.EFFECT) {
+                hasEffects = true;
+            }
+            parts.add(p);
+        }
+        if (coreSpellPart.getSpellNodeType() == SpellNodeType.TYPE && hasEffects) {
+            Spell spell = SpellAssembler.assambleSpell(coreSpellPart, parts, spellName);
+            return spell != null ? Either.left(spell) : null;
+        } else {
+            SpellPart spellPart = SpellAssembler.assembleSpellPart(coreSpellPart, parts);
+            return spellPart != null ? Either.right(spellPart) : null;
+        }
+    }
+
+    public ItemStack assembleSpell() {
+        Either<Spell, SpellPart> result = getCurrentResult();
+        if (result == null) return ItemStack.EMPTY;
+
+        if (result.left().isPresent()) {
+            return SpellAssembler.createSpellItemStack(result.left().get());
+        } else if (result.right().isPresent()) {
+            return SpellAssembler.createSpellPartItemStack(result.right().get(), spellName);
         }
         return ItemStack.EMPTY;
     }
 
-    public void markChanged(){
+    public void markChanged() {
         setChanged();
-        if(level != null){
+        if (level != null) {
             level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
         }
     }
@@ -136,13 +115,13 @@ public class SpellDesignerBlockEntity extends BlockEntity implements ICraftingPa
         return itemHandler;
     }
 
+    public String getSpellName() {
+        return spellName;
+    }
+
     public void setSpellName(String name) {
         spellName = name;
         markChanged();
-    }
-
-    public String getSpellName() {
-        return spellName;
     }
 
     public void onCraft(Player player) {
@@ -156,7 +135,7 @@ public class SpellDesignerBlockEntity extends BlockEntity implements ICraftingPa
                 itemHandler.getStackInSlot(CHISEL_SLOT_INDEX)
                         .hurtAndBreak(4, (ServerLevel) player.level(), (ServerPlayer) player, e -> {
                         });
-                setSpellName("");
+                setSpellName(DEFAULT_SPELL_NAME);
                 markChanged();
             }
         }
@@ -180,27 +159,15 @@ public class SpellDesignerBlockEntity extends BlockEntity implements ICraftingPa
     }
 
     public Map<Mana, Integer> getManaCost() {
-        Map<Mana, Integer> cost = new HashMap<>();
-        int count = 0;
-        for (int i = 0; i < CHISEL_SLOT_INDEX; i++) {
-            ItemStack stack = itemHandler.getStackInSlot(i);
-            SpellPart part = stack.get(SPELL_PART_DATA_COMPONENT);
-            if (part != null) {
-                for (Map.Entry<Mana, Integer> entry : part.getCore().value().getManaCost().entrySet()) {
-                    cost.put(entry.getKey(), cost.getOrDefault(entry.getKey(), 0) + entry.getValue());
-                }
-                for (AbstractSpellModifier modifier : part.getModifiers()) {
-                    for (Map.Entry<Mana, Integer> entry : modifier.getManaCost().entrySet()) {
-                        cost.put(entry.getKey(), cost.getOrDefault(entry.getKey(), 0) + entry.getValue());
-                    }
-                }
-                count = count + part.getModifiers().size() + 1;
+        Either<Spell, SpellPart> result = getCurrentResult();
+
+        if (result != null) {
+            if (result.left().isPresent()) {
+                return result.left().get().getManaCost();
+            } else if (result.right().isPresent()) {
+                return result.right().get().getManaCost();
             }
         }
-        int scalar = Spell.getModifierCostScalar(count - 1);
-        for (Map.Entry<Mana, Integer> entry : cost.entrySet()) {
-            entry.setValue(entry.getValue() * scalar);
-        }
-        return cost;
+        return new HashMap<>();
     }
 }

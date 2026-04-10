@@ -4,8 +4,6 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 
-import java.util.List;
-
 public class SpellResolver {
     private final Spell spell;
 
@@ -22,24 +20,10 @@ public class SpellResolver {
     }
 
     public SpellCastingResult resolve(HitResult rayTrace, SpellCastingContext context) {
-        SpellCastingResult result = SpellCastingResult.SUCCESS;
-        for(AbstractSpellEffect effect : spell.getEffects()){
-            SpellCastingContext localContext = context.clone();
-            List<AbstractSpellModifier> modifiers = spell.getModifiers().get(effect);
-            boolean hasModifiers = modifiers != null;
-            if (hasModifiers) {
-                for (AbstractSpellModifier modifier : modifiers) {
-                    modifier.onGatherContext(rayTrace, localContext);
-                    modifier.preResolve(rayTrace, localContext);
-                }
-            }
-            result = effect.resolve(rayTrace, localContext).compare(result);
-            if (hasModifiers) {
-                for (AbstractSpellModifier modifier : modifiers) {
-                    modifier.postResolve(rayTrace, localContext);
-                }
-            }
-        }
+        SpellCastingContext localContext =
+                new SpellCastingContext(context.getLevel(), context.getCaster(), context.getHandIn());
+        SpellCastingResult result = spell.resolveEffects(rayTrace, localContext);
+        spell.getCore().getModifiers().forEach(modifier -> modifier.postResolve(rayTrace, context));
         return result;
     }
 }

@@ -4,6 +4,7 @@ import io.github.sfseeger.lib.common.mana.Mana;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
@@ -24,4 +25,9 @@ public abstract class AbstractSpellEffect extends AbstractSpellNode {
     public abstract SpellCastingResult resolveBlock(BlockHitResult blockHitResult, SpellCastingContext context);
 
     public abstract SpellCastingResult resolveEntity(EntityHitResult entityHitResult, SpellCastingContext context);
+
+    @Override
+    public @NotNull SpellNodeType getSpellNodeType() {
+        return SpellNodeType.EFFECT;
+    }
 }

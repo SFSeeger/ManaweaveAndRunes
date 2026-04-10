@@ -4,6 +4,7 @@ import io.github.sfseeger.lib.common.mana.Manas;
 import io.github.sfseeger.lib.common.spells.AbstractSpellModifier;
 import io.github.sfseeger.lib.common.spells.SpellCastingContext;
 import net.minecraft.world.phys.HitResult;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
@@ -15,7 +16,7 @@ public class SpellModifierStrengthen extends AbstractSpellModifier {
     }
 
     @Override
-    public void onGatherContext(HitResult rayTrace, SpellCastingContext context) {
+    public void onGatherContext(@Nullable HitResult rayTrace, SpellCastingContext context) {
         float strength = (float)context.getVariable("strength");
         context.setVariable("strength", strength + 1);
     }

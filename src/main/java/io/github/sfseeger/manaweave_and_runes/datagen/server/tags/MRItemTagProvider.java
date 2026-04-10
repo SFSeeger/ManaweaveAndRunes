@@ -42,5 +42,8 @@ public class MRItemTagProvider extends ItemTagsProvider {
                 .add(MRBlockInit.SOUL_MANA_INFUSED_ROCK_BLOCK.asItem())
                 .add(MRBlockInit.VOID_MANA_INFUSED_ROCK_BLOCK.asItem())
         ;
+
+        this.tag(MRTagInit.CHISEL_ITEM)
+                .add(MRItemInit.DIAMOND_CHISEL.get());
     }
 }

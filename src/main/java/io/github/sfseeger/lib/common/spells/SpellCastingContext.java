@@ -24,7 +24,10 @@ public class SpellCastingContext implements Cloneable {
     public Map<String, Object> getVariables() {
         return variables;
     }
-    public Object getVariable(String key) {return variables.get(key);}
+
+    public Object getVariable(String key) {
+        return variables.get(key);
+    }
 
     @SuppressWarnings("unchecked")
     public <T> T getVariableSave(String key, T defaultValue) {
@@ -37,6 +40,10 @@ public class SpellCastingContext implements Cloneable {
 
     public LivingEntity getCaster() {
         return caster;
+    }
+
+    public InteractionHand getHandIn() {
+        return handIn;
     }
 
     public void setVariable(String key, Object value) {

@@ -13,6 +13,7 @@ public enum SpellCastingResult {
     SpellCastingResult(boolean success) {
         this.success = success;
     }
+
     public SpellCastingResult compare(SpellCastingResult other){
         return this.ordinal() >= other.ordinal() ? this: other;
     }

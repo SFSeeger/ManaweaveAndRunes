@@ -54,7 +54,7 @@ public class Manas {
             new ManaProperties.Builder().color(0x2A2F4E)
                     .addGenerationCondition(new SurroundedByBlockGenerationCondition(Blocks.BEDROCK, 3))
                     .addGenerationCondition(new SurroundedByBlockGenerationCondition(Blocks.WARPED_WART_BLOCK, 1))
-                    .addGenerationCondition(new BiomeGenerationCondition(Tags.Biomes.IS_END, 2))
+                    .addGenerationCondition(new BiomeGenerationCondition(Tags.Biomes.IS_END, 20))
                     .canBeGenerated(true)
                     .icon(ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "container/mana/void_mana"))
                     .build());
@@ -79,7 +79,7 @@ public class Manas {
             new ManaProperties.Builder().color(0x2A2F4E)
                     .addGenerationCondition(new SurroundedByBlockGenerationCondition(Blocks.TNT, 1))
                     .addGenerationCondition(new SurroundedByBlockGenerationCondition(Blocks.CREEPER_HEAD, 3))
-                    .addGenerationCondition(new SurroundedByBlockGenerationCondition(Blocks.SLIME_BLOCK, 1))
+                    .addGenerationCondition(new SurroundedByBlockGenerationCondition(Blocks.WITHER_SKELETON_SKULL, 5))
                     .canBeGenerated(true)
                     .icon(ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "container/mana/entropy_mana"))
                     .build());

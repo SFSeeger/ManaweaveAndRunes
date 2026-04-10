@@ -23,14 +23,18 @@ public class SpellCaster {
     public SpellCaster() {
     }
 
-    public SpellCastingResult cast(Level level, LivingEntity entity, InteractionHand handIn, @NotNull Spell spell) {
-        AbstractSpellType type = spell.getSpellType();
+    public static SpellCastingResult cast(Level level, LivingEntity entity, InteractionHand handIn, @NotNull Spell spell) {
         SpellCastingContext context = new SpellCastingContext(level, entity, handIn);
         SpellResolver resolver = new SpellResolver(spell);
+
+        SpellPart core = spell.getCore();
+        core.getModifiers().forEach(modifier -> modifier.onGatherContext(null, context));
+        core.getModifiers().forEach(modifier -> modifier.preResolve(null, context));
+
         if (!extractRequiredMana(spell, context, true)) return SpellCastingResult.FAILURE;
         extractRequiredMana(spell, context, false);
 
-        if (!level.isClientSide()) {
+        if (!level.isClientSide() && core.getCore().value() instanceof AbstractSpellType type) {
             HitResult result =
                     SpellUtils.rayTrace(entity,
                                         0.3f + entity.getAttribute(Attributes.BLOCK_INTERACTION_RANGE).getValue(),
@@ -43,19 +47,18 @@ public class SpellCaster {
             if (result instanceof EntityHitResult r && r.getType() != HitResult.Type.MISS) {
                 return type.castOnEntity(r.getEntity(), context, resolver);
             }
-
             return type.cast(context, resolver);
         }
         return SpellCastingResult.SKIPPED;
     }
 
-    public boolean extractRequiredMana(Spell spell, SpellCastingContext context, boolean simulate){
+    public static boolean extractRequiredMana(Spell spell, SpellCastingContext context, boolean simulate) {
         if(context.getCaster().hasInfiniteMaterials()) return true;
 
         Map<Mana, Integer> requiredMana = spell.getManaCost();
         Map<Mana, Integer> consumedMana = new HashMap<>();
         Iterable<ItemStack> items;
-        boolean isPlayer = context.getCaster() instanceof Player player;
+        boolean isPlayer = context.getCaster() instanceof Player;
         if (isPlayer) {
             items = ((Player) context.getCaster()).getInventory().items.stream()
                     .filter(itemStack -> itemStack.is(MRTagInit.SPELL_MANA_PROVIDER))

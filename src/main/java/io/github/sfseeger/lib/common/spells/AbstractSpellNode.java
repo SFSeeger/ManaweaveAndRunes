@@ -10,7 +10,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.world.item.Item;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 import java.util.Set;
@@ -53,6 +53,8 @@ public abstract class AbstractSpellNode {
     }
 
     public abstract Set<AbstractSpellNode> getPossibleModifiers();
+
+    public abstract @NotNull SpellNodeType getSpellNodeType();
 
     public String getDescriptionId() {
         if (this.descriptionId == null) {

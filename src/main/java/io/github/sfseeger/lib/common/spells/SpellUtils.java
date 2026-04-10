@@ -85,9 +85,7 @@ public class SpellUtils {
         MinecraftServer server = level.getServer();
         if (server != null) {
             if (context.getCaster() instanceof Player player) {
-                if (server.isUnderSpawnProtection((ServerLevel) level, pos, player)) {
-                    return false;
-                }
+                return !server.isUnderSpawnProtection((ServerLevel) level, pos, player);
             } else {
                 if (!server.getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING)) return false;
                 return !isInsideSpawn(pos, level, server);
