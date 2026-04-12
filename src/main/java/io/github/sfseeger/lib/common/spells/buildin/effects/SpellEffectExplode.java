@@ -1,6 +1,5 @@
 package io.github.sfseeger.lib.common.spells.buildin.effects;
 
-import io.github.sfseeger.lib.common.mana.Manas;
 import io.github.sfseeger.lib.common.spells.*;
 import io.github.sfseeger.lib.common.spells.buildin.modifiers.SpellModifierStrengthen;
 import net.minecraft.core.BlockPos;
@@ -10,14 +9,13 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 
-import java.util.Map;
 import java.util.Set;
 
 public class SpellEffectExplode extends AbstractSpellEffect {
     public static final SpellEffectExplode INSTANCE = new SpellEffectExplode();
 
     public SpellEffectExplode() {
-        super(Map.of(Manas.FireMana, 4, Manas.EntropyMana, 10), 10);
+        super();
     }
 
     @Override
@@ -46,10 +44,5 @@ public class SpellEffectExplode extends AbstractSpellEffect {
             return true;
         }
         return false;
-    }
-
-    @Override
-    public Set<AbstractSpellNode> getPossibleModifiers() {
-        return Set.of(SpellModifierStrengthen.INSTANCE);
     }
 }

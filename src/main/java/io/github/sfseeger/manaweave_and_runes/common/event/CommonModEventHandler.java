@@ -3,6 +3,7 @@ package io.github.sfseeger.manaweave_and_runes.common.event;
 import io.github.sfseeger.lib.common.datamaps.BlockHarmDataMap;
 import io.github.sfseeger.lib.common.datamaps.BlockHealDataMap;
 import io.github.sfseeger.lib.common.datamaps.ManaMapData;
+import io.github.sfseeger.lib.common.datamaps.SpellNodeAttributes;
 import io.github.sfseeger.lib.core.ManaweaveAndRunesRegistries;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
 import io.github.sfseeger.manaweave_and_runes.client.ClientPayloadHandler;
@@ -60,5 +61,6 @@ public class CommonModEventHandler {
         event.register(ManaMapData.MANA_MAP_DATA);
         event.register(BlockHarmDataMap.BLOCK_BLOCK_HARM_DATA);
         event.register(BlockHealDataMap.BLOCK_BLOCK_HEAL_DATA);
+        event.register(SpellNodeAttributes.SPELL_NODE_ATTRIBUTES);
     }
 }

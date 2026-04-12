@@ -1,6 +1,5 @@
 package io.github.sfseeger.lib.common.spells.buildin.effects;
 
-import io.github.sfseeger.lib.common.mana.Manas;
 import io.github.sfseeger.lib.common.spells.*;
 import io.github.sfseeger.lib.common.spells.buildin.modifiers.SpellModifierElongate;
 import io.github.sfseeger.lib.common.spells.buildin.modifiers.SpellModifierStrengthen;
@@ -14,7 +13,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 
-import java.util.Map;
 import java.util.Set;
 
 import static net.minecraft.world.entity.projectile.windcharge.AbstractWindCharge.EXPLOSION_DAMAGE_CALCULATOR;
@@ -23,7 +21,7 @@ public class SpellEffectPush extends AbstractSpellEffect {
     public static final SpellEffectPush INSTANCE = new SpellEffectPush();
 
     public SpellEffectPush() {
-        super(Map.of(Manas.AirMana, 5), 5);
+        super();
     }
 
     @Override

@@ -3,6 +3,7 @@ package io.github.sfseeger.lib.common.mana;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
+import io.github.sfseeger.lib.common.datamaps.SpellNodeAttributes;
 import io.github.sfseeger.lib.common.mana.generation.AbstractManaGenerationCondition;
 import io.github.sfseeger.lib.common.mana.generation.ManaGenerationHelper;
 import io.github.sfseeger.lib.core.ManaweaveAndRunesRegistries;
@@ -25,8 +26,10 @@ import java.util.stream.Collectors;
 
 public class Mana {
 
-    public static final Codec<Holder<Mana>> CODEC;
+    public static final Codec<Holder<Mana>> HOLDER_CODEC;
+    public static final Codec<Mana> CODEC;
     public static final Codec<List<Pair<Holder<Mana>, Integer>>> MANAS_WITH_AMOUNT_CODEC;
+    public static final Codec<Map<Mana, Integer>> MANA_MAP_CODEC;
     public static final StreamCodec<RegistryFriendlyByteBuf, Map<Mana, Integer>> MANA_MAP_STREAM_CODEC =
             ByteBufCodecs.map(
                     HashMap::new,
@@ -43,8 +46,8 @@ public class Mana {
             );
 
     static {
-        //  ManaRegistry.MANA_REGISTRY.holderByNameCodec().fieldOf("mana_id").forGetter(Mana::RegistryHolder)
-        CODEC = Codec.lazyInitialized(() ->
+        CODEC = Codec.lazyInitialized(ManaweaveAndRunesRegistries.MANA_REGISTRY::byNameCodec);
+        HOLDER_CODEC = Codec.lazyInitialized(() ->
                                               ManaweaveAndRunesRegistries.MANA_REGISTRY.holderByNameCodec().validate(
                                                       instance -> instance.is(Manas.EmptyMana.registryHolder()) ?
                                                               DataResult.error(
@@ -54,10 +57,16 @@ public class Mana {
         );
         MANAS_WITH_AMOUNT_CODEC = Codec.list(
                 Codec.pair(
-                        Mana.CODEC.fieldOf("manaType").codec(),
+                        Mana.HOLDER_CODEC.fieldOf("manaType").codec(),
                         Codec.INT.fieldOf("amount").codec()
                 )
         );
+
+        MANA_MAP_CODEC = Codec.lazyInitialized(
+                () -> Codec.unboundedMap(
+                        CODEC,
+                        Codec.INT
+                ));
     }
 
     String descriptionId;

@@ -6,6 +6,7 @@ import io.github.sfseeger.lib.common.spells.AbstractSpellModifier;
 import io.github.sfseeger.lib.common.spells.SpellPart;
 import io.github.sfseeger.manaweave_and_runes.common.blockentities.SpellDesignerBlockEntity;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRBlockInit;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRTagInit;
 import io.github.sfseeger.manaweave_and_runes.core.payloads.CraftPayload;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
@@ -83,7 +84,7 @@ public class SpellDesignerMenu extends AbstractContainerMenu {
             if (index >= INV_SLOT_START && index < HOTBAR_SLOT_END + 1) {
                 boolean couldMove = false;
                 // Is the item a chisel?
-                if (quickMovedStack.getItem() == DIAMOND_CHISEL.get()) { //TODO: Replace wth chisel item
+                if (quickMovedStack.is(MRTagInit.CHISEL_ITEM)) {
                     couldMove = this.moveItemStackTo(rawStack, 5, 6, false);
                 // Is the item a spell Part?
                 } else if (quickMovedStack.getItem() instanceof SpellPartHolderItem) {

@@ -5,6 +5,7 @@ import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.github.sfseeger.lib.common.mana.Mana;
+import io.github.sfseeger.lib.common.spells.AbstractSpellNode;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
@@ -72,7 +73,7 @@ public record ManaMapData(Map<Mana, Integer> manaMap) {
     }
 
     public record ManaMapRemover(Holder<Mana> key) implements DataMapValueRemover<Item, ManaMapData> {
-        public static final Codec<ManaMapRemover> CODEC = Mana.CODEC.xmap(ManaMapRemover::new, ManaMapRemover::key);
+        public static final Codec<ManaMapRemover> CODEC = Mana.HOLDER_CODEC.xmap(ManaMapRemover::new, ManaMapRemover::key);
 
         @Override
         public Optional<ManaMapData> remove(ManaMapData manaMapData, Registry<Item> registry,
@@ -82,4 +83,5 @@ public record ManaMapData(Map<Mana, Integer> manaMap) {
             return newMap.isEmpty() ? Optional.empty() : Optional.of(new ManaMapData(newMap));
         }
     }
+
 }

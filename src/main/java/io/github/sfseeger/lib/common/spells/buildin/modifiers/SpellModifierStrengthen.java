@@ -1,18 +1,15 @@
 package io.github.sfseeger.lib.common.spells.buildin.modifiers;
 
-import io.github.sfseeger.lib.common.mana.Manas;
 import io.github.sfseeger.lib.common.spells.AbstractSpellModifier;
 import io.github.sfseeger.lib.common.spells.SpellCastingContext;
 import net.minecraft.world.phys.HitResult;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Map;
-
 public class SpellModifierStrengthen extends AbstractSpellModifier {
     public static final SpellModifierStrengthen INSTANCE = new SpellModifierStrengthen();
 
     public SpellModifierStrengthen() {
-        super(Map.of(Manas.OrderMana, 6), 8);
+        super();
     }
 
     @Override

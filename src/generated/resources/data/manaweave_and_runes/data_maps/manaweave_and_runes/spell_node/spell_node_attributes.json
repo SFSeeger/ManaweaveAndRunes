@@ -1,0 +1,119 @@
+{
+  "values": {
+    "manaweave_and_runes:spell_effect.break": {
+      "baseCooldown": 8,
+      "cost": {
+        "manaweave_and_runes:earth_mana": 4,
+        "manaweave_and_runes:entropy_mana": 2
+      },
+      "possibleModifiers": [
+        "manaweave_and_runes:spell_modifier.delicate",
+        "manaweave_and_runes:spell_modifier.widen",
+        "manaweave_and_runes:spell_modifier.elongate",
+        "manaweave_and_runes:spell_modifier.strengthen"
+      ]
+    },
+    "manaweave_and_runes:spell_effect.burn": {
+      "baseCooldown": 8,
+      "cost": {
+        "manaweave_and_runes:fire_mana": 4
+      },
+      "possibleModifiers": [
+        "manaweave_and_runes:spell_modifier.strengthen"
+      ]
+    },
+    "manaweave_and_runes:spell_effect.explode": {
+      "baseCooldown": 12,
+      "cost": {
+        "manaweave_and_runes:entropy_mana": 4,
+        "manaweave_and_runes:fire_mana": 6
+      },
+      "possibleModifiers": [
+        "manaweave_and_runes:spell_modifier.widen",
+        "manaweave_and_runes:spell_modifier.strengthen"
+      ]
+    },
+    "manaweave_and_runes:spell_effect.harm": {
+      "baseCooldown": 6,
+      "cost": {
+        "manaweave_and_runes:entropy_mana": 4
+      },
+      "possibleModifiers": [
+        "manaweave_and_runes:spell_modifier.delicate",
+        "manaweave_and_runes:spell_modifier.strengthen"
+      ]
+    },
+    "manaweave_and_runes:spell_effect.heal": {
+      "baseCooldown": 6,
+      "cost": {
+        "manaweave_and_runes:water_mana": 4
+      },
+      "possibleModifiers": [
+        "manaweave_and_runes:spell_modifier.delicate",
+        "manaweave_and_runes:spell_modifier.strengthen"
+      ]
+    },
+    "manaweave_and_runes:spell_effect.push": {
+      "baseCooldown": 6,
+      "cost": {
+        "manaweave_and_runes:air_mana": 4
+      },
+      "possibleModifiers": [
+        "manaweave_and_runes:spell_modifier.widen",
+        "manaweave_and_runes:spell_modifier.elongate",
+        "manaweave_and_runes:spell_modifier.strengthen"
+      ]
+    },
+    "manaweave_and_runes:spell_modifier.delicate": {
+      "baseCooldown": 4,
+      "cost": {
+        "manaweave_and_runes:soul_mana": 2
+      },
+      "possibleModifiers": []
+    },
+    "manaweave_and_runes:spell_modifier.elongate": {
+      "baseCooldown": 4,
+      "cost": {
+        "manaweave_and_runes:water_mana": 2
+      },
+      "possibleModifiers": []
+    },
+    "manaweave_and_runes:spell_modifier.strengthen": {
+      "baseCooldown": 4,
+      "cost": {
+        "manaweave_and_runes:entropy_mana": 2
+      },
+      "possibleModifiers": []
+    },
+    "manaweave_and_runes:spell_modifier.widen": {
+      "baseCooldown": 4,
+      "cost": {
+        "manaweave_and_runes:air_mana": 2
+      },
+      "possibleModifiers": []
+    },
+    "manaweave_and_runes:spell_type.projectile": {
+      "baseCooldown": 10,
+      "cost": {
+        "manaweave_and_runes:air_mana": 5
+      },
+      "possibleModifiers": [
+        "manaweave_and_runes:spell_modifier.strengthen"
+      ]
+    },
+    "manaweave_and_runes:spell_type.self": {
+      "baseCooldown": 3,
+      "cost": {
+        "manaweave_and_runes:earth_mana": 3
+      },
+      "possibleModifiers": []
+    },
+    "manaweave_and_runes:spell_type.touch": {
+      "baseCooldown": 5,
+      "cost": {
+        "manaweave_and_runes:earth_mana": 3
+      },
+      "possibleModifiers": []
+    }
+  }
+}

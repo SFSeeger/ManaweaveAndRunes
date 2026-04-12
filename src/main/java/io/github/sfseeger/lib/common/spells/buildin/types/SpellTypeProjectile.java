@@ -1,7 +1,6 @@
 package io.github.sfseeger.lib.common.spells.buildin.types;
 
 import io.github.sfseeger.lib.common.entities.projectiles.SpellProjectileEntity;
-import io.github.sfseeger.lib.common.mana.Manas;
 import io.github.sfseeger.lib.common.spells.*;
 import io.github.sfseeger.manaweave_and_runes.core.init.SpellNodeInit;
 import net.minecraft.world.entity.Entity;
@@ -9,14 +8,13 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 
-import java.util.Map;
 import java.util.Set;
 
 public class SpellTypeProjectile extends AbstractSpellType {
     public static final SpellTypeProjectile INSTANCE = new SpellTypeProjectile();
 
     public SpellTypeProjectile() {
-        super(Map.of(Manas.AirMana, 5), 10);
+        super();
     }
 
     @Override
@@ -44,12 +42,5 @@ public class SpellTypeProjectile extends AbstractSpellType {
         float strength = context.getVariableSave("strength", 1f);
         entity.shootFromRotation(caster, caster.getXRot(), caster.getYRot(), 0.0F, 2.5F + strength / 2, 1.0F);
         level.addFreshEntity(entity);
-    }
-
-    @Override
-    public Set<AbstractSpellNode> getPossibleModifiers() {
-        return Set.of(
-                SpellNodeInit.SPELL_MODIFIER_STRENGTHEN.get()
-        );
     }
 }

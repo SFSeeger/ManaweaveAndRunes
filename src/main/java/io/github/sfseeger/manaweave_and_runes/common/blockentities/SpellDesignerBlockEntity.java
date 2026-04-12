@@ -7,6 +7,7 @@ import io.github.sfseeger.lib.common.spells.Spell;
 import io.github.sfseeger.lib.common.spells.SpellNodeType;
 import io.github.sfseeger.lib.common.spells.SpellPart;
 import io.github.sfseeger.manaweave_and_runes.common.spells.SpellAssembler;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRTagInit;
 import io.github.sfseeger.manaweave_and_runes.core.payloads.CraftPayload;
 import io.github.sfseeger.manaweave_and_runes.core.payloads.ICraftingPacketHandler;
 import io.github.sfseeger.manaweave_and_runes.core.util.IInventoryBlockEntity;
@@ -155,7 +156,7 @@ public class SpellDesignerBlockEntity extends BlockEntity implements ICraftingPa
 
     public boolean hasChisel() {
         ItemStack s = itemHandler.getStackInSlot(5);
-        return !s.isEmpty() && s.getItem() == DIAMOND_CHISEL.get(); //TODO: Change to chisel item
+        return !s.isEmpty() && s.is(MRTagInit.CHISEL_ITEM);
     }
 
     public Map<Mana, Integer> getManaCost() {

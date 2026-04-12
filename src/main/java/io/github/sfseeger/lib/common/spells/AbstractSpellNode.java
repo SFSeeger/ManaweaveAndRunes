@@ -1,6 +1,7 @@
 package io.github.sfseeger.lib.common.spells;
 
 import com.mojang.serialization.Codec;
+import io.github.sfseeger.lib.common.datamaps.SpellNodeAttributes;
 import io.github.sfseeger.lib.common.mana.Mana;
 import io.github.sfseeger.lib.core.ManaweaveAndRunesRegistries;
 import net.minecraft.Util;
@@ -10,6 +11,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
@@ -27,13 +29,9 @@ public abstract class AbstractSpellNode {
     public static final StreamCodec<RegistryFriendlyByteBuf, Holder<AbstractSpellNode>>
             HOLDER_STREAM_CODEC = ByteBufCodecs.holderRegistry(ManaweaveAndRunesRegistries.SPELL_NODE_REGISTRY_KEY);
 
-    private final Map<Mana, Integer> baseCosts;
-    private final int baseCooldown;
     private String descriptionId;
 
-    public AbstractSpellNode(Map<Mana, Integer> baseCosts, int baseCooldown) {
-        this.baseCosts = baseCosts;
-        this.baseCooldown = baseCooldown;
+    public AbstractSpellNode() {
     }
 
     public MutableComponent getName() {
@@ -45,21 +43,30 @@ public abstract class AbstractSpellNode {
     }
 
     public Map<Mana, Integer> getManaCost() {
-        return baseCosts;
+        return SpellNodeAttributes.getAttributesForSpellNode(this).map(SpellNodeAttributes::cost).orElse(Map.of());
     }
 
     public int getCooldown() {
-        return baseCooldown;
+        return SpellNodeAttributes.getAttributesForSpellNode(this).map(SpellNodeAttributes::baseCooldown).orElse(0);
     }
 
-    public abstract Set<AbstractSpellNode> getPossibleModifiers();
+    public Set<AbstractSpellNode> getPossibleModifiers() {
+        return SpellNodeAttributes.getAttributesForSpellNode(this)
+                .map(SpellNodeAttributes::possibleModifiers)
+                .orElse(Set.of());
+    }
 
     public abstract @NotNull SpellNodeType getSpellNodeType();
 
     public String getDescriptionId() {
         if (this.descriptionId == null) {
-            this.descriptionId = Util.makeDescriptionId("spell", ManaweaveAndRunesRegistries.SPELL_NODE_REGISTRY.getKey(this));
+            this.descriptionId =
+                    Util.makeDescriptionId("spell", ManaweaveAndRunesRegistries.SPELL_NODE_REGISTRY.getKey(this));
         }
         return this.descriptionId;
+    }
+
+    public ResourceLocation getRegistryName() {
+        return ManaweaveAndRunesRegistries.SPELL_NODE_REGISTRY.getKey(this);
     }
 }

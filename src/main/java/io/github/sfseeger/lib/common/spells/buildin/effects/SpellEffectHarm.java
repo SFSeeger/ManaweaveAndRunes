@@ -1,7 +1,6 @@
 package io.github.sfseeger.lib.common.spells.buildin.effects;
 
 import io.github.sfseeger.lib.common.datamaps.BlockHarmDataMap;
-import io.github.sfseeger.lib.common.mana.Manas;
 import io.github.sfseeger.lib.common.spells.*;
 import io.github.sfseeger.lib.common.spells.buildin.modifiers.SpellModifierDelicate;
 import io.github.sfseeger.lib.common.spells.buildin.modifiers.SpellModifierStrengthen;
@@ -14,14 +13,13 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 
-import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
 public class SpellEffectHarm extends AbstractSpellEffect {
     public static final SpellEffectHarm INSTANCE = new SpellEffectHarm();
     public SpellEffectHarm() {
-        super(Map.of(Manas.SoulMana, 5, Manas.VoidMana, 1), 4);
+        super();
     }
 
     @Override
@@ -55,10 +53,5 @@ public class SpellEffectHarm extends AbstractSpellEffect {
                                1 * strength) ? SpellCastingResult.SUCCESS : SpellCastingResult.FAILURE;
         }
         return SpellCastingResult.SKIPPED;
-    }
-
-    @Override
-    public Set<AbstractSpellNode> getPossibleModifiers() {
-        return Set.of(SpellModifierStrengthen.INSTANCE, SpellModifierDelicate.INSTANCE);
     }
 }

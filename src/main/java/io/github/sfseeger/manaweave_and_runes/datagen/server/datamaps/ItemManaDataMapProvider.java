@@ -1,77 +1,21 @@
-package io.github.sfseeger.manaweave_and_runes.datagen.server;
+package io.github.sfseeger.manaweave_and_runes.datagen.server.datamaps;
 
-import io.github.sfseeger.lib.common.datamaps.BlockHarmDataMap;
-import io.github.sfseeger.lib.common.datamaps.BlockHealDataMap;
 import io.github.sfseeger.lib.common.datamaps.ManaMapData;
 import io.github.sfseeger.lib.common.mana.Mana;
 import io.github.sfseeger.lib.common.mana.Manas;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.data.PackOutput;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.data.DataMapProvider;
 
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
 
-public class MRDataMapProvider extends DataMapProvider {
-    public MRDataMapProvider(PackOutput packOutput,
-            CompletableFuture<HolderLookup.Provider> lookupProvider) {
-        super(packOutput, lookupProvider);
-    }
-
+public class ItemManaDataMapProvider implements IDataMapRegistrar {
     @Override
-    @SuppressWarnings("deprecated")
-    protected void gather() {
-        createItemManaDataMap();
+    public void register(DataMapProvider provider) {
 
-        Builder<BlockHarmDataMap, Block> harm_builder = builder(BlockHarmDataMap.BLOCK_BLOCK_HARM_DATA);
-        addBlockHarmData(harm_builder, Blocks.STONE, Blocks.COBBLESTONE, 0.0f, 0.8f);
-        addBlockHarmData(harm_builder, Blocks.COBBLESTONE, Blocks.GRAVEL, 0.0f, 0.8f);
-        addBlockHarmData(harm_builder, Blocks.GRAVEL, Blocks.SAND, 0.0f, 0.9f);
-        addBlockHarmData(harm_builder, Blocks.SAND, Blocks.CLAY, 0.0f, 0.9f);
-        addBlockHarmData(harm_builder, Blocks.CLAY, Blocks.SAND, 0.0f, 0.9f);
-
-        addBlockHarmData(harm_builder, Blocks.POLISHED_BLACKSTONE_BRICKS, Blocks.CRACKED_POLISHED_BLACKSTONE_BRICKS,
-                         1.0f, 0.8f);
-        addBlockHarmData(harm_builder, Blocks.POLISHED_BLACKSTONE, Blocks.BLACKSTONE, 1.0f, 0.8f);
-
-        addBlockHarmData(harm_builder, Blocks.DEEPSLATE_BRICKS, Blocks.CRACKED_DEEPSLATE_BRICKS, 1.5f, 0.8f);
-        addBlockHarmData(harm_builder, Blocks.POLISHED_DEEPSLATE, Blocks.DEEPSLATE, 1.5f, 0.8f);
-        addBlockHarmData(harm_builder, Blocks.DEEPSLATE, Blocks.COBBLED_DEEPSLATE, 1.5f, 0.8f);
-
-        Builder<BlockHealDataMap, Block> heal_builder = builder(BlockHealDataMap.BLOCK_BLOCK_HEAL_DATA);
-        addBlockHealData(heal_builder, Blocks.COBBLESTONE, Blocks.STONE, 0.0f, 0.8f);
-        addBlockHealData(heal_builder, Blocks.GRAVEL, Blocks.COBBLESTONE, 0.0f, 0.8f);
-        addBlockHealData(heal_builder, Blocks.SAND, Blocks.GRAVEL, 0.0f, 0.9f);
-        addBlockHealData(heal_builder, Blocks.CLAY, Blocks.SAND, 0.0f, 0.9f);
-
-        addBlockHealData(heal_builder, Blocks.CRACKED_POLISHED_BLACKSTONE_BRICKS, Blocks.POLISHED_BLACKSTONE_BRICKS,
-                         1.0f, 0.8f);
-        addBlockHealData(heal_builder, Blocks.BLACKSTONE, Blocks.POLISHED_BLACKSTONE, 1.0f, 0.8f);
-
-        addBlockHealData(heal_builder, Blocks.CRACKED_DEEPSLATE_BRICKS, Blocks.DEEPSLATE_BRICKS, 1.5f, 0.8f);
-        addBlockHealData(heal_builder, Blocks.DEEPSLATE, Blocks.POLISHED_DEEPSLATE, 1.5f, 0.8f);
-        addBlockHealData(heal_builder, Blocks.COBBLED_DEEPSLATE, Blocks.DEEPSLATE, 1.5f, 0.8f);
-    }
-
-    private void addBlockHealData(Builder<BlockHealDataMap, Block> builder, Block block, Block convertedBlock,
-            float strength, float chance) {
-        builder.add(block.builtInRegistryHolder(), new BlockHealDataMap(convertedBlock, strength, chance), false);
-    }
-
-    private void addBlockHarmData(Builder<BlockHarmDataMap, Block> builder, Block block, Block convertedBlock,
-            float strength, float chance) {
-        builder.add(block.builtInRegistryHolder(), new BlockHarmDataMap(convertedBlock, strength, chance), false);
-    }
-
-
-    private void createItemManaDataMap() {
-        AdvancedBuilder<ManaMapData, Item, ?> builder = builder(ManaMapData.MANA_MAP_DATA);
+        DataMapProvider.AdvancedBuilder<ManaMapData, Item, ?> builder = provider.builder(ManaMapData.MANA_MAP_DATA);
 
         addManaData(builder, Items.COAL, Map.of(Manas.FireMana, 25));
         addManaData(builder, Items.BLUE_DYE, Map.of(Manas.AirMana, 10));
@@ -117,12 +61,14 @@ public class MRDataMapProvider extends DataMapProvider {
         addManaData(builder, Items.TOTEM_OF_UNDYING, Map.of(Manas.SoulMana, 300, Manas.OrderMana, 200));
     }
 
-    private void addManaData(AdvancedBuilder<ManaMapData, Item, ?> builder, Item item, Map<Mana, Integer> manaValues) {
+    private void addManaData(DataMapProvider.AdvancedBuilder<ManaMapData, Item, ?> builder, Item item, Map<Mana, Integer> manaValues) {
         builder.add(item.builtInRegistryHolder(), new ManaMapData(manaValues), false);
     }
 
-    private void addManaData(AdvancedBuilder<ManaMapData, Item, ?> builder, TagKey<Item> tag,
-            Map<Mana, Integer> manaValues) {
+    private void addManaData(DataMapProvider.AdvancedBuilder<ManaMapData, Item, ?> builder, TagKey<Item> tag,
+                             Map<Mana, Integer> manaValues
+    ) {
         builder.add(tag, new ManaMapData(manaValues), false);
     }
+
 }

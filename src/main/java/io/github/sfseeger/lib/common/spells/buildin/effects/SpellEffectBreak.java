@@ -1,6 +1,5 @@
 package io.github.sfseeger.lib.common.spells.buildin.effects;
 
-import io.github.sfseeger.lib.common.mana.Manas;
 import io.github.sfseeger.lib.common.spells.*;
 import io.github.sfseeger.lib.common.spells.buildin.modifiers.SpellModifierDelicate;
 import io.github.sfseeger.lib.common.spells.buildin.modifiers.SpellModifierElongate;
@@ -18,14 +17,13 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 
-import java.util.Map;
 import java.util.Set;
 
 public class SpellEffectBreak extends AbstractSpellEffect {
     public static final SpellEffectBreak INSTANCE = new SpellEffectBreak();
 
     public SpellEffectBreak() {
-        super(Map.of(Manas.EarthMana, 5, Manas.EntropyMana, 1), 0);
+        super();
     }
 
     @Override
@@ -36,8 +34,8 @@ public class SpellEffectBreak extends AbstractSpellEffect {
 
     @Override
     public SpellCastingResult resolveEntity(EntityHitResult entityHitResult, SpellCastingContext context) {
-        return breakBlock(entityHitResult.getEntity().getOnPos(), context, Direction.UP)
-                ? SpellCastingResult.SUCCESS : SpellCastingResult.FAILURE;
+        return breakBlock(entityHitResult.getEntity().getOnPos(), context,
+                          Direction.UP) ? SpellCastingResult.SUCCESS : SpellCastingResult.FAILURE;
     }
 
     private boolean breakBlock(BlockPos pos, SpellCastingContext context, Direction direction) {
@@ -49,30 +47,29 @@ public class SpellEffectBreak extends AbstractSpellEffect {
 
 
         return SpellUtils.executeOnPlane(pos, context, direction, (pos1) -> {
-                                             boolean isPlayer = context.getCaster() instanceof Player;
+            boolean isPlayer = context.getCaster() instanceof Player;
 
-                                             BlockState state = level.getBlockState(pos1);
+            BlockState state = level.getBlockState(pos1);
             if (delicate && !state.equals(targetState)) return false;
 
-                                             float d = state.getDestroySpeed(level, pos1);
+            float d = state.getDestroySpeed(level, pos1);
 
-                                             float strengthThreshold = (strength / 3.0f) * 100.0f;
+            float strengthThreshold = (strength / 3.0f) * 100.0f;
 
-                                             if (d < 0) {
-                                                 return false;
-                                             }
-                                             if (d > strengthThreshold) {
-                                                 return false;
-                                             }
-                                             if (!SpellUtils.canChangeBlockState(pos1, context)) {
-                                                 return false;
-                                             }
+            if (d < 0) {
+                return false;
+            }
+            if (d > strengthThreshold) {
+                return false;
+            }
+            if (!SpellUtils.canChangeBlockState(pos1, context)) {
+                return false;
+            }
 
-                                             boolean shouldHarvest =
-                                                     isHarvestable(state, strength) && !(isPlayer && ((Player) context.getCaster()).isCreative());
-                                             return level.destroyBlock(pos1, shouldHarvest, context.getCaster());
-                                         }
-        );
+            boolean shouldHarvest =
+                    isHarvestable(state, strength) && !(isPlayer && ((Player) context.getCaster()).isCreative());
+            return level.destroyBlock(pos1, shouldHarvest, context.getCaster());
+        });
     }
 
     private Tier getToolTier(float strength) {
@@ -100,11 +97,5 @@ public class SpellEffectBreak extends AbstractSpellEffect {
         if (toolTier == Tiers.NETHERITE) fakePickaxe = new ItemStack(Items.NETHERITE_PICKAXE);
 
         return !state.requiresCorrectToolForDrops() || fakePickaxe.isCorrectToolForDrops(state);
-    }
-
-    @Override
-    public Set<AbstractSpellNode> getPossibleModifiers() {
-        return Set.of(SpellModifierStrengthen.INSTANCE, SpellModifierWiden.INSTANCE, SpellModifierElongate.INSTANCE,
-                      SpellModifierDelicate.INSTANCE);
     }
 }

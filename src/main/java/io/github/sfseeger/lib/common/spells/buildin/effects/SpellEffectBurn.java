@@ -1,6 +1,5 @@
 package io.github.sfseeger.lib.common.spells.buildin.effects;
 
-import io.github.sfseeger.lib.common.mana.Manas;
 import io.github.sfseeger.lib.common.spells.AbstractSpellEffect;
 import io.github.sfseeger.lib.common.spells.AbstractSpellNode;
 import io.github.sfseeger.lib.common.spells.SpellCastingContext;
@@ -17,14 +16,13 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.neoforged.neoforge.common.ItemAbilities;
 
-import java.util.Map;
 import java.util.Set;
 
 public class SpellEffectBurn extends AbstractSpellEffect {
     public static final SpellEffectBurn INSTANCE = new SpellEffectBurn();
 
     public SpellEffectBurn() {
-        super(Map.of(Manas.FireMana, 5), 5);
+        super();
     }
 
     @Override
@@ -55,10 +53,5 @@ public class SpellEffectBurn extends AbstractSpellEffect {
     public SpellCastingResult resolveEntity(EntityHitResult entityHitResult, SpellCastingContext context) {
         entityHitResult.getEntity().setRemainingFireTicks((int) (30 * (float) context.getVariable("strength")));
         return SpellCastingResult.SUCCESS;
-    }
-
-    @Override
-    public Set<AbstractSpellNode> getPossibleModifiers() {
-        return Set.of(SpellModifierStrengthen.INSTANCE);
     }
 }

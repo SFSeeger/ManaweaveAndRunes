@@ -1,16 +1,13 @@
 package io.github.sfseeger.lib.common.spells;
 
-import io.github.sfseeger.lib.common.mana.Mana;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Map;
-
 public abstract class AbstractSpellEffect extends AbstractSpellNode {
-    public AbstractSpellEffect(Map<Mana, Integer> baseCosts, int baseCooldown) {
-        super(baseCosts, baseCooldown);
+    public AbstractSpellEffect() {
+        super();
     }
 
     public SpellCastingResult resolve(HitResult rayTrace, SpellCastingContext context) {
