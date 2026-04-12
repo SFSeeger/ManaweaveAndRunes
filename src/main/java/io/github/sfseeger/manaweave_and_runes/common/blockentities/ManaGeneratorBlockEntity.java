@@ -27,13 +27,17 @@ import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.wrapper.RangedWrapper;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib.animatable.GeoBlockEntity;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animation.*;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class ManaGeneratorBlockEntity extends BlockEntity implements IManaNetworkSubscriber, IInventoryBlockEntity, WorldlyContainer {
+public class ManaGeneratorBlockEntity extends BlockEntity implements IManaNetworkSubscriber, IInventoryBlockEntity, WorldlyContainer, GeoBlockEntity {
     public static final int CAPACITY = 1000;
     public static final int[] INPUTS = {0};
     public static final int[] FUEL = {1};
@@ -41,6 +45,12 @@ public class ManaGeneratorBlockEntity extends BlockEntity implements IManaNetwor
     private static final int MAX_EXTRACT = 1000;
     private final ManaHandler manaHandler;
     private final int maxCookTime = 30;
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+    protected static final RawAnimation DEPLOY_ANIM = RawAnimation.begin().thenLoop("deploy");
+    protected static final RawAnimation ACTIVE_ANIM = RawAnimation.begin().thenLoop("working");
+    protected static final RawAnimation DEACTIVATE_ANIM =
+            RawAnimation.begin().thenPlay("deactivate").thenLoop("deploy");
+
     private ManaNetworkNode manaNetworkNode = new ManaNetworkNode(this, ManaNetworkNodeType.PROVIDER);
     private int maxBurnTime = 0;
     private int burnTimeRemaining = 0;
@@ -100,8 +110,9 @@ public class ManaGeneratorBlockEntity extends BlockEntity implements IManaNetwor
     }
 
     public void burn(Level level, BlockPos pos, BlockState state) {
-        boolean flag = false;
+        boolean shouldUpdate = false;
         if (burnTimeRemaining > 0) {
+            triggerAnim("default", "activate");
             burnTimeRemaining--;
             if (!itemStackHandler.getStackInSlot(0).isEmpty()) {
                 if (cookTimeRemaining < maxCookTime) {
@@ -116,22 +127,24 @@ public class ManaGeneratorBlockEntity extends BlockEntity implements IManaNetwor
                     }
                 }
             }
-            flag = true;
+            shouldUpdate = true;
         }
-        if (burnTimeRemaining == 0 && !itemStackHandler.getStackInSlot(0).isEmpty() && !itemStackHandler.getStackInSlot(
-                1).isEmpty()) {
+        if (burnTimeRemaining == 0 && !itemStackHandler.getStackInSlot(0).isEmpty() && !itemStackHandler.getStackInSlot(1).isEmpty()) {
             startCooking(itemStackHandler.getStackInSlot(0), itemStackHandler.getStackInSlot(1));
-            flag = true;
+            shouldUpdate = true;
         }
 
         if (!manaHandler.getManaTypesStored().isEmpty()) {
             manaHandler.getManaTypesStored()
-                    .forEach(mana -> manaNetworkNode.provideMana(Math.min(manaHandler.getManaStored(mana), MAX_EXTRACT),
-                                                                 mana));
+                    .forEach(mana -> manaNetworkNode.provideMana(Math.min(manaHandler.getManaStored(mana), MAX_EXTRACT), mana));
+        }
+
+        if(!isLit() || (isLit() && itemStackHandler.getStackInSlot(0).isEmpty())) {
+            triggerAnim("default", "deactivate");
         }
 
         level.setBlock(pos, state.setValue(ManaGeneratorBlock.LIT, isLit()), 3);
-        if (flag) {
+        if (shouldUpdate) {
             markUpdated();
         }
     }
@@ -311,5 +324,23 @@ public class ManaGeneratorBlockEntity extends BlockEntity implements IManaNetwor
         for (int i = 0; i < itemStackHandler.getSlots(); i++) {
             itemStackHandler.setStackInSlot(i, ItemStack.EMPTY);
         }
+    }
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        controllers.add(
+                new AnimationController<>(this, "default", this::deployAnimController)
+                        .triggerableAnim("activate", ACTIVE_ANIM)
+                        .triggerableAnim("deactivate", DEACTIVATE_ANIM)
+        );
+    }
+
+    protected <E extends ManaGeneratorBlockEntity> PlayState deployAnimController(AnimationState<E> animationState) {
+        return animationState.setAndContinue(DEPLOY_ANIM);
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return cache;
     }
 }

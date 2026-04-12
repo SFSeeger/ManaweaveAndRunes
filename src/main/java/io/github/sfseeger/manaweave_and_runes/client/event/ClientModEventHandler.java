@@ -8,6 +8,8 @@ import io.github.sfseeger.manaweave_and_runes.client.particles.ManaConcentratedP
 import io.github.sfseeger.manaweave_and_runes.client.particles.ManaTravelParticle;
 import io.github.sfseeger.manaweave_and_runes.client.particles.mana_particle.ManaParticleType;
 import io.github.sfseeger.manaweave_and_runes.client.renderers.block.*;
+import io.github.sfseeger.manaweave_and_runes.client.renderers.item.tooltip.ICasterTooltipComponent;
+import io.github.sfseeger.manaweave_and_runes.client.renderers.item.tooltip.ManaDisplayTooltipComponent;
 import io.github.sfseeger.manaweave_and_runes.client.screens.*;
 import io.github.sfseeger.manaweave_and_runes.core.init.EntityTypeInit;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRBlockEntityInit;
@@ -17,8 +19,11 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.RegisterClientTooltipComponentFactoriesEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
+
+import java.util.function.Function;
 
 @EventBusSubscriber(modid = ManaweaveAndRunes.MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientModEventHandler {
@@ -37,7 +42,7 @@ public class ClientModEventHandler {
         event.registerBlockEntityRenderer(MRBlockEntityInit.MANA_TRANSMITTER_BLOCK_ENTITY.get(),
                                           ManaNodeRenderer::new);
         event.registerBlockEntityRenderer(MRBlockEntityInit.MANA_GENERATOR_BLOCK_ENTITY.get(),
-                                          ManaNodeRenderer::new);
+                                          ManaGeneratorBlockEntityRenderer::new);
         event.registerBlockEntityRenderer(MRBlockEntityInit.RUNEWROUGHT_BENCH_BLOCK_ENTITY.get(),
                                           RunewroughtBenchBlockEntityRenderer::new);
         event.registerBlockEntityRenderer(MRBlockEntityInit.SPELL_DESIGNER_BLOCK_ENTITY.get(),
@@ -70,5 +75,11 @@ public class ClientModEventHandler {
         event.registerSpriteSet(MRParticleTypeInit.MANA_CONCENTRATED.get(),
                                 ManaConcentratedParticle.ManaConcentratedProvider::new);
         event.registerSpriteSet(MRParticleTypeInit.MANA_PARTICLE.get(), ManaParticleType.Factory::new);
+    }
+
+    @SubscribeEvent
+    public static void onRegisterClientTooltipEvent(RegisterClientTooltipComponentFactoriesEvent event) {
+        event.register(ManaDisplayTooltipComponent.class, Function.identity());
+        event.register(ICasterTooltipComponent.class, Function.identity());
     }
 }

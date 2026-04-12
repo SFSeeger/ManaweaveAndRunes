@@ -79,10 +79,6 @@
   "item.manaweave_and_runes.mana_connector.unlinking_all": "Unlinking all",
   "item.manaweave_and_runes.mana_connector.linking_started": "Selected block",
   "item.manaweave_and_runes.mana_connector.target": "Target",
-  "advancements.manaweave_and_runes.ritual_anchor.title": "Anchored in Arcana",
-  "advancements.manaweave_and_runes.ritual_anchor.description": "Build a Ritual Anchor. Who knows what power lies within?",
-  "advancements.manaweave_and_runes.master_anchor.title": "Advanced Arcana",
-  "advancements.manaweave_and_runes.master_anchor.description": "Upgrade a ritual anchor to master",
   "ritual.manaweave_and_runes.mana_insufficient": "It seems like there was not enough mana to supply the ritual",
   "ritual.manaweave_and_runes.item_insufficient": "The ritual could not consume an item it needed",
   "ritual.manaweave_and_runes.unknown_ritual": "You don't know if this ritual exists",
@@ -116,23 +112,29 @@
   "item.manaweave_and_runes.spell_part_holder": "Spell Part",
   "ritual.shattering_rite.invalid_position": "This position is too far from the ritual anchor",
   "death.attack.manaweave_and_runes.ritual_failure": "%1$s's ritual backfired",
-  "patchouli.manaweave_and_runes.mana_concentration.time": "Craft Time",
-  "patchouli.manaweave_and_runes.ritual.ritual_duration": "Ritual Duration",
-  "patchouli.manaweave_and_runes.ritual.item_consumption_rate": "Item Rate",
-  "patchouli.manaweave_and_runes.ritual.mana_consumption_rate": "Mana Rate",
-  "patchouli.manaweave_and_runes.ritual.ritual_duration_infinite": "Infinite",
+
   "advancements.manaweave_and_runes.root.title": "Manaweave and Runes",
   "advancements.manaweave_and_runes.root.description": "Unlock the secrets of the arcane",
   "advancements.manaweave_and_runes.tutorial.manaweavers_guide.title": "Booksmarts",
-  "advancements.manaweave_and_runes.tutorial.manaweavers_guide.description": "Build the Manaweaver's Guide using a book and an amethyt shard",
+  "advancements.manaweave_and_runes.tutorial.manaweavers_guide.description": "Build the Manaweaver's Guide using a book and an amethyst shard",
   "advancements.manaweave_and_runes.tutorial.template_found.title": "Learning from the old masters",
   "advancements.manaweave_and_runes.tutorial.template_found.description": "Find a Rune Carving Template",
   "advancements.manaweave_and_runes.tutorial.template_duplicated.title": "Now there are two of them!",
   "advancements.manaweave_and_runes.tutorial.template_duplicated.description": "Duplicate a Rune Carving Template",
   "advancements.manaweave_and_runes.tutorial.tanzanite_found.description": "Mine some Tanzanite Ore using a Diamond Pickaxe",
   "advancements.manaweave_and_runes.tutorial.tanzanite_found.title": "Glimmering Gemstone Hunter",
+  "advancements.manaweave_and_runes.ritual_anchor.title": "Anchored in Arcana",
+  "advancements.manaweave_and_runes.ritual_anchor.description": "Build a Ritual Anchor. Who knows what power lies within?",
+  "advancements.manaweave_and_runes.master_anchor.title": "Advanced Arcana",
+  "advancements.manaweave_and_runes.master_anchor.description": "Upgrade a ritual anchor to master",
 
   "item.manaweave_and_runes.soul_container_rune.unknown_player": "Unknown",
+
+  "patchouli.manaweave_and_runes.mana_concentration.time": "Craft Time",
+  "patchouli.manaweave_and_runes.ritual.ritual_duration": "Ritual Duration",
+  "patchouli.manaweave_and_runes.ritual.item_consumption_rate": "Item Rate",
+  "patchouli.manaweave_and_runes.ritual.mana_consumption_rate": "Mana Rate",
+  "patchouli.manaweave_and_runes.ritual.ritual_duration_infinite": "Infinite",
 
   "jei.manaweave_and_runes.rune_carver": "Rune Carving",
   "jei.manaweave_and_runes.mana_concentrator": "Mana Concentrating",
@@ -148,5 +150,6 @@
   "mark.manaweave_and_runes.mark_of_sinking": "Mark of Sinking",
   "mark.manaweave_and_runes.mark_of_flight": "Mark of Flight",
 
-  "entity.minecraft.villager.manaweave_and_runes.rune_smith": "Rune Smith"
+  "entity.minecraft.villager.manaweave_and_runes.rune_smith": "Rune Smith",
+  "tooltip.manaweave_and_runes.caster": "Current Spell: %s"
 }

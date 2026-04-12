@@ -8,7 +8,6 @@ import io.github.sfseeger.manaweave_and_runes.core.init.MRBlockInit;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.properties.Property;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -50,30 +49,31 @@ public class MRBlockStateProvider extends BlockStateProvider {
 
         DeferredBlock<ManaTransmitter> manaTransmitterBlock = MRBlockInit.MANA_TRANSMITTER_BLOCK;
 
-        this.directionalBlock(manaTransmitterBlock.get(),
-                              blockState -> this.models()
-                                      .getExistingFile(
-                                              ResourceLocation.parse(manaTransmitterBlock.getRegisteredName())));
+        this.directionalBlock(manaTransmitterBlock.get(), blockState -> this.models()
+                .getExistingFile(ResourceLocation.parse(manaTransmitterBlock.getRegisteredName())));
         this.simpleBlockItem(manaTransmitterBlock.get(), this.models()
                 .getExistingFile(ResourceLocation.parse(manaTransmitterBlock.getRegisteredName())));
 
 
-        simpleBlockWithItem(MRBlockInit.NOVICE_MANA_COLLECTOR.get(), this.models()
-                .getExistingFile(modLoc("block/mana_collector")));
+        simpleBlockWithItem(MRBlockInit.NOVICE_MANA_COLLECTOR.get(),
+                            this.models().getExistingFile(modLoc("block/mana_collector")));
 
-        simpleBlockItem(MRBlockInit.NOVICE_RITUAL_ANCHOR_BLOCK.get(), this.models()
-                .getExistingFile(modLoc("block/ritual_anchor_java_model")));
-        simpleBlockItem(MRBlockInit.MASTER_RITUAL_ANCHOR_BLOCK.get(), this.models()
-                .getExistingFile(modLoc("block/ritual_anchor_java_model")));
-        simpleBlockItem(MRBlockInit.ASCENDED_RITUAL_ANCHOR_BLOCK.get(), this.models()
-                .getExistingFile(modLoc("block/ritual_anchor_java_model")));
+        simpleBlockItem(MRBlockInit.NOVICE_RITUAL_ANCHOR_BLOCK.get(),
+                        this.models().getExistingFile(modLoc("block/ritual_anchor_java_model")));
+        simpleBlockItem(MRBlockInit.MASTER_RITUAL_ANCHOR_BLOCK.get(),
+                        this.models().getExistingFile(modLoc("block/ritual_anchor_java_model")));
+        simpleBlockItem(MRBlockInit.ASCENDED_RITUAL_ANCHOR_BLOCK.get(),
+                        this.models().getExistingFile(modLoc("block/ritual_anchor_java_model")));
 
-        simpleBlockItem(MRBlockInit.NOVICE_MANA_CONCENTRATOR_BLOCK.get(), this.models()
-                .getExistingFile(modLoc("item/mana_concentrator")));
-        simpleBlockItem(MRBlockInit.MASTER_MANA_CONCENTRATOR_BLOCK.get(), this.models()
-                .getExistingFile(modLoc("item/mana_concentrator")));
-        simpleBlockItem(MRBlockInit.ASCENDED_MANA_CONCENTRATOR_BLOCK.get(), this.models()
-                .getExistingFile(modLoc("item/mana_concentrator")));
+        simpleBlockItem(MRBlockInit.NOVICE_MANA_CONCENTRATOR_BLOCK.get(),
+                        this.models().getExistingFile(modLoc("item/mana_concentrator")));
+        simpleBlockItem(MRBlockInit.MASTER_MANA_CONCENTRATOR_BLOCK.get(),
+                        this.models().getExistingFile(modLoc("item/mana_concentrator")));
+        simpleBlockItem(MRBlockInit.ASCENDED_MANA_CONCENTRATOR_BLOCK.get(),
+                        this.models().getExistingFile(modLoc("item/mana_concentrator")));
+
+        simpleBlockItem(MRBlockInit.MANA_GENERATOR_BLOCK.get(),
+                        this.models().getExistingFile(modLoc("block/mana_generator")));
 
 
         DeferredBlock<RuneBlock> deferredRuneBlock = MRBlockInit.RUNE_BLOCK;
@@ -92,23 +92,20 @@ public class MRBlockStateProvider extends BlockStateProvider {
         this.getVariantBuilder(deferredScryingPool.get()).forAllStates(blockState -> {
             boolean filled = blockState.getValue(ScryingPool.FILLED);
             return ConfiguredModel.builder()
-                    .modelFile(this.models().getExistingFile(
-                            ResourceLocation.parse(
-                                    deferredScryingPool.getRegisteredName() + (filled ? "_filled" : "_empty"))))
+                    .modelFile(this.models()
+                                       .getExistingFile(ResourceLocation.parse(
+                                               deferredScryingPool.getRegisteredName() + (filled ? "_filled" : "_empty"))))
                     .build();
         });
-        simpleBlockItem(deferredScryingPool.get(), this.models() .getExistingFile(ResourceLocation.parse(deferredScryingPool.getRegisteredName() + "_empty")));
+        simpleBlockItem(deferredScryingPool.get(), this.models()
+                .getExistingFile(ResourceLocation.parse(deferredScryingPool.getRegisteredName() + "_empty")));
 
         this.simpleBlockWithItem(MRBlockInit.RUNE_CARVER_BLOCK.get(), this.models()
-                .cubeBottomTop(MRBlockInit.RUNE_CARVER_BLOCK.getRegisteredName(),
-                               modLoc("block/rune_carver_side"),
-                               modLoc("block/rune_carver_bottom"),
-                               modLoc("block/rune_carver_top")));
+                .cubeBottomTop(MRBlockInit.RUNE_CARVER_BLOCK.getRegisteredName(), modLoc("block/rune_carver_side"),
+                               modLoc("block/rune_carver_bottom"), modLoc("block/rune_carver_top")));
 
-        this.simpleBlockWithItem(MRBlockInit.TANZANITE_BLOCK.get(),
-                                 this.models().cubeBottomTop(MRBlockInit.TANZANITE_BLOCK.getRegisteredName(),
-                                                             modLoc("block/tanzanite_block_side"),
-                                                             modLoc("block/tanzanite_block_bottom"),
-                                                             modLoc("block/tanzanite_block_top")));
+        this.simpleBlockWithItem(MRBlockInit.TANZANITE_BLOCK.get(), this.models()
+                .cubeBottomTop(MRBlockInit.TANZANITE_BLOCK.getRegisteredName(), modLoc("block/tanzanite_block_side"),
+                               modLoc("block/tanzanite_block_bottom"), modLoc("block/tanzanite_block_top")));
     }
 }

@@ -3,24 +3,24 @@
     "#minecraft:terracotta": {
       "mana": [
         {
-          "amount": 2,
-          "manaType": "manaweave_and_runes:air_mana"
-        },
-        {
           "amount": 4,
           "manaType": "manaweave_and_runes:fire_mana"
+        },
+        {
+          "amount": 2,
+          "manaType": "manaweave_and_runes:air_mana"
         }
       ]
     },
     "minecraft:amethyst_shard": {
       "mana": [
         {
-          "amount": 20,
-          "manaType": "manaweave_and_runes:air_mana"
-        },
-        {
           "amount": 40,
           "manaType": "manaweave_and_runes:order_mana"
+        },
+        {
+          "amount": 20,
+          "manaType": "manaweave_and_runes:air_mana"
         }
       ]
     },
@@ -79,12 +79,12 @@
     "minecraft:diamond": {
       "mana": [
         {
-          "amount": 75,
-          "manaType": "manaweave_and_runes:earth_mana"
-        },
-        {
           "amount": 150,
           "manaType": "manaweave_and_runes:order_mana"
+        },
+        {
+          "amount": 75,
+          "manaType": "manaweave_and_runes:earth_mana"
         }
       ]
     },
@@ -111,12 +111,12 @@
     "minecraft:emerald": {
       "mana": [
         {
-          "amount": 60,
-          "manaType": "manaweave_and_runes:earth_mana"
-        },
-        {
           "amount": 120,
           "manaType": "manaweave_and_runes:order_mana"
+        },
+        {
+          "amount": 60,
+          "manaType": "manaweave_and_runes:earth_mana"
         }
       ]
     },
@@ -143,24 +143,24 @@
     "minecraft:flint_and_steel": {
       "mana": [
         {
-          "amount": 12,
-          "manaType": "manaweave_and_runes:entropy_mana"
-        },
-        {
           "amount": 35,
           "manaType": "manaweave_and_runes:fire_mana"
+        },
+        {
+          "amount": 12,
+          "manaType": "manaweave_and_runes:entropy_mana"
         }
       ]
     },
     "minecraft:ghast_tear": {
       "mana": [
         {
-          "amount": 40,
-          "manaType": "manaweave_and_runes:air_mana"
-        },
-        {
           "amount": 80,
           "manaType": "manaweave_and_runes:soul_mana"
+        },
+        {
+          "amount": 40,
+          "manaType": "manaweave_and_runes:air_mana"
         }
       ]
     },
@@ -179,24 +179,24 @@
     "minecraft:golden_apple": {
       "mana": [
         {
-          "amount": 100,
-          "manaType": "manaweave_and_runes:order_mana"
-        },
-        {
           "amount": 70,
           "manaType": "manaweave_and_runes:soul_mana"
+        },
+        {
+          "amount": 100,
+          "manaType": "manaweave_and_runes:order_mana"
         }
       ]
     },
     "minecraft:grass_block": {
       "mana": [
         {
-          "amount": 5,
-          "manaType": "manaweave_and_runes:earth_mana"
-        },
-        {
           "amount": 3,
           "manaType": "manaweave_and_runes:water_mana"
+        },
+        {
+          "amount": 5,
+          "manaType": "manaweave_and_runes:earth_mana"
         }
       ]
     },
@@ -204,35 +204,35 @@
       "mana": [
         {
           "amount": 10,
-          "manaType": "manaweave_and_runes:water_mana"
+          "manaType": "manaweave_and_runes:order_mana"
         },
         {
           "amount": 10,
-          "manaType": "manaweave_and_runes:order_mana"
+          "manaType": "manaweave_and_runes:water_mana"
         }
       ]
     },
     "minecraft:iron_ingot": {
       "mana": [
         {
-          "amount": 25,
-          "manaType": "manaweave_and_runes:earth_mana"
-        },
-        {
           "amount": 50,
           "manaType": "manaweave_and_runes:order_mana"
+        },
+        {
+          "amount": 25,
+          "manaType": "manaweave_and_runes:earth_mana"
         }
       ]
     },
     "minecraft:lapis_lazuli": {
       "mana": [
         {
-          "amount": 30,
-          "manaType": "manaweave_and_runes:water_mana"
-        },
-        {
           "amount": 15,
           "manaType": "manaweave_and_runes:order_mana"
+        },
+        {
+          "amount": 30,
+          "manaType": "manaweave_and_runes:water_mana"
         }
       ]
     },
@@ -255,12 +255,12 @@
     "minecraft:magma_cream": {
       "mana": [
         {
-          "amount": 15,
-          "manaType": "manaweave_and_runes:water_mana"
-        },
-        {
           "amount": 30,
           "manaType": "manaweave_and_runes:fire_mana"
+        },
+        {
+          "amount": 15,
+          "manaType": "manaweave_and_runes:water_mana"
         }
       ]
     },
@@ -275,24 +275,24 @@
     "minecraft:nether_star": {
       "mana": [
         {
-          "amount": 150,
-          "manaType": "manaweave_and_runes:order_mana"
-        },
-        {
           "amount": 250,
           "manaType": "manaweave_and_runes:soul_mana"
+        },
+        {
+          "amount": 150,
+          "manaType": "manaweave_and_runes:order_mana"
         }
       ]
     },
     "minecraft:netherite_ingot": {
       "mana": [
         {
-          "amount": 200,
-          "manaType": "manaweave_and_runes:entropy_mana"
-        },
-        {
           "amount": 80,
           "manaType": "manaweave_and_runes:fire_mana"
+        },
+        {
+          "amount": 200,
+          "manaType": "manaweave_and_runes:entropy_mana"
         }
       ]
     },
@@ -343,12 +343,12 @@
     "minecraft:slime_ball": {
       "mana": [
         {
-          "amount": 15,
-          "manaType": "manaweave_and_runes:water_mana"
-        },
-        {
           "amount": 5,
           "manaType": "manaweave_and_runes:earth_mana"
+        },
+        {
+          "amount": 15,
+          "manaType": "manaweave_and_runes:water_mana"
         }
       ]
     },
@@ -367,12 +367,12 @@
     "minecraft:soul_sand": {
       "mana": [
         {
-          "amount": 15,
-          "manaType": "manaweave_and_runes:entropy_mana"
-        },
-        {
           "amount": 30,
           "manaType": "manaweave_and_runes:soul_mana"
+        },
+        {
+          "amount": 15,
+          "manaType": "manaweave_and_runes:entropy_mana"
         }
       ]
     },
@@ -403,24 +403,24 @@
     "minecraft:totem_of_undying": {
       "mana": [
         {
-          "amount": 200,
-          "manaType": "manaweave_and_runes:order_mana"
-        },
-        {
           "amount": 300,
           "manaType": "manaweave_and_runes:soul_mana"
+        },
+        {
+          "amount": 200,
+          "manaType": "manaweave_and_runes:order_mana"
         }
       ]
     },
     "minecraft:turtle_scute": {
       "mana": [
         {
-          "amount": 30,
-          "manaType": "manaweave_and_runes:water_mana"
-        },
-        {
           "amount": 20,
           "manaType": "manaweave_and_runes:earth_mana"
+        },
+        {
+          "amount": 30,
+          "manaType": "manaweave_and_runes:water_mana"
         }
       ]
     },

@@ -2,6 +2,7 @@ package io.github.sfseeger.lib.common.items;
 
 import io.github.sfseeger.lib.common.spells.Spell;
 import io.github.sfseeger.lib.common.spells.data_components.SpellDataComponent;
+import io.github.sfseeger.manaweave_and_runes.client.renderers.item.tooltip.ManaDisplayTooltipComponent;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRDataComponentsInit;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.network.chat.Component;
@@ -35,14 +36,15 @@ public class SpellHolderItem extends Item {
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
         Spell spell = getSpell(stack);
-        if (spell != null) {
-            tooltipComponents.add(Component.literal(spell.getName()));
-        }
     }
 
     @Override
     public Optional<TooltipComponent> getTooltipImage(ItemStack stack) {
-        return super.getTooltipImage(stack);
+        Spell spell = getSpell(stack);
+        if (spell == null) return Optional.empty();
+        return Optional.of(
+                new ManaDisplayTooltipComponent(spell.getManaCost())
+        );
     }
 
     @Override

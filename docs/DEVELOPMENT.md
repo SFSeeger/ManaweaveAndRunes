@@ -116,6 +116,7 @@ Marks are permanent effects that are applied to a player by certain rituals. The
 and Boons. Curses have negative effects on the player, while Boons have positive effects.
 Marks can be removed by certain rituals at random. Each mark has a ritual associated with it.
 Every mark ritual needs a mark container (item) as well as a soul container rune and specific items.
+To get all marks currently affecting a player, the player can use a _Scrying Pool_.
 
 ##### Available Marks
 
@@ -164,6 +165,10 @@ top always taking mana first, emptying the item into the network or serving as a
 Can be used to craft new items using mana and some input items. This is also a multiblock which comes in multiple tiers.
 Mana can be supplied by connecting it to a _Mana Network_ or by placing _Storage Runes_ inside it. The recipe is
 determined by the input items and the tier of the concentrator.
+
+### Scrying Pool
+Allows to see the current marks affecting a player. To use it, fill it using an _Echo Shard_ by throwing it on the block or right clicking it with the shard in hand. 
+Then right-click the pool with an empty hand to see the marks affecting you. 
 
 ## Spell Casting (Mana Weaving?)
 

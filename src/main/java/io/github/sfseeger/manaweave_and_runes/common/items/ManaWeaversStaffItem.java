@@ -4,14 +4,17 @@ import io.github.sfseeger.lib.common.items.IItemHandlerItem;
 import io.github.sfseeger.lib.common.items.SpellHolderItem;
 import io.github.sfseeger.lib.common.spells.*;
 import io.github.sfseeger.manaweave_and_runes.client.renderers.item.ManaWeaversStaffRenderer;
+import io.github.sfseeger.manaweave_and_runes.client.renderers.item.tooltip.ICasterTooltipComponent;
 import io.github.sfseeger.manaweave_and_runes.common.data_components.ItemStackHandlerDataComponent;
 import io.github.sfseeger.manaweave_and_runes.common.data_components.SelectedSlotDataComponent;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRDataComponentsInit;
+import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
@@ -19,18 +22,22 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.animatable.client.GeoRenderProvider;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.animation.*;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Consumer;
 
+@MethodsReturnNonnullByDefault
+@ParametersAreNonnullByDefault
 public class ManaWeaversStaffItem extends Item implements IItemHandlerItem, ISpellCaster, IUpgradable, GeoItem {
-    private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+    private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
     public ManaWeaversStaffItem() {
         super(new Item.Properties().stacksTo(1)
@@ -67,12 +74,12 @@ public class ManaWeaversStaffItem extends Item implements IItemHandlerItem, ISpe
     }
 
     @Override
-    public Spell getCurrrntSpell(ItemStack stack) {
+    public @Nullable Spell getCurrrntSpell(ItemStack stack) {
         return getSpell(stack, getCurrentSpellIndex(stack));
     }
 
     @Override
-    public Spell getSpell(ItemStack stack, int index) {
+    public @Nullable Spell getSpell(ItemStack stack, int index) {
         ItemStack spellItem = getItemHandler(stack).getStackInSlot(index);
         if (spellItem.getItem() instanceof SpellHolderItem) {
             return SpellHolderItem.getSpell(spellItem);
@@ -99,10 +106,9 @@ public class ManaWeaversStaffItem extends Item implements IItemHandlerItem, ISpe
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack itemstack = player.getItemInHand(hand);
-        SpellCaster caster = new SpellCaster();
         Spell spell = getCurrrntSpell(itemstack);
         if (spell != null) {
-            SpellCastingResult result = caster.cast(level, player, hand, spell);
+            SpellCastingResult result = SpellCaster.cast(level, player, hand, spell);
             if (result.isSuccess() && !(result == SpellCastingResult.SKIPPED)) {
                 player.getCooldowns().addCooldown(this, spell.getCooldown());
             }
@@ -114,12 +120,17 @@ public class ManaWeaversStaffItem extends Item implements IItemHandlerItem, ISpe
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents,
-            TooltipFlag tooltipFlag) {
+                                TooltipFlag tooltipFlag
+    ) {
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
-        Spell spell = getCurrrntSpell(stack);
-        if (spell != null) {
-            tooltipComponents.add(Component.literal(spell.getName()));
-        }
+    }
+
+    @Override
+    public Optional<TooltipComponent> getTooltipImage(ItemStack stack) {
+        Spell spell = getSpell(stack, getCurrentSpellIndex(stack));
+        return Optional.of(
+                new ICasterTooltipComponent(spell)
+        );
     }
 
     private PlayState idlePredicate(AnimationState<ManaWeaversStaffItem> state) {
@@ -143,7 +154,7 @@ public class ManaWeaversStaffItem extends Item implements IItemHandlerItem, ISpe
             private ManaWeaversStaffRenderer renderer;
 
             @Override
-            public @NotNull BlockEntityWithoutLevelRenderer getGeoItemRenderer() {
+            public BlockEntityWithoutLevelRenderer getGeoItemRenderer() {
                 if (this.renderer == null)
                     this.renderer = new ManaWeaversStaffRenderer();
 
