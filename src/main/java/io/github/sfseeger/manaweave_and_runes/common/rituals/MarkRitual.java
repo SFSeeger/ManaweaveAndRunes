@@ -4,7 +4,7 @@ import io.github.sfseeger.lib.common.Tier;
 import io.github.sfseeger.lib.common.rituals.Ritual;
 import io.github.sfseeger.lib.common.rituals.marks.MarkDataAttachment;
 import io.github.sfseeger.lib.common.rituals.marks.MarkInstance;
-import io.github.sfseeger.lib.common.rituals.ritual_data.builtin.PlayerRitualData;
+import io.github.sfseeger.lib.common.context_data_types.builtin.PlayerContextDataType;
 import io.github.sfseeger.lib.common.rituals.state_machine.RitualStateMachineContext;
 import io.github.sfseeger.lib.common.rituals.state_machine.RitualStepResult;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRDataAttachmentInit;
@@ -15,7 +15,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 
-import static io.github.sfseeger.lib.common.rituals.ritual_data.RitualDataTypes.PLAYER_TYPE;
+import static io.github.sfseeger.lib.common.context_data_types.ContextDataTypes.PLAYER_TYPE;
 
 public abstract class MarkRitual extends Ritual {
     public MarkRitual(Tier tier, int duration) {
@@ -33,7 +33,7 @@ public abstract class MarkRitual extends Ritual {
         if (random.nextInt(100) > 90) {
             return RitualStepResult.FAIL;
         }
-        PlayerRitualData playerRitualData = ctx.ritualContext().getData(PLAYER_TYPE);
+        PlayerContextDataType playerRitualData = ctx.contextMap().getData(PLAYER_TYPE).orElse(null);
         if (playerRitualData == null) {
             return RitualStepResult.FAIL;
         }

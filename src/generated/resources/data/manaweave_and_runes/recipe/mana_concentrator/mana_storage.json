@@ -18,7 +18,7 @@
   "manaMap": [
     {
       "amount": 500,
-      "manaType": "manaweave_and_runes:water_mana"
+      "manaType": "manaweave_and_runes:air_mana"
     },
     {
       "amount": 500,
@@ -30,7 +30,7 @@
     },
     {
       "amount": 500,
-      "manaType": "manaweave_and_runes:air_mana"
+      "manaType": "manaweave_and_runes:water_mana"
     }
   ],
   "result": {

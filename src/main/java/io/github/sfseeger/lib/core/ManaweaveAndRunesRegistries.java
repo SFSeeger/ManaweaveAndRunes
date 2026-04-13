@@ -1,10 +1,10 @@
 package io.github.sfseeger.lib.core;
 
+import io.github.sfseeger.lib.common.context_data_types.ContextDataType;
 import io.github.sfseeger.lib.common.mana.Mana;
-import io.github.sfseeger.lib.common.rituals.marks.Mark;
 import io.github.sfseeger.lib.common.rituals.Ritual;
 import io.github.sfseeger.lib.common.rituals.RitualInput;
-import io.github.sfseeger.lib.common.rituals.ritual_data.RitualDataType;
+import io.github.sfseeger.lib.common.rituals.marks.Mark;
 import io.github.sfseeger.lib.common.spells.AbstractSpellNode;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
 import io.github.sfseeger.manaweave_and_runes.core.util.MultiblockValidator;
@@ -18,7 +18,8 @@ public class ManaweaveAndRunesRegistries {
             ResourceKey.createRegistryKey(ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "mana"));
     public static final Registry<Mana> MANA_REGISTRY = new RegistryBuilder<>(MANA_REGISTRY_KEY)
             .sync(true)
-            .defaultKey(ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "empty_mana")) //TODO: Change this to the actual default key
+            .defaultKey(ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID,
+                                                              "empty_mana")) //TODO: Change this to the actual default key
             .maxId(256)
             .create();
 
@@ -36,15 +37,16 @@ public class ManaweaveAndRunesRegistries {
 
     public static Registry<Mark> MARK_REGISTRY = new RegistryBuilder<>(MARK_REGISTRY_KEY)
             .sync(true)
-            .defaultKey(ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "empty_mark")) //TODO: Change this to the actual default key
+            .defaultKey(ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID,
+                                                              "empty_mark")) //TODO: Change this to the actual default key
             .maxId(256)
             .create();
 
-    public static final ResourceKey<Registry<RitualDataType<?>>> RITUAL_DATA_TYPE_REGISTRY_KEY =
+    public static final ResourceKey<Registry<ContextDataType<?>>> CONTEXT_DATA_TYPE_REGISTRY_KEY =
             ResourceKey.createRegistryKey(
-                    ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "ritual_data_type"));
-    public static final Registry<RitualDataType<?>> RITUAL_DATA_TYPE_REGISTRY =
-            new RegistryBuilder<>(RITUAL_DATA_TYPE_REGISTRY_KEY)
+                    ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "context_data_type"));
+    public static final Registry<ContextDataType<?>> CONTEXT_DATA_TYPE_REGISTRY =
+            new RegistryBuilder<>(CONTEXT_DATA_TYPE_REGISTRY_KEY)
                     .sync(true)
                     .defaultKey(ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID,
                                                                       "default")) //TODO: Change this to the actual default key

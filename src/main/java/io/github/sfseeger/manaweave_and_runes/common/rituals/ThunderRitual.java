@@ -1,12 +1,12 @@
 package io.github.sfseeger.manaweave_and_runes.common.rituals;
 
 import io.github.sfseeger.lib.common.Tier;
+import io.github.sfseeger.lib.common.context_data_types.builtin.PlayerContextDataType;
 import io.github.sfseeger.lib.common.rituals.Ritual;
 import io.github.sfseeger.lib.common.rituals.state_machine.RitualStateMachineContext;
 import io.github.sfseeger.lib.common.rituals.state_machine.RitualStepResult;
-import io.github.sfseeger.lib.common.rituals.ritual_data.RitualContext;
-import io.github.sfseeger.lib.common.rituals.ritual_data.builtin.PlayerRitualData;
-import io.github.sfseeger.lib.common.rituals.ritual_data.builtin.PositionRitualData;
+import io.github.sfseeger.lib.common.context_data_types.ContextMap;
+import io.github.sfseeger.lib.common.context_data_types.builtin.PositionContextDataType;
 import io.github.sfseeger.manaweave_and_runes.common.MRDamageTypes;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRItemInit;
 import net.minecraft.core.BlockPos;
@@ -21,8 +21,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
-import static io.github.sfseeger.lib.common.rituals.ritual_data.RitualDataTypes.PLAYER_TYPE;
-import static io.github.sfseeger.lib.common.rituals.ritual_data.RitualDataTypes.POSITION_TYPE;
+import static io.github.sfseeger.lib.common.context_data_types.ContextDataTypes.PLAYER_TYPE;
+import static io.github.sfseeger.lib.common.context_data_types.ContextDataTypes.POSITION_TYPE;
 
 public class ThunderRitual extends Ritual {
     public ThunderRitual() {
@@ -37,13 +37,13 @@ public class ThunderRitual extends Ritual {
     @Override
     public RitualStepResult onRitualServerTick(RitualStateMachineContext ctx) {
         if (ctx.ticksPassed() % 20 == 0) {
-            PositionRitualData posData = ctx.ritualContext().getData(POSITION_TYPE);
+            PositionContextDataType posData = ctx.contextMap().getData(POSITION_TYPE).orElse(null);
             if (posData == null) {
                 return RitualStepResult.FAIL;
             }
             RandomSource random = ctx.level().random;
 
-            BlockPos contextPos = posData.getPos();
+            BlockPos contextPos = posData.pos();
             EntityType.LIGHTNING_BOLT.spawn((ServerLevel) ctx.level(), contextPos.offset(random.nextInt(0, 5), 0, random.nextInt(0, 5)),
                                             MobSpawnType.TRIGGERED);
         }
@@ -56,11 +56,11 @@ public class ThunderRitual extends Ritual {
     }
 
     @Override
-    public void onRitualAbort(Level level, BlockPos pos, BlockState state, RitualContext context,
+    public void onRitualAbort(Level level, BlockPos pos, BlockState state, ContextMap context,
                               RitualOriginType originType) {
         returnPositionRune(level, pos);
 
-        PlayerRitualData player = context.getData("starting_player", PLAYER_TYPE);
+        PlayerContextDataType player = context.getData("starting_player", PLAYER_TYPE).orElse(null);
         if (player == null) {
             return;
         }

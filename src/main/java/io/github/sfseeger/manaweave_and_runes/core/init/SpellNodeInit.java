@@ -1,14 +1,15 @@
 package io.github.sfseeger.manaweave_and_runes.core.init;
 
 import io.github.sfseeger.lib.common.spells.AbstractSpellNode;
-import io.github.sfseeger.lib.common.spells.buildin.effects.*;
-import io.github.sfseeger.lib.common.spells.buildin.modifiers.SpellModifierDelicate;
-import io.github.sfseeger.lib.common.spells.buildin.modifiers.SpellModifierElongate;
-import io.github.sfseeger.lib.common.spells.buildin.modifiers.SpellModifierStrengthen;
-import io.github.sfseeger.lib.common.spells.buildin.modifiers.SpellModifierWiden;
-import io.github.sfseeger.lib.common.spells.buildin.types.SpellTypeProjectile;
-import io.github.sfseeger.lib.common.spells.buildin.types.SpellTypeSelf;
-import io.github.sfseeger.lib.common.spells.buildin.types.SpellTypeTouch;
+import io.github.sfseeger.manaweave_and_runes.common.spells.effects.*;
+import io.github.sfseeger.manaweave_and_runes.common.spells.modifiers.SpellModifierDelicate;
+import io.github.sfseeger.manaweave_and_runes.common.spells.modifiers.SpellModifierElongate;
+import io.github.sfseeger.manaweave_and_runes.common.spells.modifiers.SpellModifierStrengthen;
+import io.github.sfseeger.manaweave_and_runes.common.spells.modifiers.SpellModifierWiden;
+import io.github.sfseeger.manaweave_and_runes.common.spells.types.SpellTypeProjectile;
+import io.github.sfseeger.manaweave_and_runes.common.spells.types.SpellTypeRune;
+import io.github.sfseeger.manaweave_and_runes.common.spells.types.SpellTypeSelf;
+import io.github.sfseeger.manaweave_and_runes.common.spells.types.SpellTypeTouch;
 import io.github.sfseeger.lib.core.ManaweaveAndRunesRegistries;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -25,6 +26,8 @@ public class SpellNodeInit {
             SPELL_NODES.register("spell_type.touch", () -> SpellTypeTouch.INSTANCE);
     public static final Supplier<AbstractSpellNode> SPELL_TYPE_PROJECTILE =
             SPELL_NODES.register("spell_type.projectile", () -> SpellTypeProjectile.INSTANCE);
+    public static final Supplier<AbstractSpellNode> SPELL_TYPE_RUNE =
+            SPELL_NODES.register("spell_type.rune", () -> SpellTypeRune.INSTANCE);
 
     public static final Supplier<AbstractSpellNode> SPELL_EFFECT_BURN =
             SPELL_NODES.register("spell_effect.burn", () -> SpellEffectBurn.INSTANCE);

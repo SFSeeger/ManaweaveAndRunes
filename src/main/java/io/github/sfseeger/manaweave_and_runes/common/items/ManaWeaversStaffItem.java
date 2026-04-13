@@ -1,7 +1,6 @@
 package io.github.sfseeger.manaweave_and_runes.common.items;
 
 import io.github.sfseeger.lib.common.items.IItemHandlerItem;
-import io.github.sfseeger.lib.common.items.SpellHolderItem;
 import io.github.sfseeger.lib.common.spells.*;
 import io.github.sfseeger.manaweave_and_runes.client.renderers.item.ManaWeaversStaffRenderer;
 import io.github.sfseeger.manaweave_and_runes.client.renderers.item.tooltip.ICasterTooltipComponent;

@@ -1,9 +1,9 @@
 package io.github.sfseeger.manaweave_and_runes.common.rituals;
 
 import io.github.sfseeger.lib.common.Tier;
+import io.github.sfseeger.lib.common.context_data_types.builtin.PlayerListContextDataType;
 import io.github.sfseeger.lib.common.rituals.Ritual;
-import io.github.sfseeger.lib.common.rituals.ritual_data.RitualContext;
-import io.github.sfseeger.lib.common.rituals.ritual_data.builtin.PlayerListRitualData;
+import io.github.sfseeger.lib.common.context_data_types.ContextMap;
 import io.github.sfseeger.lib.common.rituals.state_machine.RitualStateMachineContext;
 import io.github.sfseeger.lib.common.rituals.state_machine.RitualStepResult;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
@@ -24,7 +24,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
-import static io.github.sfseeger.lib.common.rituals.ritual_data.RitualDataTypes.PLAYER_LIST_TYPE;
+import static io.github.sfseeger.lib.common.context_data_types.ContextDataTypes.PLAYER_LIST_TYPE;
 
 public class FlightRitual extends Ritual {
     public static final ResourceLocation FLIGHT_RITUAL_FLIGHT_MODIFIER_ID = ManaweaveAndRunes.asResource(
@@ -53,46 +53,43 @@ public class FlightRitual extends Ritual {
                                         new AttributeModifier(FLIGHT_RITUAL_FLIGHT_MODIFIER_ID, 1.0,
                                                               AttributeModifier.Operation.ADD_VALUE));
                             }
-                            PlayerListRitualData data = ctx.ritualContext()
-                                    .getData("affected_players", PLAYER_LIST_TYPE);
+                            PlayerListContextDataType data = ctx.contextMap()
+                                    .getData("affected_players", PLAYER_LIST_TYPE).orElse(null);
                             if (data == null) {
-                                data = PlayerListRitualData.fromPlayerList(Set.of());
-                                ctx.ritualContext().putData("affected_players", data);
+                                data = PlayerListContextDataType.fromPlayerList(Set.of());
+                                ctx.contextMap().putData("affected_players", data);
                             }
                             data.addPlayer(player);
                             playerUUIDsInArea.add(player.getUUID());
                         }
                     });
-            removeFlightFromPlayers(ctx.level(), ctx.ritualContext(), playerUUIDsInArea);
+            removeFlightFromPlayers(ctx.level(), ctx.contextMap(), playerUUIDsInArea);
         }
         return RitualStepResult.SUCCESS;
     }
 
     @Override
     public void onRitualEnd(RitualStateMachineContext ctx) {
-        removeFlightFromPlayers(ctx.level(), ctx.ritualContext(), null);
+        removeFlightFromPlayers(ctx.level(), ctx.contextMap(), null);
     }
 
     @Override
-    public void onRitualAbort(Level level, BlockPos pos, BlockState state, RitualContext context, RitualOriginType originType) {
+    public void onRitualAbort(Level level, BlockPos pos, BlockState state, ContextMap context, RitualOriginType originType) {
         removeFlightFromPlayers(level, context, null);
     }
 
-    private void removeFlightFromPlayers(Level level, RitualContext context, @Nullable Set<UUID> unaffectedPlayers) {
-        PlayerListRitualData data = context.getData("affected_players", PLAYER_LIST_TYPE);
-        if (data != null) {
-            data.playerUUIDs()
-                    .stream()
-                    .filter(p -> unaffectedPlayers == null || !unaffectedPlayers.contains(p))
-                    .forEach(player -> {
-                        Player p = Objects.requireNonNull(level.getServer()).getPlayerList().getPlayer(player);
-                        if (p != null) {
-                            AttributeInstance attribute = p.getAttribute(NeoForgeMod.CREATIVE_FLIGHT);
-                            if (attribute != null) {
-                                attribute.removeModifier(FLIGHT_RITUAL_FLIGHT_MODIFIER_ID);
-                            }
+    private void removeFlightFromPlayers(Level level, ContextMap context, @Nullable Set<UUID> unaffectedPlayers) {
+        context.getData("affected_players", PLAYER_LIST_TYPE).ifPresent(data -> data.playerUUIDs()
+                .stream()
+                .filter(p -> unaffectedPlayers == null || !unaffectedPlayers.contains(p))
+                .forEach(player -> {
+                    Player p = Objects.requireNonNull(level.getServer()).getPlayerList().getPlayer(player);
+                    if (p != null) {
+                        AttributeInstance attribute = p.getAttribute(NeoForgeMod.CREATIVE_FLIGHT);
+                        if (attribute != null) {
+                            attribute.removeModifier(FLIGHT_RITUAL_FLIGHT_MODIFIER_ID);
                         }
-                    });
-        }
+                    }
+                }));
     }
 }

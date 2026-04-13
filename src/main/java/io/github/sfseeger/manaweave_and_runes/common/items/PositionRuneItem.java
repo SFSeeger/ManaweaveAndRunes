@@ -1,7 +1,7 @@
 package io.github.sfseeger.manaweave_and_runes.common.items;
 
-import io.github.sfseeger.lib.common.rituals.ritual_data.IRitualDataCapable;
-import io.github.sfseeger.lib.common.rituals.ritual_data.builtin.PositionRitualData;
+import io.github.sfseeger.lib.common.context_data_types.IContextDataCapable;
+import io.github.sfseeger.lib.common.context_data_types.builtin.PositionContextDataType;
 import io.github.sfseeger.manaweave_and_runes.common.data_components.BlockPosDataComponent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -16,7 +16,7 @@ import java.util.List;
 
 import static io.github.sfseeger.manaweave_and_runes.core.init.MRDataComponentsInit.BLOCK_POS_DATA_COMPONENT;
 
-public class PositionRuneItem extends Item implements IRitualDataCapable {
+public class PositionRuneItem extends Item implements IContextDataCapable {
     public PositionRuneItem() {
         super(new Item.Properties().stacksTo(1)
                       .rarity(Rarity.UNCOMMON));
@@ -34,19 +34,19 @@ public class PositionRuneItem extends Item implements IRitualDataCapable {
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents,
             TooltipFlag tooltipFlag) {
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
-        PositionRitualData data = getData(stack);
+        PositionContextDataType data = getData(stack);
         if (data != null) {
             tooltipComponents.add(Component.literal(
-                    "Position: " + data.getPos().getX() + ", " + data.getPos().getY() + ", " + data.getPos().getZ()));
+                    "Position: " + data.pos().getX() + ", " + data.pos().getY() + ", " + data.pos().getZ()));
         }
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public PositionRitualData getData(ItemStack stack) {
+    public PositionContextDataType getData(ItemStack stack) {
         BlockPosDataComponent component = stack.get(BLOCK_POS_DATA_COMPONENT);
         if (component != null) {
-            return new PositionRitualData(component.pos());
+            return new PositionContextDataType(component.pos());
         }
         return null;
     }

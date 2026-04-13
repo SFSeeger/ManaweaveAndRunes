@@ -1,13 +1,13 @@
 package io.github.sfseeger.manaweave_and_runes.common.rituals;
 
 import io.github.sfseeger.lib.common.Tier;
+import io.github.sfseeger.lib.common.context_data_types.ContextMap;
 import io.github.sfseeger.lib.common.rituals.Ritual;
 import io.github.sfseeger.lib.common.rituals.state_machine.RitualStateMachineContext;
 import io.github.sfseeger.lib.common.rituals.state_machine.RitualStepResult;
 import io.github.sfseeger.lib.common.rituals.RitualUtils;
-import io.github.sfseeger.lib.common.rituals.ritual_data.RitualContext;
-import io.github.sfseeger.lib.common.rituals.ritual_data.RitualDataTypes;
-import io.github.sfseeger.lib.common.rituals.ritual_data.builtin.PositionRitualData;
+import io.github.sfseeger.lib.common.context_data_types.ContextDataTypes;
+import io.github.sfseeger.lib.common.context_data_types.builtin.PositionContextDataType;
 import io.github.sfseeger.lib.common.spells.SpellUtils;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRItemInit;
 import io.github.sfseeger.manaweave_and_runes.core.util.Utils;
@@ -42,11 +42,11 @@ public class ShatteringRiteRitual extends Ritual {
     @Override
     public RitualStepResult onRitualServerTick(RitualStateMachineContext ctx) {
 
-        PositionRitualData data = ctx.ritualContext().getData(RitualDataTypes.POSITION_TYPE);
+        PositionContextDataType data = ctx.contextMap().getData(ContextDataTypes.POSITION_TYPE).orElse(null);
 
-        if (data == null || data.getPos().distManhattan(ctx.pos()) >= 64) {
+        if (data == null || data.pos().distManhattan(ctx.pos()) >= 64) {
             RitualUtils.displayMessageToStartingPlayer(
-                    Component.translatable("ritual.shattering_rite.invalid_position"), ctx.level(), ctx.ritualContext());
+                    Component.translatable("ritual.shattering_rite.invalid_position"), ctx.level(), ctx.contextMap());
             return RitualStepResult.FAIL;
         }
         if (ctx.level().random.nextInt(100) < 50) {
@@ -58,7 +58,7 @@ public class ShatteringRiteRitual extends Ritual {
         RandomSource random = ctx.level().random;
 
         for (int i = 0; i < MAX_TRIES; i++) {
-            BlockPos targetPos = Utils.getRandomBlockPos(data.getPos(), random, d);
+            BlockPos targetPos = Utils.getRandomBlockPos(data.pos(), random, d);
             if (tryBreak(targetPos, ctx.level(), ctx.pos())) {
                 return RitualStepResult.SUCCESS;
             }
@@ -73,7 +73,7 @@ public class ShatteringRiteRitual extends Ritual {
     }
 
     @Override
-    public void onRitualAbort(Level level, BlockPos pos, BlockState state, RitualContext context,
+    public void onRitualAbort(Level level, BlockPos pos, BlockState state, ContextMap context,
                               RitualOriginType originType) {
         returnPositionRune(level, pos);
         tryBreak(Utils.getRandomBlockPos(pos, level.random, getDimension()), level, pos);

@@ -2,7 +2,7 @@ package io.github.sfseeger.manaweave_and_runes.common.rituals;
 
 import io.github.sfseeger.lib.common.Tier;
 import io.github.sfseeger.lib.common.rituals.Ritual;
-import io.github.sfseeger.lib.common.rituals.ritual_data.RitualContext;
+import io.github.sfseeger.lib.common.context_data_types.ContextMap;
 import io.github.sfseeger.lib.common.rituals.state_machine.RitualStateMachineContext;
 import io.github.sfseeger.lib.common.rituals.state_machine.RitualStepResult;
 import io.github.sfseeger.manaweave_and_runes.common.blocks.ritual_anchor.RitualAnchorBlock;
@@ -52,7 +52,7 @@ public class ParticleRitual extends Ritual {
 
     @Override
     public void onRitualClientTick(Level level, BlockPos pos, BlockState state, int ticksPassed,
-                                   RitualContext context, RitualOriginType originType
+                                   ContextMap context, RitualOriginType originType
     ) {
         if (ticksPassed % 10 == 0) {
             level.playSound(null, pos, SoundEvents.BEACON_ACTIVATE, SoundSource.BLOCKS, 1, 1);
@@ -65,7 +65,7 @@ public class ParticleRitual extends Ritual {
     }
 
     @Override
-    public void onRitualAbort(Level level, BlockPos pos, BlockState state, RitualContext context,
+    public void onRitualAbort(Level level, BlockPos pos, BlockState state, ContextMap context,
                               RitualOriginType originType
     ) {
     }

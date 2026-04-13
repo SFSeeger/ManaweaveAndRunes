@@ -75,6 +75,8 @@ public class MRBlockStateProvider extends BlockStateProvider {
         simpleBlockItem(MRBlockInit.MANA_GENERATOR_BLOCK.get(),
                         this.models().getExistingFile(modLoc("block/mana_generator")));
 
+        blockWithExistingModel(MRBlockInit.SPELL_RUNE_BLOCK);
+
 
         DeferredBlock<RuneBlock> deferredRuneBlock = MRBlockInit.RUNE_BLOCK;
         ResourceLocation runeBlockBase = this.blockTexture(deferredRuneBlock.get());

@@ -40,8 +40,8 @@ public class SpellPart implements Cloneable {
         return new SpellPart(core, modifiers.stream().map(n -> (AbstractSpellModifier) n).collect(Collectors.toList()));
     }
 
-    public SpellCastingResult resolveEffect(HitResult hitResult, SpellCastingContext context) {
-        SpellCastingContext localContext = context.clone();
+    public SpellCastingResult resolveEffect(HitResult hitResult, AbstractSpellCastingContext context) {
+        AbstractSpellCastingContext localContext = context.intoFreshInstance();
         modifiers.forEach(modifier -> {
             modifier.onGatherContext(hitResult, localContext);
         });

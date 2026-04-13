@@ -10,7 +10,7 @@ public abstract class AbstractSpellEffect extends AbstractSpellNode {
         super();
     }
 
-    public SpellCastingResult resolve(HitResult rayTrace, SpellCastingContext context) {
+    public @NotNull SpellCastingResult resolve(HitResult rayTrace, AbstractSpellCastingContext context) {
         if (rayTrace instanceof BlockHitResult blockHitResult) {
             return resolveBlock(blockHitResult, context);
         } else if (rayTrace instanceof EntityHitResult entityHitResult) {
@@ -19,9 +19,9 @@ public abstract class AbstractSpellEffect extends AbstractSpellNode {
         return SpellCastingResult.FAILURE;
     }
 
-    public abstract SpellCastingResult resolveBlock(BlockHitResult blockHitResult, SpellCastingContext context);
+    public abstract @NotNull SpellCastingResult resolveBlock(BlockHitResult blockHitResult, AbstractSpellCastingContext context);
 
-    public abstract SpellCastingResult resolveEntity(EntityHitResult entityHitResult, SpellCastingContext context);
+    public abstract @NotNull SpellCastingResult resolveEntity(EntityHitResult entityHitResult, AbstractSpellCastingContext context);
 
     @Override
     public @NotNull SpellNodeType getSpellNodeType() {

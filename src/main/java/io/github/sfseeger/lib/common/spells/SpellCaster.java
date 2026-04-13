@@ -3,6 +3,7 @@ package io.github.sfseeger.lib.common.spells;
 import io.github.sfseeger.lib.common.mana.Mana;
 import io.github.sfseeger.lib.common.mana.capability.IManaHandler;
 import io.github.sfseeger.lib.common.mana.capability.ManaweaveAndRunesCapabilities;
+import io.github.sfseeger.lib.common.spells.casting_context.EntitySpellCastingContext;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRTagInit;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
@@ -24,7 +25,7 @@ public class SpellCaster {
     }
 
     public static SpellCastingResult cast(Level level, LivingEntity entity, InteractionHand handIn, @NotNull Spell spell) {
-        SpellCastingContext context = new SpellCastingContext(level, entity, handIn);
+        AbstractSpellCastingContext context = new EntitySpellCastingContext(entity);
         SpellResolver resolver = new SpellResolver(spell);
 
         SpellPart core = spell.getCore();
@@ -52,7 +53,8 @@ public class SpellCaster {
         return SpellCastingResult.SKIPPED;
     }
 
-    public static boolean extractRequiredMana(Spell spell, SpellCastingContext context, boolean simulate) {
+    public static boolean extractRequiredMana(Spell spell, AbstractSpellCastingContext context, boolean simulate) {
+        if(context.getCaster() == null) return false;
         if(context.getCaster().hasInfiniteMaterials()) return true;
 
         Map<Mana, Integer> requiredMana = spell.getManaCost();

@@ -67,4 +67,10 @@ public class MRBlockEntityInit {
                                                                          MRBlockInit.RUNEWROUGHT_BENCH_BLOCK.get())
                                                 .build(null));
 
+    public static final Supplier<BlockEntityType<SpellRuneBlockEntity>> SPELL_RUNE_BLOCK_ENTITY =
+            BLOCK_ENTITY_TYPES.register("spell_rune_block_entity",
+                                        () -> BlockEntityType.Builder.of(SpellRuneBlockEntity::new,
+                                                                         MRBlockInit.SPELL_RUNE_BLOCK.get())
+                                                .build(null));
+
 }

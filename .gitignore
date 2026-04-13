@@ -25,3 +25,7 @@ run-data
 repo
 
 .cache
+
+# python
+.venv
+.__pychache__

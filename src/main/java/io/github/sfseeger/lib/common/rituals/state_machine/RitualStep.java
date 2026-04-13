@@ -1,7 +1,5 @@
 package io.github.sfseeger.lib.common.rituals.state_machine;
 
-import io.github.sfseeger.lib.common.rituals.ritual_data.RitualContext;
-
 import java.util.function.Function;
 
 public class RitualStep {

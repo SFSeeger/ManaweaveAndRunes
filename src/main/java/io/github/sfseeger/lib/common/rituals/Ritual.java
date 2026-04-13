@@ -3,8 +3,8 @@ package io.github.sfseeger.lib.common.rituals;
 
 import com.mojang.serialization.Codec;
 import io.github.sfseeger.lib.common.Tier;
+import io.github.sfseeger.lib.common.context_data_types.ContextMap;
 import io.github.sfseeger.lib.common.mana.Mana;
-import io.github.sfseeger.lib.common.rituals.ritual_data.RitualContext;
 import io.github.sfseeger.lib.common.rituals.state_machine.RitualStateMachineContext;
 import io.github.sfseeger.lib.common.rituals.state_machine.RitualStepResult;
 import io.github.sfseeger.lib.core.ManaweaveAndRunesRegistries;
@@ -79,12 +79,12 @@ public abstract class Ritual {
 
     public abstract RitualStepResult onRitualServerTick(RitualStateMachineContext ctx);
 
-    public void onRitualClientTick(Level level, BlockPos pos, BlockState state, int ticksPassed, RitualContext context,
+    public void onRitualClientTick(Level level, BlockPos pos, BlockState state, int ticksPassed, ContextMap context,
                                    RitualOriginType originType
     ) {
     }
 
-    public RitualStepResult onRitualStart(Level level, BlockPos pos, BlockState state, RitualContext context,
+    public RitualStepResult onRitualStart(Level level, BlockPos pos, BlockState state, ContextMap context,
                                           RitualOriginType originType
     ) {
         return RitualStepResult.SUCCESS;
@@ -93,13 +93,13 @@ public abstract class Ritual {
     public abstract void onRitualEnd(RitualStateMachineContext ctx);
 
     @Deprecated
-    public void onRitualAbort(Level level, BlockPos pos, BlockState state, RitualContext context,
+    public void onRitualAbort(Level level, BlockPos pos, BlockState state, ContextMap context,
                               RitualOriginType originType
     ) {
     }
 
     public void onRitualAbort(RitualStateMachineContext ctx) {
-        onRitualAbort(ctx.level(), ctx.pos(), ctx.state(), ctx.ritualContext(), ctx.originType());
+        onRitualAbort(ctx.level(), ctx.pos(), ctx.state(), ctx.contextMap(), ctx.originType());
     }
 
     public int getDuration() {

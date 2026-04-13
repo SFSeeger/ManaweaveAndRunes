@@ -1,7 +1,7 @@
 package io.github.sfseeger.lib.common.rituals;
 
 import io.github.sfseeger.lib.common.Tier;
-import io.github.sfseeger.lib.common.rituals.ritual_data.RitualContext;
+import io.github.sfseeger.lib.common.context_data_types.ContextMap;
 import io.github.sfseeger.lib.common.rituals.state_machine.RitualStateMachineContext;
 import io.github.sfseeger.lib.common.rituals.state_machine.RitualStepResult;
 import net.minecraft.core.BlockPos;
@@ -26,7 +26,7 @@ public class Rituals {
         }
 
         @Override
-        public void onRitualAbort(Level level, BlockPos pos, BlockState state, RitualContext context,
+        public void onRitualAbort(Level level, BlockPos pos, BlockState state, ContextMap context,
                                   RitualOriginType originType) {
         }
     };

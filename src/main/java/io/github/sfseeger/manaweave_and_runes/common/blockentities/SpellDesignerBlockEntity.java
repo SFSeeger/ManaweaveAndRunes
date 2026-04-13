@@ -1,7 +1,7 @@
 package io.github.sfseeger.manaweave_and_runes.common.blockentities;
 
 import com.mojang.datafixers.util.Either;
-import io.github.sfseeger.lib.common.items.SpellPartHolderItem;
+import io.github.sfseeger.manaweave_and_runes.common.items.SpellPartHolderItem;
 import io.github.sfseeger.lib.common.mana.Mana;
 import io.github.sfseeger.lib.common.spells.Spell;
 import io.github.sfseeger.lib.common.spells.SpellNodeType;
@@ -31,7 +31,6 @@ import java.util.Map;
 
 import static io.github.sfseeger.manaweave_and_runes.core.init.MRBlockEntityInit.SPELL_DESIGNER_BLOCK_ENTITY;
 import static io.github.sfseeger.manaweave_and_runes.core.init.MRDataComponentsInit.SPELL_PART_DATA_COMPONENT;
-import static io.github.sfseeger.manaweave_and_runes.core.init.MRItemInit.DIAMOND_CHISEL;
 
 
 public class SpellDesignerBlockEntity extends BlockEntity implements ICraftingPacketHandler, IInventoryBlockEntity {

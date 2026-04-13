@@ -1,7 +1,7 @@
 package io.github.sfseeger.manaweave_and_runes.common.items;
 
-import io.github.sfseeger.lib.common.rituals.ritual_data.IRitualDataCapable;
-import io.github.sfseeger.lib.common.rituals.ritual_data.builtin.PlayerRitualData;
+import io.github.sfseeger.lib.common.context_data_types.IContextDataCapable;
+import io.github.sfseeger.lib.common.context_data_types.builtin.PlayerContextDataType;
 import io.github.sfseeger.manaweave_and_runes.common.data_components.PlayerDataComponent;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.network.chat.Component;
@@ -21,13 +21,12 @@ import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
-import java.util.UUID;
 
 import static io.github.sfseeger.manaweave_and_runes.core.init.MRDataComponentsInit.PLAYER_DATA_COMPONENT;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class SoulContainerRuneItem extends Item implements IRitualDataCapable {
+public class SoulContainerRuneItem extends Item implements IContextDataCapable {
     public SoulContainerRuneItem() {
         super(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON));
     }
@@ -113,10 +112,10 @@ public class SoulContainerRuneItem extends Item implements IRitualDataCapable {
 
     @SuppressWarnings("unchecked")
     @Override
-    public PlayerRitualData getData(ItemStack stack) {
+    public PlayerContextDataType getData(ItemStack stack) {
         PlayerDataComponent component = stack.get(PLAYER_DATA_COMPONENT);
         if (component != null) {
-            return new PlayerRitualData(component.playerUUID());
+            return new PlayerContextDataType(component.playerUUID());
         }
         return null;
     }

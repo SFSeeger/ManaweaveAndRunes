@@ -22,11 +22,11 @@
     },
     {
       "amount": 50,
-      "manaType": "manaweave_and_runes:soul_mana"
+      "manaType": "manaweave_and_runes:order_mana"
     },
     {
       "amount": 50,
-      "manaType": "manaweave_and_runes:order_mana"
+      "manaType": "manaweave_and_runes:soul_mana"
     }
   ],
   "result": {

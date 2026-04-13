@@ -3,7 +3,7 @@ package io.github.sfseeger.manaweave_and_runes.common.rituals;
 import io.github.sfseeger.lib.common.Tier;
 import io.github.sfseeger.lib.common.rituals.Ritual;
 import io.github.sfseeger.lib.common.rituals.RitualUtils;
-import io.github.sfseeger.lib.common.rituals.ritual_data.RitualContext;
+import io.github.sfseeger.lib.common.context_data_types.ContextMap;
 import io.github.sfseeger.lib.common.rituals.state_machine.RitualStateMachineContext;
 import io.github.sfseeger.lib.common.rituals.state_machine.RitualStepResult;
 import io.github.sfseeger.manaweave_and_runes.client.particles.mana_particle.ManaParticleOptions;
@@ -67,7 +67,7 @@ public class SanctuaryRitual extends Ritual {
     }
 
     @Override
-    public void onRitualClientTick(Level level, BlockPos pos, BlockState state, int ticksPassed, RitualContext context,
+    public void onRitualClientTick(Level level, BlockPos pos, BlockState state, int ticksPassed, ContextMap context,
                                    RitualOriginType originType
     ) {
         Vec3 d = getDimension();
@@ -86,7 +86,7 @@ public class SanctuaryRitual extends Ritual {
     }
 
     @Override
-    public void onRitualAbort(Level level, BlockPos pos, BlockState state, RitualContext context,
+    public void onRitualAbort(Level level, BlockPos pos, BlockState state, ContextMap context,
                               RitualOriginType originType
     ) {
         RitualUtils.getStartingPlayer(level, context).ifPresent(player -> {

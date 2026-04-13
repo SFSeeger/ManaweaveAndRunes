@@ -7,12 +7,16 @@ import io.github.sfseeger.lib.core.ManaweaveAndRunesRegistries;
 import io.github.sfseeger.manaweave_and_runes.core.init.SpellNodeInit;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.common.data.DataMapProvider;
 
 import java.util.function.Supplier;
 
 public class SpellNodeAttributeProvider implements IDataMapRegistrar {
+    private static ResourceKey<AbstractSpellNode> createResourceKey(Supplier<AbstractSpellNode> spellNode) {
+        return ResourceKey.create(ManaweaveAndRunesRegistries.SPELL_NODE_REGISTRY_KEY,
+                                  spellNode.get().getRegistryName());
+    }
+
     @Override
     public void register(DataMapProvider provider) {
         DataMapProvider.Builder<SpellNodeAttributes, AbstractSpellNode> builder =
@@ -20,8 +24,15 @@ public class SpellNodeAttributeProvider implements IDataMapRegistrar {
         addAttributes(builder, SpellNodeInit.SPELL_TYPE_PROJECTILE, SpellNodeAttributes.builder(10).withCost(
                 Manas.AirMana, 5).withModifier(SpellNodeInit.SPELL_MODIFIER_STRENGTHEN).build());
 
-        addAttributes(builder, SpellNodeInit.SPELL_TYPE_SELF, SpellNodeAttributes.builder(3).withCost(Manas.EarthMana, 3).build());
-        addAttributes(builder, SpellNodeInit.SPELL_TYPE_TOUCH, SpellNodeAttributes.builder(5).withCost(Manas.EarthMana, 3).build());
+        addAttributes(builder, SpellNodeInit.SPELL_TYPE_SELF,
+                      SpellNodeAttributes.builder(3).withCost(Manas.EarthMana, 3).build());
+        addAttributes(builder, SpellNodeInit.SPELL_TYPE_TOUCH,
+                      SpellNodeAttributes.builder(5).withCost(Manas.EarthMana, 3).build());
+        addAttributes(builder, SpellNodeInit.SPELL_TYPE_RUNE, SpellNodeAttributes.builder(15)
+                .withCost(Manas.EarthMana, 3)
+                .withModifier(SpellNodeInit.SPELL_MODIFIER_ELONGATE)
+                .withModifier(SpellNodeInit.SPELL_MODIFIER_WIDEN)
+                .build());
 
 
         addAttributes(builder, SpellNodeInit.SPELL_EFFECT_BREAK, SpellNodeAttributes.builder(8)
@@ -79,9 +90,5 @@ public class SpellNodeAttributeProvider implements IDataMapRegistrar {
 
     private void addAttributes(DataMapProvider.Builder<SpellNodeAttributes, AbstractSpellNode> builder, Supplier<AbstractSpellNode> node, SpellNodeAttributes attributes) {
         builder.add(createResourceKey(node), attributes, false);
-    }
-
-    private static ResourceKey<AbstractSpellNode> createResourceKey(Supplier<AbstractSpellNode> spellNode) {
-       return ResourceKey.create(ManaweaveAndRunesRegistries.SPELL_NODE_REGISTRY_KEY, spellNode.get().getRegistryName());
     }
 }

@@ -73,7 +73,7 @@ public class SpellUtils {
     }
 
 
-    public static boolean canChangeBlockState(BlockPos pos, SpellCastingContext context) {
+    public static boolean canChangeBlockState(BlockPos pos, AbstractSpellCastingContext context) {
         Level level = context.getLevel();
         if (level == null) return false;
         if (level.isClientSide) {
@@ -116,16 +116,16 @@ public class SpellUtils {
         return k <= server.getSpawnProtectionRadius();
     }
 
-    public static boolean executeOnPlane(BlockPos pos, SpellCastingContext context, Direction direction,
-            Function<BlockPos, Boolean> function) {
+    public static boolean executeOnPlane(BlockPos pos, AbstractSpellCastingContext context, Direction direction,
+                                         Function<BlockPos, Boolean> function) {
         return executeOnPlane(pos, context, direction, 1, function);
     }
 
-    public static boolean executeOnPlane(BlockPos pos, SpellCastingContext context, Direction direction, int steps,
-            Function<BlockPos, Boolean> function) {
-        int width = context.getVariableSave("width", 1);
+    public static boolean executeOnPlane(BlockPos pos, AbstractSpellCastingContext context, Direction direction, int steps,
+                                         Function<BlockPos, Boolean> function) {
+        int width = (int) context.getFloatContextData("width", 1f);
         int width2 = width / 2;
-        int height = context.getVariableSave("height", 1);
+        int height = (int) context.getFloatContextData("height", 1);
         int height2 = height / 2;
 
         Vec3i b1 = new Vec3i(0, 0, 1);
@@ -133,7 +133,7 @@ public class SpellUtils {
         switch (direction.getAxis()) {
             case Direction.Axis.X -> b1 = new Vec3i(0, 0, 1);
             case Direction.Axis.Y -> {
-                int i = context.getCaster().getDirection().getAxis() == Direction.Axis.Z ? 1 : 0;
+                int i = context.getDirection().getAxis() == Direction.Axis.Z ? 1 : 0;
                 b1 = new Vec3i(i, 0, 1 - i);
                 b2 = new Vec3i(1 - i, 0, i);
             }

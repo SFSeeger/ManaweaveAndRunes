@@ -1,6 +1,6 @@
 package io.github.sfseeger.lib.common.entities.projectiles;
 
-import io.github.sfseeger.lib.common.spells.SpellCastingContext;
+import io.github.sfseeger.lib.common.spells.AbstractSpellCastingContext;
 import io.github.sfseeger.lib.common.spells.SpellResolver;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRParticleTypeInit;
 import net.minecraft.core.particles.ParticleTypes;
@@ -21,13 +21,13 @@ import static io.github.sfseeger.lib.common.entities.ManaWeaveAndRuneEntityTypes
 
 public class SpellProjectileEntity extends Projectile {
     private SpellResolver resolver;
-    private SpellCastingContext context;
+    private AbstractSpellCastingContext context;
 
     public SpellProjectileEntity(EntityType<? extends Projectile> entityType, Level level) {
         super(entityType, level);
     }
 
-    public SpellProjectileEntity(Level level, SpellCastingContext context, SpellResolver resolver) {
+    public SpellProjectileEntity(Level level, AbstractSpellCastingContext context, SpellResolver resolver) {
         this(SPELL_PROJECTILE, level);
         this.context = context;
         this.resolver = resolver;

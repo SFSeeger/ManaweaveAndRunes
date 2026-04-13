@@ -1,6 +1,6 @@
 package io.github.sfseeger.manaweave_and_runes.common.menus;
 
-import io.github.sfseeger.lib.common.items.SpellPartHolderItem;
+import io.github.sfseeger.manaweave_and_runes.common.items.SpellPartHolderItem;
 import io.github.sfseeger.lib.common.mana.Mana;
 import io.github.sfseeger.lib.common.spells.AbstractSpellModifier;
 import io.github.sfseeger.lib.common.spells.SpellPart;
@@ -22,7 +22,6 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import java.util.Map;
 
 import static io.github.sfseeger.manaweave_and_runes.core.init.MRDataComponentsInit.SPELL_PART_DATA_COMPONENT;
-import static io.github.sfseeger.manaweave_and_runes.core.init.MRItemInit.DIAMOND_CHISEL;
 import static io.github.sfseeger.manaweave_and_runes.core.init.MRMenuInit.SPELL_DESIGNER_MENU;
 
 public class SpellDesignerMenu extends AbstractContainerMenu {

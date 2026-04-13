@@ -11,13 +11,13 @@ public abstract class AbstractSpellModifier extends AbstractSpellNode {
         super();
     }
 
-    public void onGatherContext(@Nullable HitResult rayTrace, SpellCastingContext context) {
+    public void onGatherContext(@Nullable HitResult rayTrace, AbstractSpellCastingContext context) {
     }
 
-    public void preResolve(@Nullable HitResult rayTrace, SpellCastingContext context) {
+    public void preResolve(@Nullable HitResult rayTrace, AbstractSpellCastingContext context) {
     }
 
-    public void postResolve(@Nullable HitResult rayTrace, SpellCastingContext context) {
+    public void postResolve(@Nullable HitResult rayTrace, AbstractSpellCastingContext context) {
     }
 
     @Override

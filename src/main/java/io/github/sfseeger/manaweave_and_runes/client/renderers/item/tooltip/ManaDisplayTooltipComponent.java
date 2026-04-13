@@ -86,7 +86,7 @@ public class ManaDisplayTooltipComponent implements ClientTooltipComponent, Tool
     }
 
     private int getMaxPerLine() {
-        int perLine = Math.ceilDiv(manaCost.size(), getLineCount());
+        int perLine = Math.ceilDiv(manaCost.size(), getLineCount() + 1);
         return Math.min(perLine, MAX_PER_LINE);
     }
 

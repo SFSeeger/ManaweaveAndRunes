@@ -1,13 +1,14 @@
 package io.github.sfseeger.manaweave_and_runes.common.rituals;
 
 import io.github.sfseeger.lib.common.Tier;
+import io.github.sfseeger.lib.common.context_data_types.builtin.PlayerContextDataType;
 import io.github.sfseeger.lib.common.rituals.Ritual;
 import io.github.sfseeger.lib.common.rituals.RitualUtils;
 import io.github.sfseeger.lib.common.rituals.marks.MarkDataAttachment;
 import io.github.sfseeger.lib.common.rituals.marks.MarkInstance;
 import io.github.sfseeger.lib.common.rituals.marks.MarkType;
-import io.github.sfseeger.lib.common.rituals.ritual_data.RitualDataTypes;
-import io.github.sfseeger.lib.common.rituals.ritual_data.builtin.BooleanRitualData;
+import io.github.sfseeger.lib.common.context_data_types.ContextDataTypes;
+import io.github.sfseeger.lib.common.context_data_types.builtin.BooleanContextDataType;
 import io.github.sfseeger.lib.common.rituals.state_machine.RitualStateMachineContext;
 import io.github.sfseeger.lib.common.rituals.state_machine.RitualStepResult;
 import io.github.sfseeger.manaweave_and_runes.common.blocks.ritual_anchor.RitualAnchorBlock;
@@ -36,10 +37,12 @@ public class CurseRemovalRitual extends Ritual {
 
     @Override
     public RitualStepResult onRitualServerTick(RitualStateMachineContext ctx) {
-        ctx.ritualContext().putData("curse_removed", new BooleanRitualData(false));
+        ctx.contextMap().putData("curse_removed", new BooleanContextDataType(false));
 
         ServerLevel level = (ServerLevel) ctx.level();
-        UUID playerUUID = ctx.ritualContext().getData(RitualDataTypes.PLAYER_TYPE).getPlayerUUID();
+        Optional<PlayerContextDataType> playerData = ctx.contextMap().getData(ContextDataTypes.PLAYER_TYPE);
+        if (playerData.isEmpty()) return RitualStepResult.FAIL;
+        UUID playerUUID = playerData.get().getPlayerUUID();
         Player player = level.getPlayerByUUID(playerUUID);
         if (player == null) return RitualStepResult.FAIL;
 
@@ -69,7 +72,7 @@ public class CurseRemovalRitual extends Ritual {
         curseToRemove.onMarkRemove(player);
         playerMarks.remove(curseToRemove);
         player.setData(MRDataAttachmentInit.MARKS_DATA_ATTACHMENT_TYPE, marks);
-        ctx.ritualContext().putData("curse_removed", new BooleanRitualData(true));
+        ctx.contextMap().putData("curse_removed", new BooleanContextDataType(true));
 
         return RitualStepResult.SUCCESS;
     }
@@ -77,7 +80,7 @@ public class CurseRemovalRitual extends Ritual {
     @Override
     public void onRitualEnd(RitualStateMachineContext ctx) {
         BlockPos pos = ctx.pos();
-        BooleanRitualData ritualData = ctx.ritualContext().getData("curse_removed", RitualDataTypes.BOOLEAN_TYPE);
+        BooleanContextDataType ritualData = ctx.contextMap().getData("curse_removed", ContextDataTypes.BOOLEAN_TYPE).orElse(null);
         if (ritualData != null && ritualData.value()) {
             ((ServerLevel) ctx.level()).sendParticles(ParticleTypes.GLOW, pos.getX() + 0.5, pos.getY() + 2,
                                                       pos.getZ() + 0.5, 20, 0.5, 0.5, 0.5, 0.1);

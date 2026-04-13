@@ -44,7 +44,7 @@ public class Spell {
         this.core = core;
     }
 
-    public SpellCastingResult resolveEffects(HitResult hitResult, SpellCastingContext context) {
+    public SpellCastingResult resolveEffects(HitResult hitResult, AbstractSpellCastingContext context) {
         SpellCastingResult result = SpellCastingResult.SUCCESS;
         for (SpellPart part : spellParts) {
             SpellCastingResult result1 = part.resolveEffect(hitResult, context);
@@ -62,6 +62,8 @@ public class Spell {
     }
 
     public Map<Mana, Integer> getManaCost() {
+        if (core == null) return Map.of(); // Annoying check for empty data component
+
         Map<Mana, Integer> manaCost = new HashMap<>(core.getManaCost());
         spellParts.forEach(
                 part -> part.getManaCost().forEach((mana, cost) -> manaCost.merge(mana, cost, Integer::sum)));

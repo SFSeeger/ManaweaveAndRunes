@@ -4,6 +4,8 @@ import com.mojang.logging.LogUtils;
 import io.github.sfseeger.lib.common.mana.network.ManaNetworkHandler;
 import io.github.sfseeger.manaweave_and_runes.client.event.KeyManager;
 import io.github.sfseeger.manaweave_and_runes.core.init.*;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
@@ -88,6 +90,7 @@ public class ManaweaveAndRunes {
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
+            ItemBlockRenderTypes.setRenderLayer(MRBlockInit.SPELL_RUNE_BLOCK.get(), RenderType.translucent());
         }
     }
 }

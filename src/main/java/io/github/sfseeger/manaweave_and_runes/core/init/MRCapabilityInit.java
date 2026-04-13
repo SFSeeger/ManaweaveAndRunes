@@ -2,7 +2,7 @@ package io.github.sfseeger.manaweave_and_runes.core.init;
 
 import io.github.sfseeger.lib.common.items.AbstractRuneItem;
 import io.github.sfseeger.lib.common.items.IItemHandlerItem;
-import io.github.sfseeger.lib.common.items.SpellHolderItem;
+import io.github.sfseeger.manaweave_and_runes.common.items.SpellHolderItem;
 import io.github.sfseeger.lib.common.mana.Mana;
 import io.github.sfseeger.lib.common.mana.capability.IManaItem;
 import io.github.sfseeger.lib.common.mana.capability.ItemStackManaHandler;

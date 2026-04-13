@@ -9,11 +9,11 @@ public abstract class AbstractSpellType extends AbstractSpellNode {
         super();
     }
 
-    public abstract SpellCastingResult cast(SpellCastingContext context, SpellResolver resolver);
+    public abstract SpellCastingResult cast(AbstractSpellCastingContext context, SpellResolver resolver);
 
-    public abstract SpellCastingResult castOnBlock(BlockHitResult result, SpellCastingContext context, SpellResolver resolver);
+    public abstract SpellCastingResult castOnBlock(BlockHitResult result, AbstractSpellCastingContext context, SpellResolver resolver);
 
-    public abstract SpellCastingResult castOnEntity(Entity target, SpellCastingContext context, SpellResolver resolver);
+    public abstract SpellCastingResult castOnEntity(Entity target, AbstractSpellCastingContext context, SpellResolver resolver);
 
     @Override
     public @NotNull SpellNodeType getSpellNodeType() {

@@ -1,5 +1,7 @@
 package io.github.sfseeger.manaweave_and_runes.common.blockentities;
 
+import io.github.sfseeger.lib.common.context_data_types.ContextMap;
+import io.github.sfseeger.lib.common.context_data_types.builtin.PlayerContextDataType;
 import io.github.sfseeger.lib.common.mana.IManaNetworkSubscriber;
 import io.github.sfseeger.lib.common.mana.Mana;
 import io.github.sfseeger.lib.common.mana.capability.ManaHandler;
@@ -8,9 +10,7 @@ import io.github.sfseeger.lib.common.mana.network.ManaNetworkNodeType;
 import io.github.sfseeger.lib.common.rituals.IRitualManager;
 import io.github.sfseeger.lib.common.rituals.Ritual;
 import io.github.sfseeger.lib.common.rituals.RitualUtils;
-import io.github.sfseeger.lib.common.rituals.ritual_data.IRitualDataCapable;
-import io.github.sfseeger.lib.common.rituals.ritual_data.RitualContext;
-import io.github.sfseeger.lib.common.rituals.ritual_data.builtin.PlayerRitualData;
+import io.github.sfseeger.lib.common.context_data_types.IContextDataCapable;
 import io.github.sfseeger.lib.common.rituals.state_machine.RitualStateMachine;
 import io.github.sfseeger.lib.common.rituals.state_machine.RitualStateMachineContext;
 import io.github.sfseeger.lib.common.rituals.state_machine.RitualStepId;
@@ -77,7 +77,7 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
     private List<BlockPos> pedestalPositions = new ArrayList<>();
     private List<BlockPos> pedestalsToVisit = new ArrayList<>();
     private List<Ingredient> requiredItems = new ArrayList<>();
-    private RitualContext ritualContext = new RitualContext();
+    private ContextMap contextMap = new ContextMap();
     private ManaNetworkNode manaNetworkNode = new ManaNetworkNode(this, ManaNetworkNodeType.RECEIVER, 20, true);
 
     public RitualAnchorBlockEntity(BlockPos pos, BlockState blockState) {
@@ -145,7 +145,7 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
                 case TICK_LOOP -> {
                     Ritual ritual = blockEntity.getRitual();
                     if (ritual != null) {
-                        ritual.onRitualClientTick(level, pos, state, blockEntity.ritualTicks, blockEntity.ritualContext,
+                        ritual.onRitualClientTick(level, pos, state, blockEntity.ritualTicks, blockEntity.contextMap,
                                                   ORIGIN_TYPE);
                     }
                 }
@@ -163,7 +163,7 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
 
         RitualStateMachineContext ctx = new RitualStateMachineContext(level, pos, state, ORIGIN_TYPE,
                                                                       blockEntity.ritualTicks, blockEntity.getRitual(),
-                                                                      blockEntity.ritualContext);
+                                                                      blockEntity.contextMap);
         blockEntity.stateMachine.tick(ctx);
     }
 
@@ -187,7 +187,7 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
                 return RitualStepResult.SKIP;
             }
             RitualUtils.displayMessageToStartingPlayer(
-                    Component.translatable("ritual.manaweave_and_runes.item_insufficient"), level, ctx.ritualContext());
+                    Component.translatable("ritual.manaweave_and_runes.item_insufficient"), level, ctx.contextMap());
             return RitualStepResult.FAIL;
         }
 
@@ -240,7 +240,7 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
             return RitualStepResult.SUCCESS;
         }
         RitualUtils.displayMessageToStartingPlayer(
-                Component.translatable("ritual.manaweave_and_runes.item_insufficient"), level, ctx.ritualContext());
+                Component.translatable("ritual.manaweave_and_runes.item_insufficient"), level, ctx.contextMap());
         return RitualStepResult.FAIL;
     }
 
@@ -252,7 +252,7 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
                 if (manaHandler.extractMana(amount, entry.getKey(), false) != amount) {
                     RitualUtils.displayMessageToStartingPlayer(
                             Component.translatable("ritual.manaweave_and_runes.mana_insufficient"), level,
-                            ctx.ritualContext());
+                            ctx.contextMap());
                     return RitualStepResult.FAIL;
                 }
             }
@@ -301,7 +301,7 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
         this.pedestalsToVisit.clear();
         this.requiredItems = List.of();
         this.consumedItems.clear();
-        this.ritualContext = new RitualContext();
+        this.contextMap = new ContextMap();
         this.setRitual(null);
         this.triggerAnim("controller", "idle_active");
         markUpdated();
@@ -345,27 +345,27 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
         }
 
         List<ItemStack> items = new ArrayList<>();
-        RitualContext ritualContext = new RitualContext();
+        ContextMap contextMap = new ContextMap();
         for (BlockPos offset : getRitualAnchorType().findBlocks(level, MRBlockInit.RUNE_PEDESTAL_BLOCK.get())) {
             BlockPos worldPos = getBlockPos().offset(offset);
             BlockEntity blockEntity = level.getBlockEntity(worldPos);
             if (blockEntity instanceof RunePedestalBlockEntity pBE) {
                 ItemStack itemStack = pBE.getItem();
                 if (!itemStack.isEmpty()) {
-                    if (itemStack.getItem() instanceof IRitualDataCapable ritItem
+                    if (itemStack.getItem() instanceof IContextDataCapable ritItem
                             && ritItem.getData(itemStack) != null) {
-                        ritualContext.putData(null, ritItem.getData(itemStack));
+                        contextMap.putData(null, ritItem.getData(itemStack));
                     }
                     items.add(itemStack);
                 }
             }
         }
-        ritualContext.putData("starting_player", new PlayerRitualData(player));
+        contextMap.putData("starting_player", new PlayerContextDataType(player));
 
         Ritual ritual = getMatchingRitual(items, getRitualAnchorType().getTier(), ORIGIN_TYPE, level).orElse(null);
         if (ritual == null) {
             RitualUtils.displayMessageToStartingPlayer(
-                    Component.translatable("ritual.manaweave_and_runes.unknown_ritual"), level, ritualContext);
+                    Component.translatable("ritual.manaweave_and_runes.unknown_ritual"), level, contextMap);
             return false;
         }
 
@@ -377,7 +377,7 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
                 .getOrStartProgress(advancement)
                 .isDone()) {
             RitualUtils.displayMessageToStartingPlayer(
-                    Component.translatable("ritual.manaweave_and_runes.unknown_ritual"), level, ritualContext);
+                    Component.translatable("ritual.manaweave_and_runes.unknown_ritual"), level, contextMap);
             return false;
         }
 
@@ -385,7 +385,7 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
         this.pedestalPositions = getRitualAnchorType().findBlocks(level, MRBlockInit.RUNE_PEDESTAL_BLOCK.get());
         this.pedestalsToVisit = new ArrayList<>(pedestalPositions);
         this.requiredItems = ritual.getInitialItemCost(level);
-        this.ritualContext = ritualContext;
+        this.contextMap = contextMap;
 
         startRitual(ritual);
         triggerAnim("controller", "start_ritual");
@@ -420,7 +420,7 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
         super.loadAdditional(tag, registries);
         deserializeNBT(tag.getCompound("current_ritual"), registries);
         ritualTicks = tag.getInt("ritual_ticks");
-        if (tag.contains("context")) ritualContext = RitualContext.deserializeNBT(tag.getCompound("context"));
+        if (tag.contains("context")) contextMap = ContextMap.fromNBT(registries, tag.getCompound("context"));
         manaHandler.deserializeNBT(registries, tag.getCompound("mana"));
         manaNetworkNode = ManaNetworkNode.deserializeNBT(tag.getCompound("mana_network_node"), registries, this)
                 .orElse(new ManaNetworkNode(this, ManaNetworkNodeType.RECEIVER, 20, true));
@@ -431,7 +431,7 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
         super.saveAdditional(tag, registries);
         tag.put("current_ritual", currentRitual != null ? serializeNBT(registries) : new CompoundTag());
         tag.putInt("ritual_ticks", ritualTicks);
-        tag.put("context", ritualContext.serializeNBT());
+        tag.put("context", contextMap.serializeNBT(registries));
         tag.put("mana", manaHandler.serializeNBT(registries));
         tag.put("mana_network_node", manaNetworkNode.serializeNBT(registries));
     }
@@ -475,8 +475,7 @@ public class RitualAnchorBlockEntity extends BlockEntity implements IRitualManag
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(
-                new AnimationController<>(this, "controller", 0, this::deployAnimController).triggerableAnim("activate",
-                                                                                                             ACTIVATION_ANIMATION)
+                new AnimationController<>(this, "controller", 0, this::deployAnimController).triggerableAnim("activate", ACTIVATION_ANIMATION)
                         .triggerableAnim("idle_active", IDLE_ACTIVE)
                         .triggerableAnim("start_ritual", RUNNING_ANIMATION)
                         .triggerableAnim("deactivate", DEACTIVATION_ANIMATION));

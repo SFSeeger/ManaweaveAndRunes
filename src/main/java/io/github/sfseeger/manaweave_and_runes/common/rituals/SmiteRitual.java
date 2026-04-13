@@ -1,10 +1,11 @@
 package io.github.sfseeger.manaweave_and_runes.common.rituals;
 
 import io.github.sfseeger.lib.common.Tier;
+import io.github.sfseeger.lib.common.context_data_types.builtin.PlayerContextDataType;
 import io.github.sfseeger.lib.common.rituals.Ritual;
 import io.github.sfseeger.lib.common.rituals.RitualUtils;
-import io.github.sfseeger.lib.common.rituals.ritual_data.RitualContext;
-import io.github.sfseeger.lib.common.rituals.ritual_data.RitualDataTypes;
+import io.github.sfseeger.lib.common.context_data_types.ContextMap;
+import io.github.sfseeger.lib.common.context_data_types.ContextDataTypes;
 import io.github.sfseeger.lib.common.rituals.state_machine.RitualStateMachineContext;
 import io.github.sfseeger.lib.common.rituals.state_machine.RitualStepResult;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRItemInit;
@@ -21,6 +22,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.Optional;
 import java.util.UUID;
 
 public class SmiteRitual extends Ritual {
@@ -36,7 +38,10 @@ public class SmiteRitual extends Ritual {
 
     @Override
     public RitualStepResult onRitualServerTick(RitualStateMachineContext ctx) {
-        UUID playerUUID = ctx.ritualContext().getData(RitualDataTypes.PLAYER_TYPE).getPlayerUUID();
+        Optional<PlayerContextDataType> playerData = ctx.contextMap().getData(ContextDataTypes.PLAYER_TYPE);
+        if (playerData.isEmpty()) return RitualStepResult.FAIL;
+        UUID playerUUID = playerData.get().getPlayerUUID();
+
         Player player = ctx.level().getPlayerByUUID(playerUUID);
         if (player != null && player.isAlive() && ctx.pos()
                 .distManhattan(player.blockPosition()) <= getDimension().x() / 2) {
@@ -54,7 +59,9 @@ public class SmiteRitual extends Ritual {
     @Override
     public void onRitualEnd(RitualStateMachineContext ctx) {
         returnRune(ctx.level(), ctx.pos());
-        UUID playerUUID = ctx.ritualContext().getData(RitualDataTypes.PLAYER_TYPE).getPlayerUUID();
+        Optional<PlayerContextDataType> playerData = ctx.contextMap().getData(ContextDataTypes.PLAYER_TYPE);
+        if (playerData.isEmpty()) return;
+        UUID playerUUID = playerData.get().getPlayerUUID();
         Player player = ctx.level().getPlayerByUUID(playerUUID);
         if (player != null && player.isAlive() && ctx.pos()
                 .distManhattan(player.blockPosition()) <= getDimension().x() / 2) {
@@ -64,7 +71,7 @@ public class SmiteRitual extends Ritual {
     }
 
     @Override
-    public void onRitualAbort(Level level, BlockPos pos, BlockState state, RitualContext context,
+    public void onRitualAbort(Level level, BlockPos pos, BlockState state, ContextMap context,
                               RitualOriginType originType
     ) {
         returnRune(level, pos);

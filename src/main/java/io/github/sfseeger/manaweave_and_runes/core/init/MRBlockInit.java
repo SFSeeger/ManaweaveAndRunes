@@ -6,6 +6,7 @@ import io.github.sfseeger.manaweave_and_runes.common.blocks.mana_concentrator.Ma
 import io.github.sfseeger.manaweave_and_runes.common.blocks.mana_concentrator.ManaConcentratorTypes;
 import io.github.sfseeger.manaweave_and_runes.common.blocks.ritual_anchor.RitualAnchorBlock;
 import io.github.sfseeger.manaweave_and_runes.common.blocks.ritual_anchor.RitualAnchorTypes;
+import joptsimple.internal.AbbreviationMap;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.block.Block;
@@ -110,6 +111,8 @@ public class MRBlockInit {
 
     public static final DeferredBlock<ScryingPool> SCRYING_POOL_BLOCK =
             registerBlock("scrying_pool", ScryingPool::new);
+    public static final DeferredBlock<SpellRuneBlock> SPELL_RUNE_BLOCK =
+            registerBlock("spell_rune", SpellRuneBlock::new);
 
 
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block) {
