@@ -151,5 +151,6 @@
   "mark.manaweave_and_runes.mark_of_flight": "Mark of Flight",
 
   "entity.minecraft.villager.manaweave_and_runes.rune_smith": "Rune Smith",
-  "tooltip.manaweave_and_runes.caster": "Current Spell: %s"
+  "tooltip.manaweave_and_runes.caster": "Current Spell: %s",
+  "container.manaweave_and_runes.runic_loom": "Runic Loom"
 }

@@ -28,4 +28,6 @@ public class MRMenuInit {
 
     public static final Supplier<MenuType<ManaGeneratorMenu>> MANA_GENERATOR_MENU = MENUS.register(
             "mana_generator_menu", () -> IMenuTypeExtension.create(ManaGeneratorMenu::new));
+    public static final Supplier<MenuType<RunicLoomMenu>> RUNIC_LOOM_MENU = MENUS.register(
+            "runic_loom_menu", () -> IMenuTypeExtension.create(RunicLoomMenu::new));
 }

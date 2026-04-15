@@ -66,6 +66,7 @@ public class ClientModEventHandler {
         event.register(MRMenuInit.RUNEWROUGHT_BENCH_MENU_TYPE.get(), RunewroughtBenchScreen::new);
         event.register(MRMenuInit.SPELL_DESIGNER_MENU.get(), SpellDesignerScreen::new);
         event.register(MRMenuInit.MANA_GENERATOR_MENU.get(), ManaGeneratorScreen::new);
+        event.register(MRMenuInit.RUNIC_LOOM_MENU.get(), RunicLoomScreen::new);
     }
 
     @SubscribeEvent

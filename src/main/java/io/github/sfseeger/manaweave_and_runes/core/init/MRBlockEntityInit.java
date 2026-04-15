@@ -60,8 +60,7 @@ public class MRBlockEntityInit {
                                                                          MRBlockInit.ASCENDED_RITUAL_ANCHOR_BLOCK.get())
                                                 .build(null));
 
-    public static final Supplier<BlockEntityType<RunewroughtBenchBlockEntity>>
-            RUNEWROUGHT_BENCH_BLOCK_ENTITY =
+    public static final Supplier<BlockEntityType<RunewroughtBenchBlockEntity>> RUNEWROUGHT_BENCH_BLOCK_ENTITY =
             BLOCK_ENTITY_TYPES.register("runewrought_bench_block_entity",
                                         () -> BlockEntityType.Builder.of(RunewroughtBenchBlockEntity::new,
                                                                          MRBlockInit.RUNEWROUGHT_BENCH_BLOCK.get())
@@ -71,6 +70,12 @@ public class MRBlockEntityInit {
             BLOCK_ENTITY_TYPES.register("spell_rune_block_entity",
                                         () -> BlockEntityType.Builder.of(SpellRuneBlockEntity::new,
                                                                          MRBlockInit.SPELL_RUNE_BLOCK.get())
+                                                .build(null));
+
+    public static final Supplier<BlockEntityType<RunicLoomBlockEntity>> RUNIC_LOOM_BLOCK_ENTITY =
+            BLOCK_ENTITY_TYPES.register("runic_loom_block_entity",
+                                        () -> BlockEntityType.Builder.of(RunicLoomBlockEntity::new,
+                                                                         MRBlockInit.RUNIC_LOOM_BLOCK.get())
                                                 .build(null));
 
 }

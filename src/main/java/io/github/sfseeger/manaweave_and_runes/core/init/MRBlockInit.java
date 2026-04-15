@@ -114,6 +114,9 @@ public class MRBlockInit {
     public static final DeferredBlock<SpellRuneBlock> SPELL_RUNE_BLOCK =
             registerBlock("spell_rune", SpellRuneBlock::new);
 
+    public static final DeferredBlock<RunicLoomBlock> RUNIC_LOOM_BLOCK =
+            registerBlock("runic_loom", RunicLoomBlock::new);
+
 
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block) {
         DeferredBlock<T> deferredBlock = BLOCKS.register(name, block);
