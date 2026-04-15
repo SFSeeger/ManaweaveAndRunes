@@ -4,6 +4,7 @@ import io.github.sfseeger.lib.common.context_data_types.IContextDataType;
 import io.github.sfseeger.lib.common.context_data_types.ContextDataType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
@@ -41,6 +42,11 @@ public class PlayerContextDataType implements IContextDataType {
     @Override
     public ContextDataType<?> getType() {
         return PLAYER_TYPE;
+    }
+
+    @Override
+    public @Nullable IContextDataType merge(IContextDataType other) {
+        return null;
     }
 
     @Override

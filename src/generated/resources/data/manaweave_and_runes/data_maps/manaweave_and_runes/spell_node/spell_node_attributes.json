@@ -7,10 +7,11 @@
         "manaweave_and_runes:entropy_mana": 2
       },
       "possibleModifiers": [
-        "manaweave_and_runes:spell_modifier.widen",
-        "manaweave_and_runes:spell_modifier.elongate",
         "manaweave_and_runes:spell_modifier.strengthen",
-        "manaweave_and_runes:spell_modifier.delicate"
+        "manaweave_and_runes:spell_modifier.widen",
+        "manaweave_and_runes:spell_modifier.hasten",
+        "manaweave_and_runes:spell_modifier.delicate",
+        "manaweave_and_runes:spell_modifier.elongate"
       ]
     },
     "manaweave_and_runes:spell_effect.burn": {
@@ -19,37 +20,42 @@
         "manaweave_and_runes:fire_mana": 4
       },
       "possibleModifiers": [
-        "manaweave_and_runes:spell_modifier.strengthen"
+        "manaweave_and_runes:spell_modifier.hasten"
       ]
     },
     "manaweave_and_runes:spell_effect.explode": {
       "baseCooldown": 12,
       "cost": {
-        "manaweave_and_runes:entropy_mana": 4,
-        "manaweave_and_runes:fire_mana": 6
+        "manaweave_and_runes:entropy_mana": 8,
+        "manaweave_and_runes:fire_mana": 15
       },
       "possibleModifiers": [
+        "manaweave_and_runes:spell_modifier.strengthen",
         "manaweave_and_runes:spell_modifier.widen",
-        "manaweave_and_runes:spell_modifier.strengthen"
+        "manaweave_and_runes:spell_modifier.hasten"
       ]
     },
     "manaweave_and_runes:spell_effect.harm": {
       "baseCooldown": 6,
       "cost": {
-        "manaweave_and_runes:entropy_mana": 4
+        "manaweave_and_runes:entropy_mana": 2,
+        "manaweave_and_runes:void_mana": 2
       },
       "possibleModifiers": [
         "manaweave_and_runes:spell_modifier.strengthen",
+        "manaweave_and_runes:spell_modifier.hasten",
         "manaweave_and_runes:spell_modifier.delicate"
       ]
     },
     "manaweave_and_runes:spell_effect.heal": {
       "baseCooldown": 6,
       "cost": {
-        "manaweave_and_runes:water_mana": 4
+        "manaweave_and_runes:order_mana": 2,
+        "manaweave_and_runes:water_mana": 8
       },
       "possibleModifiers": [
         "manaweave_and_runes:spell_modifier.strengthen",
+        "manaweave_and_runes:spell_modifier.hasten",
         "manaweave_and_runes:spell_modifier.delicate"
       ]
     },
@@ -59,29 +65,37 @@
         "manaweave_and_runes:air_mana": 4
       },
       "possibleModifiers": [
+        "manaweave_and_runes:spell_modifier.strengthen",
         "manaweave_and_runes:spell_modifier.widen",
-        "manaweave_and_runes:spell_modifier.elongate",
-        "manaweave_and_runes:spell_modifier.strengthen"
+        "manaweave_and_runes:spell_modifier.hasten",
+        "manaweave_and_runes:spell_modifier.elongate"
       ]
     },
     "manaweave_and_runes:spell_modifier.delicate": {
-      "baseCooldown": 4,
+      "baseCooldown": 1,
       "cost": {
-        "manaweave_and_runes:soul_mana": 2
+        "manaweave_and_runes:order_mana": 1
       },
       "possibleModifiers": []
     },
     "manaweave_and_runes:spell_modifier.elongate": {
       "baseCooldown": 4,
       "cost": {
-        "manaweave_and_runes:water_mana": 2
+        "manaweave_and_runes:air_mana": 2
+      },
+      "possibleModifiers": []
+    },
+    "manaweave_and_runes:spell_modifier.hasten": {
+      "baseCooldown": -4,
+      "cost": {
+        "manaweave_and_runes:order_mana": 4
       },
       "possibleModifiers": []
     },
     "manaweave_and_runes:spell_modifier.strengthen": {
       "baseCooldown": 4,
       "cost": {
-        "manaweave_and_runes:entropy_mana": 2
+        "manaweave_and_runes:earth_mana": 4
       },
       "possibleModifiers": []
     },
@@ -98,17 +112,20 @@
         "manaweave_and_runes:air_mana": 5
       },
       "possibleModifiers": [
-        "manaweave_and_runes:spell_modifier.strengthen"
+        "manaweave_and_runes:spell_modifier.strengthen",
+        "manaweave_and_runes:spell_modifier.hasten"
       ]
     },
     "manaweave_and_runes:spell_type.rune": {
-      "baseCooldown": 15,
+      "baseCooldown": 200,
       "cost": {
-        "manaweave_and_runes:earth_mana": 3
+        "manaweave_and_runes:earth_mana": 10,
+        "manaweave_and_runes:order_mana": 2
       },
       "possibleModifiers": [
         "manaweave_and_runes:spell_modifier.widen",
-        "manaweave_and_runes:spell_modifier.elongate"
+        "manaweave_and_runes:spell_modifier.hasten",
+        "manaweave_and_runes:spell_modifier.delicate"
       ]
     },
     "manaweave_and_runes:spell_type.self": {
@@ -116,14 +133,18 @@
       "cost": {
         "manaweave_and_runes:earth_mana": 3
       },
-      "possibleModifiers": []
+      "possibleModifiers": [
+        "manaweave_and_runes:spell_modifier.hasten"
+      ]
     },
     "manaweave_and_runes:spell_type.touch": {
       "baseCooldown": 5,
       "cost": {
         "manaweave_and_runes:earth_mana": 3
       },
-      "possibleModifiers": []
+      "possibleModifiers": [
+        "manaweave_and_runes:spell_modifier.hasten"
+      ]
     }
   }
 }

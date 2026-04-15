@@ -7,6 +7,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.IntArrayTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.world.entity.player.Player;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -40,6 +41,16 @@ public record PlayerListContextDataType(Set<UUID> playerUUIDs) implements IConte
     @Override
     public ContextDataType<?> getType() {
         return PLAYER_LIST_TYPE;
+    }
+
+    @Override
+    public @Nullable IContextDataType merge(IContextDataType other) {
+        if (other instanceof PlayerListContextDataType(Set<UUID> uuiDs)) {
+            Set<UUID> mergedSet = new HashSet<>(this.playerUUIDs);
+            mergedSet.addAll(uuiDs);
+            return new PlayerListContextDataType(mergedSet);
+        }
+        return null;
     }
 
     @Override

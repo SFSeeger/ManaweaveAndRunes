@@ -25,6 +25,8 @@ public class MRItemInit {
             ITEMS.register("mana_weaver_wand", () -> new Item(new Item.Properties().stacksTo(1)));
     public static final DeferredItem<Item> MARK_CONTAINER_ITEM =
             ITEMS.register("mark_container", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
+    public static final DeferredItem<Item> RUNE_MATRIX_ITEM =
+            ITEMS.register("rune_matrix", () -> new Item(new Item.Properties()));
 
 
     public static final DeferredItem<Item> AMETHYST_BASE_RUNE =

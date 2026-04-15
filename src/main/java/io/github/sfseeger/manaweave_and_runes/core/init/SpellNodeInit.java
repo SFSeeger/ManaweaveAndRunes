@@ -2,10 +2,7 @@ package io.github.sfseeger.manaweave_and_runes.core.init;
 
 import io.github.sfseeger.lib.common.spells.AbstractSpellNode;
 import io.github.sfseeger.manaweave_and_runes.common.spells.effects.*;
-import io.github.sfseeger.manaweave_and_runes.common.spells.modifiers.SpellModifierDelicate;
-import io.github.sfseeger.manaweave_and_runes.common.spells.modifiers.SpellModifierElongate;
-import io.github.sfseeger.manaweave_and_runes.common.spells.modifiers.SpellModifierStrengthen;
-import io.github.sfseeger.manaweave_and_runes.common.spells.modifiers.SpellModifierWiden;
+import io.github.sfseeger.manaweave_and_runes.common.spells.modifiers.*;
 import io.github.sfseeger.manaweave_and_runes.common.spells.types.SpellTypeProjectile;
 import io.github.sfseeger.manaweave_and_runes.common.spells.types.SpellTypeRune;
 import io.github.sfseeger.manaweave_and_runes.common.spells.types.SpellTypeSelf;
@@ -51,5 +48,7 @@ public class SpellNodeInit {
             SPELL_NODES.register("spell_modifier.elongate", () -> SpellModifierElongate.INSTANCE);
     public static final Supplier<AbstractSpellNode> SPELL_MODIFIER_DELICATE =
             SPELL_NODES.register("spell_modifier.delicate", () -> SpellModifierDelicate.INSTANCE);
+    public static final Supplier<SpellModifierHasten> SPELL_MODIFIER_HASTEN =
+            SPELL_NODES.register("spell_modifier.hasten", () -> SpellModifierHasten.INSTANCE);
 
 }

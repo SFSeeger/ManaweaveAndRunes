@@ -3,6 +3,7 @@ package io.github.sfseeger.lib.common.spells;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.github.sfseeger.lib.common.mana.Mana;
+import io.github.sfseeger.manaweave_and_runes.Config;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -71,7 +72,7 @@ public class Spell {
     }
 
     public int getCooldown() {
-        return core.getCooldown() + spellParts.stream().mapToInt(SpellPart::getCooldown).sum();
+        return Math.max(core.getCooldown() + spellParts.stream().mapToInt(SpellPart::getCooldown).sum(), Config.minimumSpellCooldown);
     }
 
     public boolean isValid() {

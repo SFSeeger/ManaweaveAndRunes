@@ -130,20 +130,20 @@ public record SpellNodeAttributes(Map<Mana, Integer> cost, int baseCooldown, Set
             return this;
         }
 
-        public Builder withModifier(AbstractSpellNode modifier) {
+        public <T extends AbstractSpellNode> Builder withModifier(T modifier) {
             if (!(modifier instanceof AbstractSpellModifier))
                 throw new IllegalArgumentException("Modifier must be an AbstractSpellModifier");
             this.possibleModifiers.add(modifier);
             return this;
         }
 
-        public Builder withModifier(Holder<AbstractSpellNode> modifier) {
+        public <T extends AbstractSpellNode> Builder withModifier(Holder<T> modifier) {
             if (!(modifier.value() instanceof AbstractSpellModifier modifier1))
                 throw new IllegalArgumentException("Modifier must be an AbstractSpellModifier");
             return withModifier(modifier1);
         }
 
-        public Builder withModifier(Supplier<AbstractSpellNode> modifier) {
+        public <T extends AbstractSpellNode> Builder withModifier(Supplier<T> modifier) {
             if (!(modifier.get() instanceof AbstractSpellModifier modifier1))
                 throw new IllegalArgumentException("Modifier must be an AbstractSpellModifier");
             this.possibleModifiers.add(modifier1);

@@ -6,13 +6,13 @@
       "item": "minecraft:amethyst_block"
     },
     {
-      "item": "minecraft:crafting_table"
+      "item": "minecraft:enchanting_table"
     },
     {
       "item": "minecraft:heart_of_the_sea"
     },
     {
-      "item": "minecraft:redstone_block"
+      "item": "manaweave_and_runes:mana_storage"
     }
   ],
   "manaMap": [
@@ -22,7 +22,7 @@
     },
     {
       "amount": 500,
-      "manaType": "manaweave_and_runes:earth_mana"
+      "manaType": "manaweave_and_runes:water_mana"
     },
     {
       "amount": 500,
@@ -30,7 +30,7 @@
     },
     {
       "amount": 500,
-      "manaType": "manaweave_and_runes:water_mana"
+      "manaType": "manaweave_and_runes:earth_mana"
     }
   ],
   "result": {

@@ -2,6 +2,7 @@ package io.github.sfseeger.manaweave_and_runes.common.spells.effects;
 
 import io.github.sfseeger.lib.common.datamaps.BlockHealDataMap;
 import io.github.sfseeger.lib.common.spells.*;
+import io.github.sfseeger.manaweave_and_runes.Config;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -30,7 +31,7 @@ public class SpellEffectHeal extends AbstractSpellEffect {
         boolean delicate = context.getBooleanContextData("delicate");
         if (delicate) return SpellCastingResult.SUCCESS;
 
-        if (SpellUtils.canChangeBlockState(pos, context)) {
+        if (SpellUtils.canChangeBlockState(pos, context) && Config.allowHealSpellGriefing) {
             BlockState state = level.getBlockState(pos);
             Block block = state.getBlock();
             Optional<Block> replacement = BlockHealDataMap.getConvertedBlock(block, level.getRandom(), strength);

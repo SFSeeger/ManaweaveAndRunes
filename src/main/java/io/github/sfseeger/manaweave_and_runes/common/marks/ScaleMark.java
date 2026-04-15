@@ -17,6 +17,10 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public abstract class ScaleMark extends Mark {
     @Override
     public void applyEffect(MarkInstance markInstance, Player player) {
+        AttributeInstance attribute = player.getAttribute(Attributes.SCALE);
+        if (attribute != null && !attribute.hasModifier(getModifierLocation())) {
+            onMarkAdd(markInstance, player);
+        }
     }
 
     @Override

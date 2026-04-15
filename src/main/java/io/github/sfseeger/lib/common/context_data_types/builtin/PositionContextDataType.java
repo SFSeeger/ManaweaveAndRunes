@@ -4,6 +4,7 @@ import io.github.sfseeger.lib.common.context_data_types.IContextDataType;
 import io.github.sfseeger.lib.common.context_data_types.ContextDataType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import org.jetbrains.annotations.Nullable;
 
 import static io.github.sfseeger.lib.common.context_data_types.ContextDataTypes.POSITION_TYPE;
 
@@ -19,6 +20,11 @@ public record PositionContextDataType(BlockPos pos) implements IContextDataType 
     @Override
     public ContextDataType<?> getType() {
         return POSITION_TYPE;
+    }
+
+    @Override
+    public @Nullable IContextDataType merge(IContextDataType other) {
+        return null;
     }
 
     @Override

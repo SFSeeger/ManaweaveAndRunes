@@ -21,17 +21,20 @@ public class MarkOfFlight extends Mark {
 
     @Override
     public void applyEffect(MarkInstance markInstance, Player player) {
+        AttributeInstance attribute = player.getAttribute(NeoForgeMod.CREATIVE_FLIGHT);
+        if (attribute != null) {
+            if (!attribute.hasModifier(MARK_OF_FLYING_ATTRIBUTE_MODIFIER_ID)) {
+                addModifier(attribute);
+            }
+            ;
+        }
     }
 
     @Override
     public void onMarkAdd(MarkInstance markInstance, Player player) {
         AttributeInstance attribute = player.getAttribute(NeoForgeMod.CREATIVE_FLIGHT);
         if (attribute != null) {
-            attribute.addOrReplacePermanentModifier(new AttributeModifier(
-                    MARK_OF_FLYING_ATTRIBUTE_MODIFIER_ID,
-                    1.0,
-                    AttributeModifier.Operation.ADD_VALUE
-            ));
+            addModifier(attribute);
         }
     }
 
@@ -46,5 +49,13 @@ public class MarkOfFlight extends Mark {
     @Override
     public MarkType getMarkType() {
         return MarkType.BOON;
+    }
+
+    private void addModifier(AttributeInstance attribute) {
+        attribute.addOrReplacePermanentModifier(new AttributeModifier(
+                MARK_OF_FLYING_ATTRIBUTE_MODIFIER_ID,
+                1.0,
+                AttributeModifier.Operation.ADD_VALUE
+        ));
     }
 }

@@ -27,6 +27,7 @@ public class MRItemModelProvider extends ItemModelProvider {
 
         handheldItem(MRItemInit.DIAMOND_CHISEL.get());
         basicItem(MRItemInit.SPELL_HOLDER_ITEM.get());
+        basicItem(MRItemInit.RUNE_MATRIX_ITEM.get());
 
         basicItem(MRItemInit.AMETHYST_BASE_RUNE.get());
         basicItem(MRItemInit.AMETHYST_FIRE_RUNE_ITEM.get());

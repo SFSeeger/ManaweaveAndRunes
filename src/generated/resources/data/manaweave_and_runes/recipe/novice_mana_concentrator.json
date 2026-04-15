@@ -16,8 +16,8 @@
     }
   },
   "pattern": [
-    "AAA",
-    "G#G",
+    "GGG",
+    "A#A",
     "PPP"
   ],
   "result": {

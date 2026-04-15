@@ -2,9 +2,14 @@
   "type": "manaweave_and_runes:mana_concentrator",
   "craftTime": 100,
   "inputs": [
-    {
-      "item": "minecraft:bucket"
-    },
+    [
+      {
+        "item": "minecraft:obsidian"
+      },
+      {
+        "item": "minecraft:crying_obsidian"
+      }
+    ],
     {
       "item": "minecraft:stone_bricks"
     },

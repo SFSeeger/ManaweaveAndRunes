@@ -6,7 +6,7 @@
       "item": "minecraft:gold_block"
     },
     {
-      "item": "minecraft:amethyst_block"
+      "tag": "manaweave_and_runes:spell_mana_provider"
     },
     {
       "tag": "manaweave_and_runes:spell_mana_provider"
@@ -22,7 +22,7 @@
     },
     {
       "amount": 500,
-      "manaType": "manaweave_and_runes:earth_mana"
+      "manaType": "manaweave_and_runes:water_mana"
     },
     {
       "amount": 500,
@@ -30,7 +30,7 @@
     },
     {
       "amount": 500,
-      "manaType": "manaweave_and_runes:water_mana"
+      "manaType": "manaweave_and_runes:earth_mana"
     }
   ],
   "result": {

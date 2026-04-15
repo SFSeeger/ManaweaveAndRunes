@@ -12,17 +12,30 @@ public class Config
 {
     private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
-    private static final ModConfigSpec.BooleanValue LOG_DIRT_BLOCK = BUILDER
-            .comment("Whether to log the dirt block on common setup")
-            .define("logDirtBlock", true);
+    private static final ModConfigSpec.BooleanValue ALLOW_HARM_SPELL_GRIEFING = BUILDER
+            .comment("Whether to allow harm spells to damage blocks. This can be set to false to prevent griefing on servers.")
+            .define("allowHarmSpellGriefing", true);
+
+    private static final ModConfigSpec.BooleanValue ALLOW_HEAL_SPELL_GRIEFING = BUILDER
+            .comment("Whether to allow heal spells to heal blocks. This can be set to false to prevent griefing on servers.")
+            .define("allowHealSpellGriefing", true);
+
+    private static final ModConfigSpec.IntValue MINIMUM_SPELL_COOLDOWN = BUILDER
+            .comment("Minimum cooldown in ticks between spell casts.")
+            .defineInRange("minimumSpellCooldown", 2, 0, Integer.MAX_VALUE);
+
 
     static final ModConfigSpec SPEC = BUILDER.build();
 
-    public static boolean logDirtBlock;
+    public static boolean allowHarmSpellGriefing;
+    public static boolean allowHealSpellGriefing;
+    public static int minimumSpellCooldown;
 
     @SubscribeEvent
     static void onLoad(final ModConfigEvent event)
     {
-        logDirtBlock = LOG_DIRT_BLOCK.get();
+        allowHarmSpellGriefing = ALLOW_HARM_SPELL_GRIEFING.get();
+        allowHealSpellGriefing = ALLOW_HEAL_SPELL_GRIEFING.get();
+        minimumSpellCooldown = MINIMUM_SPELL_COOLDOWN.get();
     }
 }

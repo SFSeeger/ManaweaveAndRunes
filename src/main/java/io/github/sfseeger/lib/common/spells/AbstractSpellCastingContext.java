@@ -1,5 +1,6 @@
 package io.github.sfseeger.lib.common.spells;
 
+import io.github.sfseeger.lib.common.context_data_types.ContextDataType;
 import io.github.sfseeger.lib.common.context_data_types.ContextDataTypes;
 import io.github.sfseeger.lib.common.context_data_types.ContextMap;
 import io.github.sfseeger.lib.common.context_data_types.IContextDataType;
@@ -16,6 +17,7 @@ import net.neoforged.neoforge.common.util.INBTSerializable;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 public abstract class AbstractSpellCastingContext implements Cloneable, INBTSerializable<CompoundTag> {
@@ -114,6 +116,24 @@ public abstract class AbstractSpellCastingContext implements Cloneable, INBTSeri
         this.getContextData().deserializeNBT(provider, tag.getCompound("Data"));
         this.setCasterUUID(tag.getUUID("CasterUUID"));
         this.setCasterId(tag.getInt("CasterId"));
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T extends IContextDataType, X extends ContextDataType<T>> Optional<T> getData(String key, X type) {
+        Optional<T> baseValue = getContextData().getData(key, type);
+        Optional<T> globalValue = getContextData().getData("global_" + key, type);
+        if (globalValue.isEmpty()) {
+            return baseValue;
+        } else if (baseValue.isEmpty()) {
+            return globalValue;
+        } else {
+            T merged = (T) baseValue.get().merge(globalValue.get());
+            if (merged != null) {
+                return Optional.of(merged);
+            }
+            return baseValue;
+        }
+
     }
 
     public float getFloatContextData(String key, float defaultValue) {
