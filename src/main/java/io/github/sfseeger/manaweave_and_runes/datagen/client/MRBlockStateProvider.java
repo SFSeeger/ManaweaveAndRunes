@@ -4,6 +4,7 @@ import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
 import io.github.sfseeger.manaweave_and_runes.common.blocks.ManaTransmitter;
 import io.github.sfseeger.manaweave_and_runes.common.blocks.RuneBlock;
 import io.github.sfseeger.manaweave_and_runes.common.blocks.ScryingPool;
+import io.github.sfseeger.manaweave_and_runes.common.blocks.SpellRuneBlock;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRBlockInit;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -75,7 +76,17 @@ public class MRBlockStateProvider extends BlockStateProvider {
         simpleBlockItem(MRBlockInit.MANA_GENERATOR_BLOCK.get(),
                         this.models().getExistingFile(modLoc("block/mana_generator")));
 
-        blockWithExistingModel(MRBlockInit.SPELL_RUNE_BLOCK);
+
+        DeferredBlock<SpellRuneBlock> spellRuneBlock = MRBlockInit.SPELL_RUNE_BLOCK;
+        this.getVariantBuilder(spellRuneBlock.get()).forAllStates(blockState -> {
+            boolean hidden = blockState.getValue(SpellRuneBlock.HIDDEN);
+            return ConfiguredModel.builder()
+                    .modelFile(this.models().getExistingFile(ResourceLocation.parse(
+                            spellRuneBlock.getRegisteredName() + (hidden ? "_hidden" : ""))))
+                    .build();
+        });
+        simpleBlockItem(spellRuneBlock.get(), this.models()
+                .getExistingFile(ResourceLocation.parse(spellRuneBlock.getRegisteredName() + "_hidden")));
 
 
         DeferredBlock<RuneBlock> deferredRuneBlock = MRBlockInit.RUNE_BLOCK;

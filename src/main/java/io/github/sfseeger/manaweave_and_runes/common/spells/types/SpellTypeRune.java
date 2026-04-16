@@ -3,12 +3,14 @@ package io.github.sfseeger.manaweave_and_runes.common.spells.types;
 import io.github.sfseeger.lib.common.spells.*;
 import io.github.sfseeger.lib.common.spells.casting_context.BlockCasterCastingContext;
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
+import io.github.sfseeger.manaweave_and_runes.common.blocks.SpellRuneBlock;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRBlockEntityInit;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRBlockInit;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 
@@ -40,7 +42,13 @@ public class SpellTypeRune extends AbstractSpellType {
         context1.setCaster(context.getCaster());
         context1.setContextData(context.getContextData());
 
-        level.setBlockAndUpdate(pos, MRBlockInit.SPELL_RUNE_BLOCK.get().defaultBlockState());
+        BlockState state = MRBlockInit.SPELL_RUNE_BLOCK.get().defaultBlockState();
+
+        if (context.getBooleanContextData("delicate")) {
+            state.setValue(SpellRuneBlock.HIDDEN, true);
+        }
+
+        level.setBlockAndUpdate(pos, state);
         level.getBlockEntity(pos, MRBlockEntityInit.SPELL_RUNE_BLOCK_ENTITY.get()).ifPresent(blockEntity -> {
             ManaweaveAndRunes.LOGGER.debug("Placed spell rune block at {}, setting resolver and context", pos);
             blockEntity.setResolver(resolver);

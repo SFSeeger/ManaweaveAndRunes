@@ -1,7 +1,10 @@
 {
   "variants": {
-    "": {
+    "hidden=false": {
       "model": "manaweave_and_runes:block/spell_rune"
+    },
+    "hidden=true": {
+      "model": "manaweave_and_runes:block/spell_rune_hidden"
     }
   }
 }
