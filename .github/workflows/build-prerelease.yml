@@ -1,9 +1,9 @@
-name: Build
-
+name: Build Prerelease
 on:
   push:
     tags:
-      - '1.*.*-*.*.*'
+      - '1.*.*-*.*.*-alpha'
+      - '1.*.*-*.*.*-beta'
 
 permissions:
   contents: write
@@ -50,7 +50,8 @@ jobs:
             build/libs/manaweave_and_runes-${{ env.TAG_REF }}.jar
             LICENSE.txt
           body: ${{ env.CHANGELOG }}
-          make_latest: true
+          make_latest: false
+          prerelease: true
           fail_on_unmatched_files: true
 
       - name: Install UV
@@ -65,4 +66,4 @@ jobs:
           MODRINTH_API_KEY: ${{ secrets.MODRINTH_API_KEY }}
           MODRINTH_PROJECT_IR: ${{ vars.modrinth_project_id }}
           MODRINTH_API_URL: 'https://api.modrinth.com/v2/version'
-          VERSION_TYPE: 'release'
+          VERSION_TYPE: 'alpha'

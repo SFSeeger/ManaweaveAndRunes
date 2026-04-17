@@ -3,13 +3,11 @@
   "criteria": {
     "has_golden_apple": {
       "conditions": {
-        "items": [
-          {
-            "items": "minecraft:golden_apple"
-          }
-        ]
+        "item": {
+          "items": "minecraft:golden_apple"
+        }
       },
-      "trigger": "minecraft:inventory_changed"
+      "trigger": "minecraft:consume_item"
     }
   },
   "requirements": [

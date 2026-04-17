@@ -33,6 +33,7 @@ public class MRBlockTagsProvider extends BlockTagsProvider {
                 .add(MRBlockInit.ASCENDED_RITUAL_ANCHOR_BLOCK.get())
                 .add(MRBlockInit.MANA_TRANSMITTER_BLOCK.get())
                 .add(MRBlockInit.RUNEWROUGHT_BENCH_BLOCK.get())
+                .add(MRBlockInit.SPELL_DESIGNER_BLOCK.get())
                 .add(MRBlockInit.RUNE_BLOCK.get())
                 .add(MRBlockInit.FIRE_MANA_INFUSED_ROCK_BLOCK.get())
                 .add(MRBlockInit.AIR_MANA_INFUSED_ROCK_BLOCK.get())
@@ -74,6 +75,7 @@ public class MRBlockTagsProvider extends BlockTagsProvider {
         ;
 
         this.tag(BlockTags.NEEDS_DIAMOND_TOOL)
+                .add(MRBlockInit.TANZANITE_BLOCK.get())
                 .add(MRBlockInit.TANZANITE_ORE.get())
                 .add(MRBlockInit.DEEPSLATE_TANZANITE_ORE.get())
         ;

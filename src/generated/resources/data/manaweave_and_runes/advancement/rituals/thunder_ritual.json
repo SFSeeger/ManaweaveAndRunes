@@ -1,20 +1,13 @@
 {
   "parent": "manaweave_and_runes:rituals/root",
   "criteria": {
-    "has_position_rune": {
-      "conditions": {
-        "items": [
-          {
-            "items": "manaweave_and_runes:position_rune"
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
+    "witness_lightning_strike": {
+      "trigger": "minecraft:lightning_strike"
     }
   },
   "requirements": [
     [
-      "has_position_rune"
+      "witness_lightning_strike"
     ]
   ],
   "sends_telemetry_event": true

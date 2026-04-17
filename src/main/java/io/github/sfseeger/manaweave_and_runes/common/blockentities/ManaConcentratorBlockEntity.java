@@ -107,13 +107,6 @@ public class ManaConcentratorBlockEntity extends BlockEntity implements IInvento
             if (blockEntity.craftTimePassed >= blockEntity.craftTime) {
                 ItemStack result = blockEntity.craft();
                 if (!result.isEmpty()) {
-                    if (result.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof ManaConcentratorBlock block) {
-                        level.setBlockAndUpdate(pos, block.defaultBlockState());
-                    } else {
-                        level.addFreshEntity(
-                                new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, result, 0, 0, 0));
-                    }
-
                     level.playSound(null, pos, SoundEvents.AMETHYST_BLOCK_RESONATE, SoundSource.BLOCKS, 1.0F, 1.0F);
 
                     float yOffset = blockEntity.getEffectYOffset();
@@ -121,6 +114,13 @@ public class ManaConcentratorBlockEntity extends BlockEntity implements IInvento
                                                         pos.getY() + yOffset, pos.getZ() + 0.5, 1, 0, 0, 0,
                                                         yOffset < 1.5 ? 1 : 0);
                     blockEntity.stopCrafting();
+                    if (result.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof ManaConcentratorBlock block) {
+                        level.setBlockAndUpdate(pos, block.defaultBlockState());
+                    } else {
+                        level.addFreshEntity(
+                                new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, result, 0,
+                                               0, 0));
+                    }
                 }
                 blockEntity.stopCrafting();
             } else if (level.getGameTime() % 15 == 0) {
@@ -353,7 +353,8 @@ public class ManaConcentratorBlockEntity extends BlockEntity implements IInvento
         for (BlockPos pos : relativePedestalPositions) {
             BlockEntity blockEntity = level.getBlockEntity(getBlockPos().offset(pos));
             ItemStack item;
-            if (blockEntity instanceof RunePedestalBlockEntity runePedestalBlockEntity && !(item = runePedestalBlockEntity.getItem()).isEmpty()) {
+            if (blockEntity instanceof RunePedestalBlockEntity runePedestalBlockEntity && !(item =
+                    runePedestalBlockEntity.getItem()).isEmpty()) {
                 inputItems.add(item);
             }
         }

@@ -1,23 +1,21 @@
 {
   "parent": "manaweave_and_runes:rituals/root",
   "criteria": {
-    "has_enchanted_golden_apple": {
+    "placed_ascended_ritual_anchor": {
       "conditions": {
-        "items": [
+        "location": [
           {
-            "items": "minecraft:enchanted_golden_apple"
-          },
-          {
-            "items": "manaweave_and_runes:ascended_ritual_anchor"
+            "block": "manaweave_and_runes:ascended_ritual_anchor",
+            "condition": "minecraft:block_state_property"
           }
         ]
       },
-      "trigger": "minecraft:inventory_changed"
+      "trigger": "minecraft:placed_block"
     }
   },
   "requirements": [
     [
-      "has_enchanted_golden_apple"
+      "placed_ascended_ritual_anchor"
     ]
   ],
   "sends_telemetry_event": true

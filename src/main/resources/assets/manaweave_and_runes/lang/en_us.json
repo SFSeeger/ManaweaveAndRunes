@@ -80,6 +80,7 @@
   "item.manaweave_and_runes.mana_connector.unlinking_all": "Unlinking all",
   "item.manaweave_and_runes.mana_connector.linking_started": "Selected block",
   "item.manaweave_and_runes.mana_connector.target": "Target",
+  "item.manaweave_and_runes.blank_spell_part": "Blank Spell Part",
   "ritual.manaweave_and_runes.mana_insufficient": "It seems like there was not enough mana to supply the ritual",
   "ritual.manaweave_and_runes.item_insufficient": "The ritual could not consume an item it needed",
   "ritual.manaweave_and_runes.unknown_ritual": "You don't know if this ritual exists",

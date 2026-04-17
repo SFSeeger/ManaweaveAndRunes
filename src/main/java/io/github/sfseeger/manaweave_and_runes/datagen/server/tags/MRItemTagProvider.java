@@ -45,5 +45,15 @@ public class MRItemTagProvider extends ItemTagsProvider {
 
         this.tag(MRTagInit.CHISEL_ITEM)
                 .add(MRItemInit.DIAMOND_CHISEL.get());
+
+        this.tag(MRTagInit.MANA_INFUSED_BLOCK_ITEM)
+                .add(MRBlockInit.FIRE_MANA_INFUSED_ROCK_BLOCK.asItem())
+                .add(MRBlockInit.AIR_MANA_INFUSED_ROCK_BLOCK.asItem())
+                .add(MRBlockInit.EARTH_MANA_INFUSED_ROCK_BLOCK.asItem())
+                .add(MRBlockInit.WATER_MANA_INFUSED_ROCK_BLOCK.asItem())
+                .add(MRBlockInit.ENTROPY_MANA_INFUSED_ROCK_BLOCK.asItem())
+                .add(MRBlockInit.ORDER_MANA_INFUSED_ROCK_BLOCK.asItem())
+                .add(MRBlockInit.SOUL_MANA_INFUSED_ROCK_BLOCK.asItem())
+                .add(MRBlockInit.VOID_MANA_INFUSED_ROCK_BLOCK.asItem());
     }
 }

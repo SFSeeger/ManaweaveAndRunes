@@ -1,64 +1,68 @@
 package io.github.sfseeger.manaweave_and_runes.datagen.server;
 
 import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
+import io.github.sfseeger.manaweave_and_runes.core.init.MRBlockInit;
 import io.github.sfseeger.manaweave_and_runes.core.init.MRItemInit;
 import net.minecraft.advancements.*;
-import net.minecraft.advancements.critereon.InventoryChangeTrigger;
-import net.minecraft.advancements.critereon.RecipeCraftedTrigger;
+import net.minecraft.advancements.critereon.*;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.AdventureModePredicate;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.neoforged.neoforge.common.data.AdvancementProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import vazkii.patchouli.api.PatchouliAPI;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 public class MRAdvancementProvider extends AdvancementProvider {
     public MRAdvancementProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries,
-            ExistingFileHelper existingFileHelper) {
+                                 ExistingFileHelper existingFileHelper) {
         super(output, registries, existingFileHelper, List.of(new ModAdvancementGenerator()));
     }
 
     private static class ModAdvancementGenerator implements AdvancementGenerator {
         @Override
         public void generate(HolderLookup.Provider provider, Consumer<AdvancementHolder> consumer,
-                ExistingFileHelper existingFileHelper) {
+                             ExistingFileHelper existingFileHelper) {
             AdvancementHolder modRoot = Advancement.Builder.advancement()
                     .display(new ItemStack(Items.AMETHYST_SHARD),
-                             Component.translatable("advancements.manaweave_and_runes.root.title"),
-                             Component.translatable("advancements.manaweave_and_runes.root.description"),
-                             ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID,
-                                                                   "textures/gui/advancements/backgrounds/main.png"),
-                             AdvancementType.TASK, true, true, false)
+                            Component.translatable("advancements.manaweave_and_runes.root.title"),
+                            Component.translatable("advancements.manaweave_and_runes.root.description"),
+                            ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID,
+                                    "textures/gui/advancements/backgrounds/main.png"),
+                            AdvancementType.TASK, true, true, false)
                     .addCriterion("has_amethyst_shard",
-                                  InventoryChangeTrigger.TriggerInstance.hasItems(Items.AMETHYST_SHARD))
+                            InventoryChangeTrigger.TriggerInstance.hasItems(Items.AMETHYST_SHARD))
                     .save(consumer, ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "root"),
-                          existingFileHelper);
+                            existingFileHelper);
 
             createTutorialAdvancements(modRoot, provider, consumer, existingFileHelper);
             createRitualAdvancements(modRoot, provider, consumer, existingFileHelper);
         }
 
         private void createTutorialAdvancements(AdvancementHolder modRoot, HolderLookup.Provider provider,
-                Consumer<AdvancementHolder> consumer,
-                ExistingFileHelper existingFileHelper) {
+                                                Consumer<AdvancementHolder> consumer,
+                                                ExistingFileHelper existingFileHelper) {
             AdvancementHolder manaweaversGuide = Advancement.Builder.advancement()
                     .parent(modRoot)
                     .display(PatchouliAPI.get().getBookStack(getAdvancementId("manaweavers_guide")),
-                             Component.translatable(
-                                     "advancements.manaweave_and_runes.tutorial.manaweavers_guide.title"),
-                             Component.translatable(
-                                     "advancements.manaweave_and_runes.tutorial.manaweavers_guide.description"),
-                             null,
-                             AdvancementType.TASK, true, true, false)
+                            Component.translatable(
+                                    "advancements.manaweave_and_runes.tutorial.manaweavers_guide.title"),
+                            Component.translatable(
+                                    "advancements.manaweave_and_runes.tutorial.manaweavers_guide.description"),
+                            null,
+                            AdvancementType.TASK, true, true, false)
                     .addCriterion("has_patchouli_book", RecipeCraftedTrigger.TriggerInstance.craftedItem(
                             ResourceLocation.fromNamespaceAndPath("patchouli", "guide_book")))
                     .save(consumer, getAdvancementId("tutorial/manaweavers_guide"), existingFileHelper);
@@ -66,23 +70,23 @@ public class MRAdvancementProvider extends AdvancementProvider {
             AdvancementHolder tanzaniteFound = Advancement.Builder.advancement()
                     .parent(manaweaversGuide)
                     .display(new ItemStack(MRItemInit.TANZANITE.get()),
-                             Component.translatable("advancements.manaweave_and_runes.tutorial.tanzanite_found.title"),
-                             Component.translatable(
-                                     "advancements.manaweave_and_runes.tutorial.tanzanite_found.description"),
-                             null,
-                             AdvancementType.TASK, true, true, false)
+                            Component.translatable("advancements.manaweave_and_runes.tutorial.tanzanite_found.title"),
+                            Component.translatable(
+                                    "advancements.manaweave_and_runes.tutorial.tanzanite_found.description"),
+                            null,
+                            AdvancementType.TASK, true, true, false)
                     .addCriterion("has_tanzanite",
-                                  InventoryChangeTrigger.TriggerInstance.hasItems(MRItemInit.TANZANITE.get()))
+                            InventoryChangeTrigger.TriggerInstance.hasItems(MRItemInit.TANZANITE.get()))
                     .save(consumer, getAdvancementId("tutorial/tanzanite_found"), existingFileHelper);
 
             AdvancementHolder templateFound = Advancement.Builder.advancement()
                     .parent(manaweaversGuide)
                     .display(new ItemStack(MRItemInit.RUNE_BLOCK_CARVING_TEMPLATE.get()),
-                             Component.translatable("advancements.manaweave_and_runes.tutorial.template_found.title"),
-                             Component.translatable(
-                                     "advancements.manaweave_and_runes.tutorial.template_found.description"),
-                             null,
-                             AdvancementType.TASK, true, true, false)
+                            Component.translatable("advancements.manaweave_and_runes.tutorial.template_found.title"),
+                            Component.translatable(
+                                    "advancements.manaweave_and_runes.tutorial.template_found.description"),
+                            null,
+                            AdvancementType.TASK, true, true, false)
                     .addCriterion("has_fire_template", InventoryChangeTrigger.TriggerInstance.hasItems(
                             MRItemInit.FIRE_RUNE_CARVING_TEMPLATE.get()))
                     .addCriterion("has_air_template", InventoryChangeTrigger.TriggerInstance.hasItems(
@@ -105,12 +109,12 @@ public class MRAdvancementProvider extends AdvancementProvider {
             AdvancementHolder templateDuplicated = Advancement.Builder.advancement()
                     .parent(templateFound)
                     .display(new ItemStack(MRItemInit.FIRE_RUNE_CARVING_TEMPLATE.get()),
-                             Component.translatable(
-                                     "advancements.manaweave_and_runes.tutorial.template_duplicated.title"),
-                             Component.translatable(
-                                     "advancements.manaweave_and_runes.tutorial.template_duplicated.description"),
-                             null,
-                             AdvancementType.TASK, true, true, false)
+                            Component.translatable(
+                                    "advancements.manaweave_and_runes.tutorial.template_duplicated.title"),
+                            Component.translatable(
+                                    "advancements.manaweave_and_runes.tutorial.template_duplicated.description"),
+                            null,
+                            AdvancementType.TASK, true, true, false)
                     .addCriterion("made_fire_template", RecipeCraftedTrigger.TriggerInstance.craftedItem(
                             MRItemInit.FIRE_RUNE_CARVING_TEMPLATE.getKey()
                                     .location()))
@@ -140,8 +144,8 @@ public class MRAdvancementProvider extends AdvancementProvider {
         }
 
         private void createRitualAdvancements(AdvancementHolder modRoot, HolderLookup.Provider provider,
-                Consumer<AdvancementHolder> consumer,
-                ExistingFileHelper existingFileHelper) {
+                                              Consumer<AdvancementHolder> consumer,
+                                              ExistingFileHelper existingFileHelper) {
 
             ResourceLocation id = ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID, "rituals/");
 
@@ -150,12 +154,12 @@ public class MRAdvancementProvider extends AdvancementProvider {
             AdvancementHolder ritual_root = Advancement.Builder.advancement()
                     .parent(modRoot)
                     .addCriterion("pickup_novice_ritual_anchor",
-                                  InventoryChangeTrigger.TriggerInstance.hasItems(noviceRitualAnchor))
+                            InventoryChangeTrigger.TriggerInstance.hasItems(noviceRitualAnchor))
                     .display(new ItemStack(noviceRitualAnchor),
-                             Component.translatable("advancements.manaweave_and_runes.ritual_anchor.title"),
-                             Component.translatable("advancements.manaweave_and_runes.ritual_anchor.description"),
-                             null,
-                             AdvancementType.TASK, true, true, false)
+                            Component.translatable("advancements.manaweave_and_runes.ritual_anchor.title"),
+                            Component.translatable("advancements.manaweave_and_runes.ritual_anchor.description"),
+                            null,
+                            AdvancementType.TASK, true, true, false)
                     .rewards(AdvancementRewards.Builder.experience(100))
                     .save(consumer, id.withSuffix("root"), existingFileHelper);
 
@@ -164,13 +168,26 @@ public class MRAdvancementProvider extends AdvancementProvider {
             AdvancementHolder masterAnchor = Advancement.Builder.advancement()
                     .parent(ritual_root)
                     .addCriterion("pickup_master_ritual_anchor",
-                                  InventoryChangeTrigger.TriggerInstance.hasItems(masterRitualAnchor))
+                            InventoryChangeTrigger.TriggerInstance.hasItems(masterRitualAnchor))
                     .display(new ItemStack(masterRitualAnchor),
-                             Component.translatable("advancements.manaweave_and_runes.master_anchor.title"),
-                             Component.translatable("advancements.manaweave_and_runes.master_anchor.description"), null,
-                             AdvancementType.TASK, true, true, false)
+                            Component.translatable("advancements.manaweave_and_runes.master_anchor.title"),
+                            Component.translatable("advancements.manaweave_and_runes.master_anchor.description"), null,
+                            AdvancementType.TASK, true, true, false)
                     .rewards(AdvancementRewards.Builder.experience(500))
                     .save(consumer, id.withSuffix("master_ritual_anchor"), existingFileHelper);
+
+            Advancement.Builder.advancement()
+                    .parent(ritual_root)
+                    .addCriterion("has_feather", InventoryChangeTrigger.TriggerInstance.hasItems(Items.FEATHER))
+                    .save(consumer, id.withSuffix("particle_ritual"), existingFileHelper);
+
+            Advancement.Builder.advancement()
+                    .parent(ritual_root)
+                    .addCriterion("witness_lightning_strike",
+                            LightningStrikeTrigger.TriggerInstance.lightningStrike(
+                                    Optional.empty(), Optional.empty()
+                            ))
+                    .save(consumer, id.withSuffix("thunder_ritual"), existingFileHelper);
 
             Advancement.Builder.advancement()
                     .parent(ritual_root)
@@ -179,27 +196,21 @@ public class MRAdvancementProvider extends AdvancementProvider {
 
             Advancement.Builder.advancement()
                     .parent(ritual_root)
-                    .addCriterion("has_position_rune", InventoryChangeTrigger.TriggerInstance.hasItems(
-                            MRItemInit.POSITION_RUNE_ITEM.get()))
-                    .save(consumer, id.withSuffix("thunder_ritual"), existingFileHelper);
-
-            Advancement.Builder.advancement()
-                    .parent(ritual_root)
                     .addCriterion("has_break_spell", InventoryChangeTrigger.TriggerInstance.hasItems(
                             BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath(ManaweaveAndRunes.MODID,
-                                                                                             "spell_effect.break"))))
+                                    "spell_effect.break"))))
                     .save(consumer, id.withSuffix("shattering_rite_ritual"), existingFileHelper);
 
             Advancement.Builder.advancement()
                     .parent(ritual_root)
-                    .addCriterion("has_golden_apple", InventoryChangeTrigger.TriggerInstance.hasItems(
-                            Items.GOLDEN_APPLE)) //TODO: Better condition
+                    .addCriterion("has_golden_apple", ConsumeItemTrigger.TriggerInstance.usedItem(
+                            Items.GOLDEN_APPLE))
                     .save(consumer, id.withSuffix("sanctuary_ritual"), existingFileHelper);
             Advancement.Builder.advancement()
                     .parent(ritual_root)
-                    .addCriterion("has_enchanted_golden_apple",
-                                  InventoryChangeTrigger.TriggerInstance.hasItems(Items.ENCHANTED_GOLDEN_APPLE,
-                                                                                  MRItemInit.ASCENDED_RITUAL_ANCHOR_BLOCK_ITEM)) //TODO: Better condition
+                    .addCriterion("placed_ascended_ritual_anchor",
+                            ItemUsedOnLocationTrigger.TriggerInstance.placedBlock(MRBlockInit.ASCENDED_RITUAL_ANCHOR_BLOCK.get())
+                    )
                     .save(consumer, id.withSuffix("ascended_sanctuary_ritual"), existingFileHelper);
         }
 

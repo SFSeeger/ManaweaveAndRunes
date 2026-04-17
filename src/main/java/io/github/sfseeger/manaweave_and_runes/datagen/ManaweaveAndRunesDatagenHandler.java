@@ -5,13 +5,11 @@ import io.github.sfseeger.manaweave_and_runes.datagen.client.MRBlockStateProvide
 import io.github.sfseeger.manaweave_and_runes.datagen.client.MRItemModelProvider;
 import io.github.sfseeger.manaweave_and_runes.datagen.client.MRParticleDescriptionProvider;
 import io.github.sfseeger.manaweave_and_runes.datagen.server.MRAdvancementProvider;
-import io.github.sfseeger.manaweave_and_runes.datagen.server.datamaps.ItemManaDataMapProvider;
 import io.github.sfseeger.manaweave_and_runes.datagen.server.datamaps.MRDataMapProvider;
-import io.github.sfseeger.manaweave_and_runes.datagen.server.MRRecipeProvider;
-import io.github.sfseeger.manaweave_and_runes.datagen.server.datamaps.SpellNodeAttributeProvider;
 import io.github.sfseeger.manaweave_and_runes.datagen.server.datapack.MRDataPackProvider;
 import io.github.sfseeger.manaweave_and_runes.datagen.server.loot.MRLootModifierProvider;
 import io.github.sfseeger.manaweave_and_runes.datagen.server.loot_tables.MRLootTableProvider;
+import io.github.sfseeger.manaweave_and_runes.datagen.server.recipes.MRRecipeProvider;
 import io.github.sfseeger.manaweave_and_runes.datagen.server.tags.MRBiomeTagProvider;
 import io.github.sfseeger.manaweave_and_runes.datagen.server.tags.MRBlockTagsProvider;
 import io.github.sfseeger.manaweave_and_runes.datagen.server.tags.MRItemTagProvider;

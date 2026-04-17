@@ -27,6 +27,8 @@ public class MRItemInit {
             ITEMS.register("mark_container", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
     public static final DeferredItem<Item> RUNE_MATRIX_ITEM =
             ITEMS.register("rune_matrix", () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> BLANK_SPELL_PART =
+            ITEMS.register("blank_spell_part", () -> new Item(new Item.Properties()));
 
 
     public static final DeferredItem<Item> AMETHYST_BASE_RUNE =
