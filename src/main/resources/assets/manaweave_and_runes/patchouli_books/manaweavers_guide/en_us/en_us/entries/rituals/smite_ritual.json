@@ -1,0 +1,16 @@
+{
+  "name": "Smite Ritual",
+  "icon": "minecraft:lightening_rod",
+  "category": "manaweave_and_runes:rituals_category",
+  "advancement": "manaweave_and_runes:rituals/smite_ritual",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Summons Lightening to another players location and smites them."
+    },
+    {
+      "type": "manaweave_and_runes:ritual_input",
+      "ritual": "manaweave_and_runes:smite_ritual"
+    }
+  ]
+}

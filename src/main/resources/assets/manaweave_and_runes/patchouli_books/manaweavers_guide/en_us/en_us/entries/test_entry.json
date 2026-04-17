@@ -1,0 +1,11 @@
+{
+  "name": "READ ME FIRST",
+  "icon": "minecraft:writable_book",
+  "category": "manaweave_and_runes:test_category",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "THIS BOOK IS EXTREMELY INCOMPLETE. DO NOT BELIEVE ANYTHING IN IT! The developer excuses himself for the lack of content."
+    }
+  ]
+}

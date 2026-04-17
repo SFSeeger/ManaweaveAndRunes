@@ -1,0 +1,16 @@
+{
+  "name": "Sanctuary - Improved",
+  "icon": "minecraft:enchanted_golden_apple",
+  "category": "manaweave_and_runes:rituals_category",
+  "advancement": "manaweave_and_runes:rituals/ascended_sanctuary_ritual",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Simmilar to the $(l:manaweave_and_runes:rituals/sanctuary_ritual)Sanctuary Ritual$(/l), this Ritual creates a Sanctuary, a safe space where you can rest and recover, undisturbed by any hostiles trying to get to you. However, this Ritual is more powerful, and will also heal you and affect a larger area."
+    },
+    {
+      "type": "manaweave_and_runes:ritual_input",
+      "ritual": "manaweave_and_runes:ascended_sanctuary_ritual"
+    }
+  ]
+}

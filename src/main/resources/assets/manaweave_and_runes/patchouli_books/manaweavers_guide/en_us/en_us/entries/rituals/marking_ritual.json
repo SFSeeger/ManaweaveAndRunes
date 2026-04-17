@@ -1,0 +1,11 @@
+{
+  "name": "Marking Rituals",
+  "icon": "minecraft:writable_book",
+  "category": "manaweave_and_runes:rituals_category",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Apply one of the Mark Effects to a Player. Find more under Marks!"
+    }
+  ]
+}

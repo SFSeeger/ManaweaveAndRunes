@@ -1,0 +1,39 @@
+{
+  "type": "manaweave_and_runes:mana_concentrator",
+  "craftTime": 0,
+  "inputs": [
+    {
+      "item": "minecraft:furnace"
+    },
+    {
+      "item": "minecraft:nether_brick"
+    },
+    {
+      "item": "minecraft:nether_brick"
+    },
+    {
+      "item": "minecraft:amethyst_block"
+    },
+    {
+      "item": "manaweave_and_runes:tanzanite"
+    },
+    {
+      "item": "manaweave_and_runes:rune_matrix"
+    }
+  ],
+  "manaMap": [
+    {
+      "amount": 200,
+      "manaType": "manaweave_and_runes:fire_mana"
+    },
+    {
+      "amount": 20,
+      "manaType": "manaweave_and_runes:order_mana"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "manaweave_and_runes:mana_generator"
+  },
+  "tier": "MASTER"
+}

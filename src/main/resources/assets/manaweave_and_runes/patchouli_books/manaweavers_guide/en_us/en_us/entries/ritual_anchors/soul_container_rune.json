@@ -1,0 +1,15 @@
+{
+  "name": "Soul Container Rune",
+  "icon": "manaweave_and_runes:soul_container_rune",
+  "category": "manaweave_and_runes:ritual_anchors_category",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The Soul Container Rune is a rune that is used to define the target player of a ritual. It is used in combination with the $(l:manaweave_and_runes:ritual_anchors/novice_ritual_anchor) Ritual Anchor $() to define the player in which the ritual will affect. $(2br)Using it is relatively simple. Just right click a player while being unnoticed to steal a tiny fragment of their soul. You can also just right click to capture your own."
+    },
+    {
+      "type": "manaweave_and_runes:rune_carving",
+      "recipe": "manaweave_and_runes:soul_container_rune"
+    }
+  ]
+}

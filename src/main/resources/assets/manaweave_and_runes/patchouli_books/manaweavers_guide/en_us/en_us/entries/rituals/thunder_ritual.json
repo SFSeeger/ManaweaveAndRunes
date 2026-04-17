@@ -1,0 +1,16 @@
+{
+  "name": "Thunder Ritual",
+  "icon": "minecraft:lightning_rod",
+  "category": "manaweave_and_runes:rituals_category",
+  "advancement": "manaweave_and_runes:rituals/thunder_ritual",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Creates lightning at the target location."
+    },
+    {
+      "type": "manaweave_and_runes:ritual_input",
+      "ritual": "manaweave_and_runes:thunder_ritual"
+    }
+  ]
+}

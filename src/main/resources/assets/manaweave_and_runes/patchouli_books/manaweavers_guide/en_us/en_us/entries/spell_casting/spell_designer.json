@@ -1,0 +1,31 @@
+{
+  "name": "The Spell Designer",
+  "icon": "manaweave_and_runes:spell_designer",
+  "category": "manaweave_and_runes:spell_casting_category",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Can be used to create spells by placing spell parts in a spell circle. Spells consist of at least one effect and a spell type."
+    },
+    {
+      "type": "manaweave_and_runes:mana_concentration",
+      "recipe": "manaweave_and_runes:mana_concentrator/spell_designer"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "They can be cast by using a Manaweaver's Staff after adding the Spell Runes to it at a Runewrought Bench. Spells can be toggled by pressing 'U'."
+    },
+    {
+      "type": "manaweave_and_runes:mana_concentration",
+      "recipe": "manaweave_and_runes:mana_concentrator/runewrought_bench_block"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "You can also augment spells with modifiers. Spells are read from the center outward and should follow the pattern type > effect/modifier > modifier."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Self -> Cast on the caster, Touch -> Casts on the block/entity being touched, Projectile -> Casts in a straight line until it hits a block/entity, Rune -> Places a rune on the ground which function like a mine, Rune Widen -> Increases Rune Radius, Rune Delicate -> Makes rune harder to detect."
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "type": "manaweave_and_runes:mana_concentrator",
+  "craftTime": 45,
+  "inputs": [
+    {
+      "item": "manaweave_and_runes:rune_matrix"
+    },
+    {
+      "item": "manaweave_and_runes:tanzanite"
+    },
+    [
+      {
+        "item": "minecraft:leather"
+      },
+      {
+        "item": "minecraft:rabbit_hide"
+      }
+    ],
+    [
+      {
+        "item": "minecraft:leather"
+      },
+      {
+        "item": "minecraft:rabbit_hide"
+      }
+    ],
+    [
+      {
+        "item": "minecraft:leather"
+      },
+      {
+        "item": "minecraft:rabbit_hide"
+      }
+    ],
+    {
+      "item": "minecraft:gold_ingot"
+    }
+  ],
+  "manaMap": [
+    {
+      "amount": 30,
+      "manaType": "manaweave_and_runes:order_mana"
+    },
+    {
+      "amount": 600,
+      "manaType": "manaweave_and_runes:earth_mana"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "manaweave_and_runes:rune_bracelet"
+  },
+  "tier": "MASTER"
+}

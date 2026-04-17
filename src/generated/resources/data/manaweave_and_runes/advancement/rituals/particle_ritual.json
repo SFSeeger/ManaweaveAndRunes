@@ -1,0 +1,21 @@
+{
+  "parent": "manaweave_and_runes:rituals/root",
+  "criteria": {
+    "has_feather": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:feather"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_feather"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

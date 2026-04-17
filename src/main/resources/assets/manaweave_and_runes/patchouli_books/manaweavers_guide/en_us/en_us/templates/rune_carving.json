@@ -1,0 +1,93 @@
+{
+  "processor": "io.github.sfseeger.lib.client.patchouli.RuneCarvingComponentProcessor",
+  "components": [
+    {
+      "type": "patchouli:header",
+      "text": "#output1->iname",
+      "x": -1,
+      "y": -1
+    },
+    {
+      "type": "patchouli:image",
+      "image": "manaweave_and_runes:textures/gui/book/rune_carving.png",
+      "x": 10,
+      "y": 16,
+      "width": 100,
+      "height": 24,
+      "texture_width": 100,
+      "texture_height": 24
+    },
+    {
+      "type": "patchouli:item",
+      "item": "#chisel1",
+      "x": 14,
+      "y": 20
+    },
+    {
+      "type": "patchouli:item",
+      "item": "#template1",
+      "x": 32,
+      "y": 20
+    },
+    {
+      "type": "patchouli:item",
+      "item": "#ingredient1",
+      "x": 52,
+      "y": 20
+    },
+    {
+      "type": "patchouli:item",
+      "item": "#output1",
+      "link_recipe": true,
+      "x": 90,
+      "y": 20
+    },
+    {
+      "type": "patchouli:header",
+      "text": "#output2->iname",
+      "guard": "#recipe2->exists",
+      "x": -1,
+      "y": 50
+    },
+    {
+      "type": "patchouli:image",
+      "image": "manaweave_and_runes:textures/gui/book/rune_carving.png",
+      "guard": "#recipe2->exists",
+      "x": 10,
+      "y": 66,
+      "width": 100,
+      "height": 24,
+      "texture_width": 100,
+      "texture_height": 24
+    },
+    {
+      "type": "patchouli:item",
+      "item": "#chisel2",
+      "guard": "#recipe2->exists",
+      "x": 14,
+      "y": 70
+    },
+    {
+      "type": "patchouli:item",
+      "item": "#template2",
+      "guard": "#recipe2->exists",
+      "x": 32,
+      "y": 70
+    },
+    {
+      "type": "patchouli:item",
+      "item": "#ingredient2",
+      "guard": "#recipe2->exists",
+      "x": 52,
+      "y": 70
+    },
+    {
+      "type": "patchouli:item",
+      "item": "#output2",
+      "guard": "#recipe2->exists",
+      "link_recipe": true,
+      "x": 90,
+      "y": 70
+    }
+  ]
+}

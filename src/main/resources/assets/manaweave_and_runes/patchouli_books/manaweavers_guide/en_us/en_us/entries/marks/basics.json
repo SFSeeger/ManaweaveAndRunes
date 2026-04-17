@@ -1,0 +1,19 @@
+{
+  "name": "Marks Basics",
+  "icon": "manaweave_and_runes:scrying_pool",
+  "category": "manaweave_and_runes:marks_category",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Marks are permament effects that can be applied to a player by performing a ritual. They can be used to curse or provide boons to the player. To see all marks currently affecting a player you can use a Scrying Pool."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "manaweave_and_runes:scrying_pool"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Marks have rituals associated with them. These rituals require a mark container, soul container rune and ritual specific items"
+    }
+  ]
+}

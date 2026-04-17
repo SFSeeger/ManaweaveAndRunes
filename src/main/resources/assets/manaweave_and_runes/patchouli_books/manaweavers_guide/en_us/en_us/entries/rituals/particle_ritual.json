@@ -1,0 +1,16 @@
+{
+  "name": "Particle Ritual",
+  "icon": "minecraft:gunpowder",
+  "category": "manaweave_and_runes:rituals_category",
+  "advancement": "manaweave_and_runes:rituals/particle_ritual",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Creates a large amount of particles around the position supplied for a certain amount of time."
+    },
+    {
+      "type": "manaweave_and_runes:ritual_input",
+      "ritual": "manaweave_and_runes:particle_ritual"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "name": "Mana Storage Runes",
+  "icon": "manaweave_and_runes:amethyst_air_rune",
+  "category": "manaweave_and_runes:mana_concentration_category",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A fundamental vessel of mana retention, the Amethyst Storage Rune is carefully carved within a Rune Carver, its crystalline lattice etched with patterns designed to hold and release arcane energy. Acting as a portable reservoir, it allows mana to be stored and later drawn upon for various applications, from fueling spells to powering intricate constructs. Charging these runes requires either a Rune Pedestal connected to a Mana Network or a Mana Collector, where they gradually absorb ambient mana until fully infused. Their capacity is limited, but their efficiency makes them invaluable to any practitioner. Whether used in spellcasting, infusion processes, or sustaining larger magical structures, the Amethyst Storage Rune serves as the cornerstone of sustained mana manipulation."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "manaweave_and_runes:amethyst_base_rune"
+    },
+    {
+      "type": "manaweave_and_runes:rune_carving",
+      "recipe": "manaweave_and_runes:amethyst_air_rune",
+      "recipe2": "manaweave_and_runes:amethyst_fire_rune"
+    },
+    {
+      "type": "manaweave_and_runes:rune_carving",
+      "recipe": "manaweave_and_runes:amethyst_earth_rune",
+      "recipe2": "manaweave_and_runes:amethyst_water_rune"
+    }
+  ]
+}

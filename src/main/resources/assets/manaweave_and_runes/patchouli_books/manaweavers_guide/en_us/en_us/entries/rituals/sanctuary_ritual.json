@@ -1,0 +1,16 @@
+{
+  "name": "Sanctuary",
+  "icon": "minecraft:golden_apple",
+  "category": "manaweave_and_runes:rituals_category",
+  "advancement": "manaweave_and_runes:rituals/sanctuary_ritual",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "This Ritual creates a Sanctuary, a safe space where you can rest and recover, undisturbed by any hostiles trying to get to you."
+    },
+    {
+      "type": "manaweave_and_runes:ritual_input",
+      "ritual": "manaweave_and_runes:sanctuary_ritual"
+    }
+  ]
+}

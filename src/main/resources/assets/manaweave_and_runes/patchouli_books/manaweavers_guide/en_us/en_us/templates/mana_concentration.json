@@ -1,0 +1,23 @@
+{
+  "processor": "io.github.sfseeger.lib.client.patchouli.ManaConcentratorComponentProcessor",
+  "components": [
+    {
+      "type": "patchouli:header",
+      "text": "#output->iname",
+      "x": -1,
+      "y": -1
+    },
+    {
+      "type": "patchouli:separator",
+      "x": -1,
+      "y": -1
+    },
+    {
+      "type": "patchouli:custom",
+      "class": "io.github.sfseeger.lib.client.patchouli.ManaConcentrationDisplayComponent",
+      "recipe": "#recipe",
+      "x": 50,
+      "y": 55
+    }
+  ]
+}

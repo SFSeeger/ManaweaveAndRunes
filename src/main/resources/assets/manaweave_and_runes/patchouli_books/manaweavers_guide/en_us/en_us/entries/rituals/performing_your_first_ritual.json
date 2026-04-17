@@ -1,0 +1,15 @@
+{
+  "name": "Performing a Ritual",
+  "icon": "manaweave_and_runes:master_ritual_anchor",
+  "category": "manaweave_and_runes:rituals_category",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "This ritual is one many beginners can perform. It creates a small particle effect around the Ritual Anchor. $(2br)The rate of mana and tick-item (marked with a clock icon) consumption varies from ritual to ritual. Refer to the ritual for these details."
+    },
+    {
+      "type": "manaweave_and_runes:ritual_input",
+      "ritual": "manaweave_and_runes:particle_ritual"
+    }
+  ]
+}

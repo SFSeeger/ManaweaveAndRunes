@@ -1,0 +1,15 @@
+{
+  "name": "The Position Rune",
+  "icon": "manaweave_and_runes:position_rune",
+  "category": "manaweave_and_runes:ritual_anchors_category",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The Position Rune is a rune that is used to define the position of a ritual. It is used in combination with the $(l:manaweave_and_runes:ritual_anchors/novice_ritual_anchor) Ritual Anchor $() to define the area in which the ritual will be performed."
+    },
+    {
+      "type": "manaweave_and_runes:rune_carving",
+      "recipe": "manaweave_and_runes:position_rune"
+    }
+  ]
+}

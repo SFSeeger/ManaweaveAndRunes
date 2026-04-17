@@ -1,0 +1,16 @@
+{
+  "name": "Growth Ritual",
+  "icon": "minecraft:wheat",
+  "category": "manaweave_and_runes:rituals_category",
+  "advancement": "manaweave_and_runes:rituals/growth_ritual",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Increases growth speed of crops in an area around the position supplied."
+    },
+    {
+      "type": "manaweave_and_runes:ritual_input",
+      "ritual": "manaweave_and_runes:growth_ritual"
+    }
+  ]
+}

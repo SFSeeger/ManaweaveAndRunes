@@ -1,0 +1,15 @@
+{
+  "name": "The Runewrought Workbench",
+  "icon": "manaweave_and_runes:runewrought_bench",
+  "category": "manaweave_and_runes:spell_casting_category",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The runewrought workbench is used to place spell holder into staffs and runes onto the rune bracelet"
+    },
+    {
+      "type": "manaweave_and_runes:mana_concentration",
+      "recipe": "manaweave_and_runes:mana_concentrator/runewrought_bench"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "Fly Ritual",
+  "icon": "minecraft:feather",
+  "category": "manaweave_and_runes:rituals_category",
+  "advancement": "manaweave_and_runes:rituals/flight_ritual",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Grants the player the ability to fly in an area around the position supplied."
+    },
+    {
+      "type": "manaweave_and_runes:ritual_input",
+      "ritual": "manaweave_and_runes:flight_ritual"
+    }
+  ]
+}
