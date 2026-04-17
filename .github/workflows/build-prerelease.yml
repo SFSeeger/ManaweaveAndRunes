@@ -2,8 +2,8 @@ name: Build Prerelease
 on:
   push:
     tags:
-      - '1.*.*-*.*.*-alpha'
-      - '1.*.*-*.*.*-beta'
+      - '*-alpha'
+      - '*-beta'
 
 permissions:
   contents: write
