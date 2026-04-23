@@ -4,8 +4,8 @@ on:
     tags:
       - '*.*.*-*.*.*-alpha*'
       - '*.*.*-*.*.*-beta*'
-      - '!*.*.*-*.*.*'
-
+    tags-ignore:
+      - "*.*.*-*.*.*"
 permissions:
   contents: write
 

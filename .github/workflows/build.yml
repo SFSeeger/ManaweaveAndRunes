@@ -4,8 +4,9 @@ on:
   push:
     tags:
       - '*.*.*-*.*.*'
-      - '!*.*.*-*.*.*-alpha*'
-      - '!*.*.*-*.*.*-beta*'
+    tags-ignore:
+      - '*.*.*-*.*.*-alpha*'
+      - '*.*.*-*.*.*-beta*'
 
 permissions:
   contents: write
