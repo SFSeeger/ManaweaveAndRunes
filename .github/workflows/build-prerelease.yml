@@ -8,7 +8,7 @@ permissions:
   contents: write
 
 jobs:
-  build:
+  build-prerelease:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -36,6 +36,9 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
+      - name: Install UV
+        run: "curl -LsSf https://astral.sh/uv/install.sh | sh"
+
       - name: Build with Gradle
         uses: gradle/actions/setup-gradle@v3
         with:
@@ -53,9 +56,6 @@ jobs:
           prerelease: true
           fail_on_unmatched_files: true
 
-      - name: Install UV
-        run: "curl -LsSf https://astral.sh/uv/install.sh | sh"
-
       - name: Create release on modrinth
         run: "uv run scripts/upload_artifact/main.py"
         if: startsWith(github.ref, 'refs/tags/')
@@ -63,6 +63,6 @@ jobs:
           TAG_REF: ${{ env.TAG_REF }}
           CHANGELOG: ${{ env.CHANGELOG }}
           MODRINTH_API_KEY: ${{ secrets.MODRINTH_API_KEY }}
-          MODRINTH_PROJECT_IR: ${{ vars.modrinth_project_id }}
+          MODRINTH_PROJECT_ID: ${{ vars.modrinth_project_id }}
           MODRINTH_API_URL: 'https://api.modrinth.com/v2/version'
           VERSION_TYPE: 'alpha'
