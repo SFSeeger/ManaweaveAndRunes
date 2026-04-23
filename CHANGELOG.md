@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.21.1-0.2.0-alpha1
+- Added some patchouli documentation
+- Added more and better recipes
+
 ## 1.21.1-0.2.0-alpha
 - Added Marks, powerful permanent effects to curse your foes and buff yourself and allies. Marks are applied by using a
   Marking Ritual

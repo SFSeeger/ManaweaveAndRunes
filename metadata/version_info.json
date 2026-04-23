@@ -4,7 +4,8 @@
         "1.21.1-0.1.0": "- Initial release",
         "1.21.1-0.1.1": "- Updated Runecarver Texture\n- Added some patchouli documentation\n- Added missing mana textures\n- Bugfixes",
         "1.21.1-0.1.2": "- Add smite ritual\n- Fix Tanzanite Ore not dropping when mined\n- Make template duplication more expensive",
-        "1.21.1-0.2.0-alpha": "- Added Marks, powerful permanent effects to curse your foes and buff yourself and allies. Marks are applied by using a\n  Marking Ritual\n- Added Spell Type Rune, which allows the caster to place a \"mine\" on the ground\n- Added Crafting Recipes for all the items and blocks\n- Added Rune Bracelet and GUI to help with spellcasting\n- Added some patchouli documentation\n- Added a very small config\n- Added Textures for the Mana Generator\n- Fixed Mana Networks not splitting correctly\n- Fixed Mana Concentrator upgrades not working"
+        "1.21.1-0.2.0-alpha": "- Added Marks, powerful permanent effects to curse your foes and buff yourself and allies. Marks are applied by using a\n  Marking Ritual\n- Added Spell Type Rune, which allows the caster to place a \"mine\" on the ground\n- Added Crafting Recipes for all the items and blocks\n- Added Rune Bracelet and GUI to help with spellcasting\n- Added some patchouli documentation\n- Added a very small config\n- Added Textures for the Mana Generator\n- Fixed Mana Networks not splitting correctly\n- Fixed Mana Concentrator upgrades not working",
+        "1.21.1-0.2.0-alpha1": "- Added some patchouli documentation\n- Added more and better recipes"
     },
     "promos": {
         "1.21.1-latest": "1.21.1-0.1.2",
