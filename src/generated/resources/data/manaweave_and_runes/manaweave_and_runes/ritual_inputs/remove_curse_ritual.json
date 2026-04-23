@@ -1,10 +1,13 @@
 {
   "initialItemCost": [
     {
-      "item": "minecraft:blue_orchid"
+      "item": "minecraft:amethyst_block"
     },
     {
-      "item": "minecraft:glow_ink_sac"
+      "item": "minecraft:blaze_rod"
+    },
+    {
+      "item": "minecraft:lapis_lazuli"
     },
     {
       "item": "manaweave_and_runes:soul_container_rune"

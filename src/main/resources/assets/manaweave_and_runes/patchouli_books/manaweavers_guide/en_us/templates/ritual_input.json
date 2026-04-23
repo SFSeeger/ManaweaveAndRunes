@@ -16,7 +16,7 @@
       "type": "patchouli:custom",
       "class": "io.github.sfseeger.lib.client.patchouli.RitualDisplayComponents",
       "ritual": "#ritual",
-      "guard": "#mana_type1->exists",
+      "guard": "#start_item1->exists",
       "x": 50,
       "y": 55
     }

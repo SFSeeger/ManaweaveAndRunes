@@ -4,7 +4,7 @@ import io.github.sfseeger.manaweave_and_runes.ManaweaveAndRunes;
 import io.github.sfseeger.manaweave_and_runes.datagen.client.MRBlockStateProvider;
 import io.github.sfseeger.manaweave_and_runes.datagen.client.MRItemModelProvider;
 import io.github.sfseeger.manaweave_and_runes.datagen.client.MRParticleDescriptionProvider;
-import io.github.sfseeger.manaweave_and_runes.datagen.server.MRAdvancementProvider;
+import io.github.sfseeger.manaweave_and_runes.datagen.server.advancements.MRAdvancementProvider;
 import io.github.sfseeger.manaweave_and_runes.datagen.server.datamaps.MRDataMapProvider;
 import io.github.sfseeger.manaweave_and_runes.datagen.server.datapack.MRDataPackProvider;
 import io.github.sfseeger.manaweave_and_runes.datagen.server.loot.MRLootModifierProvider;

@@ -4,7 +4,13 @@
       "item": "minecraft:obsidian"
     },
     {
+      "item": "minecraft:deepslate"
+    },
+    {
       "item": "minecraft:nether_wart"
+    },
+    {
+      "item": "minecraft:diamond"
     },
     {
       "item": "manaweave_and_runes:mark_container"
@@ -13,7 +19,20 @@
       "item": "manaweave_and_runes:soul_container_rune"
     }
   ],
-  "manaCost": [],
+  "manaCost": [
+    {
+      "amount": 300,
+      "manaType": "manaweave_and_runes:earth_mana"
+    },
+    {
+      "amount": 500,
+      "manaType": "manaweave_and_runes:soul_mana"
+    },
+    {
+      "amount": 500,
+      "manaType": "manaweave_and_runes:entropy_mana"
+    }
+  ],
   "manaRate": 20,
   "tickItemCost": []
 }

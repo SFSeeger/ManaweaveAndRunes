@@ -38,12 +38,12 @@
   ],
   "manaMap": [
     {
-      "amount": 30,
-      "manaType": "manaweave_and_runes:order_mana"
-    },
-    {
       "amount": 600,
       "manaType": "manaweave_and_runes:earth_mana"
+    },
+    {
+      "amount": 30,
+      "manaType": "manaweave_and_runes:order_mana"
     }
   ],
   "result": {

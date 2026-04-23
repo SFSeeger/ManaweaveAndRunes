@@ -3,20 +3,20 @@
   "craftTime": 250,
   "inputs": [
     {
-      "item": "manaweave_and_runes:position_rune"
+      "item": "minecraft:flint_and_steel"
     },
     {
-      "item": "minecraft:fire_charge"
+      "item": "manaweave_and_runes:blank_spell_part"
     }
   ],
   "manaMap": [
     {
-      "amount": 300,
-      "manaType": "manaweave_and_runes:fire_mana"
+      "amount": 20,
+      "manaType": "manaweave_and_runes:earth_mana"
     },
     {
-      "amount": 300,
-      "manaType": "manaweave_and_runes:order_mana"
+      "amount": 100,
+      "manaType": "manaweave_and_runes:fire_mana"
     }
   ],
   "result": {

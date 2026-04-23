@@ -1,7 +1,6 @@
 # Changelog
 
 ## 1.21.1-0.2.0-alpha
-
 - Added Marks, powerful permanent effects to curse your foes and buff yourself and allies. Marks are applied by using a
   Marking Ritual
 - Added Spell Type Rune, which allows the caster to place a "mine" on the ground

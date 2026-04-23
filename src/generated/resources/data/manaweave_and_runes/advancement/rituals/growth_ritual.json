@@ -1,0 +1,28 @@
+{
+  "parent": "manaweave_and_runes:rituals/root",
+  "criteria": {
+    "used_bone_meal": {
+      "conditions": {
+        "location": [
+          {
+            "condition": "minecraft:location_check",
+            "predicate": {}
+          },
+          {
+            "condition": "minecraft:match_tool",
+            "predicate": {
+              "items": "minecraft:bone_meal"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:item_used_on_block"
+    }
+  },
+  "requirements": [
+    [
+      "used_bone_meal"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

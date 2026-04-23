@@ -1,0 +1,14 @@
+{
+  "parent": "manaweave_and_runes:rituals/root",
+  "criteria": {
+    "witness_lightning_strike": {
+      "trigger": "minecraft:lightning_strike"
+    }
+  },
+  "requirements": [
+    [
+      "witness_lightning_strike"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

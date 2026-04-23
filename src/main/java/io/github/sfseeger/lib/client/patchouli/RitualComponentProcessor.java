@@ -51,7 +51,7 @@ public class RitualComponentProcessor implements IComponentProcessor {
                 }
                 return null;
             }
-            ;
+
             Ingredient ingredient = ritualInput.getInitialItemCost().get(index);
             ItemStack[] itemStacks = ingredient.getItems();
             ItemStack stack = itemStacks.length == 0 ? ItemStack.EMPTY : itemStacks[0];

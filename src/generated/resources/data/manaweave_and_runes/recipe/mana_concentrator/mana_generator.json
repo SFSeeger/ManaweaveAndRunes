@@ -1,6 +1,6 @@
 {
   "type": "manaweave_and_runes:mana_concentrator",
-  "craftTime": 0,
+  "craftTime": 100,
   "inputs": [
     {
       "item": "minecraft:furnace"

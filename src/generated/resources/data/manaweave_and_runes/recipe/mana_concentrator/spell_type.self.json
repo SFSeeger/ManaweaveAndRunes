@@ -7,15 +7,18 @@
     },
     {
       "item": "minecraft:paper"
+    },
+    {
+      "item": "manaweave_and_runes:blank_spell_part"
     }
   ],
   "manaMap": [
     {
-      "amount": 100,
+      "amount": 10,
       "manaType": "manaweave_and_runes:soul_mana"
     },
     {
-      "amount": 100,
+      "amount": 10,
       "manaType": "manaweave_and_runes:order_mana"
     }
   ],

@@ -6,19 +6,26 @@
       "item": "minecraft:golden_apple"
     },
     {
-      "item": "minecraft:diamond"
+      "item": "minecraft:ghast_tear"
     },
     {
       "item": "manaweave_and_runes:tanzanite"
+    },
+    {
+      "item": "manaweave_and_runes:blank_spell_part"
     }
   ],
   "manaMap": [
     {
-      "amount": 300,
+      "amount": 60,
+      "manaType": "manaweave_and_runes:earth_mana"
+    },
+    {
+      "amount": 40,
       "manaType": "manaweave_and_runes:soul_mana"
     },
     {
-      "amount": 300,
+      "amount": 40,
       "manaType": "manaweave_and_runes:order_mana"
     }
   ],

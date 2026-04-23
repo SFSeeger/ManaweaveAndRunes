@@ -5,16 +5,19 @@
     },
     {
       "item": "minecraft:feather"
+    },
+    {
+      "item": "minecraft:wind_charge"
     }
   ],
   "manaCost": [
     {
-      "amount": 5,
-      "manaType": "manaweave_and_runes:soul_mana"
-    },
-    {
       "amount": 20,
       "manaType": "manaweave_and_runes:air_mana"
+    },
+    {
+      "amount": 5,
+      "manaType": "manaweave_and_runes:soul_mana"
     }
   ],
   "manaRate": 40,

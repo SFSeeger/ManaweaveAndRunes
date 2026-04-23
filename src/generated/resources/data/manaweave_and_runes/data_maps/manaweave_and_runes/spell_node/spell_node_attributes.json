@@ -9,9 +9,9 @@
       "possibleModifiers": [
         "manaweave_and_runes:spell_modifier.elongate",
         "manaweave_and_runes:spell_modifier.strengthen",
-        "manaweave_and_runes:spell_modifier.widen",
+        "manaweave_and_runes:spell_modifier.delicate",
         "manaweave_and_runes:spell_modifier.hasten",
-        "manaweave_and_runes:spell_modifier.delicate"
+        "manaweave_and_runes:spell_modifier.widen"
       ]
     },
     "manaweave_and_runes:spell_effect.burn": {
@@ -31,8 +31,8 @@
       },
       "possibleModifiers": [
         "manaweave_and_runes:spell_modifier.strengthen",
-        "manaweave_and_runes:spell_modifier.widen",
-        "manaweave_and_runes:spell_modifier.hasten"
+        "manaweave_and_runes:spell_modifier.hasten",
+        "manaweave_and_runes:spell_modifier.widen"
       ]
     },
     "manaweave_and_runes:spell_effect.harm": {
@@ -43,8 +43,8 @@
       },
       "possibleModifiers": [
         "manaweave_and_runes:spell_modifier.strengthen",
-        "manaweave_and_runes:spell_modifier.hasten",
-        "manaweave_and_runes:spell_modifier.delicate"
+        "manaweave_and_runes:spell_modifier.delicate",
+        "manaweave_and_runes:spell_modifier.hasten"
       ]
     },
     "manaweave_and_runes:spell_effect.heal": {
@@ -55,8 +55,8 @@
       },
       "possibleModifiers": [
         "manaweave_and_runes:spell_modifier.strengthen",
-        "manaweave_and_runes:spell_modifier.hasten",
-        "manaweave_and_runes:spell_modifier.delicate"
+        "manaweave_and_runes:spell_modifier.delicate",
+        "manaweave_and_runes:spell_modifier.hasten"
       ]
     },
     "manaweave_and_runes:spell_effect.push": {
@@ -67,8 +67,8 @@
       "possibleModifiers": [
         "manaweave_and_runes:spell_modifier.elongate",
         "manaweave_and_runes:spell_modifier.strengthen",
-        "manaweave_and_runes:spell_modifier.widen",
-        "manaweave_and_runes:spell_modifier.hasten"
+        "manaweave_and_runes:spell_modifier.hasten",
+        "manaweave_and_runes:spell_modifier.widen"
       ]
     },
     "manaweave_and_runes:spell_modifier.delicate": {
@@ -123,9 +123,9 @@
         "manaweave_and_runes:order_mana": 2
       },
       "possibleModifiers": [
-        "manaweave_and_runes:spell_modifier.widen",
+        "manaweave_and_runes:spell_modifier.delicate",
         "manaweave_and_runes:spell_modifier.hasten",
-        "manaweave_and_runes:spell_modifier.delicate"
+        "manaweave_and_runes:spell_modifier.widen"
       ]
     },
     "manaweave_and_runes:spell_type.self": {

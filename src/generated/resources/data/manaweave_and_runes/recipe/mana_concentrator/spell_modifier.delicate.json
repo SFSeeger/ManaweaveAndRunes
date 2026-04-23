@@ -1,0 +1,37 @@
+{
+  "type": "manaweave_and_runes:mana_concentrator",
+  "craftTime": 300,
+  "inputs": [
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "item": "minecraft:lapis_lazuli"
+    },
+    {
+      "item": "minecraft:amethyst_shard"
+    },
+    {
+      "item": "manaweave_and_runes:blank_spell_part"
+    }
+  ],
+  "manaMap": [
+    {
+      "amount": 200,
+      "manaType": "manaweave_and_runes:fire_mana"
+    },
+    {
+      "amount": 100,
+      "manaType": "manaweave_and_runes:air_mana"
+    },
+    {
+      "amount": 50,
+      "manaType": "manaweave_and_runes:entropy_mana"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "manaweave_and_runes:spell_modifier.delicate"
+  },
+  "tier": "NOVICE"
+}

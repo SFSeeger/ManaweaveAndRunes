@@ -1,0 +1,29 @@
+{
+  "parent": "manaweave_and_runes:rituals/root",
+  "criteria": {
+    "fell_from_distance": {
+      "conditions": {
+        "distance": {
+          "y": {
+            "min": 10.0
+          }
+        },
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {}
+          }
+        ],
+        "start_position": {}
+      },
+      "trigger": "minecraft:fall_from_height"
+    }
+  },
+  "requirements": [
+    [
+      "fell_from_distance"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

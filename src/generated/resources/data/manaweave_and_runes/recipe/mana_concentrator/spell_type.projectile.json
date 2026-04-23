@@ -3,22 +3,22 @@
   "craftTime": 250,
   "inputs": [
     {
-      "item": "minecraft:firework_rocket"
-    },
-    {
       "item": "minecraft:arrow"
     },
     {
       "item": "minecraft:bow"
+    },
+    {
+      "item": "manaweave_and_runes:blank_spell_part"
     }
   ],
   "manaMap": [
     {
-      "amount": 300,
+      "amount": 100,
       "manaType": "manaweave_and_runes:air_mana"
     },
     {
-      "amount": 300,
+      "amount": 10,
       "manaType": "manaweave_and_runes:entropy_mana"
     }
   ],

@@ -38,6 +38,7 @@
   "block.manaweave_and_runes.entropy_mana_infused_rock": "Entropy Mana Infused Rock",
   "block.manaweave_and_runes.soul_mana_infused_rock": "Soul Mana Infused Rock",
   "block.manaweave_and_runes.void_mana_infused_rock": "Void Mana Infused Rock",
+  "block.manaweave_and_runes.novice_mana_collector": "Novice Mana Collector",
   "block.manaweave_and_runes.scrying_pool": "Scrying Pool",
   "lore.manaweave_and_runes.mana_stored": "%d / %d",
   "item.manaweave_and_runes.tanzanite": "Tanzanite",
@@ -149,10 +150,16 @@
   "message.manaweave_and_runes.scrying_pool.boon_entry": "You bear the boon %s",
 
   "mark.manaweave_and_runes.mark_of_shrinking": "Mark of Shrinking",
-  "mark.manaweave_and_runes.mark_of_growing": "Mark of Growing",
+  "mark.manaweave_and_runes.mark_of_growth": "Mark of Growth",
   "mark.manaweave_and_runes.mark_of_overheating": "Mark of Overheating",
   "mark.manaweave_and_runes.mark_of_sinking": "Mark of Sinking",
   "mark.manaweave_and_runes.mark_of_flight": "Mark of Flight",
+
+  "ritual.manaweave_and_runes.mark_of_shrinking_ritual": "Mark of Shrinking",
+  "ritual.manaweave_and_runes.mark_of_growth_ritual": "Mark of Growth",
+  "ritual.manaweave_and_runes.mark_of_overheating_ritual": "Mark of Overheating",
+  "ritual.manaweave_and_runes.mark_of_sinking_ritual": "Mark of Sinking",
+  "ritual.manaweave_and_runes.mark_of_flight_ritual": "Mark of Flight",
 
   "entity.minecraft.villager.manaweave_and_runes.rune_smith": "Rune Smith",
   "tooltip.manaweave_and_runes.caster": "Current Spell: %s"

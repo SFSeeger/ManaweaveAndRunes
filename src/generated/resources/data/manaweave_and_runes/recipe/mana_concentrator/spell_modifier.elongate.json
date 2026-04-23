@@ -9,10 +9,13 @@
       "item": "minecraft:piston"
     },
     {
-      "item": "minecraft:wind_charge"
+      "item": "minecraft:stone_button"
     },
     {
       "item": "manaweave_and_runes:tanzanite"
+    },
+    {
+      "item": "manaweave_and_runes:blank_spell_part"
     }
   ],
   "manaMap": [
@@ -21,7 +24,7 @@
       "manaType": "manaweave_and_runes:water_mana"
     },
     {
-      "amount": 300,
+      "amount": 50,
       "manaType": "manaweave_and_runes:order_mana"
     }
   ],

@@ -1,0 +1,16 @@
+{
+  "name": "Mark of Growth",
+  "icon": "minecraft:pitcher_plant",
+  "category": "manaweave_and_runes:marks_category",
+  "_advancement": "manaweave_and_runes:marks/mark_of_growth",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Causes the player to grow in size and increases their health."
+    },
+    {
+      "type": "manaweave_and_runes:ritual_input",
+      "ritual": "manaweave_and_runes:mark_of_growth_ritual"
+    }
+  ]
+}

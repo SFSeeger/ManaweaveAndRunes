@@ -17,7 +17,7 @@
     },
     {
       "type": "patchouli:multiblock",
-      "multiblock":{
+      "multiblock": {
         "mapping": {
           "R": "manaweave_and_runes:rune_block",
           "A": "manaweave_and_runes:rune_pedestal",

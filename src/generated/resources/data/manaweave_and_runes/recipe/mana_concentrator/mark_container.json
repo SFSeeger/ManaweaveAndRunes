@@ -42,11 +42,11 @@
   "manaMap": [
     {
       "amount": 500,
-      "manaType": "manaweave_and_runes:soul_mana"
+      "manaType": "manaweave_and_runes:earth_mana"
     },
     {
       "amount": 500,
-      "manaType": "manaweave_and_runes:earth_mana"
+      "manaType": "manaweave_and_runes:soul_mana"
     },
     {
       "amount": 150,

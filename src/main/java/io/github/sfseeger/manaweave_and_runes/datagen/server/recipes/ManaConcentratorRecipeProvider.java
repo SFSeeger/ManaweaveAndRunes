@@ -105,6 +105,7 @@ public class ManaConcentratorRecipeProvider implements IRecipeRegistrar {
 
         new ManaConcentratorRecipeBuilder.Builder(MRBlockInit.MASTER_RITUAL_ANCHOR_BLOCK.get())
                 .setTier(Tier.MASTER)
+                .setCraftTime(500)
                 .addInput(Ingredient.of(Items.NETHERITE_INGOT))
                 .addInput(Ingredient.of(MRBlockInit.NOVICE_RITUAL_ANCHOR_BLOCK))
                 .addInput(Ingredient.of(MRItemInit.TANZANITE))
@@ -117,6 +118,29 @@ public class ManaConcentratorRecipeProvider implements IRecipeRegistrar {
                 .addMana(Manas.SoulMana, 200)
                 .addMana(Manas.EntropyMana, 100)
                 .addMana(Manas.VoidMana, 100)
+                .save(output);
+
+        new ManaConcentratorRecipeBuilder.Builder(MRBlockInit.ASCENDED_RITUAL_ANCHOR_BLOCK.get())
+                .setTier(Tier.ASCENDED)
+                .setCraftTime(600)
+                .addInput(Ingredient.of(Items.NETHERITE_INGOT))
+                .addInput(Ingredient.of(Items.NETHERITE_INGOT))
+                .addInput(Ingredient.of(Items.BEACON))
+                .addInput(Ingredient.of(MRBlockInit.MASTER_RITUAL_ANCHOR_BLOCK.get()))
+                .addInput(Ingredient.of(MRItemInit.TANZANITE))
+                .addInput(Ingredient.of(MRItemInit.RUNE_MATRIX_ITEM))
+                .addInput(Ingredient.of(MRItemInit.RUNE_MATRIX_ITEM))
+                .addInput(Ingredient.of(Items.ENCHANTED_GOLDEN_APPLE))
+                .addInput(Ingredient.of(MRBlockInit.MANA_STORAGE_BLOCK))
+                .addInput(Ingredient.of(Items.END_CRYSTAL))
+                .addMana(Manas.FireMana, 2000)
+                .addMana(Manas.AirMana, 2000)
+                .addMana(Manas.EarthMana, 2000)
+                .addMana(Manas.WaterMana, 2000)
+                .addMana(Manas.EntropyMana, 1000)
+                .addMana(Manas.OrderMana, 1000)
+                .addMana(Manas.SoulMana, 1000)
+                .addMana(Manas.VoidMana, 1000)
                 .save(output);
 
         new ManaConcentratorRecipeBuilder.Builder(MRBlockInit.SPELL_DESIGNER_BLOCK).setTier(Tier.NOVICE)
@@ -185,6 +209,7 @@ public class ManaConcentratorRecipeProvider implements IRecipeRegistrar {
 
         new ManaConcentratorRecipeBuilder.Builder(MRBlockInit.MANA_GENERATOR_BLOCK)
                 .setTier(Tier.MASTER)
+                .setCraftTime(100)
                 .addInput(Ingredient.of(Blocks.FURNACE))
                 .addInput(Ingredient.of(Items.NETHER_BRICK))
                 .addInput(Ingredient.of(Items.NETHER_BRICK))
