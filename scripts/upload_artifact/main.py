@@ -18,13 +18,13 @@ def main():
         "project_id": project_id,
         "loaders": ["neoforge"],
         "game_versions": ["1.21.1"],
-        "version_title": f"Manaweave and Runes {tag_ref}",
+        "name": f"Manaweave and Runes {tag_ref}",
         "version_number": tag_ref,
         "file_parts": ["jar"],
         "primary_file": "jar",
         "changelog": changelog,
         "dependencies": [
-            {"project_id": "8BmcQJ2H", "dependency_type": "optional"},
+            {"project_id": "8BmcQJ2H", "dependency_type": "required"},
             {"project_id": "nU0bVIaL", "dependency_type": "required"},
         ],
         "version_type": version_type,
@@ -32,17 +32,16 @@ def main():
         "status": "listed",
     }
 
-    files = {}
-
     # Prepare multipart request
-    with open(jar_path, "rb") as jar_file:
-        files = {
-            "jar": jar_file,
-            "data": (None, json.dumps(payload), "application/json"),
-        }
+    files = {
+        "data": ("data.json", json.dumps(payload), "application/json"),
+        "jar": (os.path.basename(jar_path), open(jar_path, "rb")),
+    }
+    print(json.dumps(payload, indent=2))
 
     headers = {
         "Authorization": modrinth_api_key,
+        "User-Agent": "SFSeeger/manaweave-and-runes",
     }
 
     response = requests.post(
@@ -56,7 +55,7 @@ def main():
     print("Response:", response.text)
 
     if response.status_code >= 400:
-        raise Exception("Upload failed")
+        raise Exception(f"Upload failed with error {response.status_code}: {response.text}")
 
 if __name__ == "__main__":
     main()
